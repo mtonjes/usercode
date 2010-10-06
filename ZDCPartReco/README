@@ -1,0 +1,26 @@
+These are only PART of a copy of the ZDC reconstruction algorithm.
+The file has been modified to do a Simple Time calculation as was agreed on in the 29 September 2010 ZDC Wednesday meeting.
+******************************
+To use (tested in CMSSW_3_8_4):
+
+cmsrel CMSSW_3_8_4
+cd CMSSW_3_8_4/src
+cmsenv
+cvs co -r CMSSW_3_9_0_pre2 RecoLocalCalo/HcalRecAlgos
+cvs co -d MTonjes/ZDCPartReco UserCode/MTonjes/ZDCPartReco 
+mv MTonjes/ZDCPartReco/src/ZdcSimpleRecAlgo.cc RecoLocalCalo/HcalRecAlgos/src/.
+mv MTonjes/ZDCPartReco/test/*.py RecoLocalCalo/HcalRecAlgos/test/.
+rm -rf MTonjes
+scramv1 b
+
+******************************
+On FNAL or LXPLUS (if data files read in are still there):
+cd RecoLocalCalo/HcalRecAlgos/test
+cmsRun zdc_ReReco_TimeCheck_DebugOff_cfg.py 
+
+******************************
+You can also use the zdc_ReReco_TimeCheck_DebugOn_cfg.py to write Debug statements to your cout file (please note I was not able to figure out how to configure it to ONLY write Debug statements for just zdcreco alone. It gives the Debug statements from every part of Reco which is run)
+******************************
+Please note that version put into CMSSW official Reco will not have so many Debug statements, these are for your use only to understand where the code is getting its numbers.
+******************************
+-Marguerite Tonjes 6 October 2010
