@@ -13,7 +13,7 @@ Description: <one line class summary>
 //
 // Original Author:  Taylan Yetkin
 //         Created:  Sat Nov  7 23:04:14 CET 2009
-// $Id: MargueriteZDCAnalyzer.cc,v 1.1.1.1 2010/01/21 00:44:19 ssen Exp $
+// $Id: MargueriteZDCAnalyzer.cc,v 1.1 2010/11/25 09:18:17 belt Exp $
 //
 //
 
@@ -181,7 +181,7 @@ void MargueriteZDCAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSe
                 EM_P_EnergyCheck[iChannel-1]=0.;
 			    for(int i = 0; i < fTS; ++i){
 			        h_ZDCP_EM_Pulse[iChannel-1]->Fill(i,fData[i]);
-			    	if (i==0 || i==1 || i==2 || i==3 ) {
+			    	if (i==1 || i==2 || i==3 ) {
 //			    	if (i==0 || i==1 || i==2 || i==3 || i==8 || i==9) {
 			    	  int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
 			    	  EM_Pnoise[iChannel-1]+=DigiDatafC[i+chid*10];
@@ -202,7 +202,7 @@ void MargueriteZDCAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSe
                 EM_M_EnergyCheck[iChannel-1]=0.;
 			    for(int i = 0; i < fTS; ++i){
 			       h_ZDCM_EM_Pulse[iChannel-1]->Fill(i,fData[i]);
-			    	if (i==0 || i==1 || i==2 || i==3 ) {
+			    	if (i==1 || i==2 || i==3 ) {
 //			    	if (i==0 || i==1 || i==2 || i==3 || i==8 || i==9) {
 			    	  int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
 			    	  EM_Mnoise[iChannel-1]+=DigiDatafC[i+chid*10];
@@ -225,7 +225,7 @@ void MargueriteZDCAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSe
                 HAD_P_EnergyCheck[iChannel-1]=0.;
 			    for(int i = 0; i < fTS; ++i){
 			       h_ZDCP_HAD_Pulse[iChannel-1]->Fill(i,fData[i]);
-			    	if (i==0 || i==1 || i==2 || i==3 ) {
+			    	if (i==1 || i==2 || i==3 ) {
 //			    	if (i==0 || i==1 || i==2 || i==3 || i==8 || i==9) {
 			    	  int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
 			    	  HAD_Pnoise[iChannel-1]+=DigiDatafC[i+chid*10];
@@ -246,7 +246,7 @@ void MargueriteZDCAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSe
                 HAD_M_EnergyCheck[iChannel-1]=0.;
 			    for(int i = 0; i < fTS; ++i){
 			       h_ZDCM_HAD_Pulse[iChannel-1]->Fill(i,fData[i]);
-			    	if (i==0 || i==1 || i==2 || i==3 ) {
+			    	if (i==1 || i==2 || i==3 ) {
 //			    	if (i==0 || i==1 || i==2 || i==3 || i==8 || i==9) {
 			    	  int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
 			    	  HAD_Mnoise[iChannel-1]+=DigiDatafC[i+chid*10];
@@ -585,11 +585,11 @@ void MargueriteZDCAnalyzer::beginJob(){
 		h_ZDCP_Had_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
 		h_ZDCP_Had_TotE->SetFillColor(kGreen);
 		sprintf(title,"h_ZDCP_TotE_HadronLike");
-		sprintf(name,"ZDC Total Energy assuming Hadronic particle only (alpha*(EM1+EM2+EM3+EM4+EM5)+(Had1+Had2+Had3+Had4))*0.782828, +ZDC");
+		sprintf(name,"ZDC Total Energy assuming Hadronic particle only (alpha*Energy(EM1+EM2+EM3+EM4+EM5)*(0.782828/0.025514)+Energy(Had1+Had2+Had3+Had4)), +ZDC");
 		h_ZDCP_TotE_HadronLike = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
 		h_ZDCP_TotE_HadronLike->SetFillColor(kGreen);	
 		sprintf(title,"h_ZDCP_TotE");
-		sprintf(name,"ZDC Total Rechit Energy (EM*0.025514, Had*0.782828), which assumes multiple particle types hit +ZDC");
+		sprintf(name,"ZDC Total Rechit Energy (DigiEM*0.025514, DigiHad*0.782828), which assumes multiple particle types hit +ZDC");
 		h_ZDCP_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
 		h_ZDCP_TotE->SetFillColor(kGreen);		
 	h_ZDCP_EM_TotE->Sumw2();
@@ -682,11 +682,11 @@ void MargueriteZDCAnalyzer::beginJob(){
 		h_ZDCM_Had_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
 		h_ZDCM_Had_TotE->SetFillColor(kGreen);
 		sprintf(title,"h_ZDCM_TotE_HadronLike");
-		sprintf(name,"ZDC Total Energy assuming Hadronic particle only (alpha*(EM1+EM2+EM3+EM4+EM5)+(Had1+Had2+Had3+Had4))*0.782828, -ZDC");
+		sprintf(name,"ZDC Total Energy assuming Hadronic particle only (alpha*Energy(EM1+EM2+EM3+EM4+EM5)*(0.782828/0.025514)+Energy(Had1+Had2+Had3+Had4)), -ZDC");
 		h_ZDCM_TotE_HadronLike = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
 		h_ZDCM_TotE_HadronLike->SetFillColor(kGreen);	
 		sprintf(title,"h_ZDCM_TotE");
-		sprintf(name,"ZDC Total Rechit Energy (EM*0.025514, Had*0.782828), which assumes multiple particle types hit -ZDC");
+		sprintf(name,"ZDC Total Rechit Energy (DigiEM*0.025514, DigiHad*0.782828), which assumes multiple particle types hit -ZDC");
 		h_ZDCM_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
 		h_ZDCM_TotE->SetFillColor(kGreen);			
 	h_ZDCM_EM_TotE->Sumw2();
