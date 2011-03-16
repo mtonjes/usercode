@@ -13,7 +13,7 @@ Description: <one line class summary>
 //
 // Original Author:  Taylan Yetkin
 //         Created:  Sat Nov  7 23:04:14 CET 2009
-// $Id: MargueriteZDCAnalyzer.cc,v 1.2 2011/02/25 20:54:00 belt Exp $
+// $Id: MargueriteZDCAnalyzer.cc,v 1.3 2011/02/28 19:10:18 belt Exp $
 //
 //
 
@@ -287,7 +287,7 @@ void MargueriteZDCAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSe
 				h_ZDCP_EM_RecHitEnergy[iChannel-1]->Fill(zhit->energy());
 				h_ZDCP_EM_RecHitTiming[iChannel-1]->Fill(zhit->time());
 				EMP[iChannel-1]=EMP[iChannel-1]+zhit->energy();
-				DigiEMP[iChannel-1]=DigiEMP[iChannel-1]/C_EM + zhit->energy();
+				DigiEMP[iChannel-1]=DigiEMP[iChannel-1] + zhit->energy()/C_EM;
 //				int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
 //				std::cout<<"RecHit energy = "<<zhit->energy()<<", Energy from Digi = "<<EM_P_EnergyCheck[iChannel-1]*0.025514<<", Noise from Digi = "<<EM_Pnoise[iChannel-1]*0.025514<<std::endl;
 //       std::cout<<"ZDCP_EM, going to fill some noise histos"<<std::endl;
@@ -300,7 +300,7 @@ void MargueriteZDCAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSe
 				h_ZDCM_EM_RecHitEnergy[iChannel-1]->Fill(zhit->energy());
 				h_ZDCM_EM_RecHitTiming[iChannel-1]->Fill(zhit->time());
 				EMM[iChannel-1]=EMM[iChannel-1]+zhit->energy();
-				DigiEMM[iChannel-1]=DigiEMM[iChannel-1]/C_EM + zhit->energy();
+				DigiEMM[iChannel-1]=DigiEMM[iChannel-1] + zhit->energy()/C_EM;
 //				int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
 //				std::cout<<"RecHit energy = "<<zhit->energy()<<", Energy from Digi = "<<EM_M_EnergyCheck[iChannel-1]*0.025514<<", Noise from Digi = "<<EM_Mnoise[iChannel-1]*0.025514<<std::endl;
 //       std::cout<<"ZDCP_EM, going to fill some noise histos"<<std::endl;
@@ -352,8 +352,10 @@ void MargueriteZDCAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSe
     h_ZDCM_EM_TotE->Fill(EMM_TotE);
     h_ZDCP_Had_TotE->Fill(HadP_TotE);
     h_ZDCM_Had_TotE->Fill(HadM_TotE);
-    h_ZDCP_TotE_HadronLike->Fill(alpha*Digi_EMP_TotE*C_Had + HadP_TotE);
-    h_ZDCM_TotE_HadronLike->Fill(alpha*Digi_EMM_TotE*C_Had + HadM_TotE);
+//    h_ZDCP_TotE_HadronLike->Fill(alpha*Digi_EMP_TotE*C_Had + HadP_TotE);
+//    h_ZDCM_TotE_HadronLike->Fill(alpha*Digi_EMM_TotE*C_Had + HadM_TotE);
+    h_ZDCP_TotE_HadronLike->Fill(alpha*EMP_TotE*C_Had/C_EM + HadP_TotE);
+    h_ZDCM_TotE_HadronLike->Fill(alpha*EMM_TotE*C_Had/C_EM + HadM_TotE);    
     h_ZDCP_TotE->Fill(EMP_TotE+HadP_TotE);
     h_ZDCM_TotE->Fill(EMM_TotE+HadM_TotE);
 	
@@ -365,7 +367,8 @@ void MargueriteZDCAnalyzer::beginJob(){
 	char name[128];
 	C_Had = 0.782828;
 	C_EM = 0.025514;
-	alpha = 1.0;
+// recommended alpha from Oleg (15 March 2011): better resolution
+	alpha = 1.35;
 
 	for(int i = 0; i < 4;++i){
 		// pulse Plus Side	
@@ -376,7 +379,7 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//integrated charge over 10 time samples		
 		sprintf(title,"h_ZDCP_HADChan_%i_Charge",i+1);
 		sprintf(name,"ZDC HAD Section Charge for channel %i",i+1);
-		h_ZDCP_HAD_Charge[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000);
+		h_ZDCP_HAD_Charge[i] = book1DHistogram(ZDCDir,title, name, 30000, -10., 30000.);
 		h_ZDCP_HAD_Charge[i]->SetFillColor(kBlue);
 		//charge weighted time slice		
 		sprintf(title,"h_ZDCP_HADChan_%i_TSMean",i+1);
@@ -386,21 +389,21 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//RecHit for HAD sections
 		sprintf(title,"h_ZDCP_HADChan_%i_RecHit_Energy",i+1);
 		sprintf(name,"ZDC HAD Section Rechit Energy for channel %i",i+1);
-		h_ZDCP_HAD_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCP_HAD_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCP_HAD_RecHitEnergy[i]->SetFillColor(kRed);
 		
 		sprintf(title,"h_ZDCP_HADChan_%i_Noise",i+1);
 		sprintf(name,"ZDCP HAD Section Noise for channel %i",i+1);
-		h_ZDCP_HAD_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000.);
+		h_ZDCP_HAD_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);
 		h_ZDCP_HAD_Noise[i]->SetFillColor(kBlue);	
 		sprintf(title,"h_ZDCM_HADChan_%i_Noise",i+1);
 		sprintf(name,"ZDCM HAD Section Noise for channel %i",i+1);
-		h_ZDCM_HAD_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000.);
+		h_ZDCM_HAD_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);
 		h_ZDCM_HAD_Noise[i]->SetFillColor(7);
 		
 		sprintf(title,"h_ZDCP_HADChan_%i_RecHit_Timing",i+1);
 		sprintf(name,"ZDC HAD Section Rechit Timing for channel %i",i+1);
-		h_ZDCP_HAD_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 1000.);		
+		h_ZDCP_HAD_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);		
 		h_ZDCP_HAD_RecHitTiming[i]->SetFillColor(kRed);
 
 		// pulse Minus Side	
@@ -411,7 +414,7 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//integrated charge over 10 time samples		
 		sprintf(title,"h_ZDCM_HADChan_%i_Charge",i+1);
 		sprintf(name,"ZDC HAD Section Charge for channel %i",i+1);
-		h_ZDCM_HAD_Charge[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000);
+		h_ZDCM_HAD_Charge[i] = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);
 		h_ZDCM_HAD_Charge[i]->SetFillColor(7);
 		//charge weighted time slice		
 		sprintf(title,"h_ZDCM_HADChan_%i_TSMean",i+1);
@@ -421,12 +424,12 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//RecHit for HAD sections
 		sprintf(title,"h_ZDCM_HADChan_%i_RecHit_Energy",i+1);
 		sprintf(name,"ZDC HAD Section Rechit Energy for channel %i",i+1);
-		h_ZDCM_HAD_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCM_HAD_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCM_HAD_RecHitEnergy[i]->SetFillColor(kRed);
 
 		sprintf(title,"h_ZDCM_HADChan_%i_RecHit_Timing",i+1);
 		sprintf(name,"ZDC HAD Section Rechit Timing for channel %i",i+1);
-		h_ZDCM_HAD_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 1000.);		
+		h_ZDCM_HAD_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);		
 		h_ZDCM_HAD_RecHitTiming[i]->SetFillColor(kRed);
 	}
 	for(int i = 0; i < 5;++i){
@@ -438,7 +441,7 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//integrated charge over 10 time samples
 		sprintf(title,"h_ZDCP_EMChan_%i_Charge",i+1);
 		sprintf(name,"ZDC EM Section Charge for channel %i",i+1);
-		h_ZDCP_EM_Charge[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000.);		
+		h_ZDCP_EM_Charge[i] = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCP_EM_Charge[i]->SetFillColor(kBlue);
 		//charge weighted time slice
 		sprintf(title,"h_ZDCP_EMChan_%i_TSMean",i+1);
@@ -448,23 +451,23 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//RecHit for EM sections
 		sprintf(title,"h_ZDCP_EMChan_%i_RecHit_Energy",i+1);
 		sprintf(name,"ZDC EM Section Rechit Energy for channel %i",i+1);
-		h_ZDCP_EM_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCP_EM_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 500, -10., 5000.);		
 		h_ZDCP_EM_RecHitEnergy[i]->SetFillColor(kRed);
 
 		sprintf(title,"h_ZDCP_EMChan_%i_RecHit_Timing",i+1);
 		sprintf(name,"ZDC EM Section Rechit Timing for channel %i",i+1);
-		h_ZDCP_EM_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 1000.);		
+		h_ZDCP_EM_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);		
 		h_ZDCP_EM_RecHitTiming[i]->SetFillColor(kRed);
 
 		sprintf(title,"h_ZDCP_EMChan_%i_Noise",i+1);
 		sprintf(name,"ZDCP EM Section Noise for channel %i",i+1);
-		h_ZDCP_EM_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000.);
+		h_ZDCP_EM_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);
 		h_ZDCP_EM_Noise[i]->SetFillColor(kBlue);		
 
 		
 		sprintf(title,"h_ZDCM_EMChan_%i_Noise",i+1);
 		sprintf(name,"ZDCM EM Section Noise for channel %i",i+1);
-		h_ZDCM_EM_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000.);
+		h_ZDCM_EM_Noise[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);
 		h_ZDCM_EM_Noise[i]->SetFillColor(7);
 
 		// pulse Minus Side
@@ -475,7 +478,7 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//integrated charge over 10 time samples
 		sprintf(title,"h_ZDCM_EMChan_%i_Charge",i+1);
 		sprintf(name,"ZDC EM Section Charge for channel %i",i+1);
-		h_ZDCM_EM_Charge[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 2000.);		
+		h_ZDCM_EM_Charge[i] = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCM_EM_Charge[i]->SetFillColor(7);
 		//charge weighted time slice
 		sprintf(title,"h_ZDCM_EMChan_%i_TSMean",i+1);
@@ -485,12 +488,12 @@ void MargueriteZDCAnalyzer::beginJob(){
 		//RecHit for EM sections
 		sprintf(title,"h_ZDCM_EMChan_%i_RecHit_Energy",i+1);
 		sprintf(name,"ZDC EM Section Rechit Energy for channel %i",i+1);
-		h_ZDCM_EM_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCM_EM_RecHitEnergy[i] = book1DHistogram(ZDCDir,title, name, 5000, -10., 5000.);		
 		h_ZDCM_EM_RecHitEnergy[i]->SetFillColor(kRed);
 
 		sprintf(title,"h_ZDCM_EMChan_%i_RecHit_Timing",i+1);
 		sprintf(name,"ZDC EM Section Rechit Timing for channel %i",i+1);
-		h_ZDCM_EM_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 1000.);		
+		h_ZDCM_EM_RecHitTiming[i] = book1DHistogram(ZDCDir,title, name, 100, -10., 100.);		
 		h_ZDCM_EM_RecHitTiming[i]->SetFillColor(kRed);
 	}
 
@@ -578,19 +581,19 @@ void MargueriteZDCAnalyzer::beginJob(){
 
 		sprintf(title,"h_ZDCP_EM_TotE");
 		sprintf(name,"ZDC EM Section Total Rechit Energy (EM1+EM2+EM3+EM4+EM5), +ZDC");
-		h_ZDCP_EM_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCP_EM_TotE = book1DHistogram(ZDCDir,title, name, 5000, -10., 50000.);		
 		h_ZDCP_EM_TotE->SetFillColor(kGreen);
 		sprintf(title,"h_ZDCP_Had_TotE");
 		sprintf(name,"ZDC Had Section Total Rechit Energy (Had1+Had2+Had3+Had4), +ZDC");
-		h_ZDCP_Had_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCP_Had_TotE = book1DHistogram(ZDCDir,title, name,1500, -10., 150000.);		
 		h_ZDCP_Had_TotE->SetFillColor(kGreen);
-		sprintf(title,"h_ZDCP_TotE_HadronLike");
+		sprintf(title,"h_ZDCP_TotE_Hadron");
 		sprintf(name,"ZDC Total Energy assuming Hadronic particle only (alpha*Energy(SumEM)*(0.782828/0.025514)+Energy(SumHad)), +ZDC");
-		h_ZDCP_TotE_HadronLike = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCP_TotE_HadronLike = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCP_TotE_HadronLike->SetFillColor(kGreen);	
 		sprintf(title,"h_ZDCP_TotE");
 		sprintf(name,"ZDC Total Rechit Energy (DigiEM*0.025514, DigiHad*0.782828), which assumes multiple particle types hit +ZDC");
-		h_ZDCP_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCP_TotE = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCP_TotE->SetFillColor(kGreen);		
 	h_ZDCP_EM_TotE->Sumw2();
 	h_ZDCP_Had_TotE->Sumw2();
@@ -675,19 +678,19 @@ void MargueriteZDCAnalyzer::beginJob(){
 	
 		sprintf(title,"h_ZDCM_EM_TotE");
 		sprintf(name,"ZDC EM Section Total Rechit Energy (EM1+EM2+EM3+EM4+EM5), -ZDC");
-		h_ZDCM_EM_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCM_EM_TotE = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCM_EM_TotE->SetFillColor(kGreen);
 		sprintf(title,"h_ZDCM_Had_TotE");
 		sprintf(name,"ZDC Had Section Total Rechit Energy (Had1+Had2+Had3+Had4), -ZDC");
-		h_ZDCM_Had_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCM_Had_TotE = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCM_Had_TotE->SetFillColor(kGreen);
-		sprintf(title,"h_ZDCM_TotE_HadronLike");
+		sprintf(title,"h_ZDCM_TotE_Hadron");
 		sprintf(name,"ZDC Total Energy assuming Hadronic particle only (alpha*Energy(SumEM)*(0.782828/0.025514)+Energy(SumHad)), -ZDC");
-		h_ZDCM_TotE_HadronLike = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCM_TotE_HadronLike = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCM_TotE_HadronLike->SetFillColor(kGreen);	
 		sprintf(title,"h_ZDCM_TotE");
 		sprintf(name,"ZDC Total Rechit Energy (DigiEM*0.025514, DigiHad*0.782828), which assumes multiple particle types hit -ZDC");
-		h_ZDCM_TotE = book1DHistogram(ZDCDir,title, name, 100, -10., 40000.);		
+		h_ZDCM_TotE = book1DHistogram(ZDCDir,title, name, 1500, -10., 150000.);		
 		h_ZDCM_TotE->SetFillColor(kGreen);			
 	h_ZDCM_EM_TotE->Sumw2();
 	h_ZDCM_Had_TotE->Sumw2();
