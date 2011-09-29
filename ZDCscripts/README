@@ -1,0 +1,38 @@
+These are scripts intended to work with Pat Kenny's ZDC Analyzer.
+The version of Analyzer was checked out Sept. 2011.
+To get Pat's code: 
+cvs co -d Analyzers/ZDCAnalyzer UserCode/pkenny/Analyzers/ZDCAnalyzer
+
+1) Run Pat's code on some 2010 PbPb data (do a zdcreco just before the ZDCanalyzer)
+2) Use these scripts to analyze the trees
+
+The core script was generated with Root's MakeClass. So if you happen to
+have a newer or modified version of ZDCAnalyzer, you will need to make
+your own class and modify the scripts appropriately.
+http://root.cern.ch/root/html/TTree.html#TTree:MakeClass
+
+To run the code, change the filename in BOTH locations in the .h file, 
+and follow the comments inside the .C file for how to loop over events.
+The code will make two histograms from your tree.
+---------------------------------------------------
+lowGainEnergy (TS 6,7,8 but in fC NOT energy): plotted EM vs. HAD 
+1D plot includes cut on saturation in EM:
+TotalNet151353_HADandEM.C
+TotalNet151353_HADandEM.h
+---------------------------------------------------
+fC (TS4,5,6 like regular energy, but in units of fC): plotted EM vs. (HAD+EM)
+1D plot includes cut on saturation in EM,
+In neutron analysis, one may need a factor of alpha in front of EM in the HAD+EM
+sum. (alpha in testbeam = 1, alpha for TS 6,7,8 is maybe 0.1, alpha for 4,5,6 = ?)
+TotalNet151353_HADandEM_sum_456.C
+TotalNet151353_HADandEM_sum_456.h
+---------------------------------------------------
+RecTree type analysis from regular energy (calibrated, but that calibration is wrong):
+ZDCRecTree.C
+ZDCRecTree.h
+---------------------------------------------------
+
+It is a hope that you can build off these examples to make your own 1n analysis.
+
+Other documentation: 
+https://twiki.cern.ch/twiki/bin/view/CMS/ZdcDataReconstruction
