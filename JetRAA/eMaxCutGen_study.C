@@ -242,14 +242,14 @@ void eMaxCutGen_study(){
    		   hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep->Fill(ratioGenPF);
    		}
    }
-   if(calopt_2/pfpt_2 > 0.85 && eMax_2/Sumcand > 0.9){
+   if(calopt_2/pfpt_2 > 0.85){
     	hMC_AllTrig_CutA_pfrefOverpfpt_keep->Fill(ratioGenPF);
     	if(pfrefpt_2>0){
    		   hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep->Fill(ratioGenPF);  
    		}
    }
 // rejected area:
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand > (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_AllTrig_CutA_pfrefOverpfpt_rej->Fill(ratioGenPF);
    		if(pfrefpt_2>0){
    		   hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej->Fill(ratioGenPF);
@@ -388,10 +388,10 @@ void eMaxCutGen_study(){
   cout<<"hMC_AllTrig_CutA_pfrefOverpfpt_keep: "<<hMC_AllTrig_CutA_pfrefOverpfpt_keep->GetEntries()<<endl;;
         
       TLegend * LpfrefOverpfpt_full = myLegend(0.2,0.6,0.2,0.8);
+      LpfrefOverpfpt_full->SetTextSize(0.03);
       LpfrefOverpfpt_full->AddEntry(hMC_AllTrig_noCut_pfrefOverpfpt,Form("Matched MC all jets: %d entries",MC_AllTrig_noCut_pfrefOverpfpt),"pl");
       LpfrefOverpfpt_full->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_keep,Form("Matched MC keep CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_keep),"pl");
       LpfrefOverpfpt_full->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_rej,Form("Matched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_rej),"pl");
-      LpfrefOverpfpt_full->SetTextSize(0.03);
       LpfrefOverpfpt_full->Draw();
       
   cGenJetMC->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_fullrange.pdf","RECREATE");
@@ -419,10 +419,10 @@ void eMaxCutGen_study(){
   cout<<"hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep: "<<hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep->GetEntries()<<endl;;
   
       TLegend * LpfrefOverpfpt = myLegend(0.4,0.7,0.4,0.9);
-      LpfrefOverpfpt->AddEntry(hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0,Form("Matched MC all jets: %d entries",MC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0),"pl");
-      LpfrefOverpfpt->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep,Form("Matched MC keep CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep),"pl");
-      LpfrefOverpfpt->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej,Form("Matched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej),"pl");
       LpfrefOverpfpt->SetTextSize(0.03);
+      LpfrefOverpfpt->AddEntry(hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0,Form("Matched MC all jets: %d entries",MC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0),"p");
+      LpfrefOverpfpt->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep,Form("Matched MC keep CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_keep),"p");
+      LpfrefOverpfpt->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej,Form("Matched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej),"p");
       LpfrefOverpfpt->Draw();
       
   cGenJetMC_pfrefptgt0->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_pfrefptgt0.pdf","RECREATE");
