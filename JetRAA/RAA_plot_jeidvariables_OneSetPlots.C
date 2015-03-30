@@ -218,6 +218,7 @@ void RAA_plot_jeidvariables_OneSetPlots(){
   // data loop
   long entries = Data_matched->GetEntries();
   //entries = 1;
+  entries = 1000;
   cout<<"matched Data ntuple: "<<entries<<" entries"<<endl;
   for(long nentry = 0; nentry < entries; ++nentry){
     
@@ -307,6 +308,7 @@ void RAA_plot_jeidvariables_OneSetPlots(){
   // data unmatched loop:
   long duentries = Data_unmatched->GetEntries();
   //entries = 1;
+  duentries = 1000;
   cout<<"Unmatched Data ntuple: "<<duentries<<" entries"<<endl;
   for(long unentry = 0; unentry < duentries; ++unentry ){
 
@@ -359,6 +361,7 @@ void RAA_plot_jeidvariables_OneSetPlots(){
   long mentries = MC_matched->GetEntries();
   //entries = 1;
   // MC loop
+  mentries = 1000;
   cout<<" looking at matched MC ntuple: "<<mentries<<" entries"<<endl;
   for(long mnentry = 0; mnentry < mentries; ++mnentry){
 
@@ -448,6 +451,7 @@ void RAA_plot_jeidvariables_OneSetPlots(){
   
   long muentries = MC_unmatched->GetEntries();
   //entries = 1;
+  muentries = 1000;
   // MC loop
   cout<<" looking at unmatched MC ntuple: "<<muentries<<" entries"<<endl;
   for(long munentry = 0; munentry < muentries; ++munentry){
@@ -589,8 +593,9 @@ void RAA_plot_jeidvariables_OneSetPlots(){
     leg->AddEntry(hData_chMaxJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-    drawText(Form("%d - %d %",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
-    
+//    DrawText(0.8,0.8,Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]));
+    char *MyCentBin = Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]);
+    drawText(MyCentBin,0.2,0.2,16);
 //    cchMaxJtpt[i]->SaveAs(Form("chMaxJtpt_cent%d.pdf",i),"RECREATE");
 
   }

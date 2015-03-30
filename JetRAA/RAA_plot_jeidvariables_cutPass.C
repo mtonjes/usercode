@@ -589,7 +589,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_chMaxJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchMaxJtpt[i]->SaveAs(Form("chMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -617,7 +617,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_eMaxJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceMaxJtpt[i]->SaveAs(Form("eMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -645,7 +645,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_phMaxJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-    drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+       drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphMaxJtpt[i]->SaveAs(Form("phMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -672,7 +672,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_neMaxJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneMaxJtpt[i]->SaveAs(Form("neMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -699,7 +699,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_muMaxJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuMaxJtpt[i]->SaveAs(Form("muMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -727,7 +727,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_chSumJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchSumJtpt[i]->SaveAs(Form("chSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -754,7 +754,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_eSumJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceSumJtpt[i]->SaveAs(Form("eSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -781,7 +781,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_phSumJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphSumJtpt[i]->SaveAs(Form("phSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -808,7 +808,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_neSumJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneSumJtpt[i]->SaveAs(Form("neSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -835,7 +835,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_muSumJtpt[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuSumJtpt[i]->SaveAs(Form("muSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -863,7 +863,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_chMaxJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchMaxJtpt_keep[i]->SaveAs(Form("chMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -891,7 +891,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_eMaxJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceMaxJtpt_keep[i]->SaveAs(Form("eMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -919,7 +919,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_phMaxJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphMaxJtpt_keep[i]->SaveAs(Form("phMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -946,7 +946,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_neMaxJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneMaxJtpt_keep[i]->SaveAs(Form("neMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -973,7 +973,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_muMaxJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuMaxJtpt_keep[i]->SaveAs(Form("muMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1001,7 +1001,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_chSumJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchSumJtpt_keep[i]->SaveAs(Form("chSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1028,7 +1028,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_eSumJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceSumJtpt_keep[i]->SaveAs(Form("eSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1055,7 +1055,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_phSumJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphSumJtpt_keep[i]->SaveAs(Form("phSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1082,7 +1082,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_neSumJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneSumJtpt_keep[i]->SaveAs(Form("neSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1109,7 +1109,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_muSumJtpt_keep[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuSumJtpt_keep[i]->SaveAs(Form("muSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1136,7 +1136,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_chMaxJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchMaxJtpt_rej[i]->SaveAs(Form("chMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1164,7 +1164,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_eMaxJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceMaxJtpt_rej[i]->SaveAs(Form("eMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1192,7 +1192,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_phMaxJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphMaxJtpt_rej[i]->SaveAs(Form("phMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1219,7 +1219,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_neMaxJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneMaxJtpt_rej[i]->SaveAs(Form("neMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1246,7 +1246,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_muMaxJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuMaxJtpt_rej[i]->SaveAs(Form("muMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1274,7 +1274,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_chSumJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchSumJtpt_rej[i]->SaveAs(Form("chSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1301,7 +1301,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_eSumJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceSumJtpt_rej[i]->SaveAs(Form("eSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1328,7 +1328,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_phSumJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphSumJtpt_rej[i]->SaveAs(Form("phSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1355,7 +1355,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_neSumJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneSumJtpt_rej[i]->SaveAs(Form("neSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1382,7 +1382,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->AddEntry(hData_muSumJtpt_rej[1],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-   drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]),0.8,0.8,16);
+      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuSumJtpt_rej[i]->SaveAs(Form("muSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
