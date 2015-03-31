@@ -18,7 +18,7 @@ void RAA_plot_jeidvariables_cutPass(){
   const int boundaries_cent[nbins_cent+1] = {0,2,4,12,20,28,36};
   int centrality_bins[nbins_cent+1] = {0,5,10,30,50,70,90};
   
-  float pfptmin = 50;
+  Float_t pfptmin = 50;
   
   TH1F * hData_chMaxJtpt[nbins_cent], * hData_phMaxJtpt[nbins_cent], * hData_neMaxJtpt[nbins_cent], * hData_muMaxJtpt[nbins_cent], * hData_eMaxJtpt[nbins_cent];
   TH1F * hData_chSumJtpt[nbins_cent], * hData_phSumJtpt[nbins_cent], * hData_neSumJtpt[nbins_cent], * hData_muSumJtpt[nbins_cent], * hData_eSumJtpt[nbins_cent];  
@@ -38,6 +38,18 @@ void RAA_plot_jeidvariables_cutPass(){
   TH1F * hMC_chMaxJtpt_rej[nbins_cent], * hMC_phMaxJtpt_rej[nbins_cent], * hMC_neMaxJtpt_rej[nbins_cent], * hMC_muMaxJtpt_rej[nbins_cent], * hMC_eMaxJtpt_rej[nbins_cent];
   TH1F * hMC_chSumJtpt_rej[nbins_cent], * hMC_phSumJtpt_rej[nbins_cent], * hMC_neSumJtpt_rej[nbins_cent], * hMC_muSumJtpt_rej[nbins_cent], * hMC_eSumJtpt_rej[nbins_cent];  
 
+  Int_t * nData_chMaxJtpt_keep[nbins_cent], * nData_phMaxJtpt_keep[nbins_cent], * nData_neMaxJtpt_keep[nbins_cent], * nData_muMaxJtpt_keep[nbins_cent], * nData_eMaxJtpt_keep[nbins_cent];
+  Int_t * nData_chSumJtpt_keep[nbins_cent], * nData_phSumJtpt_keep[nbins_cent], * nData_neSumJtpt_keep[nbins_cent], * nData_muSumJtpt_keep[nbins_cent], * nData_eSumJtpt_keep[nbins_cent];  
+  
+  Int_t * nMC_chMaxJtpt_keep[nbins_cent], * nMC_phMaxJtpt_keep[nbins_cent], * nMC_neMaxJtpt_keep[nbins_cent], * nMC_muMaxJtpt_keep[nbins_cent], * nMC_eMaxJtpt_keep[nbins_cent];
+  Int_t * nMC_chSumJtpt_keep[nbins_cent], * nMC_phSumJtpt_keep[nbins_cent], * nMC_neSumJtpt_keep[nbins_cent], * nMC_muSumJtpt_keep[nbins_cent], * nMC_eSumJtpt_keep[nbins_cent];  
+
+  Int_t * nData_chMaxJtpt_rej[nbins_cent], * nData_phMaxJtpt_rej[nbins_cent], * nData_neMaxJtpt_rej[nbins_cent], * nData_muMaxJtpt_rej[nbins_cent], * nData_eMaxJtpt_rej[nbins_cent];
+  Int_t * nData_chSumJtpt_rej[nbins_cent], * nData_phSumJtpt_rej[nbins_cent], * nData_neSumJtpt_rej[nbins_cent], * nData_muSumJtpt_rej[nbins_cent], * nData_eSumJtpt_rej[nbins_cent];  
+  
+  Int_t * nMC_chMaxJtpt_rej[nbins_cent], * nMC_phMaxJtpt_rej[nbins_cent], * nMC_neMaxJtpt_rej[nbins_cent], * nMC_muMaxJtpt_rej[nbins_cent], * nMC_eMaxJtpt_rej[nbins_cent];
+  Int_t * nMC_chSumJtpt_rej[nbins_cent], * nMC_phSumJtpt_rej[nbins_cent], * nMC_neSumJtpt_rej[nbins_cent], * nMC_muSumJtpt_rej[nbins_cent], * nMC_eSumJtpt_rej[nbins_cent];  
+
   for(int i = 0 ; i < nbins_cent ; ++i){
 
     hData_chMaxJtpt[i] = new TH1F(Form("hData_chMaxJtpt_cent%d",i),Form("Data chMax/jtpt in centrality bin %d",i),100,0,1);
@@ -45,20 +57,20 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_chSumJtpt[i] = new TH1F(Form("hData_chSumJtpt_cent%d",i),Form("Data chSum/jtpt in centrality bin %d",i),100,0,3);
     hMC_chSumJtpt[i] = new TH1F(Form("hMC_chSumJtpt_cent%d",i),Form("MC chSum/jtpt in centrality bin ",i),100,0,3);
 
-    hData_eMaxJtpt[i] = new TH1F(Form("hData_eMaxJtpt_cent%d",i),Form("Data eMax/jtpt in centrality bin %d",i),100,0,1);
-    hMC_eMaxJtpt[i] = new TH1F(Form("hMC_eMaxJtpt_cent%d",i),Form("MC eMax/jtpt in centrality bin ",i),100,0,1);
+    hData_eMaxJtpt[i] = new TH1F(Form("hData_eMaxJtpt_cent%d",i),Form("Data eMax/jtpt in centrality bin %d",i),100,0,1.4);
+    hMC_eMaxJtpt[i] = new TH1F(Form("hMC_eMaxJtpt_cent%d",i),Form("MC eMax/jtpt in centrality bin ",i),100,0,1.4);
     hData_eSumJtpt[i] = new TH1F(Form("hData_eSumJtpt_cent%d",i),Form("Data eSum/jtpt in centrality bin %d",i),100,0,1.5);
     hMC_eSumJtpt[i] = new TH1F(Form("hMC_eSumJtpt_cent%d",i),Form("MC eSum/jtpt in centrality bin ",i),100,0,1.5);
 
-    hData_neMaxJtpt[i] = new TH1F(Form("hData_neMaxJtpt_cent%d",i),Form("Data neMax/jtpt in centrality bin %d",i),100,0,1);
-    hMC_neMaxJtpt[i] = new TH1F(Form("hMC_neMaxJtpt_cent%d",i),Form("MC neMax/jtpt in centrality bin ",i),100,0,1);
-    hData_neSumJtpt[i] = new TH1F(Form("hData_neSumJtpt_cent%d",i),Form("Data neSum/jtpt in centrality bin %d",i),100,0,1.5);
-    hMC_neSumJtpt[i] = new TH1F(Form("hMC_neSumJtpt_cent%d",i),Form("MC neSum/jtpt in centrality bin ",i),100,0,1.5);
+    hData_neMaxJtpt[i] = new TH1F(Form("hData_neMaxJtpt_cent%d",i),Form("Data neMax/jtpt in centrality bin %d",i),100,0,1.2);
+    hMC_neMaxJtpt[i] = new TH1F(Form("hMC_neMaxJtpt_cent%d",i),Form("MC neMax/jtpt in centrality bin ",i),100,0,1.2);
+    hData_neSumJtpt[i] = new TH1F(Form("hData_neSumJtpt_cent%d",i),Form("Data neSum/jtpt in centrality bin %d",i),100,0,1.8);
+    hMC_neSumJtpt[i] = new TH1F(Form("hMC_neSumJtpt_cent%d",i),Form("MC neSum/jtpt in centrality bin ",i),100,0,1.8);
 
-    hData_phMaxJtpt[i] = new TH1F(Form("hData_phMaxJtpt_cent%d",i),Form("Data phMax/jtpt in centrality bin %d",i),100,0,1);
-    hMC_phMaxJtpt[i] = new TH1F(Form("hMC_phMaxJtpt_cent%d",i),Form("MC phMax/jtpt in centrality bin ",i),100,0,1);
-    hData_phSumJtpt[i] = new TH1F(Form("hData_phSumJtpt_cent%d",i),Form("Data phSum/jtpt in centrality bin %d",i),100,0,1);
-    hMC_phSumJtpt[i] = new TH1F(Form("hMC_phSumJtpt_cent%d",i),Form("MC phSum/jtpt in centrality bin ",i),100,0,1);
+    hData_phMaxJtpt[i] = new TH1F(Form("hData_phMaxJtpt_cent%d",i),Form("Data phMax/jtpt in centrality bin %d",i),100,0,1.5);
+    hMC_phMaxJtpt[i] = new TH1F(Form("hMC_phMaxJtpt_cent%d",i),Form("MC phMax/jtpt in centrality bin ",i),100,0,1.5);
+    hData_phSumJtpt[i] = new TH1F(Form("hData_phSumJtpt_cent%d",i),Form("Data phSum/jtpt in centrality bin %d",i),100,0,2);
+    hMC_phSumJtpt[i] = new TH1F(Form("hMC_phSumJtpt_cent%d",i),Form("MC phSum/jtpt in centrality bin ",i),100,0,2);
 
     hData_muMaxJtpt[i] = new TH1F(Form("hData_muMaxJtpt_cent%d",i),Form("Data muMax/jtpt in centrality bin %d",i),100,0,1);
     hMC_muMaxJtpt[i] = new TH1F(Form("hMC_muMaxJtpt_cent%d",i),Form("MC muMax/jtpt in centrality bin ",i),100,0,1);
@@ -70,20 +82,20 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_chSumJtpt_keep[i] = new TH1F(Form("hData_chSumJtpt_keep_cent%d",i),Form("Data chSum/Jtpt pass cutA in centrality bin %d",i),100,0,3);
     hMC_chSumJtpt_keep[i] = new TH1F(Form("hMC_chSumJtpt_keep_cent%d",i),Form("MC chSum/Jtpt pass cutA in centrality bin ",i),100,0,3);
 
-    hData_eMaxJtpt_keep[i] = new TH1F(Form("hData_eMaxJtpt_keep_cent%d",i),Form("Data eMax/Jtpt pass cutA in centrality bin %d",i),100,0,1);
-    hMC_eMaxJtpt_keep[i] = new TH1F(Form("hMC_eMaxJtpt_keep_cent%d",i),Form("MC eMax/Jtpt pass cutA in centrality bin ",i),100,0,1);
+    hData_eMaxJtpt_keep[i] = new TH1F(Form("hData_eMaxJtpt_keep_cent%d",i),Form("Data eMax/Jtpt pass cutA in centrality bin %d",i),100,0,1.4);
+    hMC_eMaxJtpt_keep[i] = new TH1F(Form("hMC_eMaxJtpt_keep_cent%d",i),Form("MC eMax/Jtpt pass cutA in centrality bin ",i),100,0,1.4);
     hData_eSumJtpt_keep[i] = new TH1F(Form("hData_eSumJtpt_keep_cent%d",i),Form("Data eSum/Jtpt pass cutA in centrality bin %d",i),100,0,1.5);
     hMC_eSumJtpt_keep[i] = new TH1F(Form("hMC_eSumJtpt_keep_cent%d",i),Form("MC eSum/Jtpt pass cutA in centrality bin ",i),100,0,1.5);
 
-    hData_neMaxJtpt_keep[i] = new TH1F(Form("hData_neMaxJtpt_keep_cent%d",i),Form("Data neMax/Jtpt pass cutA in centrality bin %d",i),100,0,1);
-    hMC_neMaxJtpt_keep[i] = new TH1F(Form("hMC_neMaxJtpt_keep_cent%d",i),Form("MC neMax/Jtpt pass cutA in centrality bin ",i),100,0,1);
-    hData_neSumJtpt_keep[i] = new TH1F(Form("hData_neSumJtpt_keep_cent%d",i),Form("Data neSum/Jtpt pass cutA in centrality bin %d",i),100,0,1.5);
-    hMC_neSumJtpt_keep[i] = new TH1F(Form("hMC_neSumJtpt_keep_cent%d",i),Form("MC neSum/Jtpt pass cutA in centrality bin ",i),100,0,1.5);
+    hData_neMaxJtpt_keep[i] = new TH1F(Form("hData_neMaxJtpt_keep_cent%d",i),Form("Data neMax/Jtpt pass cutA in centrality bin %d",i),100,0,1.2);
+    hMC_neMaxJtpt_keep[i] = new TH1F(Form("hMC_neMaxJtpt_keep_cent%d",i),Form("MC neMax/Jtpt pass cutA in centrality bin ",i),100,0,1.2);
+    hData_neSumJtpt_keep[i] = new TH1F(Form("hData_neSumJtpt_keep_cent%d",i),Form("Data neSum/Jtpt pass cutA in centrality bin %d",i),100,0,1.8);
+    hMC_neSumJtpt_keep[i] = new TH1F(Form("hMC_neSumJtpt_keep_cent%d",i),Form("MC neSum/Jtpt pass cutA in centrality bin ",i),100,0,1.8);
 
-    hData_phMaxJtpt_keep[i] = new TH1F(Form("hData_phMaxJtpt_keep_cent%d",i),Form("Data phMax/Jtpt pass cutA in centrality bin %d",i),100,0,1);
-    hMC_phMaxJtpt_keep[i] = new TH1F(Form("hMC_phMaxJtpt_keep_cent%d",i),Form("MC phMax/Jtpt pass cutA in centrality bin ",i),100,0,1);
-    hData_phSumJtpt_keep[i] = new TH1F(Form("hData_phSumJtpt_keep_cent%d",i),Form("Data phSum/Jtpt pass cutA in centrality bin %d",i),100,0,1);
-    hMC_phSumJtpt_keep[i] = new TH1F(Form("hMC_phSumJtpt_keep_cent%d",i),Form("MC phSum/Jtpt pass cutA in centrality bin ",i),100,0,1);
+    hData_phMaxJtpt_keep[i] = new TH1F(Form("hData_phMaxJtpt_keep_cent%d",i),Form("Data phMax/Jtpt pass cutA in centrality bin %d",i),100,0,1.5);
+    hMC_phMaxJtpt_keep[i] = new TH1F(Form("hMC_phMaxJtpt_keep_cent%d",i),Form("MC phMax/Jtpt pass cutA in centrality bin ",i),100,0,1.5);
+    hData_phSumJtpt_keep[i] = new TH1F(Form("hData_phSumJtpt_keep_cent%d",i),Form("Data phSum/Jtpt pass cutA in centrality bin %d",i),100,0,2);
+    hMC_phSumJtpt_keep[i] = new TH1F(Form("hMC_phSumJtpt_keep_cent%d",i),Form("MC phSum/Jtpt pass cutA in centrality bin ",i),100,0,2);
 
     hData_muMaxJtpt_keep[i] = new TH1F(Form("hData_muMaxJtpt_keep_cent%d",i),Form("Data muMax/Jtpt pass cutA in centrality bin %d",i),100,0,1);
     hMC_muMaxJtpt_keep[i] = new TH1F(Form("hMC_muMaxJtpt_keep_cent%d",i),Form("MC muMax/Jtpt pass cutA in centrality bin ",i),100,0,1);
@@ -95,20 +107,20 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_chSumJtpt_rej[i] = new TH1F(Form("hData_chSumJtpt_rej_cent%d",i),Form("Data chSum/Jtpt fail cutA in centrality bin %d",i),100,0,3);
     hMC_chSumJtpt_rej[i] = new TH1F(Form("hMC_chSumJtpt_rej_cent%d",i),Form("MC chSum/Jtpt fail cutA in centrality bin ",i),100,0,3);
 
-    hData_eMaxJtpt_rej[i] = new TH1F(Form("hData_eMaxJtpt_rej_cent%d",i),Form("Data eMax/Jtpt fail cutA in centrality bin %d",i),100,0,1);
-    hMC_eMaxJtpt_rej[i] = new TH1F(Form("hMC_eMaxJtpt_rej_cent%d",i),Form("MC eMax/Jtpt fail cutA in centrality bin ",i),100,0,1);
+    hData_eMaxJtpt_rej[i] = new TH1F(Form("hData_eMaxJtpt_rej_cent%d",i),Form("Data eMax/Jtpt fail cutA in centrality bin %d",i),100,0,1.4);
+    hMC_eMaxJtpt_rej[i] = new TH1F(Form("hMC_eMaxJtpt_rej_cent%d",i),Form("MC eMax/Jtpt fail cutA in centrality bin ",i),100,0,1.4);
     hData_eSumJtpt_rej[i] = new TH1F(Form("hData_eSumJtpt_rej_cent%d",i),Form("Data eSum/Jtpt fail cutA in centrality bin %d",i),100,0,1.5);
     hMC_eSumJtpt_rej[i] = new TH1F(Form("hMC_eSumJtpt_rej_cent%d",i),Form("MC eSum/Jtpt fail cutA in centrality bin ",i),100,0,1.5);
 
-    hData_neMaxJtpt_rej[i] = new TH1F(Form("hData_neMaxJtpt_rej_cent%d",i),Form("Data neMax/Jtpt fail cutA in centrality bin %d",i),100,0,1);
-    hMC_neMaxJtpt_rej[i] = new TH1F(Form("hMC_neMaxJtpt_rej_cent%d",i),Form("MC neMax/Jtpt fail cutA in centrality bin ",i),100,0,1);
-    hData_neSumJtpt_rej[i] = new TH1F(Form("hData_neSumJtpt_rej_cent%d",i),Form("Data neSum/Jtpt fail cutA in centrality bin %d",i),100,0,1.5);
-    hMC_neSumJtpt_rej[i] = new TH1F(Form("hMC_neSumJtpt_rej_cent%d",i),Form("MC neSum/Jtpt fail cutA in centrality bin ",i),100,0,1.5);
+    hData_neMaxJtpt_rej[i] = new TH1F(Form("hData_neMaxJtpt_rej_cent%d",i),Form("Data neMax/Jtpt fail cutA in centrality bin %d",i),100,0,1.2);
+    hMC_neMaxJtpt_rej[i] = new TH1F(Form("hMC_neMaxJtpt_rej_cent%d",i),Form("MC neMax/Jtpt fail cutA in centrality bin ",i),100,0,1.2);
+    hData_neSumJtpt_rej[i] = new TH1F(Form("hData_neSumJtpt_rej_cent%d",i),Form("Data neSum/Jtpt fail cutA in centrality bin %d",i),100,0,1.8);
+    hMC_neSumJtpt_rej[i] = new TH1F(Form("hMC_neSumJtpt_rej_cent%d",i),Form("MC neSum/Jtpt fail cutA in centrality bin ",i),100,0,1.8);
 
-    hData_phMaxJtpt_rej[i] = new TH1F(Form("hData_phMaxJtpt_rej_cent%d",i),Form("Data phMax/Jtpt fail cutA in centrality bin %d",i),100,0,1);
-    hMC_phMaxJtpt_rej[i] = new TH1F(Form("hMC_phMaxJtpt_rej_cent%d",i),Form("MC phMax/Jtpt fail cutA in centrality bin ",i),100,0,1);
-    hData_phSumJtpt_rej[i] = new TH1F(Form("hData_phSumJtpt_rej_cent%d",i),Form("Data phSum/Jtpt fail cutA in centrality bin %d",i),100,0,1);
-    hMC_phSumJtpt_rej[i] = new TH1F(Form("hMC_phSumJtpt_rej_cent%d",i),Form("MC phSum/Jtpt fail cutA in centrality bin ",i),100,0,1);
+    hData_phMaxJtpt_rej[i] = new TH1F(Form("hData_phMaxJtpt_rej_cent%d",i),Form("Data phMax/Jtpt fail cutA in centrality bin %d",i),100,0,1.5);
+    hMC_phMaxJtpt_rej[i] = new TH1F(Form("hMC_phMaxJtpt_rej_cent%d",i),Form("MC phMax/Jtpt fail cutA in centrality bin ",i),100,0,1.5);
+    hData_phSumJtpt_rej[i] = new TH1F(Form("hData_phSumJtpt_rej_cent%d",i),Form("Data phSum/Jtpt fail cutA in centrality bin %d",i),100,0,2);
+    hMC_phSumJtpt_rej[i] = new TH1F(Form("hMC_phSumJtpt_rej_cent%d",i),Form("MC phSum/Jtpt fail cutA in centrality bin ",i),100,0,2);
 
     hData_muMaxJtpt_rej[i] = new TH1F(Form("hData_muMaxJtpt_rej_cent%d",i),Form("Data muMax/Jtpt fail cutA in centrality bin %d",i),100,0,1);
     hMC_muMaxJtpt_rej[i] = new TH1F(Form("hMC_muMaxJtpt_rej_cent%d",i),Form("MC muMax/Jtpt fail cutA in centrality bin ",i),100,0,1);
@@ -238,7 +250,7 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt[centb1]->Fill(muSum_1/pfpt_1);
-   if(calopt_1/pfpt_1 <= 0.5 && eMax_1/Sumcand < 0.05) {
+   if((calopt_1/pfpt_1) <= 0.5 && eMax_1/Sumcand < 0.05) {
          hData_chMaxJtpt_keep[centb1]->Fill(chMax_1/pfpt_1);
          hData_eMaxJtpt_keep[centb1]->Fill(eMax_1/pfpt_1);
          hData_neMaxJtpt_keep[centb1]->Fill(neMax_1/pfpt_1);
@@ -250,7 +262,7 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_phSumJtpt_keep[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_keep[centb1]->Fill(muSum_1/pfpt_1);
    }
-   if(calopt_1/pfpt_1 > 0.5 && calopt_1/pfpt_1 <= 0.85 && eMax_1/Sumcand < (18/7 *(Float_t)calopt_1/pfpt_1 - 9/7)) ){
+   if((calopt_1/pfpt_1) > 0.5 && calopt_1/pfpt_1 <= 0.85 && eMax_1/Sumcand < (18/7 *(Float_t)calopt_1/pfpt_1 - 9/7)) ){
          hData_chMaxJtpt_keep[centb1]->Fill(chMax_1/pfpt_1);
          hData_eMaxJtpt_keep[centb1]->Fill(eMax_1/pfpt_1);
          hData_neMaxJtpt_keep[centb1]->Fill(neMax_1/pfpt_1);
@@ -381,65 +393,65 @@ void RAA_plot_jeidvariables_cutPass(){
          hMC_phSumJtpt[centb2]->Fill(phSum_2/pfpt_2,weight_2);
          hMC_muSumJtpt[centb2]->Fill(muSum_2/pfpt_2,weight_2);
    if(calopt_2/pfpt_2 <= 0.5 && eMax_2/Sumcand < 0.05) {
-         hMC_chMaxJtpt_keep[centb1]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb1]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb1]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb1]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb1]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb1]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb1]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb1]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb1]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb1]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
    }
    if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
-         hMC_chMaxJtpt_keep[centb1]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb1]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb1]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb1]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb1]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb1]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb1]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb1]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb1]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb1]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
    }
    if(calopt_2/pfpt_2 > 0.85){
-         hMC_chMaxJtpt_keep[centb1]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb1]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb1]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb1]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb1]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb1]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb1]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb1]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb1]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb1]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
    }
 // rejected:
   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
-         hMC_chMaxJtpt_rej[centb1]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_rej[centb1]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_rej[centb1]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_rej[centb1]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_rej[centb1]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_rej[centb1]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_rej[centb1]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_rej[centb1]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_rej[centb1]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_rej[centb1]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2);
+         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2);
+         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2);
+         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2);
+         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2);
+         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2);
+         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2);
+         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2);
+         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2);
+         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2);
    }
    if(calopt_2/pfpt_2 <= 0.5 && eMax_2/Sumcand >= 0.05) {
-         hMC_chMaxJtpt_rej[centb1]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_rej[centb1]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_rej[centb1]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_rej[centb1]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_rej[centb1]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_rej[centb1]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_rej[centb1]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_rej[centb1]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_rej[centb1]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_rej[centb1]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2);
+         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2);
+         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2);
+         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2);
+         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2);
+         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2);
+         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2);
+         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2);
+         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2);
+         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2);
    }
        } // end pfptmin loop
   } // end MC matched loop
@@ -470,28 +482,28 @@ void RAA_plot_jeidvariables_cutPass(){
          hMC_phSumJtpt[centb2]->Fill(phSum_2/pfpt_2,weight_2);
          hMC_muSumJtpt[centb2]->Fill(muSum_2/pfpt_2,weight_2);
     if(eMax_2/Sumcand < 0.05) {
-         hMC_chMaxJtpt_keep[centb1]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb1]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb1]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb1]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb1]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb1]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb1]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb1]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb1]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb1]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
     }
     if(eMax_2/Sumcand >= 0.05) {
-         hMC_chMaxJtpt_rej[centb1]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_rej[centb1]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_rej[centb1]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_rej[centb1]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_rej[centb1]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_rej[centb1]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_rej[centb1]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_rej[centb1]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_rej[centb1]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_rej[centb1]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2);
+         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2);
+         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2);
+         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2);
+         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2);
+         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2);
+         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2);
+         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2);
+         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2);
+         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2);
     }  
     } // end pfptmin loop
   } // end MC unmatched loop
@@ -583,13 +595,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_chMaxJtpt[i]->SetMarkerStyle(24);
     hData_chMaxJtpt[i]->SetMarkerColor(kBlack);
     hData_chMaxJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_chMaxJtpt[1],"MC","pl");
-    leg->AddEntry(hData_chMaxJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_chMaxJtpt[0],"MC","pl");
+    leg->AddEntry(hData_chMaxJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchMaxJtpt[i]->SaveAs(Form("chMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -611,13 +623,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_eMaxJtpt[i]->SetMarkerStyle(24);
     hData_eMaxJtpt[i]->SetMarkerColor(kBlack);
     hData_eMaxJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_eMaxJtpt[1],"MC","pl");
-    leg->AddEntry(hData_eMaxJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_eMaxJtpt[0],"MC","pl");
+    leg->AddEntry(hData_eMaxJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceMaxJtpt[i]->SaveAs(Form("eMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -639,13 +651,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_phMaxJtpt[i]->SetMarkerStyle(24);
     hData_phMaxJtpt[i]->SetMarkerColor(kBlack);
     hData_phMaxJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_phMaxJtpt[1],"MC","pl");
-    leg->AddEntry(hData_phMaxJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_phMaxJtpt[0],"MC","pl");
+    leg->AddEntry(hData_phMaxJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-       drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphMaxJtpt[i]->SaveAs(Form("phMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -666,13 +678,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_neMaxJtpt[i]->SetMarkerStyle(24);
     hData_neMaxJtpt[i]->SetMarkerColor(kBlack);
     hData_neMaxJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_neMaxJtpt[1],"MC","pl");
-    leg->AddEntry(hData_neMaxJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_neMaxJtpt[0],"MC","pl");
+    leg->AddEntry(hData_neMaxJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneMaxJtpt[i]->SaveAs(Form("neMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -693,13 +705,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_muMaxJtpt[i]->SetMarkerStyle(24);
     hData_muMaxJtpt[i]->SetMarkerColor(kBlack);
     hData_muMaxJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_muMaxJtpt[1],"MC","pl");
-    leg->AddEntry(hData_muMaxJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_muMaxJtpt[0],"MC","pl");
+    leg->AddEntry(hData_muMaxJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuMaxJtpt[i]->SaveAs(Form("muMaxJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -721,13 +733,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_chSumJtpt[i]->SetMarkerStyle(24);
     hData_chSumJtpt[i]->SetMarkerColor(kBlack);
     hData_chSumJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_chSumJtpt[1],"MC","pl");
-    leg->AddEntry(hData_chSumJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_chSumJtpt[0],"MC","pl");
+    leg->AddEntry(hData_chSumJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchSumJtpt[i]->SaveAs(Form("chSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -748,13 +760,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_eSumJtpt[i]->SetMarkerStyle(24);
     hData_eSumJtpt[i]->SetMarkerColor(kBlack);
     hData_eSumJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_eSumJtpt[1],"MC","pl");
-    leg->AddEntry(hData_eSumJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_eSumJtpt[0],"MC","pl");
+    leg->AddEntry(hData_eSumJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceSumJtpt[i]->SaveAs(Form("eSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -775,13 +787,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_phSumJtpt[i]->SetMarkerStyle(24);
     hData_phSumJtpt[i]->SetMarkerColor(kBlack);
     hData_phSumJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_phSumJtpt[1],"MC","pl");
-    leg->AddEntry(hData_phSumJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_phSumJtpt[0],"MC","pl");
+    leg->AddEntry(hData_phSumJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphSumJtpt[i]->SaveAs(Form("phSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -802,13 +814,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_neSumJtpt[i]->SetMarkerStyle(24);
     hData_neSumJtpt[i]->SetMarkerColor(kBlack);
     hData_neSumJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_neSumJtpt[1],"MC","pl");
-    leg->AddEntry(hData_neSumJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_neSumJtpt[0],"MC","pl");
+    leg->AddEntry(hData_neSumJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneSumJtpt[i]->SaveAs(Form("neSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -829,13 +841,13 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_muSumJtpt[i]->SetMarkerStyle(24);
     hData_muSumJtpt[i]->SetMarkerColor(kBlack);
     hData_muSumJtpt[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_muSumJtpt[1],"MC","pl");
-    leg->AddEntry(hData_muSumJtpt[1],"Data","pl");
+    leg->AddEntry(hMC_muSumJtpt[0],"MC","pl");
+    leg->AddEntry(hData_muSumJtpt[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuSumJtpt[i]->SaveAs(Form("muSumJtpt_cent%d.pdf",i),"RECREATE");
 
@@ -852,18 +864,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_chMaxJtpt_keep[i]->Print("base");
     hMC_chMaxJtpt_keep[i]->SetTitle(" ");
     hMC_chMaxJtpt_keep[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_chMaxJtpt_keep[i]->DrawNormalized();
+    nMC_chMaxJtpt_keep[i]=hMC_chMaxJtpt_keep[i]->GetEntries();
+    if (nMC_chMaxJtpt_keep[i]>0){
+       hMC_chMaxJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_chMaxJtpt_keep[i] for i= "<<i<<" has "<<nMC_chMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_chMaxJtpt_keep[i]->SetMarkerStyle(24);
     hData_chMaxJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_chMaxJtpt_keep[i]->DrawNormalized("same");
+    nData_chMaxJtpt_keep[i]=hData_chMaxJtpt_keep[i]->GetEntries();
+    if (nData_chMaxJtpt_keep[i]>0){
+      if(nMC_chMaxJtpt_keep[i]<=0){
+        hData_chMaxJtpt_keep[i]->Print("base");
+        hData_chMaxJtpt_keep[i]->SetTitle(" ");
+        hData_chMaxJtpt_keep[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_chMaxJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_chMaxJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_chMaxJtpt_keep[i] for i= "<<i<<" has "<<nData_chMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_chMaxJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_chMaxJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_chMaxJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_chMaxJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchMaxJtpt_keep[i]->SaveAs(Form("chMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -880,18 +905,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_eMaxJtpt_keep[i]->Print("base");
     hMC_eMaxJtpt_keep[i]->SetTitle(" ");
     hMC_eMaxJtpt_keep[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_eMaxJtpt_keep[i]->DrawNormalized();
+    nMC_eMaxJtpt_keep[i]=hMC_eMaxJtpt_keep[i]->GetEntries();
+    if (nMC_eMaxJtpt_keep[i]>0){
+       hMC_eMaxJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_eMaxJtpt_keep[i] for i= "<<i<<" has "<<nMC_eMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_eMaxJtpt_keep[i]->SetMarkerStyle(24);
     hData_eMaxJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_eMaxJtpt_keep[i]->DrawNormalized("same");
+    nData_eMaxJtpt_keep[i]=hData_eMaxJtpt_keep[i]->GetEntries();
+    if (nData_eMaxJtpt_keep[i]>0){
+      if(nMC_eMaxJtpt_keep[i]<=0){
+        hData_eMaxJtpt_keep[i]->Print("base");
+        hData_eMaxJtpt_keep[i]->SetTitle(" ");
+        hData_eMaxJtpt_keep[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_eMaxJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_eMaxJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_eMaxJtpt_keep[i] for i= "<<i<<" has "<<nData_eMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+        drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_eMaxJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_eMaxJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_eMaxJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_eMaxJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceMaxJtpt_keep[i]->SaveAs(Form("eMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -908,18 +946,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_phMaxJtpt_keep[i]->Print("base");
     hMC_phMaxJtpt_keep[i]->SetTitle(" ");
     hMC_phMaxJtpt_keep[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_phMaxJtpt_keep[i]->DrawNormalized();
+    nMC_phMaxJtpt_keep[i]=hMC_phMaxJtpt_keep[i]->GetEntries();
+    if (nMC_phMaxJtpt_keep[i]>0){
+       hMC_phMaxJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_phMaxJtpt_keep[i] for i= "<<i<<" has "<<nMC_phMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_phMaxJtpt_keep[i]->SetMarkerStyle(24);
     hData_phMaxJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_phMaxJtpt_keep[i]->DrawNormalized("same");
+    nData_phMaxJtpt_keep[i]=hData_phMaxJtpt_keep[i]->GetEntries();
+    if (nData_phMaxJtpt_keep[i]>0){
+      if(nMC_phMaxJtpt_keep[i]<=0){
+        hData_phMaxJtpt_keep[i]->Print("base");
+        hData_phMaxJtpt_keep[i]->SetTitle(" ");
+        hData_phMaxJtpt_keep[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_phMaxJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_phMaxJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_phMaxJtpt_keep[i] for i= "<<i<<" has "<<nData_phMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+        drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_phMaxJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_phMaxJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_phMaxJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_phMaxJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphMaxJtpt_keep[i]->SaveAs(Form("phMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -935,18 +986,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_neMaxJtpt_keep[i]->Print("base");
     hMC_neMaxJtpt_keep[i]->SetTitle(" ");
     hMC_neMaxJtpt_keep[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_neMaxJtpt_keep[i]->DrawNormalized();
+    nMC_neMaxJtpt_keep[i]=hMC_neMaxJtpt_keep[i]->GetEntries();
+    if (nMC_neMaxJtpt_keep[i]>0){
+       hMC_neMaxJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_neMaxJtpt_keep[i] for i= "<<i<<" has "<<nMC_neMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_neMaxJtpt_keep[i]->SetMarkerStyle(24);
     hData_neMaxJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_neMaxJtpt_keep[i]->DrawNormalized("same");
+    nData_neMaxJtpt_keep[i]=hData_neMaxJtpt_keep[i]->GetEntries();
+    if (nData_neMaxJtpt_keep[i]>0){
+      if(nMC_neMaxJtpt_keep[i]<=0){
+        hData_neMaxJtpt_keep[i]->Print("base");
+        hData_neMaxJtpt_keep[i]->SetTitle(" ");
+        hData_neMaxJtpt_keep[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_neMaxJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_neMaxJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_neMaxJtpt_keep[i] for i= "<<i<<" has "<<nData_neMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_neMaxJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_neMaxJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_neMaxJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_neMaxJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneMaxJtpt_keep[i]->SaveAs(Form("neMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -962,18 +1026,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_muMaxJtpt_keep[i]->Print("base");
     hMC_muMaxJtpt_keep[i]->SetTitle(" ");
     hMC_muMaxJtpt_keep[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_muMaxJtpt_keep[i]->DrawNormalized();
+    nMC_muMaxJtpt_keep[i]=hMC_muMaxJtpt_keep[i]->GetEntries();
+    if (nMC_muMaxJtpt_keep[i]>0){
+       hMC_muMaxJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_muMaxJtpt_keep[i] for i= "<<i<<" has "<<nMC_muMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_muMaxJtpt_keep[i]->SetMarkerStyle(24);
     hData_muMaxJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_muMaxJtpt_keep[i]->DrawNormalized("same");
+    nData_muMaxJtpt_keep[i]=hData_muMaxJtpt_keep[i]->GetEntries();
+    if (nData_muMaxJtpt_keep[i]>0){
+      if(nMC_muMaxJtpt_keep[i]<=0){
+        hData_muMaxJtpt_keep[i]->Print("base");
+        hData_muMaxJtpt_keep[i]->SetTitle(" ");
+        hData_muMaxJtpt_keep[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_muMaxJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_muMaxJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_muMaxJtpt_keep[i] for i= "<<i<<" has "<<nData_muMaxJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_muMaxJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_muMaxJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_muMaxJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_muMaxJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuMaxJtpt_keep[i]->SaveAs(Form("muMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -990,18 +1067,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_chSumJtpt_keep[i]->Print("base");
     hMC_chSumJtpt_keep[i]->SetTitle(" ");
     hMC_chSumJtpt_keep[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_chSumJtpt_keep[i]->DrawNormalized();
+    nMC_chSumJtpt_keep[i]=hMC_chSumJtpt_keep[i]->GetEntries();
+    if (nMC_chSumJtpt_keep[i]>0){
+       hMC_chSumJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_chSumJtpt_keep[i] for i= "<<i<<" has "<<nMC_chSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_chSumJtpt_keep[i]->SetMarkerStyle(24);
     hData_chSumJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_chSumJtpt_keep[i]->DrawNormalized("same");
+    nData_chSumJtpt_keep[i]=hData_chSumJtpt_keep[i]->GetEntries();
+    if (nData_chSumJtpt_keep[i]>0){
+      if(nMC_chSumJtpt_keep[i]<=0){
+        hData_chSumJtpt_keep[i]->Print("base");
+        hData_chSumJtpt_keep[i]->SetTitle(" ");
+        hData_chSumJtpt_keep[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_chSumJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_chSumJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_chSumJtpt_keep[i] for i= "<<i<<" has "<<nData_chSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+        drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_chSumJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_chSumJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_chSumJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_chSumJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchSumJtpt_keep[i]->SaveAs(Form("chSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1017,18 +1107,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_eSumJtpt_keep[i]->Print("base");
     hMC_eSumJtpt_keep[i]->SetTitle(" ");
     hMC_eSumJtpt_keep[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_eSumJtpt_keep[i]->DrawNormalized();
+    nMC_eSumJtpt_keep[i]=hMC_eSumJtpt_keep[i]->GetEntries();
+    if (nMC_eSumJtpt_keep[i]>0){
+       hMC_eSumJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_eSumJtpt_keep[i] for i= "<<i<<" has "<<nMC_eSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_eSumJtpt_keep[i]->SetMarkerStyle(24);
     hData_eSumJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_eSumJtpt_keep[i]->DrawNormalized("same");
+    nData_eSumJtpt_keep[i]=hData_eSumJtpt_keep[i]->GetEntries();
+    if (nData_eSumJtpt_keep[i]>0){
+      if(nMC_eSumJtpt_keep[i]<=0){
+        hData_eSumJtpt_keep[i]->Print("base");
+        hData_eSumJtpt_keep[i]->SetTitle(" ");
+        hData_eSumJtpt_keep[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_eSumJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_eSumJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_eSumJtpt_keep[i] for i= "<<i<<" has "<<nData_eSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+        drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_eSumJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_eSumJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_eSumJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_eSumJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceSumJtpt_keep[i]->SaveAs(Form("eSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1044,18 +1147,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_phSumJtpt_keep[i]->Print("base");
     hMC_phSumJtpt_keep[i]->SetTitle(" ");
     hMC_phSumJtpt_keep[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_phSumJtpt_keep[i]->DrawNormalized();
+    nMC_phSumJtpt_keep[i]=hMC_phSumJtpt_keep[i]->GetEntries();
+    if (nMC_phSumJtpt_keep[i]>0){
+       hMC_phSumJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_phSumJtpt_keep[i] for i= "<<i<<" has "<<nMC_phSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_phSumJtpt_keep[i]->SetMarkerStyle(24);
     hData_phSumJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_phSumJtpt_keep[i]->DrawNormalized("same");
+    nData_phSumJtpt_keep[i]=hData_phSumJtpt_keep[i]->GetEntries();
+    if (nData_phSumJtpt_keep[i]>0){
+      if(nMC_phSumJtpt_keep[i]<=0){
+        hData_phSumJtpt_keep[i]->Print("base");
+        hData_phSumJtpt_keep[i]->SetTitle(" ");
+        hData_phSumJtpt_keep[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_phSumJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_phSumJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_phSumJtpt_keep[i] for i= "<<i<<" has "<<nData_phSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_phSumJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_phSumJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_phSumJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_phSumJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphSumJtpt_keep[i]->SaveAs(Form("phSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1071,18 +1187,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_neSumJtpt_keep[i]->Print("base");
     hMC_neSumJtpt_keep[i]->SetTitle(" ");
     hMC_neSumJtpt_keep[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_neSumJtpt_keep[i]->DrawNormalized();
+    nMC_neSumJtpt_keep[i]=hMC_neSumJtpt_keep[i]->GetEntries();
+    if (nMC_neSumJtpt_keep[i]>0){
+       hMC_neSumJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_neSumJtpt_keep[i] for i= "<<i<<" has "<<nMC_neSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_neSumJtpt_keep[i]->SetMarkerStyle(24);
     hData_neSumJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_neSumJtpt_keep[i]->DrawNormalized("same");
+    nData_neSumJtpt_keep[i]=hData_neSumJtpt_keep[i]->GetEntries();
+    if (nData_neSumJtpt_keep[i]>0){
+      if(nMC_neSumJtpt_keep[i]<=0){
+        hData_neSumJtpt_keep[i]->Print("base");
+        hData_neSumJtpt_keep[i]->SetTitle(" ");
+        hData_neSumJtpt_keep[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_neSumJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_neSumJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_neSumJtpt_keep[i] for i= "<<i<<" has "<<nData_neSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_neSumJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_neSumJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_neSumJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_neSumJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneSumJtpt_keep[i]->SaveAs(Form("neSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1098,18 +1227,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_muSumJtpt_keep[i]->Print("base");
     hMC_muSumJtpt_keep[i]->SetTitle(" ");
     hMC_muSumJtpt_keep[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) pass CutA");
-    hMC_muSumJtpt_keep[i]->DrawNormalized();
+    nMC_muSumJtpt_keep[i]=hMC_muSumJtpt_keep[i]->GetEntries();
+    if (nMC_muSumJtpt_keep[i]>0){
+       hMC_muSumJtpt_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_muSumJtpt_keep[i] for i= "<<i<<" has "<<nMC_muSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }
 
     hData_muSumJtpt_keep[i]->SetMarkerStyle(24);
     hData_muSumJtpt_keep[i]->SetMarkerColor(kBlack);
-    hData_muSumJtpt_keep[i]->DrawNormalized("same");
+    nData_muSumJtpt_keep[i]=hData_muSumJtpt_keep[i]->GetEntries();
+    if (nData_muSumJtpt_keep[i]>0){
+      if(nMC_muSumJtpt_keep[i]<=0){
+        hData_muSumJtpt_keep[i]->Print("base");
+        hData_muSumJtpt_keep[i]->SetTitle(" ");
+        hData_muSumJtpt_keep[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_muSumJtpt_keep[i]->DrawNormalized();
+      } else {
+      hData_muSumJtpt_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_muSumJtpt_keep[i] for i= "<<i<<" has "<<nData_muSumJtpt_keep[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_muSumJtpt_keep[1],"MC","pl");
-    leg->AddEntry(hData_muSumJtpt_keep[1],"Data","pl");
+    leg->AddEntry(hMC_muSumJtpt_keep[0],"MC","pl");
+    leg->AddEntry(hData_muSumJtpt_keep[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuSumJtpt_keep[i]->SaveAs(Form("muSumJtpt_keep_cent%d.pdf",i),"RECREATE");
 
@@ -1125,18 +1267,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_chMaxJtpt_rej[i]->Print("base");
     hMC_chMaxJtpt_rej[i]->SetTitle(" ");
     hMC_chMaxJtpt_rej[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_chMaxJtpt_rej[i]->DrawNormalized();
+    nMC_chMaxJtpt_rej[i]=hMC_chMaxJtpt_rej[i]->GetEntries();
+    if (nMC_chMaxJtpt_rej[i]>0){
+       hMC_chMaxJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_chMaxJtpt_rej[i] for i= "<<i<<" has "<<nMC_chMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_chMaxJtpt_rej[i]->SetMarkerStyle(24);
     hData_chMaxJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_chMaxJtpt_rej[i]->DrawNormalized("same");
+    nData_chMaxJtpt_rej[i]=hData_chMaxJtpt_rej[i]->GetEntries();
+    if (nData_chMaxJtpt_rej[i]>0){
+      if(nMC_chMaxJtpt_rej[i]<=0){
+        hData_chMaxJtpt_rej[i]->Print("base");
+        hData_chMaxJtpt_rej[i]->SetTitle(" ");
+        hData_chMaxJtpt_rej[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_chMaxJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_chMaxJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_chMaxJtpt_rej[i] for i= "<<i<<" has "<<nData_chMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_chMaxJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_chMaxJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_chMaxJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_chMaxJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchMaxJtpt_rej[i]->SaveAs(Form("chMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1153,18 +1308,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_eMaxJtpt_rej[i]->Print("base");
     hMC_eMaxJtpt_rej[i]->SetTitle(" ");
     hMC_eMaxJtpt_rej[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_eMaxJtpt_rej[i]->DrawNormalized();
+    nMC_eMaxJtpt_rej[i]=hMC_eMaxJtpt_rej[i]->GetEntries();
+    if (nMC_eMaxJtpt_rej[i]>0){
+       hMC_eMaxJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_eMaxJtpt_rej[i] for i= "<<i<<" has "<<nMC_eMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_eMaxJtpt_rej[i]->SetMarkerStyle(24);
     hData_eMaxJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_eMaxJtpt_rej[i]->DrawNormalized("same");
+    nData_eMaxJtpt_rej[i]=hData_eMaxJtpt_rej[i]->GetEntries();
+    if (nData_eMaxJtpt_rej[i]>0){
+      if(nMC_eMaxJtpt_rej[i]<=0){
+        hData_eMaxJtpt_rej[i]->Print("base");
+        hData_eMaxJtpt_rej[i]->SetTitle(" ");
+        hData_eMaxJtpt_rej[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_eMaxJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_eMaxJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_eMaxJtpt_rej[i] for i= "<<i<<" has "<<nData_eMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_eMaxJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_eMaxJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_eMaxJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_eMaxJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceMaxJtpt_rej[i]->SaveAs(Form("eMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1181,18 +1349,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_phMaxJtpt_rej[i]->Print("base");
     hMC_phMaxJtpt_rej[i]->SetTitle(" ");
     hMC_phMaxJtpt_rej[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_phMaxJtpt_rej[i]->DrawNormalized();
+    nMC_phMaxJtpt_rej[i]=hMC_phMaxJtpt_rej[i]->GetEntries();
+    if (nMC_phMaxJtpt_rej[i]>0){
+       hMC_phMaxJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_phMaxJtpt_rej[i] for i= "<<i<<" has "<<nMC_phMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_phMaxJtpt_rej[i]->SetMarkerStyle(24);
     hData_phMaxJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_phMaxJtpt_rej[i]->DrawNormalized("same");
+    nData_phMaxJtpt_rej[i]=hData_phMaxJtpt_rej[i]->GetEntries();
+    if (nData_phMaxJtpt_rej[i]>0){
+      if(nMC_phMaxJtpt_rej[i]<=0){
+        hData_phMaxJtpt_rej[i]->Print("base");
+        hData_phMaxJtpt_rej[i]->SetTitle(" ");
+        hData_phMaxJtpt_rej[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_phMaxJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_phMaxJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_phMaxJtpt_rej[i] for i= "<<i<<" has "<<nData_phMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_phMaxJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_phMaxJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_phMaxJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_phMaxJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphMaxJtpt_rej[i]->SaveAs(Form("phMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1208,18 +1389,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_neMaxJtpt_rej[i]->Print("base");
     hMC_neMaxJtpt_rej[i]->SetTitle(" ");
     hMC_neMaxJtpt_rej[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_neMaxJtpt_rej[i]->DrawNormalized();
+    nMC_neMaxJtpt_rej[i]=hMC_neMaxJtpt_rej[i]->GetEntries();
+    if (nMC_neMaxJtpt_rej[i]>0){
+       hMC_neMaxJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_neMaxJtpt_rej[i] for i= "<<i<<" has "<<nMC_neMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_neMaxJtpt_rej[i]->SetMarkerStyle(24);
     hData_neMaxJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_neMaxJtpt_rej[i]->DrawNormalized("same");
+    nData_neMaxJtpt_rej[i]=hData_neMaxJtpt_rej[i]->GetEntries();
+    if (nData_neMaxJtpt_rej[i]>0){
+      if(nMC_neMaxJtpt_rej[i]<=0){
+        hData_neMaxJtpt_rej[i]->Print("base");
+        hData_neMaxJtpt_rej[i]->SetTitle(" ");
+        hData_neMaxJtpt_rej[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_neMaxJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_neMaxJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_neMaxJtpt_rej[i] for i= "<<i<<" has "<<nData_neMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_neMaxJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_neMaxJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_neMaxJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_neMaxJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneMaxJtpt_rej[i]->SaveAs(Form("neMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1235,18 +1429,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_muMaxJtpt_rej[i]->Print("base");
     hMC_muMaxJtpt_rej[i]->SetTitle(" ");
     hMC_muMaxJtpt_rej[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_muMaxJtpt_rej[i]->DrawNormalized();
+    nMC_muMaxJtpt_rej[i]=hMC_muMaxJtpt_rej[i]->GetEntries();
+    if (nMC_muMaxJtpt_rej[i]>0){
+       hMC_muMaxJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_muMaxJtpt_rej[i] for i= "<<i<<" has "<<nMC_muMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_muMaxJtpt_rej[i]->SetMarkerStyle(24);
     hData_muMaxJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_muMaxJtpt_rej[i]->DrawNormalized("same");
+    nData_muMaxJtpt_rej[i]=hData_muMaxJtpt_rej[i]->GetEntries();
+    if (nData_muMaxJtpt_rej[i]>0){
+      if(nMC_muMaxJtpt_rej[i]<=0){
+        hData_muMaxJtpt_rej[i]->Print("base");
+        hData_muMaxJtpt_rej[i]->SetTitle(" ");
+        hData_muMaxJtpt_rej[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_muMaxJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_muMaxJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_muMaxJtpt_rej[i] for i= "<<i<<" has "<<nData_muMaxJtpt_rej[i]<<" entries and is not drawn"<<endl; } 
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_muMaxJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_muMaxJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_muMaxJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_muMaxJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuMaxJtpt_rej[i]->SaveAs(Form("muMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1263,18 +1470,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_chSumJtpt_rej[i]->Print("base");
     hMC_chSumJtpt_rej[i]->SetTitle(" ");
     hMC_chSumJtpt_rej[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_chSumJtpt_rej[i]->DrawNormalized();
+    nMC_chSumJtpt_rej[i]=hMC_chSumJtpt_rej[i]->GetEntries();
+    if (nMC_chSumJtpt_rej[i]>0){
+       hMC_chSumJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_chSumJtpt_rej[i] for i= "<<i<<" has "<<nMC_chSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_chSumJtpt_rej[i]->SetMarkerStyle(24);
     hData_chSumJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_chSumJtpt_rej[i]->DrawNormalized("same");
+    nData_chSumJtpt_rej[i]=hData_chSumJtpt_rej[i]->GetEntries();
+    if (nData_chSumJtpt_rej[i]>0){
+      if(nMC_chSumJtpt_rej[i]<=0){
+        hData_chSumJtpt_rej[i]->Print("base");
+        hData_chSumJtpt_rej[i]->SetTitle(" ");
+        hData_chSumJtpt_rej[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_chSumJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_chSumJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_chSumJtpt_rej[i] for i= "<<i<<" has "<<nData_chSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_chSumJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_chSumJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_chSumJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_chSumJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cchSumJtpt_rej[i]->SaveAs(Form("chSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1290,18 +1510,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_eSumJtpt_rej[i]->Print("base");
     hMC_eSumJtpt_rej[i]->SetTitle(" ");
     hMC_eSumJtpt_rej[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_eSumJtpt_rej[i]->DrawNormalized();
+    nMC_eSumJtpt_rej[i]=hMC_eSumJtpt_rej[i]->GetEntries();
+    if (nMC_eSumJtpt_rej[i]>0){
+       hMC_eSumJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_eSumJtpt_rej[i] for i= "<<i<<" has "<<nMC_eSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_eSumJtpt_rej[i]->SetMarkerStyle(24);
     hData_eSumJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_eSumJtpt_rej[i]->DrawNormalized("same");
+    nData_eSumJtpt_rej[i]=hData_eSumJtpt_rej[i]->GetEntries();
+    if (nData_eSumJtpt_rej[i]>0){
+      if(nMC_eSumJtpt_rej[i]<=0){
+        hData_eSumJtpt_rej[i]->Print("base");
+        hData_eSumJtpt_rej[i]->SetTitle(" ");
+        hData_eSumJtpt_rej[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_eSumJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_eSumJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_eSumJtpt_rej[i] for i= "<<i<<" has "<<nData_eSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_eSumJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_eSumJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_eSumJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_eSumJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     ceSumJtpt_rej[i]->SaveAs(Form("eSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1317,18 +1550,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_phSumJtpt_rej[i]->Print("base");
     hMC_phSumJtpt_rej[i]->SetTitle(" ");
     hMC_phSumJtpt_rej[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_phSumJtpt_rej[i]->DrawNormalized();
+    nMC_phSumJtpt_rej[i]=hMC_phSumJtpt_rej[i]->GetEntries();
+    if (nMC_phSumJtpt_rej[i]>0){
+       hMC_phSumJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_phSumJtpt_rej[i] for i= "<<i<<" has "<<nMC_phSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_phSumJtpt_rej[i]->SetMarkerStyle(24);
     hData_phSumJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_phSumJtpt_rej[i]->DrawNormalized("same");
+    nData_phSumJtpt_rej[i]=hData_phSumJtpt_rej[i]->GetEntries();
+    if (nData_phSumJtpt_rej[i]>0){
+      if(nMC_phSumJtpt_rej[i]<=0){
+        hData_phSumJtpt_rej[i]->Print("base");
+        hData_phSumJtpt_rej[i]->SetTitle(" ");
+        hData_phSumJtpt_rej[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_phSumJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_phSumJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_phSumJtpt_rej[i] for i= "<<i<<" has "<<nData_phSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_phSumJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_phSumJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_phSumJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_phSumJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cphSumJtpt_rej[i]->SaveAs(Form("phSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1344,18 +1590,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_neSumJtpt_rej[i]->Print("base");
     hMC_neSumJtpt_rej[i]->SetTitle(" ");
     hMC_neSumJtpt_rej[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_neSumJtpt_rej[i]->DrawNormalized();
+    nMC_neSumJtpt_rej[i]=hMC_neSumJtpt_rej[i]->GetEntries();
+    if (nMC_neSumJtpt_rej[i]>0){
+       hMC_neSumJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_neSumJtpt_rej[i] for i= "<<i<<" has "<<nMC_neSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_neSumJtpt_rej[i]->SetMarkerStyle(24);
     hData_neSumJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_neSumJtpt_rej[i]->DrawNormalized("same");
+    nData_neSumJtpt_rej[i]=hData_neSumJtpt_rej[i]->GetEntries();
+    if (nData_neSumJtpt_rej[i]>0){
+      if(nMC_neSumJtpt_rej[i]<=0){
+        hData_neSumJtpt_rej[i]->Print("base");
+        hData_neSumJtpt_rej[i]->SetTitle(" ");
+        hData_neSumJtpt_rej[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_neSumJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_neSumJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_neSumJtpt_rej[i] for i= "<<i<<" has "<<nData_neSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_neSumJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_neSumJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_neSumJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_neSumJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cneSumJtpt_rej[i]->SaveAs(Form("neSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 
@@ -1371,18 +1630,31 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_muSumJtpt_rej[i]->Print("base");
     hMC_muSumJtpt_rej[i]->SetTitle(" ");
     hMC_muSumJtpt_rej[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) fail CutA");
-    hMC_muSumJtpt_rej[i]->DrawNormalized();
+    nMC_muSumJtpt_rej[i]=hMC_muSumJtpt_rej[i]->GetEntries();
+    if (nMC_muSumJtpt_rej[i]>0){
+       hMC_muSumJtpt_rej[i]->DrawNormalized();
+    } else { cout<<"hMC_muSumJtpt_rej[i] for i= "<<i<<" has "<<nMC_muSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }
 
     hData_muSumJtpt_rej[i]->SetMarkerStyle(24);
     hData_muSumJtpt_rej[i]->SetMarkerColor(kBlack);
-    hData_muSumJtpt_rej[i]->DrawNormalized("same");
+    nData_muSumJtpt_rej[i]=hData_muSumJtpt_rej[i]->GetEntries();
+    if (nData_muSumJtpt_rej[i]>0){
+      if(nMC_muSumJtpt_rej[i]<=0){
+        hData_muSumJtpt_rej[i]->Print("base");
+        hData_muSumJtpt_rej[i]->SetTitle(" ");
+        hData_muSumJtpt_rej[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) pass CutA");      
+        hData_muSumJtpt_rej[i]->DrawNormalized();
+      } else {
+      hData_muSumJtpt_rej[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_muSumJtpt_rej[i] for i= "<<i<<" has "<<nData_muSumJtpt_rej[i]<<" entries and is not drawn"<<endl; }   
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
 
     TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_muSumJtpt_rej[1],"MC","pl");
-    leg->AddEntry(hData_muSumJtpt_rej[1],"Data","pl");
+    leg->AddEntry(hMC_muSumJtpt_rej[0],"MC","pl");
+    leg->AddEntry(hData_muSumJtpt_rej[0],"Data","pl");
     leg->SetTextSize(0.04);
     leg->Draw();
-      drawText(Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]), 0.8,0.8,16);
     
     cmuSumJtpt_rej[i]->SaveAs(Form("muSumJtpt_rej_cent%d.pdf",i),"RECREATE");
 

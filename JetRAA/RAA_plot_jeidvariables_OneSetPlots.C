@@ -587,16 +587,18 @@ void RAA_plot_jeidvariables_OneSetPlots(){
     hData_chMaxJtpt[i]->SetMarkerStyle(24);
     hData_chMaxJtpt[i]->SetMarkerColor(kBlack);
     hData_chMaxJtpt[i]->DrawNormalized("same");
-
-    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
-    leg->AddEntry(hMC_chMaxJtpt[1],"MC","pl");
-    leg->AddEntry(hData_chMaxJtpt[1],"Data","pl");
+    //       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.9,20);
+    char *MyCentBin = Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]);
+//    char *MyCentBin = Form("%2.0f - %2.0f %",centrality_bins[i],centrality_bins[i+1]);
+//    cout<<"MyCentBin: "<<MyCentBin<<endl;
+//    drawText(MyCentBin,0.8,0.8,16);
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+    
+    TLegend * leg = myLegend(0.7,0.7,0.8,0.8);
+    leg->AddEntry(hMC_chMaxJtpt[0],"MC","PL");
+    leg->AddEntry(hData_chMaxJtpt[0],"Data","PL");
     leg->SetTextSize(0.04);
     leg->Draw();
-//    DrawText(0.8,0.8,Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]));
-    char *MyCentBin = Form("%d - %d % ",centrality_bins[i],centrality_bins[i+1]);
-    drawText(MyCentBin,0.2,0.2,16);
-//    cchMaxJtpt[i]->SaveAs(Form("chMaxJtpt_cent%d.pdf",i),"RECREATE");
 
   }
   
