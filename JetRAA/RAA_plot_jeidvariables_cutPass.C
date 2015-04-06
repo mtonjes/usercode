@@ -6,11 +6,11 @@ void RAA_plot_jeidvariables_cutPass(){
   TH1::SetDefaultSumw2();
   gStyle->SetOptStat(0);
   
-   TFile * fData = TFile::Open("/export/d00/scratch/rkunnawa/rootfiles/PbPb_Data_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
+   TFile * fData = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_Data_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
   TTree * Data_matched = (TTree*)fData->Get("matchedJets");
   TTree * Data_unmatched = (TTree*)fData->Get("unmatchedPFJets");
 
-  TFile * fMC = TFile::Open("/export/d00/scratch/rkunnawa/rootfiles/PbPb_MC_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
+  TFile * fMC = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_MC_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
   TTree * MC_matched = (TTree*)fMC->Get("matchedJets");
   TTree * MC_unmatched = (TTree*)fMC->Get("unmatchedPFJets");
 
@@ -49,6 +49,37 @@ void RAA_plot_jeidvariables_cutPass(){
   
   Int_t * nMC_chMaxJtpt_rej[nbins_cent], * nMC_phMaxJtpt_rej[nbins_cent], * nMC_neMaxJtpt_rej[nbins_cent], * nMC_muMaxJtpt_rej[nbins_cent], * nMC_eMaxJtpt_rej[nbins_cent];
   Int_t * nMC_chSumJtpt_rej[nbins_cent], * nMC_phSumJtpt_rej[nbins_cent], * nMC_neSumJtpt_rej[nbins_cent], * nMC_muSumJtpt_rej[nbins_cent], * nMC_eSumJtpt_rej[nbins_cent];  
+
+// jet80
+  TH1F * hData_chMaxJtpt_jet80[nbins_cent], * hData_phMaxJtpt_jet80[nbins_cent], * hData_neMaxJtpt_jet80[nbins_cent], * hData_muMaxJtpt_jet80[nbins_cent], * hData_eMaxJtpt_jet80[nbins_cent];
+  TH1F * hData_chSumJtpt_jet80[nbins_cent], * hData_phSumJtpt_jet80[nbins_cent], * hData_neSumJtpt_jet80[nbins_cent], * hData_muSumJtpt_jet80[nbins_cent], * hData_eSumJtpt_jet80[nbins_cent];  
+  
+  TH1F * hMC_chMaxJtpt_jet80[nbins_cent], * hMC_phMaxJtpt_jet80[nbins_cent], * hMC_neMaxJtpt_jet80[nbins_cent], * hMC_muMaxJtpt_jet80[nbins_cent], * hMC_eMaxJtpt_jet80[nbins_cent];
+  TH1F * hMC_chSumJtpt_jet80[nbins_cent], * hMC_phSumJtpt_jet80[nbins_cent], * hMC_neSumJtpt_jet80[nbins_cent], * hMC_muSumJtpt_jet80[nbins_cent], * hMC_eSumJtpt_jet80[nbins_cent];  
+
+  TH1F * hData_chMaxJtpt_jet80_keep[nbins_cent], * hData_phMaxJtpt_jet80_keep[nbins_cent], * hData_neMaxJtpt_jet80_keep[nbins_cent], * hData_muMaxJtpt_jet80_keep[nbins_cent], * hData_eMaxJtpt_jet80_keep[nbins_cent];
+  TH1F * hData_chSumJtpt_jet80_keep[nbins_cent], * hData_phSumJtpt_jet80_keep[nbins_cent], * hData_neSumJtpt_jet80_keep[nbins_cent], * hData_muSumJtpt_jet80_keep[nbins_cent], * hData_eSumJtpt_jet80_keep[nbins_cent];  
+  
+  TH1F * hMC_chMaxJtpt_jet80_keep[nbins_cent], * hMC_phMaxJtpt_jet80_keep[nbins_cent], * hMC_neMaxJtpt_jet80_keep[nbins_cent], * hMC_muMaxJtpt_jet80_keep[nbins_cent], * hMC_eMaxJtpt_jet80_keep[nbins_cent];
+  TH1F * hMC_chSumJtpt_jet80_keep[nbins_cent], * hMC_phSumJtpt_jet80_keep[nbins_cent], * hMC_neSumJtpt_jet80_keep[nbins_cent], * hMC_muSumJtpt_jet80_keep[nbins_cent], * hMC_eSumJtpt_jet80_keep[nbins_cent];  
+
+  TH1F * hData_chMaxJtpt_jet80_rej[nbins_cent], * hData_phMaxJtpt_jet80_rej[nbins_cent], * hData_neMaxJtpt_jet80_rej[nbins_cent], * hData_muMaxJtpt_jet80_rej[nbins_cent], * hData_eMaxJtpt_jet80_rej[nbins_cent];
+  TH1F * hData_chSumJtpt_jet80_rej[nbins_cent], * hData_phSumJtpt_jet80_rej[nbins_cent], * hData_neSumJtpt_jet80_rej[nbins_cent], * hData_muSumJtpt_jet80_rej[nbins_cent], * hData_eSumJtpt_jet80_rej[nbins_cent];  
+  
+  TH1F * hMC_chMaxJtpt_jet80_rej[nbins_cent], * hMC_phMaxJtpt_jet80_rej[nbins_cent], * hMC_neMaxJtpt_jet80_rej[nbins_cent], * hMC_muMaxJtpt_jet80_rej[nbins_cent], * hMC_eMaxJtpt_jet80_rej[nbins_cent];
+  TH1F * hMC_chSumJtpt_jet80_rej[nbins_cent], * hMC_phSumJtpt_jet80_rej[nbins_cent], * hMC_neSumJtpt_jet80_rej[nbins_cent], * hMC_muSumJtpt_jet80_rej[nbins_cent], * hMC_eSumJtpt_jet80_rej[nbins_cent];  
+
+  Int_t * nData_chMaxJtpt_jet80_keep[nbins_cent], * nData_phMaxJtpt_jet80_keep[nbins_cent], * nData_neMaxJtpt_jet80_keep[nbins_cent], * nData_muMaxJtpt_jet80_keep[nbins_cent], * nData_eMaxJtpt_jet80_keep[nbins_cent];
+  Int_t * nData_chSumJtpt_jet80_keep[nbins_cent], * nData_phSumJtpt_jet80_keep[nbins_cent], * nData_neSumJtpt_jet80_keep[nbins_cent], * nData_muSumJtpt_jet80_keep[nbins_cent], * nData_eSumJtpt_jet80_keep[nbins_cent];  
+  
+  Int_t * nMC_chMaxJtpt_jet80_keep[nbins_cent], * nMC_phMaxJtpt_jet80_keep[nbins_cent], * nMC_neMaxJtpt_jet80_keep[nbins_cent], * nMC_muMaxJtpt_jet80_keep[nbins_cent], * nMC_eMaxJtpt_jet80_keep[nbins_cent];
+  Int_t * nMC_chSumJtpt_jet80_keep[nbins_cent], * nMC_phSumJtpt_jet80_keep[nbins_cent], * nMC_neSumJtpt_jet80_keep[nbins_cent], * nMC_muSumJtpt_jet80_keep[nbins_cent], * nMC_eSumJtpt_jet80_keep[nbins_cent];  
+
+  Int_t * nData_chMaxJtpt_jet80_rej[nbins_cent], * nData_phMaxJtpt_jet80_rej[nbins_cent], * nData_neMaxJtpt_jet80_rej[nbins_cent], * nData_muMaxJtpt_jet80_rej[nbins_cent], * nData_eMaxJtpt_jet80_rej[nbins_cent];
+  Int_t * nData_chSumJtpt_jet80_rej[nbins_cent], * nData_phSumJtpt_jet80_rej[nbins_cent], * nData_neSumJtpt_jet80_rej[nbins_cent], * nData_muSumJtpt_jet80_rej[nbins_cent], * nData_eSumJtpt_jet80_rej[nbins_cent];  
+  
+  Int_t * nMC_chMaxJtpt_jet80_rej[nbins_cent], * nMC_phMaxJtpt_jet80_rej[nbins_cent], * nMC_neMaxJtpt_jet80_rej[nbins_cent], * nMC_muMaxJtpt_jet80_rej[nbins_cent], * nMC_eMaxJtpt_jet80_rej[nbins_cent];
+  Int_t * nMC_chSumJtpt_jet80_rej[nbins_cent], * nMC_phSumJtpt_jet80_rej[nbins_cent], * nMC_neSumJtpt_jet80_rej[nbins_cent], * nMC_muSumJtpt_jet80_rej[nbins_cent], * nMC_eSumJtpt_jet80_rej[nbins_cent];  
 
   for(int i = 0 ; i < nbins_cent ; ++i){
 
@@ -126,6 +157,82 @@ void RAA_plot_jeidvariables_cutPass(){
     hMC_muMaxJtpt_rej[i] = new TH1F(Form("hMC_muMaxJtpt_rej_cent%d",i),Form("MC muMax/Jtpt fail cutA in centrality bin ",i),100,0,1);
     hData_muSumJtpt_rej[i] = new TH1F(Form("hData_muSumJtpt_rej_cent%d",i),Form("Data muSum/Jtpt fail cutA in centrality bin %d",i),100,0,1);
     hMC_muSumJtpt_rej[i] = new TH1F(Form("hMC_muSumJtpt_rej_cent%d",i),Form("MC muSum/Jtpt fail cutA in centrality bin ",i),100,0,1);
+// jet80
+    hData_chMaxJtpt_jet80[i] = new TH1F(Form("hData_chMaxJtpt_jet80_cent%d",i),Form("Data chMax/Jtpt, Jet80 in centrality bin %d",i),100,0,1);
+    hMC_chMaxJtpt_jet80[i] = new TH1F(Form("hMC_chMaxJtpt_jet80_cent%d",i),Form("MC chMax/Jtpt, Jet80 in centrality bin ",i),100,0,1);
+    hData_chSumJtpt_jet80[i] = new TH1F(Form("hData_chSumJtpt_jet80_cent%d",i),Form("Data chSum/Jtpt, Jet80 in centrality bin %d",i),100,0,3);
+    hMC_chSumJtpt_jet80[i] = new TH1F(Form("hMC_chSumJtpt_jet80_cent%d",i),Form("MC chSum/Jtpt, Jet80 in centrality bin ",i),100,0,3);
+
+    hData_eMaxJtpt_jet80[i] = new TH1F(Form("hData_eMaxJtpt_jet80_cent%d",i),Form("Data eMax/Jtpt, Jet80 in centrality bin %d",i),100,0,1.4);
+    hMC_eMaxJtpt_jet80[i] = new TH1F(Form("hMC_eMaxJtpt_jet80_cent%d",i),Form("MC eMax/Jtpt, Jet80 in centrality bin ",i),100,0,1.4);
+    hData_eSumJtpt_jet80[i] = new TH1F(Form("hData_eSumJtpt_jet80_cent%d",i),Form("Data eSum/Jtpt, Jet80 in centrality bin %d",i),100,0,1.5);
+    hMC_eSumJtpt_jet80[i] = new TH1F(Form("hMC_eSumJtpt_jet80_cent%d",i),Form("MC eSum/Jtpt, Jet80 in centrality bin ",i),100,0,1.5);
+
+    hData_neMaxJtpt_jet80[i] = new TH1F(Form("hData_neMaxJtpt_jet80_cent%d",i),Form("Data neMax/Jtpt, Jet80 in centrality bin %d",i),100,0,1.2);
+    hMC_neMaxJtpt_jet80[i] = new TH1F(Form("hMC_neMaxJtpt_jet80_cent%d",i),Form("MC neMax/Jtpt, Jet80 in centrality bin ",i),100,0,1.2);
+    hData_neSumJtpt_jet80[i] = new TH1F(Form("hData_neSumJtpt_jet80_cent%d",i),Form("Data neSum/Jtpt, Jet80 in centrality bin %d",i),100,0,1.8);
+    hMC_neSumJtpt_jet80[i] = new TH1F(Form("hMC_neSumJtpt_jet80_cent%d",i),Form("MC neSum/Jtpt, Jet80 in centrality bin ",i),100,0,1.8);
+
+    hData_phMaxJtpt_jet80[i] = new TH1F(Form("hData_phMaxJtpt_jet80_cent%d",i),Form("Data phMax/Jtpt, Jet80 in centrality bin %d",i),100,0,1.5);
+    hMC_phMaxJtpt_jet80[i] = new TH1F(Form("hMC_phMaxJtpt_jet80_cent%d",i),Form("MC phMax/Jtpt, Jet80 in centrality bin ",i),100,0,1.5);
+    hData_phSumJtpt_jet80[i] = new TH1F(Form("hData_phSumJtpt_jet80_cent%d",i),Form("Data phSum/Jtpt, Jet80 in centrality bin %d",i),100,0,2);
+    hMC_phSumJtpt_jet80[i] = new TH1F(Form("hMC_phSumJtpt_jet80_cent%d",i),Form("MC phSum/Jtpt, Jet80 in centrality bin ",i),100,0,2);
+
+    hData_muMaxJtpt_jet80[i] = new TH1F(Form("hData_muMaxJtpt_jet80_cent%d",i),Form("Data muMax/Jtpt, Jet80 in centrality bin %d",i),100,0,1);
+    hMC_muMaxJtpt_jet80[i] = new TH1F(Form("hMC_muMaxJtpt_jet80_cent%d",i),Form("MC muMax/Jtpt, Jet80 in centrality bin ",i),100,0,1);
+    hData_muSumJtpt_jet80[i] = new TH1F(Form("hData_muSumJtpt_jet80_cent%d",i),Form("Data muSum/Jtpt, Jet80 in centrality bin %d",i),100,0,1);
+    hMC_muSumJtpt_jet80[i] = new TH1F(Form("hMC_muSumJtpt_jet80_cent%d",i),Form("MC muSum/Jtpt, Jet80 in centrality bin ",i),100,0,1);
+
+
+    hData_chMaxJtpt_jet80_keep[i] = new TH1F(Form("hData_chMaxJtpt_jet80_keep_cent%d",i),Form("Data chMax/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1);
+    hMC_chMaxJtpt_jet80_keep[i] = new TH1F(Form("hMC_chMaxJtpt_jet80_keep_cent%d",i),Form("MC chMax/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1);
+    hData_chSumJtpt_jet80_keep[i] = new TH1F(Form("hData_chSumJtpt_jet80_keep_cent%d",i),Form("Data chSum/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,3);
+    hMC_chSumJtpt_jet80_keep[i] = new TH1F(Form("hMC_chSumJtpt_jet80_keep_cent%d",i),Form("MC chSum/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,3);
+
+    hData_eMaxJtpt_jet80_keep[i] = new TH1F(Form("hData_eMaxJtpt_jet80_keep_cent%d",i),Form("Data eMax/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1.4);
+    hMC_eMaxJtpt_jet80_keep[i] = new TH1F(Form("hMC_eMaxJtpt_jet80_keep_cent%d",i),Form("MC eMax/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1.4);
+    hData_eSumJtpt_jet80_keep[i] = new TH1F(Form("hData_eSumJtpt_jet80_keep_cent%d",i),Form("Data eSum/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1.5);
+    hMC_eSumJtpt_jet80_keep[i] = new TH1F(Form("hMC_eSumJtpt_jet80_keep_cent%d",i),Form("MC eSum/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1.5);
+
+    hData_neMaxJtpt_jet80_keep[i] = new TH1F(Form("hData_neMaxJtpt_jet80_keep_cent%d",i),Form("Data neMax/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1.2);
+    hMC_neMaxJtpt_jet80_keep[i] = new TH1F(Form("hMC_neMaxJtpt_jet80_keep_cent%d",i),Form("MC neMax/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1.2);
+    hData_neSumJtpt_jet80_keep[i] = new TH1F(Form("hData_neSumJtpt_jet80_keep_cent%d",i),Form("Data neSum/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1.8);
+    hMC_neSumJtpt_jet80_keep[i] = new TH1F(Form("hMC_neSumJtpt_jet80_keep_cent%d",i),Form("MC neSum/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1.8);
+
+    hData_phMaxJtpt_jet80_keep[i] = new TH1F(Form("hData_phMaxJtpt_jet80_keep_cent%d",i),Form("Data phMax/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1.5);
+    hMC_phMaxJtpt_jet80_keep[i] = new TH1F(Form("hMC_phMaxJtpt_jet80_keep_cent%d",i),Form("MC phMax/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1.5);
+    hData_phSumJtpt_jet80_keep[i] = new TH1F(Form("hData_phSumJtpt_jet80_keep_cent%d",i),Form("Data phSum/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,2);
+    hMC_phSumJtpt_jet80_keep[i] = new TH1F(Form("hMC_phSumJtpt_jet80_keep_cent%d",i),Form("MC phSum/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,2);
+
+    hData_muMaxJtpt_jet80_keep[i] = new TH1F(Form("hData_muMaxJtpt_jet80_keep_cent%d",i),Form("Data muMax/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1);
+    hMC_muMaxJtpt_jet80_keep[i] = new TH1F(Form("hMC_muMaxJtpt_jet80_keep_cent%d",i),Form("MC muMax/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1);
+    hData_muSumJtpt_jet80_keep[i] = new TH1F(Form("hData_muSumJtpt_jet80_keep_cent%d",i),Form("Data muSum/Jtpt, Jet80 pass cutA in centrality bin %d",i),100,0,1);
+    hMC_muSumJtpt_jet80_keep[i] = new TH1F(Form("hMC_muSumJtpt_jet80_keep_cent%d",i),Form("MC muSum/Jtpt, Jet80 pass cutA in centrality bin ",i),100,0,1);
+
+    hData_chMaxJtpt_jet80_rej[i] = new TH1F(Form("hData_chMaxJtpt_jet80_rej_cent%d",i),Form("Data chMax/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1);
+    hMC_chMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_chMaxJtpt_jet80_rej_cent%d",i),Form("MC chMax/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1);
+    hData_chSumJtpt_jet80_rej[i] = new TH1F(Form("hData_chSumJtpt_jet80_rej_cent%d",i),Form("Data chSum/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,3);
+    hMC_chSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_chSumJtpt_jet80_rej_cent%d",i),Form("MC chSum/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,3);
+
+    hData_eMaxJtpt_jet80_rej[i] = new TH1F(Form("hData_eMaxJtpt_jet80_rej_cent%d",i),Form("Data eMax/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1.4);
+    hMC_eMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_eMaxJtpt_jet80_rej_cent%d",i),Form("MC eMax/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1.4);
+    hData_eSumJtpt_jet80_rej[i] = new TH1F(Form("hData_eSumJtpt_jet80_rej_cent%d",i),Form("Data eSum/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1.5);
+    hMC_eSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_eSumJtpt_jet80_rej_cent%d",i),Form("MC eSum/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1.5);
+
+    hData_neMaxJtpt_jet80_rej[i] = new TH1F(Form("hData_neMaxJtpt_jet80_rej_cent%d",i),Form("Data neMax/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1.2);
+    hMC_neMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_neMaxJtpt_jet80_rej_cent%d",i),Form("MC neMax/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1.2);
+    hData_neSumJtpt_jet80_rej[i] = new TH1F(Form("hData_neSumJtpt_jet80_rej_cent%d",i),Form("Data neSum/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1.8);
+    hMC_neSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_neSumJtpt_jet80_rej_cent%d",i),Form("MC neSum/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1.8);
+
+    hData_phMaxJtpt_jet80_rej[i] = new TH1F(Form("hData_phMaxJtpt_jet80_rej_cent%d",i),Form("Data phMax/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1.5);
+    hMC_phMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_phMaxJtpt_jet80_rej_cent%d",i),Form("MC phMax/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1.5);
+    hData_phSumJtpt_jet80_rej[i] = new TH1F(Form("hData_phSumJtpt_jet80_rej_cent%d",i),Form("Data phSum/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,2);
+    hMC_phSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_phSumJtpt_jet80_rej_cent%d",i),Form("MC phSum/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,2);
+
+    hData_muMaxJtpt_jet80_rej[i] = new TH1F(Form("hData_muMaxJtpt_jet80_rej_cent%d",i),Form("Data muMax/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1);
+    hMC_muMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_muMaxJtpt_jet80_rej_cent%d",i),Form("MC muMax/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1);
+    hData_muSumJtpt_jet80_rej[i] = new TH1F(Form("hData_muSumJtpt_jet80_rej_cent%d",i),Form("Data muSum/Jtpt, Jet80 fail cutA in centrality bin %d",i),100,0,1);
+    hMC_muSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_muSumJtpt_jet80_rej_cent%d",i),Form("MC muSum/Jtpt, Jet80 fail cutA in centrality bin ",i),100,0,1);
 
   }
   
@@ -250,7 +357,19 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt[centb1]->Fill(muSum_1/pfpt_1);
-   if((calopt_1/pfpt_1) <= 0.5 && eMax_1/Sumcand < 0.05) {
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80[centb1]->Fill(muSum_1/pfpt_1);
+         }
+   if((calopt_1/pfpt_1) <= 0.5 && eMax_1/Sumcand < 0.05 ) {
          hData_chMaxJtpt_keep[centb1]->Fill(chMax_1/pfpt_1);
          hData_eMaxJtpt_keep[centb1]->Fill(eMax_1/pfpt_1);
          hData_neMaxJtpt_keep[centb1]->Fill(neMax_1/pfpt_1);
@@ -261,8 +380,20 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt_keep[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt_keep[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_keep[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80_keep[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80_keep[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80_keep[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80_keep[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80_keep[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80_keep[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80_keep[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80_keep[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80_keep[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80_keep[centb1]->Fill(muSum_1/pfpt_1);         
+         }
    }
-   if((calopt_1/pfpt_1) > 0.5 && calopt_1/pfpt_1 <= 0.85 && eMax_1/Sumcand < (18/7 *(Float_t)calopt_1/pfpt_1 - 9/7)) ){
+   if((calopt_1/pfpt_1) > 0.5 && calopt_1/pfpt_1 <= 0.85 && eMax_1/Sumcand < (18/7 *(Float_t)calopt_1/pfpt_1 - 9/7))){
          hData_chMaxJtpt_keep[centb1]->Fill(chMax_1/pfpt_1);
          hData_eMaxJtpt_keep[centb1]->Fill(eMax_1/pfpt_1);
          hData_neMaxJtpt_keep[centb1]->Fill(neMax_1/pfpt_1);
@@ -273,6 +404,18 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt_keep[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt_keep[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_keep[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80_keep[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80_keep[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80_keep[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80_keep[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80_keep[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80_keep[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80_keep[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80_keep[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80_keep[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80_keep[centb1]->Fill(muSum_1/pfpt_1);         
+         }
    }
    if(calopt_1/pfpt_1 > 0.85){
          hData_chMaxJtpt_keep[centb1]->Fill(chMax_1/pfpt_1);
@@ -285,9 +428,21 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt_keep[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt_keep[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_keep[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80_keep[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80_keep[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80_keep[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80_keep[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80_keep[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80_keep[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80_keep[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80_keep[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80_keep[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80_keep[centb1]->Fill(muSum_1/pfpt_1);         
+         }
    }
 // rejected:
-  if(calopt_1/pfpt_1 > 0.5 && calopt_1/pfpt_1 <= 0.85 && eMax_1/Sumcand >= (18/7 *(Float_t)calopt_1/pfpt_1 - 9/7)) ){
+  if(calopt_1/pfpt_1 > 0.5 && calopt_1/pfpt_1 <= 0.85 && (eMax_1/Sumcand >= (18/7 *(Float_t)calopt_1/pfpt_1 - 9/7)) ){
          hData_chMaxJtpt_rej[centb1]->Fill(chMax_1/pfpt_1);
          hData_eMaxJtpt_rej[centb1]->Fill(eMax_1/pfpt_1);
          hData_neMaxJtpt_rej[centb1]->Fill(neMax_1/pfpt_1);
@@ -298,6 +453,18 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt_rej[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt_rej[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_rej[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80_rej[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80_rej[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80_rej[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80_rej[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80_rej[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80_rej[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80_rej[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80_rej[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80_rej[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80_rej[centb1]->Fill(muSum_1/pfpt_1);         
+         }
    }
    if(calopt_1/pfpt_1 <= 0.5 && eMax_1/Sumcand >= 0.05) {
          hData_chMaxJtpt_rej[centb1]->Fill(chMax_1/pfpt_1);
@@ -310,6 +477,18 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt_rej[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt_rej[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_rej[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80_rej[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80_rej[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80_rej[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80_rej[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80_rej[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80_rej[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80_rej[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80_rej[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80_rej[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80_rej[centb1]->Fill(muSum_1/pfpt_1);         
+         }
    }
 
     } // end pfptmin loop
@@ -339,6 +518,18 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80[centb1]->Fill(muSum_1/pfpt_1);         
+         }
     if(eMax_1/Sumcand < 0.05) {
          hData_chMaxJtpt_keep[centb1]->Fill(chMax_1/pfpt_1);
          hData_eMaxJtpt_keep[centb1]->Fill(eMax_1/pfpt_1);
@@ -350,8 +541,20 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt_keep[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt_keep[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_keep[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80_keep[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80_keep[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80_keep[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80_keep[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80_keep[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80_keep[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80_keep[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80_keep[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80_keep[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80_keep[centb1]->Fill(muSum_1/pfpt_1);         
+         }         
     }
-    if(eMax_1/Sumcand >= 0.05) {
+    if(eMax_1/Sumcand >= 0.05 ) {
          hData_chMaxJtpt_rej[centb1]->Fill(chMax_1/pfpt_1);
          hData_eMaxJtpt_rej[centb1]->Fill(eMax_1/pfpt_1);
          hData_neMaxJtpt_rej[centb1]->Fill(neMax_1/pfpt_1);
@@ -362,6 +565,18 @@ void RAA_plot_jeidvariables_cutPass(){
          hData_neSumJtpt_rej[centb1]->Fill(neSum_1/pfpt_1);
          hData_phSumJtpt_rej[centb1]->Fill(phSum_1/pfpt_1);
          hData_muSumJtpt_rej[centb1]->Fill(muSum_1/pfpt_1);
+         if(jet80_1 == 1) {
+             hData_chMaxJtpt_jet80_rej[centb1]->Fill(chMax_1/pfpt_1);
+             hData_eMaxJtpt_jet80_rej[centb1]->Fill(eMax_1/pfpt_1);
+             hData_neMaxJtpt_jet80_rej[centb1]->Fill(neMax_1/pfpt_1);
+             hData_phMaxJtpt_jet80_rej[centb1]->Fill(phMax_1/pfpt_1);
+             hData_muMaxJtpt_jet80_rej[centb1]->Fill(muMax_1/pfpt_1);
+             hData_chSumJtpt_jet80_rej[centb1]->Fill(chSum_1/pfpt_1);
+             hData_eSumJtpt_jet80_rej[centb1]->Fill(eSum_1/pfpt_1);
+             hData_neSumJtpt_jet80_rej[centb1]->Fill(neSum_1/pfpt_1);
+             hData_phSumJtpt_jet80_rej[centb1]->Fill(phSum_1/pfpt_1);
+             hData_muSumJtpt_jet80_rej[centb1]->Fill(muSum_1/pfpt_1);         
+         }         
     }  
     } // end pfptmin loop
   } // end Data unmatched loop
@@ -392,66 +607,138 @@ void RAA_plot_jeidvariables_cutPass(){
          hMC_neSumJtpt[centb2]->Fill(neSum_2/pfpt_2,weight_2);
          hMC_phSumJtpt[centb2]->Fill(phSum_2/pfpt_2,weight_2);
          hMC_muSumJtpt[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+         if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }         
    if(calopt_2/pfpt_2 <= 0.5 && eMax_2/Sumcand < 0.05) {
-         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+         if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }         
    }
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
-         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7))){
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+         if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }         
    }
    if(calopt_2/pfpt_2 > 0.85){
-         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+         if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }         
    }
 // rejected:
-  if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
-         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2);
+  if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7))){
+         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+         if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80_rej[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80_rej[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80_rej[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80_rej[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80_rej[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80_rej[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80_rej[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80_rej[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80_rej[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80_rej[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }         
    }
    if(calopt_2/pfpt_2 <= 0.5 && eMax_2/Sumcand >= 0.05) {
-         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+         if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80_rej[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80_rej[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80_rej[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80_rej[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80_rej[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80_rej[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80_rej[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80_rej[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80_rej[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80_rej[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }        
    }
        } // end pfptmin loop
   } // end MC matched loop
@@ -481,29 +768,65 @@ void RAA_plot_jeidvariables_cutPass(){
          hMC_neSumJtpt[centb2]->Fill(neSum_2/pfpt_2,weight_2);
          hMC_phSumJtpt[centb2]->Fill(phSum_2/pfpt_2,weight_2);
          hMC_muSumJtpt[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+          if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }        
     if(eMax_2/Sumcand < 0.05) {
-         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+         hMC_eMaxJtpt_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+         hMC_neMaxJtpt_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+         hMC_phMaxJtpt_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+         hMC_muMaxJtpt_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+         hMC_chSumJtpt_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+         hMC_eSumJtpt_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+         hMC_neSumJtpt_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+         hMC_phSumJtpt_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+         hMC_muSumJtpt_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+         if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80_keep[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80_keep[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80_keep[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80_keep[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80_keep[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80_keep[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80_keep[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80_keep[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80_keep[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80_keep[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }         
     }
     if(eMax_2/Sumcand >= 0.05) {
-         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2);
-         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2);
-         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2);
-         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2);
-         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2);
-         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2);
-         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2);
-         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2);
-         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2);
-         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2);
+         hMC_chMaxJtpt_rej[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+         hMC_eMaxJtpt_rej[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+         hMC_neMaxJtpt_rej[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+         hMC_phMaxJtpt_rej[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+         hMC_muMaxJtpt_rej[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+         hMC_chSumJtpt_rej[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+         hMC_eSumJtpt_rej[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+         hMC_neSumJtpt_rej[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+         hMC_phSumJtpt_rej[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+         hMC_muSumJtpt_rej[centb2]->Fill(muSum_2/pfpt_2,weight_2);
+          if(jet80_2 == 1){
+             hMC_chMaxJtpt_jet80_rej[centb2]->Fill(chMax_2/pfpt_2,weight_2);
+             hMC_eMaxJtpt_jet80_rej[centb2]->Fill(eMax_2/pfpt_2,weight_2);
+             hMC_neMaxJtpt_jet80_rej[centb2]->Fill(neMax_2/pfpt_2,weight_2);
+             hMC_phMaxJtpt_jet80_rej[centb2]->Fill(phMax_2/pfpt_2,weight_2);
+             hMC_muMaxJtpt_jet80_rej[centb2]->Fill(muMax_2/pfpt_2,weight_2);
+             hMC_chSumJtpt_jet80_rej[centb2]->Fill(chSum_2/pfpt_2,weight_2);
+             hMC_eSumJtpt_jet80_rej[centb2]->Fill(eSum_2/pfpt_2,weight_2);
+             hMC_neSumJtpt_jet80_rej[centb2]->Fill(neSum_2/pfpt_2,weight_2);
+             hMC_phSumJtpt_jet80_rej[centb2]->Fill(phSum_2/pfpt_2,weight_2);
+             hMC_muSumJtpt_jet80_rej[centb2]->Fill(muSum_2/pfpt_2,weight_2);         
+         }        
     }  
     } // end pfptmin loop
   } // end MC unmatched loop
@@ -576,6 +899,68 @@ void RAA_plot_jeidvariables_cutPass(){
     hData_muSumJtpt_rej[i]->Write();
     hMC_muSumJtpt_rej[i]->Write();
 
+    hData_chMaxJtpt_jet80[i]->Write();
+    hMC_chMaxJtpt_jet80[i]->Write();
+    hData_chSumJtpt_jet80[i]->Write();
+    hMC_chSumJtpt_jet80[i]->Write();
+    hData_eMaxJtpt_jet80[i]->Write();
+    hMC_eMaxJtpt_jet80[i]->Write();
+    hData_eSumJtpt_jet80[i]->Write();
+    hMC_eSumJtpt_jet80[i]->Write();
+    hData_neMaxJtpt_jet80[i]->Write();
+    hMC_neMaxJtpt_jet80[i]->Write();
+    hData_neSumJtpt_jet80[i]->Write();
+    hMC_neSumJtpt_jet80[i]->Write();
+    hData_phMaxJtpt_jet80[i]->Write();
+    hMC_phMaxJtpt_jet80[i]->Write();
+    hData_phSumJtpt_jet80[i]->Write();
+    hMC_phSumJtpt_jet80[i]->Write();
+    hData_muMaxJtpt_jet80[i]->Write();
+    hMC_muMaxJtpt_jet80[i]->Write();
+    hData_muSumJtpt_jet80[i]->Write();
+    hMC_muSumJtpt_jet80[i]->Write();
+    
+    hData_chMaxJtpt_jet80_keep[i]->Write();
+    hMC_chMaxJtpt_jet80_keep[i]->Write();
+    hData_chSumJtpt_jet80_keep[i]->Write();
+    hMC_chSumJtpt_jet80_keep[i]->Write();
+    hData_eMaxJtpt_jet80_keep[i]->Write();
+    hMC_eMaxJtpt_jet80_keep[i]->Write();
+    hData_eSumJtpt_jet80_keep[i]->Write();
+    hMC_eSumJtpt_jet80_keep[i]->Write();
+    hData_neMaxJtpt_jet80_keep[i]->Write();
+    hMC_neMaxJtpt_jet80_keep[i]->Write();
+    hData_neSumJtpt_jet80_keep[i]->Write();
+    hMC_neSumJtpt_jet80_keep[i]->Write();
+    hData_phMaxJtpt_jet80_keep[i]->Write();
+    hMC_phMaxJtpt_jet80_keep[i]->Write();
+    hData_phSumJtpt_jet80_keep[i]->Write();
+    hMC_phSumJtpt_jet80_keep[i]->Write();
+    hData_muMaxJtpt_jet80_keep[i]->Write();
+    hMC_muMaxJtpt_jet80_keep[i]->Write();
+    hData_muSumJtpt_jet80_keep[i]->Write();
+    hMC_muSumJtpt_jet80_keep[i]->Write();
+    
+    hData_chMaxJtpt_jet80_rej[i]->Write();
+    hMC_chMaxJtpt_jet80_rej[i]->Write();
+    hData_chSumJtpt_jet80_rej[i]->Write();
+    hMC_chSumJtpt_jet80_rej[i]->Write();
+    hData_eMaxJtpt_jet80_rej[i]->Write();
+    hMC_eMaxJtpt_jet80_rej[i]->Write();
+    hData_eSumJtpt_jet80_rej[i]->Write();
+    hMC_eSumJtpt_jet80_rej[i]->Write();
+    hData_neMaxJtpt_jet80_rej[i]->Write();
+    hMC_neMaxJtpt_jet80_rej[i]->Write();
+    hData_neSumJtpt_jet80_rej[i]->Write();
+    hMC_neSumJtpt_jet80_rej[i]->Write();
+    hData_phMaxJtpt_jet80_rej[i]->Write();
+    hMC_phMaxJtpt_jet80_rej[i]->Write();
+    hData_phSumJtpt_jet80_rej[i]->Write();
+    hMC_phSumJtpt_jet80_rej[i]->Write();
+    hData_muMaxJtpt_jet80_rej[i]->Write();
+    hMC_muMaxJtpt_jet80_rej[i]->Write();
+    hData_muSumJtpt_jet80_rej[i]->Write();
+    hMC_muSumJtpt_jet80_rej[i]->Write();
   }  
  
 // now plot
@@ -603,7 +988,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt[i]->SaveAs(Form("chMaxJtpt_cent%d.pdf",i),"RECREATE");
+    cchMaxJtpt[i]->SaveAs(Form("chMaxJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   
@@ -631,7 +1016,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt[i]->SaveAs(Form("eMaxJtpt_cent%d.pdf",i),"RECREATE");
+    ceMaxJtpt[i]->SaveAs(Form("eMaxJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
 
@@ -659,7 +1044,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt[i]->SaveAs(Form("phMaxJtpt_cent%d.pdf",i),"RECREATE");
+    cphMaxJtpt[i]->SaveAs(Form("phMaxJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt[nbins_cent];
@@ -686,7 +1071,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt[i]->SaveAs(Form("neMaxJtpt_cent%d.pdf",i),"RECREATE");
+    cneMaxJtpt[i]->SaveAs(Form("neMaxJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt[nbins_cent];
@@ -713,7 +1098,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt[i]->SaveAs(Form("muMaxJtpt_cent%d.pdf",i),"RECREATE");
+    cmuMaxJtpt[i]->SaveAs(Form("muMaxJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -741,7 +1126,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt[i]->SaveAs(Form("chSumJtpt_cent%d.pdf",i),"RECREATE");
+    cchSumJtpt[i]->SaveAs(Form("chSumJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * ceSumJtpt[nbins_cent];
@@ -768,7 +1153,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt[i]->SaveAs(Form("eSumJtpt_cent%d.pdf",i),"RECREATE");
+    ceSumJtpt[i]->SaveAs(Form("eSumJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cphSumJtpt[nbins_cent];
@@ -795,7 +1180,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt[i]->SaveAs(Form("phSumJtpt_cent%d.pdf",i),"RECREATE");
+    cphSumJtpt[i]->SaveAs(Form("phSumJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cneSumJtpt[nbins_cent];
@@ -822,7 +1207,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt[i]->SaveAs(Form("neSumJtpt_cent%d.pdf",i),"RECREATE");
+    cneSumJtpt[i]->SaveAs(Form("neSumJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt[nbins_cent];
@@ -849,7 +1234,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt[i]->SaveAs(Form("muSumJtpt_cent%d.pdf",i),"RECREATE");
+    cmuSumJtpt[i]->SaveAs(Form("muSumJtpt_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }    
 
@@ -890,7 +1275,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_keep[i]->SaveAs(Form("chMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cchMaxJtpt_keep[i]->SaveAs(Form("chMaxJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   
@@ -931,7 +1316,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_keep[i]->SaveAs(Form("eMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
+    ceMaxJtpt_keep[i]->SaveAs(Form("eMaxJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
 
@@ -972,7 +1357,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_keep[i]->SaveAs(Form("phMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cphMaxJtpt_keep[i]->SaveAs(Form("phMaxJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_keep[nbins_cent];
@@ -1012,7 +1397,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_keep[i]->SaveAs(Form("neMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cneMaxJtpt_keep[i]->SaveAs(Form("neMaxJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_keep[nbins_cent];
@@ -1052,7 +1437,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_keep[i]->SaveAs(Form("muMaxJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cmuMaxJtpt_keep[i]->SaveAs(Form("muMaxJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -1093,7 +1478,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_keep[i]->SaveAs(Form("chSumJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cchSumJtpt_keep[i]->SaveAs(Form("chSumJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_keep[nbins_cent];
@@ -1133,7 +1518,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_keep[i]->SaveAs(Form("eSumJtpt_keep_cent%d.pdf",i),"RECREATE");
+    ceSumJtpt_keep[i]->SaveAs(Form("eSumJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_keep[nbins_cent];
@@ -1173,7 +1558,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_keep[i]->SaveAs(Form("phSumJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cphSumJtpt_keep[i]->SaveAs(Form("phSumJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_keep[nbins_cent];
@@ -1213,7 +1598,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_keep[i]->SaveAs(Form("neSumJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cneSumJtpt_keep[i]->SaveAs(Form("neSumJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_keep[nbins_cent];
@@ -1253,7 +1638,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_keep[i]->SaveAs(Form("muSumJtpt_keep_cent%d.pdf",i),"RECREATE");
+    cmuSumJtpt_keep[i]->SaveAs(Form("muSumJtpt_keep_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
     TCanvas * cchMaxJtpt_rej[nbins_cent];
@@ -1293,7 +1678,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_rej[i]->SaveAs(Form("chMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cchMaxJtpt_rej[i]->SaveAs(Form("chMaxJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   
@@ -1334,7 +1719,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_rej[i]->SaveAs(Form("eMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
+    ceMaxJtpt_rej[i]->SaveAs(Form("eMaxJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
 
@@ -1375,7 +1760,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_rej[i]->SaveAs(Form("phMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cphMaxJtpt_rej[i]->SaveAs(Form("phMaxJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_rej[nbins_cent];
@@ -1415,7 +1800,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_rej[i]->SaveAs(Form("neMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cneMaxJtpt_rej[i]->SaveAs(Form("neMaxJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_rej[nbins_cent];
@@ -1455,7 +1840,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_rej[i]->SaveAs(Form("muMaxJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cmuMaxJtpt_rej[i]->SaveAs(Form("muMaxJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -1496,7 +1881,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_rej[i]->SaveAs(Form("chSumJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cchSumJtpt_rej[i]->SaveAs(Form("chSumJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_rej[nbins_cent];
@@ -1536,7 +1921,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_rej[i]->SaveAs(Form("eSumJtpt_rej_cent%d.pdf",i),"RECREATE");
+    ceSumJtpt_rej[i]->SaveAs(Form("eSumJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_rej[nbins_cent];
@@ -1576,7 +1961,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_rej[i]->SaveAs(Form("phSumJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cphSumJtpt_rej[i]->SaveAs(Form("phSumJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_rej[nbins_cent];
@@ -1616,7 +2001,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_rej[i]->SaveAs(Form("neSumJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cneSumJtpt_rej[i]->SaveAs(Form("neSumJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_rej[nbins_cent];
@@ -1656,7 +2041,7 @@ void RAA_plot_jeidvariables_cutPass(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_rej[i]->SaveAs(Form("muSumJtpt_rej_cent%d.pdf",i),"RECREATE");
+    cmuSumJtpt_rej[i]->SaveAs(Form("muSumJtpt_rej_cent%deMaxAndchMax.pdf",i),"RECREATE");
 
   }  
 }
