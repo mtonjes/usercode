@@ -61,7 +61,7 @@ using namespace std;
 void RAA_plot_CutA_BasicPlots(){
 
   TH1::SetDefaultSumw2();
-  
+  gStyle->SetOptStat(00000000);
 
   // the cut is a 3 step cut based on the different value of the calopt/pfpt - copy the following lines into your loop (with the corresponding branch address set)
   // if(calopt/pfpt <= 0.5 && eMax/Sumcand < 0.05) hGood->Fill();
@@ -420,7 +420,7 @@ void RAA_plot_CutA_BasicPlots(){
   MC_unmatched->SetBranchAddress("phSum",&phSum_2);
   MC_unmatched->SetBranchAddress("neSum",&neSum_2);
   MC_unmatched->SetBranchAddress("muSum",&muSum_2);
-  MC_matched->SetBranchAddress("hiBin",&hiBin_2);
+  MC_unmatched->SetBranchAddress("hiBin",&hiBin_2);
   MC_unmatched->SetBranchAddress("pfrefpt",&pfrefpt_2);
   MC_unmatched->SetBranchAddress("jet55",&jet55_2);
   MC_unmatched->SetBranchAddress("jet65",&jet65_2);
@@ -430,7 +430,7 @@ void RAA_plot_CutA_BasicPlots(){
   MC_unmatched->SetBranchAddress("pfeta", &pfeta_2);
   MC_unmatched->SetBranchAddress("pfphi", &pfphi_2);
   MC_unmatched->SetBranchAddress("pfrefpt", &pfrefpt_2);
-  MC_matched->SetBranchAddress("jet55_prescl",&jet55_p_2);
+  MC_unmatched->SetBranchAddress("jet55_prescl",&jet55_p_2);
   
 
   
@@ -478,33 +478,33 @@ void RAA_plot_CutA_BasicPlots(){
     if(jet55_1 == 1 && jet65_1 == 0 && jet80_1 == 0 ) {
       
       hData_Jet55_noCut->Fill(pfpt_1, jet55_p_1);
-	  hData_Jet55_noCut_eta->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_noCut_phi->Fill(pfphi_1, jet55_p_1);
- 	  hData_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_1, jet55_p_1); 
+	  hData_Jet55_noCut_eta->Fill(pfeta_1);
+	  hData_Jet55_noCut_phi->Fill(pfphi_1);
+ 	  hData_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_1);
+	  hData_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_1); 
       
       if(calopt_1/pfpt_1 > 0.5 && calopt_1/pfpt_1 <= 0.85 && eMax_1/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1/pfpt_1 - (Float_t)9/7)) {
 		  hData_Jet55_CutA->Fill(pfpt_1, jet55_p_1);
-	  hData_Jet55_CutA_eta->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi->Fill(pfphi_1, jet55_p_1);
- 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1, jet55_p_1); 
+	  hData_Jet55_CutA_eta->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi->Fill(pfphi_1);
+ 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1); 
 	  		  hpbpb_TrgObj55[cBin]->Fill(pfpt_1, jet55_p_1);	  		  
 	  }
       if(calopt_1/pfpt_1 > 0.85) {
 		  hData_Jet55_CutA->Fill(pfpt_1, jet55_p_1);
-	  hData_Jet55_CutA_eta->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi->Fill(pfphi_1, jet55_p_1);
- 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1, jet55_p_1); 
+	  hData_Jet55_CutA_eta->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi->Fill(pfphi_1);
+ 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1); 
 	  		  hpbpb_TrgObj55[cBin]->Fill(pfpt_1, jet55_p_1);
 	  }
       if(calopt_1/pfpt_1 <= 0.5 && eMax_1/Sumcand < 0.05) {
 		  hData_Jet55_CutA->Fill(pfpt_1, jet55_p_1);
-	  hData_Jet55_CutA_eta->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi->Fill(pfphi_1, jet55_p_1);
- 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1, jet55_p_1); 
+	  hData_Jet55_CutA_eta->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi->Fill(pfphi_1);
+ 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1); 
 	  		  hpbpb_TrgObj55[cBin]->Fill(pfpt_1, jet55_p_1);
 	  }
 
@@ -634,18 +634,18 @@ void RAA_plot_CutA_BasicPlots(){
     if(jet55_1 == 1 && jet65_1 == 0 && jet80_1 == 0 ) {
     
       hData_unmatched_Jet55_noCut->Fill(pfpt_1, jet55_p_1);
-	  hData_Jet55_noCut_eta->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_noCut_phi->Fill(pfphi_1, jet55_p_1);
- 	  hData_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_1, jet55_p_1); 
+	  hData_Jet55_noCut_eta->Fill(pfeta_1);
+	  hData_Jet55_noCut_phi->Fill(pfphi_1);
+ 	  hData_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_1);
+	  hData_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_1); 
 	  
       if(eMax_1/Sumcand < 0.05 ){
         hpbpb_TrgObj55[cBin]->Fill(pfpt_1);
 	    hData_unmatched_Jet55_CutA->Fill(pfpt_1, jet55_p_1);
-	    hData_Jet55_CutA_eta->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi->Fill(pfphi_1, jet55_p_1);
- 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1, jet55_p_1);
-	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1, jet55_p_1); 
+	    hData_Jet55_CutA_eta->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi->Fill(pfphi_1);
+ 	  hData_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_1);
+	  hData_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_1); 
 	  }
       else hData_unmatched_Jet55_CutA_rej->Fill(pfpt_1, jet55_p_1);
       
@@ -736,66 +736,66 @@ void RAA_plot_CutA_BasicPlots(){
     }    
     if(jet55_2 == 1 && jet65_2==0 && jet80_2 == 0){
       
-      hMC_Jet55_noCut->Fill(pfrefpt_2, jet55_p_2*weight);
-	  hMC_Jet55_noCut_eta->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_noCut_phi->Fill(pfphi_2, jet55_p_2*weight);
- 	  hMC_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_2, jet55_p_2*weight);
+      hMC_Jet55_noCut->Fill(pfrefpt_2, weight);
+	  hMC_Jet55_noCut_eta->Fill(pfeta_2, weight);
+	  hMC_Jet55_noCut_phi->Fill(pfphi_2, weight);
+ 	  hMC_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_2, weight);
+	  hMC_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_2, weight);
 	  
       if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2/pfpt_2 - (Float_t)9/7)){
-	hMC_Jet55_CutA->Fill(pfrefpt_2, jet55_p_2*weight);
+	hMC_Jet55_CutA->Fill(pfrefpt_2, weight);
 	hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
-	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, jet55_p_2*weight);
-	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_eta->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi->Fill(pfphi_2, jet55_p_2*weight);
- 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, jet55_p_2*weight); 
+	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, weight);
+	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
+	  hMC_Jet55_CutA_eta->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi->Fill(pfphi_2, weight);
+ 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, weight); 
 	  
 	if(nentry%2==0) {
-	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
 	  hpbpb_mcclosure_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
 	}
 	if(nentry%2==1) {
-	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfpt_2, weight);
 	}
 	
       }
       if(calopt_2/pfpt_2 > 0.85) {
-	hMC_Jet55_CutA->Fill(pfrefpt_2, jet55_p_2*weight);
+	hMC_Jet55_CutA->Fill(pfrefpt_2, weight);
 	hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
-	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, jet55_p_2*weight);
-	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_eta->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi->Fill(pfphi_2, jet55_p_2*weight);
- 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, jet55_p_2*weight); 
+	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, weight);
+	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
+	  hMC_Jet55_CutA_eta->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi->Fill(pfphi_2, weight);
+ 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, weight); 
 	  
 	if(nentry%2==0) {
-	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
 	  hpbpb_mcclosure_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
 	}
 	if(nentry%2==1) {
-	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfpt_2, weight);
 	}
 	
       }
       if(calopt_2/pfpt_2 <= 0.5 && eMax_2/Sumcand < 0.05) {
-	hMC_Jet55_CutA->Fill(pfrefpt_2, jet55_p_2*weight);
+	hMC_Jet55_CutA->Fill(pfrefpt_2, weight);
 	hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
-	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, jet55_p_2*weight);
-	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_eta->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi->Fill(pfphi_2, jet55_p_2*weight);
- 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, jet55_p_2*weight); 
+	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, weight);
+	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
+	  hMC_Jet55_CutA_eta->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi->Fill(pfphi_2, weight);
+ 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, weight); 
 	  
 	if(nentry%2==0) {
-	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
 	  hpbpb_mcclosure_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
 	}
 	if(nentry%2==1) {
-	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfrefpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfrefpt_2, weight);
 	}
 	
       }
@@ -977,30 +977,30 @@ void RAA_plot_CutA_BasicPlots(){
     } 
     
     if(jet55_2 == 1 && jet65_2==0 && jet80_2 == 0){
-	  hMC_Jet55_noCut_eta->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_noCut_phi->Fill(pfphi_2, jet55_p_2*weight);
- 	  hMC_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_2, jet55_p_2*weight);       
-      hMC_unmatched_Jet55_noCut->Fill(pfrefpt_2, jet55_p_2*weight);
+	  hMC_Jet55_noCut_eta->Fill(pfeta_2, weight);
+	  hMC_Jet55_noCut_phi->Fill(pfphi_2, weight);
+ 	  hMC_Jet55_noCut_eta_cent[cBin]->Fill(pfeta_2, weight);
+	  hMC_Jet55_noCut_phi_cent[cBin]->Fill(pfphi_2, weight);       
+      hMC_unmatched_Jet55_noCut->Fill(pfrefpt_2, weight);
       if(eMax_2/Sumcand < 0.05  ){
 	hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
-	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, jet55_p_2*weight);
-	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_eta->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi->Fill(pfphi_2, jet55_p_2*weight);
- 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, jet55_p_2*weight);
-	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, jet55_p_2*weight); 
+	hpbpb_Jet55_reco[cBin]->Fill(pfpt_2, weight);
+	hpbpb_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
+	  hMC_Jet55_CutA_eta->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi->Fill(pfphi_2, weight);
+ 	  hMC_Jet55_CutA_eta_cent[cBin]->Fill(pfeta_2, weight);
+	  hMC_Jet55_CutA_phi_cent[cBin]->Fill(pfphi_2, weight); 
 	  
 	if(nentry%2==0) {
-	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_matrix_HLT[cBin]->Fill(pfrefpt_2, pfpt_2, weight);
 	  hpbpb_mcclosure_Jet55_gen[cBin]->Fill(pfrefpt_2, weight);
 	}
 	if(nentry%2==1) {
-	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfpt_2, jet55_p_2*weight);
+	  hpbpb_mcclosure_Jet55_data[cBin]->Fill(pfpt_2, weight);
 	}
       
-	hMC_unmatched_Jet55_CutA->Fill(pfrefpt_2, jet55_p_2*weight);}
-      else hMC_unmatched_Jet55_CutA_rej->Fill(pfrefpt_2, jet55_p_2*weight);
+	hMC_unmatched_Jet55_CutA->Fill(pfrefpt_2, weight);}
+      else hMC_unmatched_Jet55_CutA_rej->Fill(pfrefpt_2, weight);
       
     }
 
@@ -1149,6 +1149,10 @@ void RAA_plot_CutA_BasicPlots(){
       hMC_Jet80_noCut_phi->Write();
       hMC_Jet80_CutA_eta->Write();
       hMC_Jet80_CutA_phi->Write();
+ hMC_noCut_phi_eta->Write(); 
+ hMC_CutA_phi_eta->Write(); 
+ hData_noCut_phi_eta->Write(); 
+ hData_CutA_phi_eta->Write(); 
 
   // add the unmatched histograms to the matched ones to get the final cut efficiency
   hData_Jet55_noCut->Add(hData_unmatched_Jet55_noCut);
@@ -1286,12 +1290,12 @@ void RAA_plot_CutA_BasicPlots(){
   cJet80_CutEfficiency_Jet80->Divide(2,1);
   cJet80_CutEfficiency_Jet80->cd(1);
 
-  hData_Jet80_CutA_eff->Rebin(5);
-  hData_Jet80_CutA_eff->Scale(1./5);
   hData_Jet80_CutA_eff->SetMarkerColor(kRed);
   hData_Jet80_CutA_eff->SetMarkerStyle(24);
-  hData_Jet80_CutA_eff->SetAxisRange(30,300,"X");
-  hData_Jet80_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+//  hData_Jet80_CutA_eff->SetAxisRange(30,300,"X");
+//  hData_Jet80_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+  hData_Jet80_CutA_eff->Rebin(5);
+  hData_Jet80_CutA_eff->Scale(1./5);
   hData_Jet80_CutA_eff->SetXTitle(Form("akPu%dPF p_{T}",radius));
   hData_Jet80_CutA_eff->SetTitle("Data");
   hData_Jet80_CutA_eff->SetYTitle("Jet80_Cut efficiency");
@@ -1304,12 +1308,12 @@ void RAA_plot_CutA_BasicPlots(){
   // hData_Jet80_CutB_eff->Draw("same");
 
   cJet80_CutEfficiency_Jet80->cd(2);
-  hMC_Jet80_CutA_eff->Rebin(5);
-  hMC_Jet80_CutA_eff->Scale(1./5);
   hMC_Jet80_CutA_eff->SetMarkerColor(kRed);
   hMC_Jet80_CutA_eff->SetMarkerStyle(24);
-  hMC_Jet80_CutA_eff->SetAxisRange(30,300,"X");
-  hMC_Jet80_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+//  hMC_Jet80_CutA_eff->SetAxisRange(30,300,"X");
+//  hMC_Jet80_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+  hMC_Jet80_CutA_eff->Rebin(5);
+  hMC_Jet80_CutA_eff->Scale(1./5);
   hMC_Jet80_CutA_eff->SetXTitle(Form("akPu%dPF ref p_{T}",radius));
   hMC_Jet80_CutA_eff->SetTitle("MC");
   hMC_Jet80_CutA_eff->SetYTitle("Jet80_Cut efficiency");
@@ -1321,8 +1325,9 @@ void RAA_plot_CutA_BasicPlots(){
   // hMC_Jet80_CutB_eff->SetAxisRange(20,600,"X");
   // hMC_Jet80_CutB_eff->Draw("same");
 
-  cJet80_CutEfficiency_Jet80->SaveAs(Form("PbPb_YetkinCuts_Jet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_R0p%d_zoomed.pdf",radius),"RECREATE");
-
+  cJet80_CutEfficiency_Jet80->SaveAs(Form("PbPb_YetkinCuts_Jet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_R0p%d_zoomed.pdf",radius));
+ cJet80_CutEfficiency_Jet80->Close();
+ 
   // TCanvas * cCutRejection_Jet80 = new TCanvas("cCutRejection_Jet80","",1000,800);
 
   // hData_Jet80_CutA_rej->Rebin(5);
@@ -1348,12 +1353,13 @@ void RAA_plot_CutA_BasicPlots(){
   cJet55_CutEfficiency_Jet55->Divide(2,1);
   cJet55_CutEfficiency_Jet55->cd(1);
 
-  hData_Jet55_CutA_eff->Rebin(5);
-  hData_Jet55_CutA_eff->Scale(1./5);
+
   hData_Jet55_CutA_eff->SetMarkerColor(kRed);
   hData_Jet55_CutA_eff->SetMarkerStyle(24);
-  hData_Jet55_CutA_eff->SetAxisRange(30,300,"X");
-  hData_Jet55_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+//  hData_Jet55_CutA_eff->SetAxisRange(30,300,"X");
+//  hData_Jet55_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+  hData_Jet55_CutA_eff->Rebin(5);
+  hData_Jet55_CutA_eff->Scale(1./5);
   hData_Jet55_CutA_eff->SetXTitle(Form("akPu%dPF p_{T}",radius));
   hData_Jet55_CutA_eff->SetTitle("Data");
   hData_Jet55_CutA_eff->SetYTitle("Jet55_Cut efficiency");
@@ -1367,12 +1373,12 @@ void RAA_plot_CutA_BasicPlots(){
   // hData_Jet55_CutB_eff->Draw("same");
 
   cJet55_CutEfficiency_Jet55->cd(2);
-  hMC_Jet55_CutA_eff->Rebin(5);
-  hMC_Jet55_CutA_eff->Scale(1./5);
   hMC_Jet55_CutA_eff->SetMarkerColor(kRed);
   hMC_Jet55_CutA_eff->SetMarkerStyle(24);
-  hMC_Jet55_CutA_eff->SetAxisRange(30,300,"X");
-  hMC_Jet55_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+//  hMC_Jet55_CutA_eff->SetAxisRange(30,300,"X");
+//  hMC_Jet55_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+  hMC_Jet55_CutA_eff->Rebin(5);
+  hMC_Jet55_CutA_eff->Scale(1./5);
   hMC_Jet55_CutA_eff->SetXTitle(Form("akPu%dPF ref p_{T}",radius));
   hMC_Jet55_CutA_eff->SetTitle("MC");
   hMC_Jet55_CutA_eff->SetYTitle("Jet55_Cut efficiency");
@@ -1384,8 +1390,8 @@ void RAA_plot_CutA_BasicPlots(){
   // hMC_Jet55_CutB_eff->SetAxisRange(20,600,"X");
   // hMC_Jet55_CutB_eff->Draw("same");
 
-  cJet55_CutEfficiency_Jet55->SaveAs(Form("PbPb_YetkinCuts_Jet55_noJet65noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius),"RECREATE");
-
+  cJet55_CutEfficiency_Jet55->SaveAs(Form("PbPb_YetkinCuts_Jet55_noJet65noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius));
+  cJet55_CutEfficiency_Jet55->Close();
   // TCanvas * cCutRejection_Jet55 = new TCanvas("cCutRejection_Jet55","",1000,800);
 
   // hData_Jet55_CutA_rej->Rebin(5);
@@ -1411,12 +1417,12 @@ void RAA_plot_CutA_BasicPlots(){
   cJet65_CutEfficiency_Jet65->Divide(2,1);
   cJet65_CutEfficiency_Jet65->cd(1);
 
-  hData_Jet65_CutA_eff->Rebin(5);
-  hData_Jet65_CutA_eff->Scale(1./5);
   hData_Jet65_CutA_eff->SetMarkerColor(kRed);
   hData_Jet65_CutA_eff->SetMarkerStyle(24);
-  hData_Jet65_CutA_eff->SetAxisRange(30,300,"X");
-  hData_Jet65_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+//  hData_Jet65_CutA_eff->SetAxisRange(30,300,"X");
+//  hData_Jet65_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+  hData_Jet65_CutA_eff->Rebin(5);
+  hData_Jet65_CutA_eff->Scale(1./5);
   hData_Jet65_CutA_eff->SetXTitle(Form("matched akPu%dPF p_{T}",radius));
   hData_Jet65_CutA_eff->SetTitle("Data");
   hData_Jet65_CutA_eff->SetYTitle("Jet65_Cut efficiency");
@@ -1429,12 +1435,12 @@ void RAA_plot_CutA_BasicPlots(){
   // hData_Jet65_CutB_eff->Draw("same");
 
   cJet65_CutEfficiency_Jet65->cd(2);
-  hMC_Jet65_CutA_eff->Rebin(5);
-  hMC_Jet65_CutA_eff->Scale(1./5);
   hMC_Jet65_CutA_eff->SetMarkerColor(kRed);
   hMC_Jet65_CutA_eff->SetMarkerStyle(24);
-  hMC_Jet65_CutA_eff->SetAxisRange(30,300,"X");
-  hMC_Jet65_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+//  hMC_Jet65_CutA_eff->SetAxisRange(30,300,"X");
+//  hMC_Jet65_CutA_eff->SetAxisRange(0.85,1.1,"Y");
+  hMC_Jet65_CutA_eff->Rebin(5);
+  hMC_Jet65_CutA_eff->Scale(1./5);
   hMC_Jet65_CutA_eff->SetXTitle(Form("matched akPu%dPF ref p_{T}",radius));
   hMC_Jet65_CutA_eff->SetTitle("MC");
   hMC_Jet65_CutA_eff->SetYTitle("Jet65_Cut efficiency");
@@ -1446,8 +1452,8 @@ void RAA_plot_CutA_BasicPlots(){
   // hMC_Jet65_CutB_eff->SetAxisRange(20,600,"X");
   // hMC_Jet65_CutB_eff->Draw("same");
 
-  cJet65_CutEfficiency_Jet65->SaveAs(Form("PbPb_YetkinCuts_Jet65_noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius),"RECREATE");
-
+  cJet65_CutEfficiency_Jet65->SaveAs(Form("PbPb_YetkinCuts_Jet65_noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius));
+cJet65_CutEfficiency_Jet65->Close();
   // TCanvas * cCutRejection_Jet65 = new TCanvas("cCutRejection_Jet65","",1000,800);
 
   // hData_Jet65_CutA_rej->Rebin(5);
@@ -1525,18 +1531,20 @@ void RAA_plot_CutA_BasicPlots(){
   hData_Combined_Efficiency->SetYTitle("Combined Jet ID cut efficiency");
   hData_Combined_Efficiency->SetMarkerStyle(20);
   hData_Combined_Efficiency->SetMarkerColor(kBlack);
-  hData_Combined_Efficiency->Rebin(10);
-  hData_Combined_Efficiency->Scale(1/10);
   hData_Combined_Efficiency->SetAxisRange(30,350,"X");
+  hData_Combined_Efficiency->Rebin(20);
+  hData_Combined_Efficiency->Scale(1/20);
   hData_Combined_Efficiency->Draw();
   
   hMC_Combined_Efficiency->SetMarkerStyle(24);
   hMC_Combined_Efficiency->SetMarkerColor(kRed);
-  hMC_Combined_Efficiency->Rebin(10);
-  hMC_Combined_Efficiency->Scale(1/10);
+  hMC_Combined_Efficiency->SetAxisRange(30,350,"X");
+  hMC_Combined_Efficiency->Rebin(20);
+  hMC_Combined_Efficiency->Scale(1/20);
   hMC_Combined_Efficiency->Draw("same");
 
-  cCombinedEff->SaveAs(Form("Combined_trigger_efficiency_YetkinCut_R0p%d.pdf",radius),"RECREATE");
+  cCombinedEff->SaveAs(Form("Combined_trigger_efficiency_YetkinCut_R0p%d.pdf",radius));
+  cCombinedEff->Close();
   
   TCanvas * cTriggerCombination = new TCanvas("cTriggerCombination","",800,600);
   cTriggerCombination->SetLogy();
@@ -1544,8 +1552,8 @@ void RAA_plot_CutA_BasicPlots(){
   hData_Combined->SetMarkerColor(kBlack);
   hData_Combined->SetMarkerStyle(25);
   hData_Combined->SetAxisRange(30,350,"X");
-  //hData_Combined->SetXTitle("");
-  //hData_Combined->Draw();
+  hData_Combined->SetXTitle("");
+  hData_Combined->Draw();
 
   hData_Jet80->SetMarkerColor(kRed);
   hData_Jet80->SetMarkerStyle(20);
@@ -1561,19 +1569,22 @@ void RAA_plot_CutA_BasicPlots(){
 
   //drawText()
 
-  cTriggerCombination->SaveAs(Form("TriggerCombination_YetkinCuts_R0p%d.pdf",radius),"RECREATE");
+  cTriggerCombination->SaveAs(Form("TriggerCombination_YetkinCuts_R0p%d.pdf",radius));
+  cTriggerCombination->Close();
 
   TCanvas * cenoCut_eta_cent[nbins_cent];
+  TCanvas * cenoCut_phi_cent[nbins_cent];
 
   for(int i = 0 ; i < nbins_cent ; ++i){
 
     cenoCut_eta_cent[i] = new TCanvas(Form("cenoCut_eta_cent%d",i),"",800,600);
+    cenoCut_eta_cent[i]->cd();
     cenoCut_eta_cent[i]->SetLogy();
     hMC_noCut_eta_cent[i]->SetMarkerColor(kBlue+1);
     hMC_noCut_eta_cent[i]->SetMarkerStyle(25);
     hMC_noCut_eta_cent[i]->Print("base");
     hMC_noCut_eta_cent[i]->SetTitle(" ");
-    hMC_noCut_eta_cent[i]->SetXTitle("ak3PuPF jet \eta no cuts");
+    hMC_noCut_eta_cent[i]->SetXTitle("ak3PuPF jet eta no cuts");
     hMC_noCut_eta_cent[i]->DrawNormalized();
 
     hData_noCut_eta_cent[i]->SetMarkerStyle(24);
@@ -1588,7 +1599,87 @@ void RAA_plot_CutA_BasicPlots(){
     leg->Draw();
     
     cenoCut_eta_cent[i]->SaveAs(Form("NoCuts_eta_cent%d_MCweight.pdf",i),"RECREATE");
-
+    cenoCut_eta_cent[i]->Close();
   }
+  for(int i = 0 ; i < nbins_cent ; ++i){
 
+    cenoCut_phi_cent[i] = new TCanvas(Form("cenoCut_phi_cent%d",i),"",800,600);
+    cenoCut_phi_cent[i]->cd();
+    cenoCut_phi_cent[i]->SetLogy();
+    hMC_noCut_phi_cent[i]->SetMarkerColor(kRed);
+    hMC_noCut_phi_cent[i]->SetMarkerStyle(28);
+    hMC_noCut_phi_cent[i]->Print("base");
+    hMC_noCut_phi_cent[i]->SetTitle(" ");
+    hMC_noCut_phi_cent[i]->SetXTitle("ak3PuPF jet phi no cuts");
+    hMC_noCut_phi_cent[i]->DrawNormalized();
+
+    hData_noCut_phi_cent[i]->SetMarkerStyle(24);
+    hData_noCut_phi_cent[i]->SetMarkerColor(kBlack);
+    hData_noCut_phi_cent[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_noCut_phi_cent[0],"MC","pl");
+    leg->AddEntry(hData_noCut_phi_cent[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    cenoCut_phi_cent[i]->SaveAs(Form("NoCuts_phi_cent%d_MCweight.pdf",i),"RECREATE");
+    cenoCut_phi_cent[i]->Close();
+  }
+  TCanvas * ceCutA_eta_cent[nbins_cent];
+  TCanvas * ceCutA_phi_cent[nbins_cent];
+
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ceCutA_eta_cent[i] = new TCanvas(Form("ceCutA_eta_cent%d",i),"",800,600);
+    ceCutA_eta_cent[i]->cd();
+    ceCutA_eta_cent[i]->SetLogy();
+    hMC_CutA_eta_cent[i]->SetMarkerColor(kBlue+1);
+    hMC_CutA_eta_cent[i]->SetMarkerStyle(25);
+    hMC_CutA_eta_cent[i]->Print("base");
+    hMC_CutA_eta_cent[i]->SetTitle(" ");
+    hMC_CutA_eta_cent[i]->SetXTitle("ak3PuPF jet eta CutA");
+    hMC_CutA_eta_cent[i]->DrawNormalized();
+
+    hData_CutA_eta_cent[i]->SetMarkerStyle(24);
+    hData_CutA_eta_cent[i]->SetMarkerColor(kBlack);
+    hData_CutA_eta_cent[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_CutA_eta_cent[0],"MC","pl");
+    leg->AddEntry(hData_CutA_eta_cent[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ceCutA_eta_cent[i]->SaveAs(Form("CutA_eta_cent%d_MCweight.pdf",i),"RECREATE");
+    ceCutA_eta_cent[i]->Close();
+  }
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ceCutA_phi_cent[i] = new TCanvas(Form("ceCutA_phi_cent%d",i),"",800,600);
+    ceCutA_phi_cent[i]->cd();
+    ceCutA_phi_cent[i]->SetLogy();
+    hMC_CutA_phi_cent[i]->SetMarkerColor(kRed);
+    hMC_CutA_phi_cent[i]->SetMarkerStyle(28);
+    hMC_CutA_phi_cent[i]->Print("base");
+    hMC_CutA_phi_cent[i]->SetTitle(" ");
+    hMC_CutA_phi_cent[i]->SetXTitle("ak3PuPF jet phi CutA");
+    hMC_CutA_phi_cent[i]->DrawNormalized();
+
+    hData_CutA_phi_cent[i]->SetMarkerStyle(24);
+    hData_CutA_phi_cent[i]->SetMarkerColor(kBlack);
+    hData_CutA_phi_cent[i]->DrawNormalized("same");
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_CutA_phi_cent[0],"MC","pl");
+    leg->AddEntry(hData_CutA_phi_cent[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ceCutA_phi_cent[i]->SaveAs(Form("CutA_phi_cent%d_MCweight.pdf",i),"RECREATE");
+    ceCutA_phi_cent[i]->Close();
+  }
 }
