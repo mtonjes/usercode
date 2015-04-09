@@ -6,16 +6,16 @@ int findBin(int hiBin);
 // .L RAA_plot_jeidvariables_cutPass_jet65.C
 // RAA_plot_jeidvariables_cutPass_jet65()
 
-void RAA_plot_jeidvariables_cutPass_jet65(){
+void RAA_plot_jetidvariables_cutPass_jet65(){
 
   TH1::SetDefaultSumw2();
   gStyle->SetOptStat(0);
   
-   TFile * fData = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_Data_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
+   TFile * fData = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_Data_calo_pf_jet_correlation_deltaR_0p2_akPu4_20150331.root");
   TTree * Data_matched = (TTree*)fData->Get("matchedJets");
   TTree * Data_unmatched = (TTree*)fData->Get("unmatchedPFJets");
 
-  TFile * fMC = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_MC_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
+  TFile * fMC = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_MC_calo_pf_jet_correlation_deltaR_0p2_akPu4_20150331.root");
   TTree * MC_matched = (TTree*)fMC->Get("matchedJets");
   TTree * MC_unmatched = (TTree*)fMC->Get("unmatchedPFJets");
 
@@ -61,80 +61,80 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
 
 // jet65
     hData_chMaxJtpt_jet65[i] = new TH1F(Form("hData_chMaxJtpt_jet65_cent%d",i),Form("Data chMax/Jtpt, jet65 in centrality bin %d",i),100,0,1);
-    hMC_chMaxJtpt_jet65[i] = new TH1F(Form("hMC_chMaxJtpt_jet65_cent%d",i),Form("MC chMax/Jtpt, jet65 in centrality bin ",i),100,0,1);
+    hMC_chMaxJtpt_jet65[i] = new TH1F(Form("hMC_chMaxJtpt_jet65_cent%d",i),Form("MC chMax/Jtpt, jet65 in centrality bin %d",i),100,0,1);
     hData_chSumJtpt_jet65[i] = new TH1F(Form("hData_chSumJtpt_jet65_cent%d",i),Form("Data chSum/Jtpt, jet65 in centrality bin %d",i),100,0,3);
-    hMC_chSumJtpt_jet65[i] = new TH1F(Form("hMC_chSumJtpt_jet65_cent%d",i),Form("MC chSum/Jtpt, jet65 in centrality bin ",i),100,0,3);
+    hMC_chSumJtpt_jet65[i] = new TH1F(Form("hMC_chSumJtpt_jet65_cent%d",i),Form("MC chSum/Jtpt, jet65 in centrality bin %d",i),100,0,3);
 
     hData_eMaxJtpt_jet65[i] = new TH1F(Form("hData_eMaxJtpt_jet65_cent%d",i),Form("Data eMax/Jtpt, jet65 in centrality bin %d",i),100,0,1.4);
-    hMC_eMaxJtpt_jet65[i] = new TH1F(Form("hMC_eMaxJtpt_jet65_cent%d",i),Form("MC eMax/Jtpt, jet65 in centrality bin ",i),100,0,1.4);
+    hMC_eMaxJtpt_jet65[i] = new TH1F(Form("hMC_eMaxJtpt_jet65_cent%d",i),Form("MC eMax/Jtpt, jet65 in centrality bin %d",i),100,0,1.4);
     hData_eSumJtpt_jet65[i] = new TH1F(Form("hData_eSumJtpt_jet65_cent%d",i),Form("Data eSum/Jtpt, jet65 in centrality bin %d",i),100,0,1.5);
-    hMC_eSumJtpt_jet65[i] = new TH1F(Form("hMC_eSumJtpt_jet65_cent%d",i),Form("MC eSum/Jtpt, jet65 in centrality bin ",i),100,0,1.5);
+    hMC_eSumJtpt_jet65[i] = new TH1F(Form("hMC_eSumJtpt_jet65_cent%d",i),Form("MC eSum/Jtpt, jet65 in centrality bin %d",i),100,0,1.5);
 
     hData_neMaxJtpt_jet65[i] = new TH1F(Form("hData_neMaxJtpt_jet65_cent%d",i),Form("Data neMax/Jtpt, jet65 in centrality bin %d",i),100,0,1.2);
-    hMC_neMaxJtpt_jet65[i] = new TH1F(Form("hMC_neMaxJtpt_jet65_cent%d",i),Form("MC neMax/Jtpt, jet65 in centrality bin ",i),100,0,1.2);
+    hMC_neMaxJtpt_jet65[i] = new TH1F(Form("hMC_neMaxJtpt_jet65_cent%d",i),Form("MC neMax/Jtpt, jet65 in centrality bin %d",i),100,0,1.2);
     hData_neSumJtpt_jet65[i] = new TH1F(Form("hData_neSumJtpt_jet65_cent%d",i),Form("Data neSum/Jtpt, jet65 in centrality bin %d",i),100,0,1.8);
-    hMC_neSumJtpt_jet65[i] = new TH1F(Form("hMC_neSumJtpt_jet65_cent%d",i),Form("MC neSum/Jtpt, jet65 in centrality bin ",i),100,0,1.8);
+    hMC_neSumJtpt_jet65[i] = new TH1F(Form("hMC_neSumJtpt_jet65_cent%d",i),Form("MC neSum/Jtpt, jet65 in centrality bin %d",i),100,0,1.8);
 
     hData_phMaxJtpt_jet65[i] = new TH1F(Form("hData_phMaxJtpt_jet65_cent%d",i),Form("Data phMax/Jtpt, jet65 in centrality bin %d",i),100,0,1.5);
-    hMC_phMaxJtpt_jet65[i] = new TH1F(Form("hMC_phMaxJtpt_jet65_cent%d",i),Form("MC phMax/Jtpt, jet65 in centrality bin ",i),100,0,1.5);
+    hMC_phMaxJtpt_jet65[i] = new TH1F(Form("hMC_phMaxJtpt_jet65_cent%d",i),Form("MC phMax/Jtpt, jet65 in centrality bin %d",i),100,0,1.5);
     hData_phSumJtpt_jet65[i] = new TH1F(Form("hData_phSumJtpt_jet65_cent%d",i),Form("Data phSum/Jtpt, jet65 in centrality bin %d",i),100,0,2);
-    hMC_phSumJtpt_jet65[i] = new TH1F(Form("hMC_phSumJtpt_jet65_cent%d",i),Form("MC phSum/Jtpt, jet65 in centrality bin ",i),100,0,2);
+    hMC_phSumJtpt_jet65[i] = new TH1F(Form("hMC_phSumJtpt_jet65_cent%d",i),Form("MC phSum/Jtpt, jet65 in centrality bin %d",i),100,0,2);
 
     hData_muMaxJtpt_jet65[i] = new TH1F(Form("hData_muMaxJtpt_jet65_cent%d",i),Form("Data muMax/Jtpt, jet65 in centrality bin %d",i),100,0,1);
-    hMC_muMaxJtpt_jet65[i] = new TH1F(Form("hMC_muMaxJtpt_jet65_cent%d",i),Form("MC muMax/Jtpt, jet65 in centrality bin ",i),100,0,1);
+    hMC_muMaxJtpt_jet65[i] = new TH1F(Form("hMC_muMaxJtpt_jet65_cent%d",i),Form("MC muMax/Jtpt, jet65 in centrality bin %d",i),100,0,1);
     hData_muSumJtpt_jet65[i] = new TH1F(Form("hData_muSumJtpt_jet65_cent%d",i),Form("Data muSum/Jtpt, jet65 in centrality bin %d",i),100,0,1);
-    hMC_muSumJtpt_jet65[i] = new TH1F(Form("hMC_muSumJtpt_jet65_cent%d",i),Form("MC muSum/Jtpt, jet65 in centrality bin ",i),100,0,1);
+    hMC_muSumJtpt_jet65[i] = new TH1F(Form("hMC_muSumJtpt_jet65_cent%d",i),Form("MC muSum/Jtpt, jet65 in centrality bin %d",i),100,0,1);
 
 
     hData_chMaxJtpt_jet65_keep[i] = new TH1F(Form("hData_chMaxJtpt_jet65_keep_cent%d",i),Form("Data chMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_chMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_chMaxJtpt_jet65_keep_cent%d",i),Form("MC chMax/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1);
+    hMC_chMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_chMaxJtpt_jet65_keep_cent%d",i),Form("MC chMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
     hData_chSumJtpt_jet65_keep[i] = new TH1F(Form("hData_chSumJtpt_jet65_keep_cent%d",i),Form("Data chSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,3);
-    hMC_chSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_chSumJtpt_jet65_keep_cent%d",i),Form("MC chSum/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,3);
+    hMC_chSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_chSumJtpt_jet65_keep_cent%d",i),Form("MC chSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,3);
 
     hData_eMaxJtpt_jet65_keep[i] = new TH1F(Form("hData_eMaxJtpt_jet65_keep_cent%d",i),Form("Data eMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.4);
-    hMC_eMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_eMaxJtpt_jet65_keep_cent%d",i),Form("MC eMax/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1.4);
+    hMC_eMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_eMaxJtpt_jet65_keep_cent%d",i),Form("MC eMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.4);
     hData_eSumJtpt_jet65_keep[i] = new TH1F(Form("hData_eSumJtpt_jet65_keep_cent%d",i),Form("Data eSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.5);
-    hMC_eSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_eSumJtpt_jet65_keep_cent%d",i),Form("MC eSum/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1.5);
+    hMC_eSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_eSumJtpt_jet65_keep_cent%d",i),Form("MC eSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.5);
 
     hData_neMaxJtpt_jet65_keep[i] = new TH1F(Form("hData_neMaxJtpt_jet65_keep_cent%d",i),Form("Data neMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.2);
-    hMC_neMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_neMaxJtpt_jet65_keep_cent%d",i),Form("MC neMax/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1.2);
+    hMC_neMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_neMaxJtpt_jet65_keep_cent%d",i),Form("MC neMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.2);
     hData_neSumJtpt_jet65_keep[i] = new TH1F(Form("hData_neSumJtpt_jet65_keep_cent%d",i),Form("Data neSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.8);
-    hMC_neSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_neSumJtpt_jet65_keep_cent%d",i),Form("MC neSum/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1.8);
+    hMC_neSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_neSumJtpt_jet65_keep_cent%d",i),Form("MC neSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.8);
 
     hData_phMaxJtpt_jet65_keep[i] = new TH1F(Form("hData_phMaxJtpt_jet65_keep_cent%d",i),Form("Data phMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.5);
-    hMC_phMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_phMaxJtpt_jet65_keep_cent%d",i),Form("MC phMax/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1.5);
+    hMC_phMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_phMaxJtpt_jet65_keep_cent%d",i),Form("MC phMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1.5);
     hData_phSumJtpt_jet65_keep[i] = new TH1F(Form("hData_phSumJtpt_jet65_keep_cent%d",i),Form("Data phSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,2);
-    hMC_phSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_phSumJtpt_jet65_keep_cent%d",i),Form("MC phSum/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,2);
+    hMC_phSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_phSumJtpt_jet65_keep_cent%d",i),Form("MC phSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,2);
 
     hData_muMaxJtpt_jet65_keep[i] = new TH1F(Form("hData_muMaxJtpt_jet65_keep_cent%d",i),Form("Data muMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_muMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_muMaxJtpt_jet65_keep_cent%d",i),Form("MC muMax/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1);
+    hMC_muMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_muMaxJtpt_jet65_keep_cent%d",i),Form("MC muMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
     hData_muSumJtpt_jet65_keep[i] = new TH1F(Form("hData_muSumJtpt_jet65_keep_cent%d",i),Form("Data muSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_muSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_muSumJtpt_jet65_keep_cent%d",i),Form("MC muSum/Jtpt, jet65 pass cutA in centrality bin ",i),100,0,1);
+    hMC_muSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_muSumJtpt_jet65_keep_cent%d",i),Form("MC muSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
 
     hData_chMaxJtpt_jet65_rej[i] = new TH1F(Form("hData_chMaxJtpt_jet65_rej_cent%d",i),Form("Data chMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1);
-    hMC_chMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_chMaxJtpt_jet65_rej_cent%d",i),Form("MC chMax/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1);
+    hMC_chMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_chMaxJtpt_jet65_rej_cent%d",i),Form("MC chMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1);
     hData_chSumJtpt_jet65_rej[i] = new TH1F(Form("hData_chSumJtpt_jet65_rej_cent%d",i),Form("Data chSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,3);
-    hMC_chSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_chSumJtpt_jet65_rej_cent%d",i),Form("MC chSum/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,3);
+    hMC_chSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_chSumJtpt_jet65_rej_cent%d",i),Form("MC chSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,3);
 
     hData_eMaxJtpt_jet65_rej[i] = new TH1F(Form("hData_eMaxJtpt_jet65_rej_cent%d",i),Form("Data eMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.4);
-    hMC_eMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_eMaxJtpt_jet65_rej_cent%d",i),Form("MC eMax/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1.4);
+    hMC_eMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_eMaxJtpt_jet65_rej_cent%d",i),Form("MC eMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.4);
     hData_eSumJtpt_jet65_rej[i] = new TH1F(Form("hData_eSumJtpt_jet65_rej_cent%d",i),Form("Data eSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.5);
-    hMC_eSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_eSumJtpt_jet65_rej_cent%d",i),Form("MC eSum/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1.5);
+    hMC_eSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_eSumJtpt_jet65_rej_cent%d",i),Form("MC eSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.5);
 
     hData_neMaxJtpt_jet65_rej[i] = new TH1F(Form("hData_neMaxJtpt_jet65_rej_cent%d",i),Form("Data neMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.2);
-    hMC_neMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_neMaxJtpt_jet65_rej_cent%d",i),Form("MC neMax/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1.2);
+    hMC_neMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_neMaxJtpt_jet65_rej_cent%d",i),Form("MC neMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.2);
     hData_neSumJtpt_jet65_rej[i] = new TH1F(Form("hData_neSumJtpt_jet65_rej_cent%d",i),Form("Data neSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.8);
-    hMC_neSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_neSumJtpt_jet65_rej_cent%d",i),Form("MC neSum/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1.8);
+    hMC_neSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_neSumJtpt_jet65_rej_cent%d",i),Form("MC neSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.8);
 
     hData_phMaxJtpt_jet65_rej[i] = new TH1F(Form("hData_phMaxJtpt_jet65_rej_cent%d",i),Form("Data phMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.5);
-    hMC_phMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_phMaxJtpt_jet65_rej_cent%d",i),Form("MC phMax/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1.5);
+    hMC_phMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_phMaxJtpt_jet65_rej_cent%d",i),Form("MC phMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1.5);
     hData_phSumJtpt_jet65_rej[i] = new TH1F(Form("hData_phSumJtpt_jet65_rej_cent%d",i),Form("Data phSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,2);
-    hMC_phSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_phSumJtpt_jet65_rej_cent%d",i),Form("MC phSum/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,2);
+    hMC_phSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_phSumJtpt_jet65_rej_cent%d",i),Form("MC phSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,2);
 
     hData_muMaxJtpt_jet65_rej[i] = new TH1F(Form("hData_muMaxJtpt_jet65_rej_cent%d",i),Form("Data muMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1);
-    hMC_muMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_muMaxJtpt_jet65_rej_cent%d",i),Form("MC muMax/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1);
+    hMC_muMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_muMaxJtpt_jet65_rej_cent%d",i),Form("MC muMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1);
     hData_muSumJtpt_jet65_rej[i] = new TH1F(Form("hData_muSumJtpt_jet65_rej_cent%d",i),Form("Data muSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1);
-    hMC_muSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_muSumJtpt_jet65_rej_cent%d",i),Form("MC muSum/Jtpt, jet65 fail cutA in centrality bin ",i),100,0,1);
+    hMC_muSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_muSumJtpt_jet65_rej_cent%d",i),Form("MC muSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1);
 
   }
   
@@ -555,7 +555,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
 
  /// end of looking at matched and unmatched, now to plot!!! 
 // save those histos to a root file, remembering that I did DrawNormalized, so they are not normalized in the root file!  
-  TFile fout("PbPb_JetIDPlots_NoCuts_and_YetkinCuts_matchedAndUn_slantedlinecalopfpt_eMaxSumcand_A_jet65Not80.root","RECREATE");
+  TFile fout("PbPb_JetIDPlots_NoCuts_and_YetkinCuts_matchedAndUn_slantedlinecalopfpt_eMaxSumcand_A_jet65Not80_R4.root","RECREATE");
   for(int i = 0 ; i < nbins_cent ; ++i){
 
     hData_chMaxJtpt_jet65[i]->Write();
@@ -633,7 +633,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_chMaxJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_chMaxJtpt_jet65[i]->Print("base");
     hMC_chMaxJtpt_jet65[i]->SetTitle(" ");
-    hMC_chMaxJtpt_jet65[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_chMaxJtpt_jet65[i]->SetXTitle("chMax/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_chMaxJtpt_jet65[i]->DrawNormalized();
 
     hData_chMaxJtpt_jet65[i]->SetMarkerStyle(24);
@@ -647,7 +647,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet65[i]->SaveAs(Form("chMaxJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cchMaxJtpt_jet65[i]->SaveAs(Form("chMaxJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   
@@ -661,7 +661,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_eMaxJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_eMaxJtpt_jet65[i]->Print("base");
     hMC_eMaxJtpt_jet65[i]->SetTitle(" ");
-    hMC_eMaxJtpt_jet65[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_eMaxJtpt_jet65[i]->SetXTitle("eMax/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_eMaxJtpt_jet65[i]->DrawNormalized();
 
     hData_eMaxJtpt_jet65[i]->SetMarkerStyle(24);
@@ -675,7 +675,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet65[i]->SaveAs(Form("eMaxJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    ceMaxJtpt_jet65[i]->SaveAs(Form("eMaxJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
 
@@ -689,7 +689,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_phMaxJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_phMaxJtpt_jet65[i]->Print("base");
     hMC_phMaxJtpt_jet65[i]->SetTitle(" ");
-    hMC_phMaxJtpt_jet65[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_phMaxJtpt_jet65[i]->SetXTitle("phMax/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_phMaxJtpt_jet65[i]->DrawNormalized();
 
     hData_phMaxJtpt_jet65[i]->SetMarkerStyle(24);
@@ -703,7 +703,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet65[i]->SaveAs(Form("phMaxJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cphMaxJtpt_jet65[i]->SaveAs(Form("phMaxJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet65[nbins_cent];
@@ -716,7 +716,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_neMaxJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_neMaxJtpt_jet65[i]->Print("base");
     hMC_neMaxJtpt_jet65[i]->SetTitle(" ");
-    hMC_neMaxJtpt_jet65[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_neMaxJtpt_jet65[i]->SetXTitle("neMax/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_neMaxJtpt_jet65[i]->DrawNormalized();
 
     hData_neMaxJtpt_jet65[i]->SetMarkerStyle(24);
@@ -730,7 +730,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet65[i]->SaveAs(Form("neMaxJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cneMaxJtpt_jet65[i]->SaveAs(Form("neMaxJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet65[nbins_cent];
@@ -743,7 +743,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_muMaxJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_muMaxJtpt_jet65[i]->Print("base");
     hMC_muMaxJtpt_jet65[i]->SetTitle(" ");
-    hMC_muMaxJtpt_jet65[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_muMaxJtpt_jet65[i]->SetXTitle("muMax/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_muMaxJtpt_jet65[i]->DrawNormalized();
 
     hData_muMaxJtpt_jet65[i]->SetMarkerStyle(24);
@@ -757,7 +757,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet65[i]->SaveAs(Form("muMaxJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cmuMaxJtpt_jet65[i]->SaveAs(Form("muMaxJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -771,7 +771,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_chSumJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_chSumJtpt_jet65[i]->Print("base");
     hMC_chSumJtpt_jet65[i]->SetTitle(" ");
-    hMC_chSumJtpt_jet65[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_chSumJtpt_jet65[i]->SetXTitle("chSum/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_chSumJtpt_jet65[i]->DrawNormalized();
 
     hData_chSumJtpt_jet65[i]->SetMarkerStyle(24);
@@ -785,7 +785,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet65[i]->SaveAs(Form("chSumJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cchSumJtpt_jet65[i]->SaveAs(Form("chSumJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet65[nbins_cent];
@@ -798,7 +798,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_eSumJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_eSumJtpt_jet65[i]->Print("base");
     hMC_eSumJtpt_jet65[i]->SetTitle(" ");
-    hMC_eSumJtpt_jet65[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_eSumJtpt_jet65[i]->SetXTitle("eSum/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_eSumJtpt_jet65[i]->DrawNormalized();
 
     hData_eSumJtpt_jet65[i]->SetMarkerStyle(24);
@@ -812,7 +812,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet65[i]->SaveAs(Form("eSumJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    ceSumJtpt_jet65[i]->SaveAs(Form("eSumJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet65[nbins_cent];
@@ -825,7 +825,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_phSumJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_phSumJtpt_jet65[i]->Print("base");
     hMC_phSumJtpt_jet65[i]->SetTitle(" ");
-    hMC_phSumJtpt_jet65[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_phSumJtpt_jet65[i]->SetXTitle("phSum/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_phSumJtpt_jet65[i]->DrawNormalized();
 
     hData_phSumJtpt_jet65[i]->SetMarkerStyle(24);
@@ -839,7 +839,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet65[i]->SaveAs(Form("phSumJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cphSumJtpt_jet65[i]->SaveAs(Form("phSumJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet65[nbins_cent];
@@ -852,7 +852,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_neSumJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_neSumJtpt_jet65[i]->Print("base");
     hMC_neSumJtpt_jet65[i]->SetTitle(" ");
-    hMC_neSumJtpt_jet65[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_neSumJtpt_jet65[i]->SetXTitle("neSum/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_neSumJtpt_jet65[i]->DrawNormalized();
 
     hData_neSumJtpt_jet65[i]->SetMarkerStyle(24);
@@ -866,7 +866,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet65[i]->SaveAs(Form("neSumJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cneSumJtpt_jet65[i]->SaveAs(Form("neSumJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet65[nbins_cent];
@@ -879,7 +879,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_muSumJtpt_jet65[i]->SetMarkerStyle(25);
     hMC_muSumJtpt_jet65[i]->Print("base");
     hMC_muSumJtpt_jet65[i]->SetTitle(" ");
-    hMC_muSumJtpt_jet65[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) jet65 no cuts");
+    hMC_muSumJtpt_jet65[i]->SetXTitle("muSum/(ak4PuPF jet p_{T}) jet65 no cuts");
     hMC_muSumJtpt_jet65[i]->DrawNormalized();
 
     hData_muSumJtpt_jet65[i]->SetMarkerStyle(24);
@@ -893,7 +893,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet65[i]->SaveAs(Form("muSumJtpt_jet65_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cmuSumJtpt_jet65[i]->SaveAs(Form("muSumJtpt_jet65_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }    
 
@@ -907,7 +907,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_chMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_chMaxJtpt_jet65_keep[i]->Print("base");
     hMC_chMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_chMaxJtpt_jet65_keep[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_chMaxJtpt_jet65_keep[i]->SetXTitle("chMax/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_chMaxJtpt_jet65_keep[i]=hMC_chMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_chMaxJtpt_jet65_keep[i]>0){
        hMC_chMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -920,7 +920,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_chMaxJtpt_jet65_keep[i]<=0){
         hData_chMaxJtpt_jet65_keep[i]->Print("base");
         hData_chMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet65_keep[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_chMaxJtpt_jet65_keep[i]->SetXTitle("chMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_chMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -934,7 +934,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet65_keep[i]->SaveAs(Form("chMaxJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cchMaxJtpt_jet65_keep[i]->SaveAs(Form("chMaxJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   
@@ -948,7 +948,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_eMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_eMaxJtpt_jet65_keep[i]->Print("base");
     hMC_eMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_eMaxJtpt_jet65_keep[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_eMaxJtpt_jet65_keep[i]->SetXTitle("eMax/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_eMaxJtpt_jet65_keep[i]=hMC_eMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_eMaxJtpt_jet65_keep[i]>0){
        hMC_eMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -961,7 +961,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_eMaxJtpt_jet65_keep[i]<=0){
         hData_eMaxJtpt_jet65_keep[i]->Print("base");
         hData_eMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet65_keep[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_eMaxJtpt_jet65_keep[i]->SetXTitle("eMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_eMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -975,7 +975,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet65_keep[i]->SaveAs(Form("eMaxJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    ceMaxJtpt_jet65_keep[i]->SaveAs(Form("eMaxJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
 
@@ -989,7 +989,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_phMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_phMaxJtpt_jet65_keep[i]->Print("base");
     hMC_phMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_phMaxJtpt_jet65_keep[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_phMaxJtpt_jet65_keep[i]->SetXTitle("phMax/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_phMaxJtpt_jet65_keep[i]=hMC_phMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_phMaxJtpt_jet65_keep[i]>0){
        hMC_phMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -1002,7 +1002,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_phMaxJtpt_jet65_keep[i]<=0){
         hData_phMaxJtpt_jet65_keep[i]->Print("base");
         hData_phMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet65_keep[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_phMaxJtpt_jet65_keep[i]->SetXTitle("phMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_phMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1016,7 +1016,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet65_keep[i]->SaveAs(Form("phMaxJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cphMaxJtpt_jet65_keep[i]->SaveAs(Form("phMaxJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet65_keep[nbins_cent];
@@ -1029,7 +1029,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_neMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_neMaxJtpt_jet65_keep[i]->Print("base");
     hMC_neMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_neMaxJtpt_jet65_keep[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_neMaxJtpt_jet65_keep[i]->SetXTitle("neMax/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_neMaxJtpt_jet65_keep[i]=hMC_neMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_neMaxJtpt_jet65_keep[i]>0){
        hMC_neMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -1042,7 +1042,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_neMaxJtpt_jet65_keep[i]<=0){
         hData_neMaxJtpt_jet65_keep[i]->Print("base");
         hData_neMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet65_keep[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_neMaxJtpt_jet65_keep[i]->SetXTitle("neMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_neMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1056,7 +1056,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet65_keep[i]->SaveAs(Form("neMaxJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cneMaxJtpt_jet65_keep[i]->SaveAs(Form("neMaxJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet65_keep[nbins_cent];
@@ -1069,7 +1069,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_muMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_muMaxJtpt_jet65_keep[i]->Print("base");
     hMC_muMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_muMaxJtpt_jet65_keep[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_muMaxJtpt_jet65_keep[i]->SetXTitle("muMax/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_muMaxJtpt_jet65_keep[i]=hMC_muMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_muMaxJtpt_jet65_keep[i]>0){
        hMC_muMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -1082,7 +1082,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_muMaxJtpt_jet65_keep[i]<=0){
         hData_muMaxJtpt_jet65_keep[i]->Print("base");
         hData_muMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet65_keep[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_muMaxJtpt_jet65_keep[i]->SetXTitle("muMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_muMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1096,7 +1096,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet65_keep[i]->SaveAs(Form("muMaxJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cmuMaxJtpt_jet65_keep[i]->SaveAs(Form("muMaxJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -1110,7 +1110,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_chSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_chSumJtpt_jet65_keep[i]->Print("base");
     hMC_chSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_chSumJtpt_jet65_keep[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_chSumJtpt_jet65_keep[i]->SetXTitle("chSum/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_chSumJtpt_jet65_keep[i]=hMC_chSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_chSumJtpt_jet65_keep[i]>0){
        hMC_chSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -1123,7 +1123,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_chSumJtpt_jet65_keep[i]<=0){
         hData_chSumJtpt_jet65_keep[i]->Print("base");
         hData_chSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_chSumJtpt_jet65_keep[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_chSumJtpt_jet65_keep[i]->SetXTitle("chSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_chSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1137,7 +1137,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet65_keep[i]->SaveAs(Form("chSumJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cchSumJtpt_jet65_keep[i]->SaveAs(Form("chSumJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet65_keep[nbins_cent];
@@ -1150,7 +1150,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_eSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_eSumJtpt_jet65_keep[i]->Print("base");
     hMC_eSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_eSumJtpt_jet65_keep[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_eSumJtpt_jet65_keep[i]->SetXTitle("eSum/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_eSumJtpt_jet65_keep[i]=hMC_eSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_eSumJtpt_jet65_keep[i]>0){
        hMC_eSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -1163,7 +1163,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_eSumJtpt_jet65_keep[i]<=0){
         hData_eSumJtpt_jet65_keep[i]->Print("base");
         hData_eSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_eSumJtpt_jet65_keep[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_eSumJtpt_jet65_keep[i]->SetXTitle("eSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_eSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1177,7 +1177,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet65_keep[i]->SaveAs(Form("eSumJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    ceSumJtpt_jet65_keep[i]->SaveAs(Form("eSumJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet65_keep[nbins_cent];
@@ -1190,7 +1190,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_phSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_phSumJtpt_jet65_keep[i]->Print("base");
     hMC_phSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_phSumJtpt_jet65_keep[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_phSumJtpt_jet65_keep[i]->SetXTitle("phSum/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_phSumJtpt_jet65_keep[i]=hMC_phSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_phSumJtpt_jet65_keep[i]>0){
        hMC_phSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -1203,7 +1203,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_phSumJtpt_jet65_keep[i]<=0){
         hData_phSumJtpt_jet65_keep[i]->Print("base");
         hData_phSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_phSumJtpt_jet65_keep[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_phSumJtpt_jet65_keep[i]->SetXTitle("phSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_phSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1217,7 +1217,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet65_keep[i]->SaveAs(Form("phSumJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cphSumJtpt_jet65_keep[i]->SaveAs(Form("phSumJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet65_keep[nbins_cent];
@@ -1230,7 +1230,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_neSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_neSumJtpt_jet65_keep[i]->Print("base");
     hMC_neSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_neSumJtpt_jet65_keep[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_neSumJtpt_jet65_keep[i]->SetXTitle("neSum/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_neSumJtpt_jet65_keep[i]=hMC_neSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_neSumJtpt_jet65_keep[i]>0){
        hMC_neSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -1243,7 +1243,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_neSumJtpt_jet65_keep[i]<=0){
         hData_neSumJtpt_jet65_keep[i]->Print("base");
         hData_neSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_neSumJtpt_jet65_keep[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_neSumJtpt_jet65_keep[i]->SetXTitle("neSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_neSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1257,7 +1257,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet65_keep[i]->SaveAs(Form("neSumJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cneSumJtpt_jet65_keep[i]->SaveAs(Form("neSumJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet65_keep[nbins_cent];
@@ -1270,7 +1270,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_muSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_muSumJtpt_jet65_keep[i]->Print("base");
     hMC_muSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_muSumJtpt_jet65_keep[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) jet65, pass CutA");
+    hMC_muSumJtpt_jet65_keep[i]->SetXTitle("muSum/(ak4PuPF jet p_{T}) jet65, pass CutA");
     nMC_muSumJtpt_jet65_keep[i]=hMC_muSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_muSumJtpt_jet65_keep[i]>0){
        hMC_muSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -1283,7 +1283,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_muSumJtpt_jet65_keep[i]<=0){
         hData_muSumJtpt_jet65_keep[i]->Print("base");
         hData_muSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_muSumJtpt_jet65_keep[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_muSumJtpt_jet65_keep[i]->SetXTitle("muSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_muSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -1297,7 +1297,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet65_keep[i]->SaveAs(Form("muSumJtpt_jet65_keep_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cmuSumJtpt_jet65_keep[i]->SaveAs(Form("muSumJtpt_jet65_keep_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
     TCanvas * cchMaxJtpt_jet65_rej[nbins_cent];
@@ -1310,7 +1310,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_chMaxJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_chMaxJtpt_jet65_rej[i]->Print("base");
     hMC_chMaxJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_chMaxJtpt_jet65_rej[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_chMaxJtpt_jet65_rej[i]->SetXTitle("chMax/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_chMaxJtpt_jet65_rej[i]=hMC_chMaxJtpt_jet65_rej[i]->GetEntries();
     if (nMC_chMaxJtpt_jet65_rej[i]>0){
        hMC_chMaxJtpt_jet65_rej[i]->DrawNormalized();
@@ -1323,7 +1323,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_chMaxJtpt_jet65_rej[i]<=0){
         hData_chMaxJtpt_jet65_rej[i]->Print("base");
         hData_chMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet65_rej[i]->SetXTitle("chMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_chMaxJtpt_jet65_rej[i]->SetXTitle("chMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_chMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1337,7 +1337,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet65_rej[i]->SaveAs(Form("chMaxJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cchMaxJtpt_jet65_rej[i]->SaveAs(Form("chMaxJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   
@@ -1351,7 +1351,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_eMaxJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_eMaxJtpt_jet65_rej[i]->Print("base");
     hMC_eMaxJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_eMaxJtpt_jet65_rej[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_eMaxJtpt_jet65_rej[i]->SetXTitle("eMax/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_eMaxJtpt_jet65_rej[i]=hMC_eMaxJtpt_jet65_rej[i]->GetEntries();
     if (nMC_eMaxJtpt_jet65_rej[i]>0){
        hMC_eMaxJtpt_jet65_rej[i]->DrawNormalized();
@@ -1364,7 +1364,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_eMaxJtpt_jet65_rej[i]<=0){
         hData_eMaxJtpt_jet65_rej[i]->Print("base");
         hData_eMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet65_rej[i]->SetXTitle("eMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_eMaxJtpt_jet65_rej[i]->SetXTitle("eMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_eMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1378,7 +1378,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet65_rej[i]->SaveAs(Form("eMaxJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    ceMaxJtpt_jet65_rej[i]->SaveAs(Form("eMaxJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
 
@@ -1392,7 +1392,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_phMaxJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_phMaxJtpt_jet65_rej[i]->Print("base");
     hMC_phMaxJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_phMaxJtpt_jet65_rej[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_phMaxJtpt_jet65_rej[i]->SetXTitle("phMax/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_phMaxJtpt_jet65_rej[i]=hMC_phMaxJtpt_jet65_rej[i]->GetEntries();
     if (nMC_phMaxJtpt_jet65_rej[i]>0){
        hMC_phMaxJtpt_jet65_rej[i]->DrawNormalized();
@@ -1405,7 +1405,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_phMaxJtpt_jet65_rej[i]<=0){
         hData_phMaxJtpt_jet65_rej[i]->Print("base");
         hData_phMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet65_rej[i]->SetXTitle("phMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_phMaxJtpt_jet65_rej[i]->SetXTitle("phMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_phMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1419,7 +1419,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet65_rej[i]->SaveAs(Form("phMaxJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cphMaxJtpt_jet65_rej[i]->SaveAs(Form("phMaxJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet65_rej[nbins_cent];
@@ -1432,7 +1432,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_neMaxJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_neMaxJtpt_jet65_rej[i]->Print("base");
     hMC_neMaxJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_neMaxJtpt_jet65_rej[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_neMaxJtpt_jet65_rej[i]->SetXTitle("neMax/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_neMaxJtpt_jet65_rej[i]=hMC_neMaxJtpt_jet65_rej[i]->GetEntries();
     if (nMC_neMaxJtpt_jet65_rej[i]>0){
        hMC_neMaxJtpt_jet65_rej[i]->DrawNormalized();
@@ -1445,7 +1445,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_neMaxJtpt_jet65_rej[i]<=0){
         hData_neMaxJtpt_jet65_rej[i]->Print("base");
         hData_neMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet65_rej[i]->SetXTitle("neMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_neMaxJtpt_jet65_rej[i]->SetXTitle("neMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_neMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1459,7 +1459,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet65_rej[i]->SaveAs(Form("neMaxJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cneMaxJtpt_jet65_rej[i]->SaveAs(Form("neMaxJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet65_rej[nbins_cent];
@@ -1472,7 +1472,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_muMaxJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_muMaxJtpt_jet65_rej[i]->Print("base");
     hMC_muMaxJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_muMaxJtpt_jet65_rej[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_muMaxJtpt_jet65_rej[i]->SetXTitle("muMax/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_muMaxJtpt_jet65_rej[i]=hMC_muMaxJtpt_jet65_rej[i]->GetEntries();
     if (nMC_muMaxJtpt_jet65_rej[i]>0){
        hMC_muMaxJtpt_jet65_rej[i]->DrawNormalized();
@@ -1485,7 +1485,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_muMaxJtpt_jet65_rej[i]<=0){
         hData_muMaxJtpt_jet65_rej[i]->Print("base");
         hData_muMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet65_rej[i]->SetXTitle("muMax/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_muMaxJtpt_jet65_rej[i]->SetXTitle("muMax/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_muMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1499,7 +1499,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet65_rej[i]->SaveAs(Form("muMaxJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cmuMaxJtpt_jet65_rej[i]->SaveAs(Form("muMaxJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -1513,7 +1513,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_chSumJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_chSumJtpt_jet65_rej[i]->Print("base");
     hMC_chSumJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_chSumJtpt_jet65_rej[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_chSumJtpt_jet65_rej[i]->SetXTitle("chSum/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_chSumJtpt_jet65_rej[i]=hMC_chSumJtpt_jet65_rej[i]->GetEntries();
     if (nMC_chSumJtpt_jet65_rej[i]>0){
        hMC_chSumJtpt_jet65_rej[i]->DrawNormalized();
@@ -1526,7 +1526,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_chSumJtpt_jet65_rej[i]<=0){
         hData_chSumJtpt_jet65_rej[i]->Print("base");
         hData_chSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_chSumJtpt_jet65_rej[i]->SetXTitle("chSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_chSumJtpt_jet65_rej[i]->SetXTitle("chSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_chSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1540,7 +1540,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet65_rej[i]->SaveAs(Form("chSumJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cchSumJtpt_jet65_rej[i]->SaveAs(Form("chSumJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet65_rej[nbins_cent];
@@ -1553,7 +1553,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_eSumJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_eSumJtpt_jet65_rej[i]->Print("base");
     hMC_eSumJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_eSumJtpt_jet65_rej[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_eSumJtpt_jet65_rej[i]->SetXTitle("eSum/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_eSumJtpt_jet65_rej[i]=hMC_eSumJtpt_jet65_rej[i]->GetEntries();
     if (nMC_eSumJtpt_jet65_rej[i]>0){
        hMC_eSumJtpt_jet65_rej[i]->DrawNormalized();
@@ -1566,7 +1566,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_eSumJtpt_jet65_rej[i]<=0){
         hData_eSumJtpt_jet65_rej[i]->Print("base");
         hData_eSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_eSumJtpt_jet65_rej[i]->SetXTitle("eSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_eSumJtpt_jet65_rej[i]->SetXTitle("eSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_eSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1580,7 +1580,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet65_rej[i]->SaveAs(Form("eSumJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    ceSumJtpt_jet65_rej[i]->SaveAs(Form("eSumJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet65_rej[nbins_cent];
@@ -1593,7 +1593,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_phSumJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_phSumJtpt_jet65_rej[i]->Print("base");
     hMC_phSumJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_phSumJtpt_jet65_rej[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_phSumJtpt_jet65_rej[i]->SetXTitle("phSum/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_phSumJtpt_jet65_rej[i]=hMC_phSumJtpt_jet65_rej[i]->GetEntries();
     if (nMC_phSumJtpt_jet65_rej[i]>0){
        hMC_phSumJtpt_jet65_rej[i]->DrawNormalized();
@@ -1606,7 +1606,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_phSumJtpt_jet65_rej[i]<=0){
         hData_phSumJtpt_jet65_rej[i]->Print("base");
         hData_phSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_phSumJtpt_jet65_rej[i]->SetXTitle("phSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_phSumJtpt_jet65_rej[i]->SetXTitle("phSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_phSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1620,7 +1620,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet65_rej[i]->SaveAs(Form("phSumJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cphSumJtpt_jet65_rej[i]->SaveAs(Form("phSumJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet65_rej[nbins_cent];
@@ -1633,7 +1633,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_neSumJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_neSumJtpt_jet65_rej[i]->Print("base");
     hMC_neSumJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_neSumJtpt_jet65_rej[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_neSumJtpt_jet65_rej[i]->SetXTitle("neSum/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_neSumJtpt_jet65_rej[i]=hMC_neSumJtpt_jet65_rej[i]->GetEntries();
     if (nMC_neSumJtpt_jet65_rej[i]>0){
        hMC_neSumJtpt_jet65_rej[i]->DrawNormalized();
@@ -1646,7 +1646,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_neSumJtpt_jet65_rej[i]<=0){
         hData_neSumJtpt_jet65_rej[i]->Print("base");
         hData_neSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_neSumJtpt_jet65_rej[i]->SetXTitle("neSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_neSumJtpt_jet65_rej[i]->SetXTitle("neSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_neSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1660,7 +1660,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet65_rej[i]->SaveAs(Form("neSumJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cneSumJtpt_jet65_rej[i]->SaveAs(Form("neSumJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet65_rej[nbins_cent];
@@ -1673,7 +1673,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     hMC_muSumJtpt_jet65_rej[i]->SetMarkerStyle(25);
     hMC_muSumJtpt_jet65_rej[i]->Print("base");
     hMC_muSumJtpt_jet65_rej[i]->SetTitle(" ");
-    hMC_muSumJtpt_jet65_rej[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) jet65, fail CutA");
+    hMC_muSumJtpt_jet65_rej[i]->SetXTitle("muSum/(ak4PuPF jet p_{T}) jet65, fail CutA");
     nMC_muSumJtpt_jet65_rej[i]=hMC_muSumJtpt_jet65_rej[i]->GetEntries();
     if (nMC_muSumJtpt_jet65_rej[i]>0){
        hMC_muSumJtpt_jet65_rej[i]->DrawNormalized();
@@ -1686,7 +1686,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
       if(nMC_muSumJtpt_jet65_rej[i]<=0){
         hData_muSumJtpt_jet65_rej[i]->Print("base");
         hData_muSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_muSumJtpt_jet65_rej[i]->SetXTitle("muSum/(ak3PuPF jet p_{T}) jet65, pass CutA");      
+        hData_muSumJtpt_jet65_rej[i]->SetXTitle("muSum/(ak4PuPF jet p_{T}) jet65, pass CutA");      
         hData_muSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -1700,7 +1700,7 @@ void RAA_plot_jeidvariables_cutPass_jet65(){
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet65_rej[i]->SaveAs(Form("muSumJtpt_jet65_rej_cent%deMax_MCweight.pdf",i),"RECREATE");
+    cmuSumJtpt_jet65_rej[i]->SaveAs(Form("muSumJtpt_jet65_rej_cent%deMax_MCweight_R4.pdf",i),"RECREATE");
 
   }  
 }
