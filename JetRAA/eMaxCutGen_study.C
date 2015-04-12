@@ -157,7 +157,7 @@ void eMaxCutGen_study(){
   MC_unmatched->SetBranchAddress("jet55",&jet55_2);
   MC_unmatched->SetBranchAddress("jet65",&jet65_2);
   MC_unmatched->SetBranchAddress("jet80",&jet80_2);
-  MC_matched->SetBranchAddress("subid",&subid);
+  MC_unmatched->SetBranchAddress("subid",&subid);
 
  long nentries = MC_matched->GetEntries();
   //entries = 1;
