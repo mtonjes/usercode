@@ -101,7 +101,6 @@ void eMaxCutGen_study(){
   Int_t jet55_p_1, jet65_p_1, jet80_p_1;
   Int_t jet55_2, jet65_2, jet80_2;
   Int_t jet55_p_2, jet65_p_2, jet80_p_2;
-  Int_t subid;
 
   Data_matched->SetBranchAddress("calopt",&calopt_1);
   Data_matched->SetBranchAddress("pfpt",&pfpt_1);
@@ -144,8 +143,7 @@ void eMaxCutGen_study(){
   MC_matched->SetBranchAddress("jet55",&jet55_2);
   MC_matched->SetBranchAddress("jet65",&jet65_2);
   MC_matched->SetBranchAddress("jet80",&jet80_2);
-    MC_matched->SetBranchAddress("subid",&subid);
-
+  
   MC_unmatched->SetBranchAddress("pfpt",&pfpt_2);
   MC_unmatched->SetBranchAddress("eMax",&eMax_2);
   MC_unmatched->SetBranchAddress("chMax",&chMax_2);
@@ -157,7 +155,6 @@ void eMaxCutGen_study(){
   MC_unmatched->SetBranchAddress("jet55",&jet55_2);
   MC_unmatched->SetBranchAddress("jet65",&jet65_2);
   MC_unmatched->SetBranchAddress("jet80",&jet80_2);
-  MC_matched->SetBranchAddress("subid",&subid);
 
  long nentries = MC_matched->GetEntries();
   //entries = 1;
@@ -172,7 +169,6 @@ void eMaxCutGen_study(){
     Float_t ratioGenPF = pfrefpt_2/pfpt_2;
     hMC_AllTrig_noCut_pfrefOverpfpt->Fill(ratioGenPF);
     hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->Fill(ratioGenPF);
-    if(subid==0){
     if(pfrefpt_2>0){
        hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->Fill(ratioGenPF);
        hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Fill(ratioGenPF);
@@ -186,7 +182,7 @@ void eMaxCutGen_study(){
    		   hMC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Fill(ratioGenPF);
    		}
    }
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_AllTrig_CutA_pfrefOverpfpt_keep->Fill(ratioGenPF);
    		hMC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_keep->Fill(ratioGenPF); 
    		if(pfrefpt_2>0){
@@ -203,7 +199,7 @@ void eMaxCutGen_study(){
    		}
    }
 // rejected area:
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_AllTrig_CutA_pfrefOverpfpt_rej->Fill(ratioGenPF);
    		hMC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_rej->Fill(ratioGenPF);
    		if(pfrefpt_2>0){
@@ -226,14 +222,14 @@ void eMaxCutGen_study(){
    if(calopt_2/pfpt_2 <= 0.5 && eMax_2/Sumcand < 0.05) {
    		hMC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_keep->Fill(ratioGenPF); 
    }
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_keep->Fill(ratioGenPF); 
    }
    if(calopt_2/pfpt_2 > 0.85){
     	hMC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_keep->Fill(ratioGenPF); 
    }
 // rejected area:
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_rej->Fill(ratioGenPF);
    }
    if(calopt_2/pfpt_2 <= 0.5 && eMax_2/Sumcand >= 0.05) {
@@ -253,7 +249,7 @@ void eMaxCutGen_study(){
    		   hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Fill(ratioGenPF);
    		}
    }
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_keep->Fill(ratioGenPF); 
    		if(pfrefpt_2>0){
    		   hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Fill(ratioGenPF);
@@ -266,7 +262,7 @@ void eMaxCutGen_study(){
    		}
    }
 // rejected area:
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_rej->Fill(ratioGenPF);
    		if(pfrefpt_2>0){
    		   hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej->Fill(ratioGenPF);
@@ -292,7 +288,7 @@ void eMaxCutGen_study(){
    		   hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Fill(ratioGenPF);
    		}
    }
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_keep->Fill(ratioGenPF); 
    		if(pfrefpt_2>0){
    		   hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Fill(ratioGenPF);
@@ -305,7 +301,7 @@ void eMaxCutGen_study(){
    		}
    }
 // rejected area:
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_rej->Fill(ratioGenPF);
    		if(pfrefpt_2>0){
    		   hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej->Fill(ratioGenPF);
@@ -332,7 +328,7 @@ void eMaxCutGen_study(){
    		   hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Fill(ratioGenPF);
    		}
    }
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand < (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_keep->Fill(ratioGenPF); 
    		if(pfrefpt_2>0){
    		   hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Fill(ratioGenPF);
@@ -345,7 +341,7 @@ void eMaxCutGen_study(){
    		}
    }
 // rejected area:
-   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) {
+   if(calopt_2/pfpt_2 > 0.5 && calopt_2/pfpt_2 <= 0.85 && eMax_2/Sumcand >= (18/7 *(Float_t)calopt_2/pfpt_2 - 9/7)) ){
    		hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_rej->Fill(ratioGenPF);
    		if(pfrefpt_2>0){
    		   hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej->Fill(ratioGenPF);
@@ -360,7 +356,7 @@ void eMaxCutGen_study(){
 
      }
     
-} // end subid loop    
+    
   }// mc matched ntuple loop
 
 
@@ -377,7 +373,6 @@ void eMaxCutGen_study(){
     Float_t ratioGenPF = pfrefpt_2/pfpt_2;
     
     hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->Fill(ratioGenPF);
-    if(subid==0){
     if(pfrefpt_2>0){
         hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Fill(ratioGenPF);
     }
@@ -459,7 +454,7 @@ void eMaxCutGen_study(){
         }
     }
   } // end jet80 
-} // end subid loop  
+  
   }// mc unmatched  ntuple loop
   
 
@@ -503,7 +498,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
 
   hMC_AllTrig_noCut_pfrefOverpfpt->SetMarkerColor(kBlack);
   hMC_AllTrig_noCut_pfrefOverpfpt->SetMarkerStyle(25);
-  hMC_AllTrig_noCut_pfrefOverpfpt->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_AllTrig_noCut_pfrefOverpfpt->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_AllTrig_noCut_pfrefOverpfpt->Draw();
   Int_t MC_AllTrig_noCut_pfrefOverpfpt=hMC_AllTrig_noCut_pfrefOverpfpt->GetEntries();
   cout<<"hMC_AllTrig_noCut_pfrefOverpfpt: "<<hMC_AllTrig_noCut_pfrefOverpfpt->GetEntries()<<endl;;
@@ -527,14 +522,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_full->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_rej,Form("Matched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_rej),"pl");
       LpfrefOverpfpt_full->Draw();
       
-  cGenJetMC->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_fullrange_subid.pdf","RECREATE");
+  cGenJetMC->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_fullrange.pdf","RECREATE");
 
   TCanvas * cGenJetMC_pfrefptgt0 = new TCanvas("cGenJetMC_pfrefptgt0","",800,600);
   cGenJetMC_pfrefptgt0->SetLogy();
 
   hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->SetMarkerColor(kBlack);
   hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->SetMarkerStyle(25);
-  hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->Draw();
   Int_t MC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0=hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->GetEntries();
   cout<<"hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0: "<<hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->GetEntries()<<endl;;
@@ -558,14 +553,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej,Form("Matched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej),"p");
       LpfrefOverpfpt->Draw();
       
-  cGenJetMC_pfrefptgt0->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_pfrefptgt0->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_pfrefptgt0.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn = new TCanvas("cGenJetMC_matchAndUn","",800,600);
   cGenJetMC_matchAndUn->SetLogy();
 
   hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->SetMarkerColor(kBlack);
   hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->SetMarkerStyle(25);
-  hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->Draw();
   Int_t MC_AllTrig_noCut_pfrefOverpfpt_matchAndUn=hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->GetEntries();
   cout<<"hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn: "<<hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->GetEntries()<<endl;;
@@ -589,14 +584,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_full->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_full->Draw();
       
-  cGenJetMC_matchAndUn->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_pfrefptgt0 = new TCanvas("cGenJetMC_matchAndUn_pfrefptgt0","",800,600);
   cGenJetMC_matchAndUn_pfrefptgt0->SetLogy();
 
   hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerColor(kBlack);
   hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerStyle(25);
-  hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Draw();
   Int_t MC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0=hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries();
   cout<<"hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0: "<<hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries()<<endl;;
@@ -620,14 +615,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn->Draw();
       
-  cGenJetMC_matchAndUn_pfrefptgt0->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_pfrefptgt0->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_NoTrig = new TCanvas("cGenJetMC_matchAndUn_NoTrig","",800,600);
   cGenJetMC_matchAndUn_NoTrig->SetLogy();
 
   hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn->SetMarkerColor(kBlack);
   hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn->SetMarkerStyle(25);
-  hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn->Draw();
   Int_t MC_NoTrig_noCut_pfrefOverpfpt_matchAndUn=hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn->GetEntries();
   cout<<"hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn: "<<hMC_NoTrig_noCut_pfrefOverpfpt_matchAndUn->GetEntries()<<endl;;
@@ -651,7 +646,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_NoTrig_full->AddEntry(hMC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject NoTrig CutA: %d entries",MC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_NoTrig_full->Draw();
       
-  cGenJetMC_matchAndUn_NoTrig->SaveAs("hMC_NoTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_NoTrig->SaveAs("hMC_NoTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange.pdf","RECREATE");
 
 
   TCanvas * cGenJetMC_matchAndUn_Jet55 = new TCanvas("cGenJetMC_matchAndUn_Jet55","",800,600);
@@ -659,7 +654,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
 
   hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn->SetMarkerColor(kBlack);
   hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn->SetMarkerStyle(25);
-  hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn->Draw();
   Int_t MC_Jet55_noCut_pfrefOverpfpt_matchAndUn=hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn->GetEntries();
   cout<<"hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn: "<<hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn->GetEntries()<<endl;;
@@ -683,14 +678,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet55_full->AddEntry(hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject Jet55 CutA: %d entries",MC_Jet55_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_Jet55_full->Draw();
       
-  cGenJetMC_matchAndUn_Jet55->SaveAs("hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet55->SaveAs("hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55 = new TCanvas("cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55","",800,600);
   cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55->SetLogy();
-  
+
   hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerColor(kBlack);
   hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerStyle(25);
-  hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Draw();
   Int_t MC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0=hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries();
   cout<<"hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0: "<<hMC_Jet55_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries()<<endl;;
@@ -714,14 +709,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet55->AddEntry(hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject Jet55 CutA: %d entries",MC_Jet55_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn_Jet55->Draw();
       
-  cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55->SaveAs("hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55->SaveAs("hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet65 = new TCanvas("cGenJetMC_matchAndUn_Jet65","",800,600);
   cGenJetMC_matchAndUn_Jet65->SetLogy();
 
   hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn->SetMarkerColor(kBlack);
   hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn->SetMarkerStyle(25);
-  hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn->Draw();
   Int_t MC_Jet65_noCut_pfrefOverpfpt_matchAndUn=hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn->GetEntries();
   cout<<"hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn: "<<hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn->GetEntries()<<endl;;
@@ -745,14 +740,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet65_full->AddEntry(hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject Jet65 CutA: %d entries",MC_Jet65_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_Jet65_full->Draw();
       
-  cGenJetMC_matchAndUn_Jet65->SaveAs("hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet65->SaveAs("hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65 = new TCanvas("cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65","",800,600);
   cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65->SetLogy();
 
   hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerColor(kBlack);
   hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerStyle(25);
-  hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Draw();
   Int_t MC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0=hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries();
   cout<<"hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0: "<<hMC_Jet65_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries()<<endl;;
@@ -776,14 +771,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet65->AddEntry(hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject Jet65 CutA: %d entries",MC_Jet65_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn_Jet65->Draw();
       
-  cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65->SaveAs("hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65->SaveAs("hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet80 = new TCanvas("cGenJetMC_matchAndUn_Jet80","",800,600);
   cGenJetMC_matchAndUn_Jet80->SetLogy();
 
   hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn->SetMarkerColor(kBlack);
   hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn->SetMarkerStyle(25);
-  hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn->Draw();
   Int_t MC_Jet80_noCut_pfrefOverpfpt_matchAndUn=hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn->GetEntries();
   cout<<"hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn: "<<hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn->GetEntries()<<endl;;
@@ -807,14 +802,14 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet80_full->AddEntry(hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject Jet80 CutA: %d entries",MC_Jet80_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_Jet80_full->Draw();
       
-  cGenJetMC_matchAndUn_Jet80->SaveAs("hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet80->SaveAs("hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange.pdf","RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80 = new TCanvas("cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80","",800,600);
   cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80->SetLogy();
 
   hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerColor(kBlack);
   hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetMarkerStyle(25);
-  hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T} (subid selected)/ matched PF p_{T}");
+  hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->SetXTitle("GenJet p_{T}/ matched PF p_{T}");
   hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Draw();
   Int_t MC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0=hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries();
   cout<<"hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0: "<<hMC_Jet80_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->GetEntries()<<endl;;
@@ -838,7 +833,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet80->AddEntry(hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject Jet80 CutA: %d entries",MC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn_Jet80->Draw();
       
-  cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80->SaveAs("hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80->SaveAs("hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0.pdf","RECREATE");
 
 
 }
