@@ -170,9 +170,9 @@ void eMaxCutGen_study(){
     
     Float_t Sumcand = chSum_2 + phSum_2 + neSum_2 + muSum_2;
     Float_t ratioGenPF = pfrefpt_2/pfpt_2;
+    if(subid==0){
     hMC_AllTrig_noCut_pfrefOverpfpt->Fill(ratioGenPF);
     hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->Fill(ratioGenPF);
-    if(subid==0){
     if(pfrefpt_2>0){
        hMC_AllTrig_noCut_pfrefOverpfpt_pfrefptgt0->Fill(ratioGenPF);
        hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Fill(ratioGenPF);
@@ -375,9 +375,8 @@ void eMaxCutGen_study(){
     
     Float_t Sumcand = chSum_2 + phSum_2 + neSum_2 + muSum_2;
     Float_t ratioGenPF = pfrefpt_2/pfpt_2;
-    
-    hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->Fill(ratioGenPF);
     if(subid==0){
+    hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn->Fill(ratioGenPF);
     if(pfrefpt_2>0){
         hMC_AllTrig_noCut_pfrefOverpfpt_matchAndUn_pfrefptgt0->Fill(ratioGenPF);
     }
