@@ -83,54 +83,163 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   fin_R4= TFile::Open(Form("/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/PbPb_pp_calopfpt_jetidcut_R0p%d_unfold_mcclosure_oppside_trgMC_n20_eta_p20_%dGeVCut_ak%s_20150415.root",4,unfoldingCut,jet_type));
 
   // get the histograms.
-  TH1F * uPbPb_R2_Bayes[nbins_cent], * uPbPb_R3_Bayes[nbins_cent], * uPbPb_R4_Bayes[nbins_cent];
-  TH1F * uPP_R2_Bayes, * uPP_R3_Bayes, * uPP_R4_Bayes;
+  TH1F * uPbPb_R2_Bayes[nbins_cent], * uPP_R2_Bayes, * uPbPb_R3_Bayes[nbins_cent], * uPP_R3_Bayes, * uPbPb_R4_Bayes[nbins_cent], * uPP_R4_Bayes;
+  TH1F * mPbPb_R2[nbins_cent], * mPP_R2, * mPbPb_R3[nbins_cent], * mPP_R3, * mPbPb_R4[nbins_cent], * mPP_R4;
+  
   TH1F * RAA_R2_Bayes[nbins_cent], * RAA_R3_Bayes[nbins_cent], * RAA_R4_Bayes[nbins_cent];
   TH1F * RAA_R2_BinByBin[nbins_cent], * RAA_R3_BinByBin[nbins_cent], * RAA_R4_BinByBin[nbins_cent];
   TH1F * RAA_R2_Meas[nbins_cent], * RAA_R3_Meas[nbins_cent], * RAA_R4_Meas[nbins_cent];
 
-  for(int i = 0;i<nbins_cent;++i){
-      uPbPb_R2_Bayes[i] = (TH1F*)fin_R2->Get(Form("uPbPb_BayesianIter4_cent%d",i));
-      uPbPb_R3_Bayes[i] = (TH1F*)fin_R3->Get(Form("uPbPb_BayesianIter4_cent%d",i));
-      uPbPb_R4_Bayes[i] = (TH1F*)fin_R4->Get(Form("uPbPb_BayesianIter4_cent%d",i));
-      RAA_R2_Bayes[i] = (TH1F*)fin_R2->Get(Form("RAA_bayesian_cent%d",i));
-      RAA_R3_Bayes[i] = (TH1F*)fin_R3->Get(Form("RAA_bayesian_cent%d",i));
-      RAA_R4_Bayes[i] = (TH1F*)fin_R4->Get(Form("RAA_bayesian_cent%d",i));
-      RAA_R2_BinByBin[i] = (TH1F*)fin_R2->Get(Form("RAA_binbybin_cent%d",i));
-      RAA_R3_BinByBin[i] = (TH1F*)fin_R3->Get(Form("RAA_binbybin_cent%d",i));
-      RAA_R4_BinByBin[i] = (TH1F*)fin_R4->Get(Form("RAA_binbybin_cent%d",i));  
-      RAA_R2_Meas[i] = (TH1F*)fin_R2->Get(Form("RAA_measured_cent%d",i));
-      RAA_R3_Meas[i] = (TH1F*)fin_R3->Get(Form("RAA_measured_cent%d",i));
-      RAA_R4_Meas[i] = (TH1F*)fin_R4->Get(Form("RAA_measured_cent%d",i));    
-  } // end centrality loop
-      uPP_R2_Bayes = (TH1F*)fin_R2->Get("uPP_BayesianIter4");
-      uPP_R3_Bayes = (TH1F*)fin_R3->Get("uPP_BayesianIter4");
-      uPP_R4_Bayes = (TH1F*)fin_R4->Get("uPP_BayesianIter4");
-        
+  uPP_R2_Bayes = (TH1F*)fin_R2->Get("PP_bayesian_unfolded_spectra");
+  uPP_R3_Bayes = (TH1F*)fin_R3->Get("PP_bayesian_unfolded_spectra");
+  uPP_R4_Bayes = (TH1F*)fin_R4->Get("PP_bayesian_unfolded_spectra");
+
+  mPP_R2 = (TH1F*)fin_R2->Get("PP_Reco_spectra_refpt");
+  mPP_R3 = (TH1F*)fin_R3->Get("PP_Reco_spectra_refpt");
+  mPP_R4 = (TH1F*)fin_R4->Get("PP_Reco_spectra_refpt");
+  
+  for(int i = 0; i<nbins_cent; ++i){
+
+    uPbPb_R2_Bayes[i] = (TH1F*)fin_R2->Get(Form("PbPb_bayesian_unfolded_spectra_combined_cent%d",i));
+    uPbPb_R3_Bayes[i] = (TH1F*)fin_R3->Get(Form("PbPb_bayesian_unfolded_spectra_combined_cent%d",i));
+    uPbPb_R4_Bayes[i] = (TH1F*)fin_R4->Get(Form("PbPb_bayesian_unfolded_spectra_combined_cent%d",i));
+
+    mPbPb_R2[i] = (TH1F*)fin_R2->Get(Form("PbPb_Reco_spectra_refpt_cent%d",i));
+    mPbPb_R3[i] = (TH1F*)fin_R3->Get(Form("PbPb_Reco_spectra_refpt_cent%d",i));
+    mPbPb_R4[i] = (TH1F*)fin_R4->Get(Form("PbPb_Reco_spectra_refpt_cent%d",i));
+
+    RAA_R2_Bayes[i]   = (TH1F*)fin_R2->Get(Form("RAA_bayesian_cent%d",i));  
+    RAA_R3_Bayes[i]   = (TH1F*)fin_R3->Get(Form("RAA_bayesian_cent%d",i));  
+    RAA_R4_Bayes[i]   = (TH1F*)fin_R4->Get(Form("RAA_bayesian_cent%d",i));  
+    
+    RAA_R2_BinByBin[i]   = (TH1F*)fin_R2->Get(Form("RAA_binbybin_cent%d",i));  
+    RAA_R3_BinByBin[i]   = (TH1F*)fin_R3->Get(Form("RAA_binbybin_cent%d",i));  
+    RAA_R4_BinByBin[i]   = (TH1F*)fin_R4->Get(Form("RAA_binbybin_cent%d",i));  
+    
+    RAA_R2_Meas[i]   = (TH1F*)fin_R2->Get(Form("RAA_measured_cent%d",i));  
+    RAA_R3_Meas[i]   = (TH1F*)fin_R3->Get(Form("RAA_measured_cent%d",i));  
+    RAA_R4_Meas[i]   = (TH1F*)fin_R4->Get(Form("RAA_measured_cent%d",i));  
+    
+  }
+  
   // plot 1 - spectra plot showing pp and 6 different centrality classes PbPb spectra
   //        - have a 3 panel plot for the different radii, with each of them scaled by two orders of magnitude 
 
+  // first we need to scale the MC to the level of Data:
+  // PbPb Data scaling:
+  //   uPbPb_Bayes[i]->Scale(1./deltaEta);// delta eta
+  //   //uPbPb_Bayes[i]->Scale(1./145.156/1e6);// Jet 80 luminosity
+  //   //uPbPb_Bayes[i]->Scale(1./1.1153/1e6);// equivalent no of minbias events 
+  //   uPbPb_Bayes[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
+  //   //uPbPb_Bayes[i]->Scale(1./145.156);
+  //   //uPbPb_Bayes[i]->Scale(1./161.939);
+  //   uPbPb_Bayes[i]->Scale(1./(7.65*1e6));
+  //   uPbPb_Bayes[i]->Scale(64.*1e9/(ncoll[i]*1e3));
+  //   uPbPb_Bayes[i] = (TH1F*)uPbPb_Bayes[i]->Rebin(nbins_pt,Form("PbPb_bayesian_unfolded_spectra_combined_cent%d",i),boundaries_pt);
+  //   divideBinWidth(uPbPb_Bayes[i]);
+  //   uPbPb_Bayes[i]->Write();
+  //   So finally PbPb is in 
+
+  // PbPb MC scaling: is already in sigma (mb) / (dEta dpT)
+  //   mPbPb_Reco[i]->Scale(1./deltaEta);// delta eta
+  //   mPbPb_Reco[i] = (TH1F*)mPbPb_Reco[i]->Rebin(nbins_pt,Form("PbPb_Reco_spectra_refpt_cent%d",i),boundaries_pt);
+  //   divideBinWidth(mPbPb_Reco[i]);
+  //   mPbPb_Reco[i]->Write();
+
+  mPP_R2->Scale(1e6);
+  mPP_R3->Scale(1e6);
+  mPP_R4->Scale(1e6);
+
+  for(int i = 0; i<nbins_cent; ++i){
+
+    mPbPb_R2[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
+    mPbPb_R2[i]->Scale(64.*1e9/(ncoll[i]*1e3));
+    mPbPb_R2[i]->Scale(1./(7.65));
+
+    mPbPb_R3[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
+    mPbPb_R3[i]->Scale(64.*1e9/(ncoll[i]*1e3));
+    mPbPb_R3[i]->Scale(1./(7.65));
+
+    mPbPb_R4[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
+    mPbPb_R4[i]->Scale(64.*1e9/(ncoll[i]*1e3));
+    mPbPb_R4[i]->Scale(1./(7.65));
+    
+  }
+ //   uPP_R2_Bayes->Draw(); // this draws just fine, so it's something about the canvas below that's broken....
   Double_t ScaleFactor[nbins_cent+1] = {1, 1e2, 1e4, 1e6, 1e8, 1e10, 1e12};  
 
+// all this draws ok outside the TCanvas (although the scaling's a bit off as we need to overlay starting with the one scaled highest, so the TCanvas code is at fault....
+  TCanvas * can = new TCanvas("can","",1200,1000);
+ can->SetLogy();
+ can->cd();
+  for(int i=(nbins_cent-1); i>-1; --i){
+    cout<<"iterate at i: "<<i<<endl;
+    uPbPb_R2_Bayes[i]->Scale(ScaleFactor[i+1]);
+    uPbPb_R2_Bayes[i]->SetMarkerStyle(20);
+    uPbPb_R2_Bayes[i]->SetMarkerColor(i+3);
+    if(i==(nbins_cent-1)){
+      makeHistTitle(uPbPb_R2_Bayes[i]," "," Jet p_{T} (GeV/c)","cross section");
+      uPbPb_R2_Bayes[i]->SetAxisRange(unfoldingCut, 299, "X");
+      uPbPb_R2_Bayes[i]->SetAxisRange(1e-5, 1e25, "Y");
+      uPbPb_R2_Bayes[i]->Draw();
+    } else {
+    uPbPb_R2_Bayes[i]->Draw("same");
+    }
+    mPbPb_R2[i]->Scale(ScaleFactor[i]);
+    mPbPb_R2[i]->SetLineStyle(2);
+    mPbPb_R2[i]->SetLineColor(i+3);
+    mPbPb_R2[i]->Draw("same L");
+    
+  }
+
+  uPP_R2_Bayes->SetMarkerStyle(20);
+  uPP_R2_Bayes->SetMarkerColor(2);
+//  makeHistTitle(uPP_R2_Bayes," "," Jet p_{T} (GeV/c)","cross section");
+//  uPP_R2_Bayes->SetAxisRange(unfoldingCut, 299, "X");
+  uPP_R2_Bayes->Draw("same L");
+  
+  cout<<"drew one pp cross section"<<endl;
+  // draw the MC
+  mPP_R2->Scale(ScaleFactor[0]);
+  mPP_R2->SetLineStyle(2);
+  mPP_R2->SetLineColor(2);
+  mPP_R2->Draw("same L");
+  
+
+
+cout<<"going to make spectra canvas, it will complain about illegal positions and stuff and NOT DRAW ANYTHING"<<endl;
   TCanvas * cSpectra = new TCanvas("cSpectra","",1200,1000);
   makeMultiPanelCanvasWithGap(cSpectra,3,1,0.01,0.01,0.16,0.2,0.04,0.04);
 
-  cSpectra->cd(1);
-  cSpectra->cd(1)->SetLogy();
-  cSpectra->cd(1)->SetLogx();
+//   cSpectra->cd(1);
+//   cSpectra->cd(1)->SetLogy();
+//   cSpectra->cd(1)->SetLogx();
 
-  uPP_R2_Bayes->Scale(ScaleFactor[0]);
+//  uPP_R2_Bayes->Scale(ScaleFactor[0]);
   uPP_R2_Bayes->SetMarkerStyle(20);
   uPP_R2_Bayes->SetMarkerColor(2);
   makeHistTitle(uPP_R2_Bayes," "," Jet p_{T} (GeV/c)","cross section");
   uPP_R2_Bayes->SetAxisRange(unfoldingCut, 299, "X");
   uPP_R2_Bayes->Draw();
-
-  for(int i = 0. i<nbins_cent; ++i){
+  
+  cout<<"drew one pp cross section"<<endl;
+  // draw the MC
+  mPP_R2->Scale(ScaleFactor[0]);
+  mPP_R2->SetLineStyle(2);
+  mPP_R2->SetLineColor(2);
+  mPP_R2->Draw("same L");
+  
+  for(int i = 0; i<nbins_cent; ++i){
     uPbPb_R2_Bayes[i]->Scale(ScaleFactor[i+1]);
     uPbPb_R2_Bayes[i]->SetMarkerStyle(20);
     uPbPb_R2_Bayes[i]->SetMarkerColor(i+3);
     uPbPb_R2_Bayes[i]->Draw("same");
+
+    mPbPb_R2[i]->Scale(ScaleFactor[i]);
+    mPbPb_R2[i]->SetLineStyle(2);
+    mPbPb_R2[i]->SetLineColor(i+3);
+    mPbPb_R2[i]->Draw("same L");
+    
   }
   
   cSpectra->cd(2);
@@ -143,12 +252,23 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   makeHistTitle(uPP_R3_Bayes," "," Jet p_{T} (GeV/c)","cross section");
   uPP_R3_Bayes->SetAxisRange(unfoldingCut, 299, "X");
   
+  // draw the MC
+  mPP_R3->Scale(ScaleFactor[0]);
+  mPP_R3->SetLineStyle(2);
+  mPP_R3->SetLineColor(2);
+  mPP_R3->Draw("same L");
+  
   uPP_R3_Bayes->Draw();
-  for(int i = 0. i<nbins_cent; ++i){
+  for(int i = 0; i<nbins_cent; ++i){
     uPbPb_R3_Bayes[i]->Scale(ScaleFactor[i+1]);
     uPbPb_R3_Bayes[i]->SetMarkerStyle(20);
     uPbPb_R3_Bayes[i]->SetMarkerColor(i+3);
     uPbPb_R3_Bayes[i]->Draw("same");
+
+    mPbPb_R3[i]->Scale(ScaleFactor[i]);
+    mPbPb_R3[i]->SetLineStyle(2);
+    mPbPb_R3[i]->SetLineColor(i+3);
+    mPbPb_R3[i]->Draw("same L");
   }
 
   cSpectra->cd(3);
@@ -160,13 +280,24 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   uPP_R4_Bayes->SetMarkerColor(2);
   makeHistTitle(uPP_R4_Bayes," "," Jet p_{T} (GeV/c)","cross section");
   uPP_R4_Bayes->SetAxisRange(unfoldingCut, 299, "X");
+
+  // draw the MC
+  mPP_R4->Scale(ScaleFactor[0]);
+  mPP_R4->SetLineStyle(2);
+  mPP_R4->SetLineColor(2);
+  mPP_R4->Draw("same L");
   
   uPP_R4_Bayes->Draw();
-  for(int i = 0. i<nbins_cent; ++i){
+  for(int i = 0; i<nbins_cent; ++i){
     uPbPb_R4_Bayes[i]->Scale(ScaleFactor[i+1]);
     uPbPb_R4_Bayes[i]->SetMarkerStyle(20);
     uPbPb_R4_Bayes[i]->SetMarkerColor(i+3);
     uPbPb_R4_Bayes[i]->Draw("same");
+    
+    mPbPb_R4[i]->Scale(ScaleFactor[i]);
+    mPbPb_R4[i]->SetLineStyle(2);
+    mPbPb_R4[i]->SetLineColor(i+3);
+    mPbPb_R4[i]->Draw("same L");
   }
 
   // also need to draw the MC as lines here: in all the 3 canvas. 
@@ -180,7 +311,6 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   // again this will be a 6 panel plot. showing measured, unfolded Bayesian, and unfolded Bin By Bin methods. 
   TCanvas *cRAA = new TCanvas("cRAA","RAA",1200,800);
   makeMultiPanelCanvasWithGap(cRAA,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-
   TLegend *tRAA = myLegend(0.45,0.75,0.85,0.9);
   TLine *lineRAA = new TLine(unfoldingCut,1,299,1);
   lineRAA->SetLineStyle(2);
@@ -194,8 +324,8 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
 
     cRAA->cd(nbins_cent-i);
 
-    RAA_R2_Bayes[i]->SetMarkerColor(kBlack);
-    RAA_R2_Bayes[i]->SetMarkerStyle(24);
+    RAA_R2_Bayes[i]->SetMarkerColor(kRed);
+    RAA_R2_Bayes[i]->SetMarkerStyle(21);
     makeHistTitle(RAA_R2_Bayes[i],"","Jet p_{T} (GeV/c)","R_{AA}");
     RAA_R2_Bayes[i]->SetAxisRange(unfoldingCut,299,"X");
     RAA_R2_Bayes[i]->SetAxisRange(0,2,"Y");
@@ -205,8 +335,8 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
     RAA_R3_Bayes[i]->SetMarkerStyle(20);
     RAA_R3_Bayes[i]->Draw("same E1");
 
-    RAA_R4_Bayes[i]->SetMarkerStyle(33);
-    RAA_R4_Bayes[i]->SetMarkerColor(kRed);
+    RAA_R4_Bayes[i]->SetMarkerStyle(20);
+    RAA_R4_Bayes[i]->SetMarkerColor(kBlue);
     RAA_R4_Bayes[i]->Draw("same E1");
 
     lineRAA->Draw();
@@ -215,16 +345,16 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
 
   }
     
-  tRAA->AddEntry(RAA_R2_Bayes[0],"No Unfolding","pl");
-  tRAA->AddEntry(RAA_R3_Bayes[0],"Bayesian","pl");
-  tRAA->AddEntry(RAA_R4_Bayes[0],"BinbyBin","pl");
+  tRAA->AddEntry(RAA_R2_Bayes[0],"R=0.2","pl");
+  tRAA->AddEntry(RAA_R3_Bayes[0],"R=0.3","pl");
+  tRAA->AddEntry(RAA_R4_Bayes[0],"R=0.4","pl");
   tRAA->SetTextSize(0.04);
 
   cRAA->cd(1);
   tRAA->Draw();
   cRAA->cd(1);
   putCMSPrel();
-  drawText(Form("Anti-k_{T} %s %s Jets R=0.%d",algo,jet_type, radius),0.2,0.23,16);
+  drawText(Form("Anti-k_{T} %s %s Jets",algo,jet_type),0.2,0.23,16);
   //drawText("|#eta|<2, |vz|<15",0.65,0.31,16);
   cRAA->cd(2);
   drawText("Jet ID cut, |#eta|<2",0.1,0.3,16);
@@ -237,7 +367,7 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
     
   // plot 3 - RAA as a function of npart - taken from http://dde.web.cern.ch/dde/glauber_lhc.htm for 84 < pT < 97 in PbPb,PP
   //        - need to decide if we have to unfold this? or if we can just take that respective pt ranges from the already existing RAA histograms.  this is bin number 16 from the centrality classes weve measured.
-  
+  cout<<"Going to make RAA as a function of Npart, this one draws weird and is broken in some way"<<endl;  
   TCanvas * cRAA_npart = new TCanvas("cRAA_npart","",800,600);
 
   // get the responsible histograms for this.
@@ -249,23 +379,25 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   //hRAA_R4_npart->LabelsOption(">","X");
 
   for(int i = 0; i<nbins_cent; ++i){
-    hRAA_R2_npart->SetBinContent(hRAA_R2_npart->FindBin(npart[i]), RAA_R2_Bayes[i]->GetBinContent[16]);
-    hRAA_R3_npart->SetBinContent(hRAA_R3_npart->FindBin(npart[i]), RAA_R3_Bayes[i]->GetBinContent[16]);
-    hRAA_R4_npart->SetBinContent(hRAA_R4_npart->FindBin(npart[i]), RAA_R4_Bayes[i]->GetBinContent[16]);    
+    hRAA_R2_npart->SetBinContent(hRAA_R2_npart->FindBin(npart[i]), RAA_R2_Bayes[i]->GetBinContent(16));
+    hRAA_R3_npart->SetBinContent(hRAA_R3_npart->FindBin(npart[i]), RAA_R3_Bayes[i]->GetBinContent(16));
+    hRAA_R4_npart->SetBinContent(hRAA_R4_npart->FindBin(npart[i]), RAA_R4_Bayes[i]->GetBinContent(16));    
   }
 
-  makeHistTitle(hRAA_R2_npart, " ", "N_{part} - number of participating nucleons ", "R_{AA{");
+  makeHistTitle(hRAA_R2_npart, " ", "$N_{\mathrm{part}}$ - number of participating nucleons ", "$R_{\mathrm{AA}}$");
   hRAA_R2_npart->SetMarkerColor(kRed);
   hRAA_R2_npart->SetMarkerStyle(20);
   hRAA_R2_npart->Draw();
   hRAA_R3_npart->SetMarkerColor(kBlack);
   hRAA_R3_npart->SetMarkerStyle(20);
-  hRAA_R3_npart->Draw("same");
+//  hRAA_R3_npart->Draw("same");
   hRAA_R4_npart->SetMarkerColor(kBlue);
   hRAA_R4_npart->SetMarkerStyle(20);
-  hRAA_R4_npart->Draw("same");
+//  hRAA_R4_npart->Draw("same");
 
   putCMSPrel();
-  cRAA_npart->SaveAs("","RECREATE");
+  cRAA_npart->SaveAs(Form("Plots/Final_paper_plots_RAA_npart_%d.pdf",date.GetDate()),"RECREATE");
+ cout<<"you should be at the end here, but you just freeze, what?"<<endl;
   
 }
+
