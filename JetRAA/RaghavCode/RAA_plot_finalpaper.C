@@ -188,7 +188,7 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   
   // draw the MC
   mPP_R2->Scale(ScaleFactor[0]);
-  mPP_R2->SetLineStyle(2);
+//  mPP_R2->SetLineStyle(2);
   mPP_R2->SetLineColor(kBlack);
   mPP_R2->Draw("same Lhist");
   
@@ -220,7 +220,17 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   
   drawText("R=0.2, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
   drawText("R=0.2, anti k_{T} Pu PF Jets, Bayesian unfolded", 0.75,0.78,16);
-    
+  putCMSPrel();
+  putPbPbLumi();
+  putPPLumi();
+  
+  //drawText("pp", 0.7,0.15,16);
+  drawText("0-5% x 10^{2}", 0.8,0.20,16);
+  drawText("5-10% x 10^{4}", 0.8,0.28,16);
+  drawText("10-30% x 10^{6}", 0.8,0.38,16);
+  drawText("30-50% x 10^{8}", 0.8,0.47,16);
+  drawText("50-70% x 10^{10}", 0.8,0.54,16);
+  drawText("70-90% x 10^{12}", 0.8,0.63,16);
   cSpectra->SaveAs(Form("Plots/Final_paper_plots_spectra_R2_%d.pdf",date.GetDate()),"RECREATE");
 
   TCanvas * cSpectra3 = new TCanvas("cSpectra3","",1200,1000);
@@ -274,7 +284,17 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   
   drawText("R=0.3, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
   drawText("R=0.3, anti k_{T} Pu PF Jets, Bayesian unfolded", 0.75,0.78,16);
-
+  putCMSPrel();
+  putPbPbLumi();
+  putPPLumi();
+  
+  //drawText("pp", 0.7,0.15,16);
+  drawText("0-5% x 10^{2}", 0.8,0.20,16);
+  drawText("5-10% x 10^{4}", 0.8,0.28,16);
+  drawText("10-30% x 10^{6}", 0.8,0.38,16);
+  drawText("30-50% x 10^{8}", 0.8,0.47,16);
+  drawText("50-70% x 10^{10}", 0.8,0.54,16);
+  drawText("70-90% x 10^{12}", 0.8,0.63,16);
   cSpectra3->SaveAs(Form("Plots/Final_paper_plots_spectra_R3_%d.pdf",date.GetDate()),"RECREATE");
   
   TCanvas * cSpectra4 = new TCanvas("cSpectra4","",1200,1000);
@@ -291,7 +311,7 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
 
   // draw the MC
   mPP_R4->Scale(ScaleFactor[0]);
-  mPP_R4->SetLineStyle(2);
+//  mPP_R4->SetLineStyle(2);
   mPP_R4->SetLineColor(kBlack);
   mPP_R4->Draw("same Lhist");
   
@@ -324,7 +344,6 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   drawText("R=0.4, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
   drawText("R=0.4, anti k_{T} Pu PF Jets, Bayesian unfolded", 0.75,0.78,16);
     
-  cSpectra4->SaveAs(Form("Plots/Final_paper_plots_spectra_R4_%d.pdf",date.GetDate()),"RECREATE");
 
   putCMSPrel();
   putPbPbLumi();
@@ -339,7 +358,7 @@ void RAA_plot_finalpaper(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_
   drawText("70-90% x 10^{12}", 0.8,0.63,16);
 
 
-  cSpectra->SaveAs(Form("Plots/Final_paper_plots_spectra_%d.pdf",date.GetDate()),"RECREATE");
+  cSpectra4->SaveAs(Form("Plots/Final_paper_plots_spectra_R4_%d.pdf",date.GetDate()),"RECREATE");
 
 
   
