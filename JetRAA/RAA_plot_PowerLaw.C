@@ -47,7 +47,7 @@
 
 using namespace std;
 
-void RAA_plot_PowerLaw(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_type = "PF"){
+void RAA_plot_PowerLaw(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_type = "PF", Int_t FitStart=70, Int_t FitEnd=280){
     
   TStopwatch timer;
   timer.Start();
@@ -60,9 +60,9 @@ void RAA_plot_PowerLaw(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_ty
   TH2::SetDefaultSumw2();
 
   TFile *fin_R2, *fin_R3, *fin_R4; 
-  fin_R2= TFile::Open(Form("/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/NoResidual/PbPb_pp_calopfpt_jetidcut_R0p%d_unfold_mcclosure_oppside_trgMC_n20_eta_p20_%dGeVCut_ak%s_20150415.root",2,unfoldingCut,jet_type));
-  fin_R3= TFile::Open(Form("/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/NoResidual/PbPb_pp_calopfpt_jetidcut_R0p%d_unfold_mcclosure_oppside_trgMC_n20_eta_p20_%dGeVCut_ak%s_20150415.root",3,unfoldingCut,jet_type));
-  fin_R4= TFile::Open(Form("/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/NoResidual/PbPb_pp_calopfpt_jetidcut_R0p%d_unfold_mcclosure_oppside_trgMC_n20_eta_p20_%dGeVCut_ak%s_20150415.root",4,unfoldingCut,jet_type));
+  fin_R2= TFile::Open(Form("/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/april16/PbPb_pp_calopfpt_jetidcut_R0p%d_unfold_mcclosure_oppside_trgMC_n20_eta_p20_%dGeVCut_ak%s_20150417.root",2,unfoldingCut,jet_type));
+  fin_R3= TFile::Open(Form("/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/april16/PbPb_pp_calopfpt_jetidcut_R0p%d_unfold_mcclosure_oppside_trgMC_n20_eta_p20_%dGeVCut_ak%s_20150417.root",3,unfoldingCut,jet_type));
+  fin_R4= TFile::Open(Form("/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/april16/PbPb_pp_calopfpt_jetidcut_R0p%d_unfold_mcclosure_oppside_trgMC_n20_eta_p20_%dGeVCut_ak%s_20150417.root",4,unfoldingCut,jet_type));
 
   // get the histograms.
   TH1F * uPbPb_R2_Bayes[nbins_cent], * uPP_R2_Bayes, * uPbPb_R3_Bayes[nbins_cent], * uPP_R3_Bayes, * uPbPb_R4_Bayes[nbins_cent], * uPP_R4_Bayes;
@@ -71,6 +71,10 @@ void RAA_plot_PowerLaw(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_ty
   TH1F * RAA_R2_Bayes[nbins_cent], * RAA_R3_Bayes[nbins_cent], * RAA_R4_Bayes[nbins_cent];
   TH1F * RAA_R2_BinByBin[nbins_cent], * RAA_R3_BinByBin[nbins_cent], * RAA_R4_BinByBin[nbins_cent];
   TH1F * RAA_R2_Meas[nbins_cent], * RAA_R3_Meas[nbins_cent], * RAA_R4_Meas[nbins_cent];
+  
+  TH1F * hRatio_R2_Bayes[nbins_cent], * hRatio_R3_Bayes[nbins_cent], * hRatio_R4_Bayes[nbins_cent];
+  TF1 * Fit_R2_Bayes[nbins_cent], * Fit_R3_Bayes[nbins_cent], * Fit_R4_Bayes[nbins_cent];
+  TH1F * hFit_R2_Bayes[nbins_cent], * hFit_R3_Bayes[nbins_cent], * hFit_R4_Bayes[nbins_cent];
 
   uPP_R2_Bayes = (TH1F*)fin_R2->Get("PP_bayesian_unfolded_spectra");
   uPP_R2_Bayes->Print("base");
@@ -143,32 +147,37 @@ void RAA_plot_PowerLaw(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_ty
   //   divideBinWidth(mPbPb_Reco[i]);
   //   mPbPb_Reco[i]->Write();
 
-  // take MC to nano barns from milli barns 
-  mPP_R2->Scale(1e6);
-  mPP_R3->Scale(1e6);
-  mPP_R4->Scale(1e6);
-
-  // divide by delta eta = 4. 
-  mPP_R2->Scale(1./4);
-  mPP_R3->Scale(1./4);
-  mPP_R4->Scale(1./4);
-
-  for(int i = 0; i<nbins_cent; ++i){
-
-    mPbPb_R2[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
-    mPbPb_R2[i]->Scale(64.*1e9/(ncoll[i]*1e3));
-    mPbPb_R2[i]->Scale(1./(7.65));
-
-    mPbPb_R3[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
-    mPbPb_R3[i]->Scale(64.*1e9/(ncoll[i]*1e3));
-    mPbPb_R3[i]->Scale(1./(7.65));
-
-    mPbPb_R4[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
-    mPbPb_R4[i]->Scale(64.*1e9/(ncoll[i]*1e3));
-    mPbPb_R4[i]->Scale(1./(7.65));
-    
-  }
-  
+// //   // take MC to nano barns from milli barns 
+// //   mPP_R2->Scale(1e6);
+// //   mPP_R3->Scale(1e6);
+// //   mPP_R4->Scale(1e6);
+// // 
+// //   // divide by delta eta = 4. 
+// //   mPP_R2->Scale(1./4);
+// //   mPP_R3->Scale(1./4);
+// //   mPP_R4->Scale(1./4);
+// // 
+// //   for(int i = 0; i<nbins_cent; ++i){
+// // 
+// //     mPbPb_R2[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
+// //     mPbPb_R2[i]->Scale(64.*1e9/(ncoll[i]*1e3));
+// //     mPbPb_R2[i]->Scale(1./(7.65));
+// // 
+// //     mPbPb_R3[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
+// //     mPbPb_R3[i]->Scale(64.*1e9/(ncoll[i]*1e3));
+// //     mPbPb_R3[i]->Scale(1./(7.65));
+// // 
+// //     mPbPb_R4[i]->Scale(1./(0.025*(boundaries_cent[i+1] - boundaries_cent[i])));
+// //     mPbPb_R4[i]->Scale(64.*1e9/(ncoll[i]*1e3));
+// //     mPbPb_R4[i]->Scale(1./(7.65));
+// //     
+// //   }
+      TLine *lineRatio = new TLine(60,1,300,1);
+    lineRatio->SetLineStyle(2);
+    lineRatio->SetLineWidth(2);
+  TH2F * hBlankSpectra = new TH2F("hBlankSpectra","",400,60,300,400,1e-4,30);
+  TH2F * hBlankRatio = new TH2F("hBlankRatio","",400,60,300,400,0,2);
+      
   Double_t ScaleFactor[nbins_cent+2] = {1, 1e2, 1e4, 1e6, 1e8, 1e10, 1e12, 1e14};  
   TCanvas * cSpectra3Pow = new TCanvas("cSpectra3Pow","",1200,1000);
   //cSpectra->cd(2);
@@ -180,22 +189,23 @@ void RAA_plot_PowerLaw(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_ty
   uPP_R3_Bayes->SetMarkerStyle(20);
   uPP_R3_Bayes->SetMarkerColor(kBlack);
   makeHistTitle(uPP_R3_Bayes," "," Jet p_{T} (GeV/c)","#frac{d #sigma}{T_{AA} dp_{T} d#eta} nb");
-  uPP_R3_Bayes->SetAxisRange(unfoldingCut, 299, "X");
+  uPP_R3_Bayes->SetAxisRange(unfoldingCut, 300, "X");
  // uPP_R3_Bayes->SetAxisRange(1e-4, 1e15, "Y");
-  uPP_R3_Bayes->Draw();
+  hBlankSpectra->Draw();
+  uPP_R3_Bayes->Draw("same");
 
    TF1 *f = new TF1("f","[0]*pow(x+[2],[1])"); //create function
    f->SetParameters(1e10,-5,0);
    f->SetLineColor(kBlue);
    TH1F *hRatioPP3 = (TH1F*)uPP_R3_Bayes->Clone("hRatioPP3"); //clone histogram hRatio from h
-   uPP_R3_Bayes->Fit("f","LL","",60,300); //fit function
-   uPP_R3_Bayes->Fit("f","LL","",60,300);
-   uPP_R3_Bayes->Fit("f","LL","",60,300);
-   uPP_R3_Bayes->Fit("f","LL","",60,300);
-   uPP_R3_Bayes->Fit("f","LL","",60,300);
-   uPP_R3_Bayes->Fit("f","LL","",60,300);
-   uPP_R3_Bayes->Fit("f","LL","",60,300);
-   uPP_R3_Bayes->Fit("f","LL","",60,300);
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd); //fit function
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd);
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd);
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd);
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd);
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd);
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd);
+   uPP_R3_Bayes->Fit("f","LL","",FitStart,FitEnd);
    f->Draw("same");
 
    TH1F *hF = (TH1F*)uPP_R3_Bayes->Clone(); //clone histogram uPP_R3_Bayes from h
@@ -236,11 +246,357 @@ void RAA_plot_PowerLaw(Int_t unfoldingCut = 60 , char *algo = "Pu", char *jet_ty
   makeHistTitle(hRatioPP3," "," Jet p_{T} (GeV/c)","Bayesian unfolded data/Power law fit");
   hRatioPP3->SetAxisRange(unfoldingCut, 299, "X");
  // uPP_R3_Bayes->SetAxisRange(1e-4, 1e15, "Y");
-  hRatioPP3->Draw();
+  hBlankRatio->Draw();
+  hRatioPP3->Draw("same");
+  lineRatio->Draw("same");
   drawText("R=0.3, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
   putCMSPrel();
   putPPLumi();
   cSpectra3Rat->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFitRatio_R3_%d.pdf",date.GetDate()),"RECREATE");  
+
+  TCanvas * cSpectra2Pow = new TCanvas("cSpectra2Pow","",1200,1000);
+  //cSpectra->cd(2);
+  cSpectra2Pow->SetLogy();
+  cSpectra2Pow->SetGridy();
+  cSpectra2Pow->SetLogx();
+
+ // uPP_R2_Bayes->Scale(ScaleFactor[0]);
+  uPP_R2_Bayes->SetMarkerStyle(20);
+  uPP_R2_Bayes->SetMarkerColor(kBlack);
+  makeHistTitle(uPP_R2_Bayes," "," Jet p_{T} (GeV/c)","#frac{d #sigma}{T_{AA} dp_{T} d#eta} nb");
+  uPP_R2_Bayes->SetAxisRange(unfoldingCut, 300, "X");
+ // uPP_R2_Bayes->SetAxisRange(1e-4, 1e15, "Y");
+ hBlankSpectra->Draw();
+  uPP_R2_Bayes->Draw("same");
+
+   TF1 *f2 = new TF1("f2","[0]*pow(x+[2],[1])"); //create function
+   f2->SetParameters(1e10,-5,0);
+   f2->SetLineColor(kBlue);
+   TH1F *hRatioPP2 = (TH1F*)uPP_R2_Bayes->Clone("hRatioPP2"); //clone histogram hRatio from h
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd); //fit function
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd);
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd);
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd);
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd);
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd);
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd);
+   uPP_R2_Bayes->Fit("f2","LL","",FitStart,FitEnd);
+   f2->Draw("same");
+
+   TH1F *hF2 = (TH1F*)uPP_R2_Bayes->Clone(); //clone histogram uPP_R2_Bayes from h
+   for (int i=1;i<=uPP_R2_Bayes->GetNbinsX();i++) //Turn the fit line into a histogram so I can take a ratio
+   {
+      double var = f2->Integral(uPP_R2_Bayes->GetBinLowEdge(i),uPP_R2_Bayes->GetBinLowEdge(i+1))/uPP_R2_Bayes->GetBinWidth(i);
+      hF2->SetBinContent(i,var);
+   }
+//   // draw the MC
+//   mPP_R2->Scale(ScaleFactor[0]);
+//   //mPP_R2->SetLineStyle(2);
+//   mPP_R2->SetLineColor(kBlack);
+//   mPP_R2->SetAxisRange(unfoldingCut, 299, "X");
+//   mPP_R2->Draw("same Lhist");
+  
+
+  TLegend * leg2 = myLegend(0.15,0.1,0.25,0.2);
+  leg2->AddEntry(uPP_R2_Bayes,"pp Data","pl");
+  leg2->AddEntry(f2,"Power law fit","l");
+  leg2->SetTextSize(0.02);
+  leg2->Draw();
+  
+  
+  drawText("R=0.2, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
+  putCMSPrel();
+  putPPLumi();
+  
+  //drawText("pp", 0.7,0.15,16);
+  cSpectra2Pow->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLaw_R2_%d.pdf",date.GetDate()),"RECREATE");  
+  
+    TCanvas * cSpectra2Rat = new TCanvas("cSpectra2Rat","",1200,1000);
+  //cSpectra->cd(2);
+  cSpectra2Rat->SetGridy();
+  cSpectra2Rat->SetLogx();
+  hRatioPP2->Divide(hF2);
+  hRatioPP2->SetMarkerStyle(20);
+  hRatioPP2->SetMarkerColor(kBlack);
+  makeHistTitle(hRatioPP2," "," Jet p_{T} (GeV/c)","Bayesian unfolded data/Power law fit");
+  hRatioPP2->SetAxisRange(unfoldingCut, 299, "X");
+ // uPP_R2_Bayes->SetAxisRange(1e-4, 1e15, "Y");
+ hBlankRatio->Draw();
+  hRatioPP2->Draw("same");
+  lineRatio->Draw("same");
+  drawText("R=0.2, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
+  putCMSPrel();
+  putPPLumi();
+  cSpectra2Rat->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFitRatio_R2_%d.pdf",date.GetDate()),"RECREATE"); 
+  
+    TCanvas * cSpectra4Pow = new TCanvas("cSpectra4Pow","",1200,1000);
+  //cSpectra->cd(2);
+  cSpectra4Pow->SetLogy();
+  cSpectra4Pow->SetGridy();
+  cSpectra4Pow->SetLogx();
+
+ // uPP_R4_Bayes->Scale(ScaleFactor[0]);
+  uPP_R4_Bayes->SetMarkerStyle(20);
+  uPP_R4_Bayes->SetMarkerColor(kBlack);
+  makeHistTitle(uPP_R4_Bayes," "," Jet p_{T} (GeV/c)","#frac{d #sigma}{T_{AA} dp_{T} d#eta} nb");
+  uPP_R4_Bayes->SetAxisRange(unfoldingCut, 300, "X");
+ // uPP_R4_Bayes->SetAxisRange(1e-4, 1e15, "Y");
+  hBlankSpectra->Draw();
+  uPP_R4_Bayes->Draw("same");
+
+   TF1 *f4 = new TF1("f4","[0]*pow(x+[2],[1])"); //create function
+   f4->SetParameters(1e10,-5,0);
+   f4->SetLineColor(kBlue);
+   TH1F *hRatioPP4 = (TH1F*)uPP_R4_Bayes->Clone("hRatioPP4"); //clone histogram hRatio from h
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd); //fit function
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd);
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd);
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd);
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd);
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd);
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd);
+   uPP_R4_Bayes->Fit("f4","LL","",FitStart,FitEnd);
+   f4->Draw("same");
+
+   TH1F *hF4 = (TH1F*)uPP_R4_Bayes->Clone(); //clone histogram uPP_R4_Bayes from h
+   for (int i=1;i<=uPP_R4_Bayes->GetNbinsX();i++) //Turn the fit line into a histogram so I can take a ratio
+   {
+      double var = f4->Integral(uPP_R4_Bayes->GetBinLowEdge(i),uPP_R4_Bayes->GetBinLowEdge(i+1))/uPP_R4_Bayes->GetBinWidth(i);
+      hF4->SetBinContent(i,var);
+   }
+//   // draw the MC
+//   mPP_R4->Scale(ScaleFactor[0]);
+//   //mPP_R4->SetLineStyle(2);
+//   mPP_R4->SetLineColor(kBlack);
+//   mPP_R4->SetAxisRange(unfoldingCut, 299, "X");
+//   mPP_R4->Draw("same Lhist");
+  
+
+  TLegend * leg4 = myLegend(0.15,0.1,0.25,0.2);
+  leg4->AddEntry(uPP_R4_Bayes,"pp Data","pl");
+  leg4->AddEntry(f4,"Power law fit","l");
+  leg4->SetTextSize(0.02);
+  leg4->Draw();
+  
+  
+  drawText("R=0.3, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
+  putCMSPrel();
+  putPPLumi();
+  
+  //drawText("pp", 0.7,0.15,16);
+  cSpectra4Pow->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLaw_R4_%d.pdf",date.GetDate()),"RECREATE");  
+  
+    TCanvas * cSpectra4Rat = new TCanvas("cSpectra4Rat","",1200,1000);
+  //cSpectra->cd(2);
+  cSpectra4Rat->SetGridy();
+  cSpectra4Rat->SetLogx();
+  hRatioPP4->Divide(hF4);
+  hRatioPP4->SetMarkerStyle(20);
+  hRatioPP4->SetMarkerColor(kBlack);
+  makeHistTitle(hRatioPP4," "," Jet p_{T} (GeV/c)","Bayesian unfolded data/Power law fit");
+  hRatioPP4->SetAxisRange(unfoldingCut, 299, "X");
+ // uPP_R4_Bayes->SetAxisRange(1e-4, 1e15, "Y");
+  hBlankRatio->Draw();
+  hRatioPP4->Draw("same");
+  lineRatio->Draw("same");
+  drawText("R=0.3, anti k_{T} PF Jets, Bayesian unfolded", 0.15,0.2,16);
+  putCMSPrel();
+  putPPLumi();
+  cSpectra4Rat->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFitRatio_R4_%d.pdf",date.GetDate()),"RECREATE"); 
+  
+  TCanvas *cPbPb_PowerLaw_R2 = new TCanvas("cPbPb_PowerLaw_R2","Power Law fit comparisons for PbPb unfolded spectra",1200,800);
+  makeMultiPanelCanvas(cPbPb_PowerLaw_R2,3,2,0.0,0.0,0.2,0.15,0.07);
+
+  
+    for(int i = 0; i<nbins_cent; ++i){
+      cPbPb_PowerLaw_R2->cd(nbins_cent-i);
+      cPbPb_PowerLaw_R2->cd(nbins_cent-i)->SetLogy();
+      cPbPb_PowerLaw_R2->cd(nbins_cent-i)->SetLogx();
+      uPbPb_R2_Bayes[i]->SetMarkerStyle(20);
+      uPbPb_R2_Bayes[i]->SetMarkerColor(kRed);
+      uPbPb_R2_Bayes[i]->SetAxisRange(unfoldingCut, 300, "X");
+      makeHistTitle(uPbPb_R2_Bayes[i]," "," Jet p_{T} (GeV/c)","#frac{d #sigma}{T_{AA} dp_{T} d#eta} nb");
+      hBlankSpectra->Draw();
+      uPbPb_R2_Bayes[i]->Draw("same");
+   Fit_R2_Bayes[i] = new TF1(Form("Fit_R2_Bayes%d",i),"[0]*pow(x+[2],[1])"); //create function
+   Fit_R2_Bayes[i]->SetParameters(1e10,-5,0);
+   Fit_R2_Bayes[i]->SetLineColor(kBlue);
+   hRatio_R2_Bayes[i] = (TH1F*)uPbPb_R2_Bayes[i]->Clone(Form("PbPb_bayesian_unfolded_spectra_combined_cent%d",i)); //clone histogram hRatio from h
+   uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd); //fit function
+   uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd);
+   uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd);
+   uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R2_Bayes[i]->Fit(Form("Fit_R2_Bayes%d",i),"LL","",FitStart,FitEnd);
+   Fit_R2_Bayes[i]->Draw("same");
+
+  hFit_R2_Bayes[i] = (TH1F*)uPbPb_R2_Bayes[i]->Clone(); //clone histogram uPP_R4_Bayes from h
+   for (int iv=1;iv<=uPbPb_R2_Bayes[i]->GetNbinsX();iv++) //Turn the fit line into a histogram so I can take a ratio
+   {
+      double var = Fit_R2_Bayes[i]->Integral(uPbPb_R2_Bayes[i]->GetBinLowEdge(iv),uPbPb_R2_Bayes[i]->GetBinLowEdge(iv+1))/uPbPb_R2_Bayes[i]->GetBinWidth(iv);
+      hFit_R2_Bayes[i]->SetBinContent(iv,var);
+   }
+      drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
+
+  }
+  putCMSPrel();
+  putPbPbLumi();
+  drawText(Form("Anti-k_{T} R=0.2 %s %s Jets",algo,jet_type),0.2,0.23,16);
+  cPbPb_PowerLaw_R2->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFit_PbPb_R2_%d.pdf",date.GetDate()),"RECREATE"); 
+
+  TCanvas *cPbPb_PowerLawRat_R2 = new TCanvas("cPbPb_PowerLawRat_R2","PbPb unfolded spectra/Power Law Fit",1200,800);
+  makeMultiPanelCanvas(cPbPb_PowerLawRat_R2,3,2,0.0,0.0,0.2,0.15,0.07);
+
+    for(int i = 0; i<nbins_cent; ++i){
+      cPbPb_PowerLawRat_R2->cd(nbins_cent-i);
+      cPbPb_PowerLawRat_R2->cd(nbins_cent-i)->SetLogx();
+      hRatio_R2_Bayes[i]->SetMarkerStyle(21);
+      hRatio_R2_Bayes[i]->SetMarkerColor(kBlue);
+      hRatio_R2_Bayes[i]->SetAxisRange(unfoldingCut, 300, "X");
+      hRatio_R2_Bayes[i]->Divide(hFit_R2_Bayes[i]);
+      makeHistTitle(hBlankRatio," "," Jet p_{T} (GeV/c)","Bayesian unfolded data/Power law fit");
+      hBlankRatio->Draw();
+      hRatio_R2_Bayes[i]->Draw("same");
+      lineRatio->Draw("same");
+      drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
+  }
+  putCMSPrel();
+  putPbPbLumi();
+  drawText(Form("Anti-k_{T} R=0.2 %s %s Jets",algo,jet_type),0.2,0.23,16);
+ cPbPb_PowerLawRat_R2->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFitRatio_PbPb_R2_%d.pdf",date.GetDate()),"RECREATE"); 
+
+  TCanvas *cPbPb_PowerLaw_R3 = new TCanvas("cPbPb_PowerLaw_R3","Power Law fit comparisons for PbPb unfolded spectra",1200,800);
+  makeMultiPanelCanvas(cPbPb_PowerLaw_R3,3,2,0.0,0.0,0.2,0.15,0.07);
+
+  
+    for(int i = 0; i<nbins_cent; ++i){
+      cPbPb_PowerLaw_R3->cd(nbins_cent-i);
+      cPbPb_PowerLaw_R3->cd(nbins_cent-i)->SetLogy();
+      cPbPb_PowerLaw_R3->cd(nbins_cent-i)->SetLogx();
+      uPbPb_R3_Bayes[i]->SetMarkerStyle(20);
+      uPbPb_R3_Bayes[i]->SetMarkerColor(kRed);
+      uPbPb_R3_Bayes[i]->SetAxisRange(unfoldingCut, 300, "X");
+      makeHistTitle(uPbPb_R3_Bayes[i]," "," Jet p_{T} (GeV/c)","#frac{d #sigma}{T_{AA} dp_{T} d#eta} nb");
+      hBlankSpectra->Draw();
+      uPbPb_R3_Bayes[i]->Draw("same");
+   Fit_R3_Bayes[i] = new TF1(Form("Fit_R3_Bayes%d",i),"[0]*pow(x+[2],[1])"); //create function
+   Fit_R3_Bayes[i]->SetParameters(1e10,-5,0);
+   Fit_R3_Bayes[i]->SetLineColor(kBlue);
+   hRatio_R3_Bayes[i] = (TH1F*)uPbPb_R3_Bayes[i]->Clone(Form("PbPb_bayesian_unfolded_spectra_combined_cent%d",i)); //clone histogram hRatio from h
+   uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd); //fit function
+   uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd);
+   uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd);
+   uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R3_Bayes[i]->Fit(Form("Fit_R3_Bayes%d",i),"LL","",FitStart,FitEnd);
+   Fit_R3_Bayes[i]->Draw("same");
+
+  hFit_R3_Bayes[i] = (TH1F*)uPbPb_R3_Bayes[i]->Clone(); //clone histogram uPP_R4_Bayes from h
+   for (int iv=1;iv<=uPbPb_R3_Bayes[i]->GetNbinsX();iv++) //Turn the fit line into a histogram so I can take a ratio
+   {
+      double var = Fit_R3_Bayes[i]->Integral(uPbPb_R3_Bayes[i]->GetBinLowEdge(iv),uPbPb_R3_Bayes[i]->GetBinLowEdge(iv+1))/uPbPb_R3_Bayes[i]->GetBinWidth(iv);
+      hFit_R3_Bayes[i]->SetBinContent(iv,var);
+   }
+      drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
+
+  }
+  putCMSPrel();
+  putPbPbLumi();
+  drawText(Form("Anti-k_{T} R=0.2 %s %s Jets",algo,jet_type),0.2,0.23,16);
+  cPbPb_PowerLaw_R3->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFit_PbPb_R3_%d.pdf",date.GetDate()),"RECREATE"); 
+
+  TCanvas *cPbPb_PowerLawRat_R3 = new TCanvas("cPbPb_PowerLawRat_R3","PbPb unfolded spectra/Power Law Fit",1200,800);
+  makeMultiPanelCanvas(cPbPb_PowerLawRat_R3,3,2,0.0,0.0,0.2,0.15,0.07);
+
+    for(int i = 0; i<nbins_cent; ++i){
+      cPbPb_PowerLawRat_R3->cd(nbins_cent-i);
+      cPbPb_PowerLawRat_R3->cd(nbins_cent-i)->SetLogx();
+      hRatio_R3_Bayes[i]->SetMarkerStyle(21);
+      hRatio_R3_Bayes[i]->SetMarkerColor(kBlue);
+      hRatio_R3_Bayes[i]->SetAxisRange(unfoldingCut, 300, "X");
+      hRatio_R3_Bayes[i]->Divide(hFit_R3_Bayes[i]);
+      makeHistTitle(hBlankRatio," "," Jet p_{T} (GeV/c)","Bayesian unfolded data/Power law fit");
+      hBlankRatio->Draw();
+      hRatio_R3_Bayes[i]->Draw("same");
+      lineRatio->Draw("same");
+      drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
+  }
+  putCMSPrel();
+  putPbPbLumi();
+  drawText(Form("Anti-k_{T} R=0.3 %s %s Jets",algo,jet_type),0.2,0.23,16);
+ cPbPb_PowerLawRat_R3->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFitRatio_PbPb_R3_%d.pdf",date.GetDate()),"RECREATE"); 
+ 
+   TCanvas *cPbPb_PowerLaw_R4 = new TCanvas("cPbPb_PowerLaw_R4","Power Law fit comparisons for PbPb unfolded spectra",1200,800);
+  makeMultiPanelCanvas(cPbPb_PowerLaw_R4,3,2,0.0,0.0,0.2,0.15,0.07);
+
+  
+    for(int i = 0; i<nbins_cent; ++i){
+      cPbPb_PowerLaw_R4->cd(nbins_cent-i);
+      cPbPb_PowerLaw_R4->cd(nbins_cent-i)->SetLogy();
+      cPbPb_PowerLaw_R4->cd(nbins_cent-i)->SetLogx();
+      uPbPb_R4_Bayes[i]->SetMarkerStyle(20);
+      uPbPb_R4_Bayes[i]->SetMarkerColor(kRed);
+      uPbPb_R4_Bayes[i]->SetAxisRange(unfoldingCut, 300, "X");
+      makeHistTitle(uPbPb_R4_Bayes[i]," "," Jet p_{T} (GeV/c)","#frac{d #sigma}{T_{AA} dp_{T} d#eta} nb");
+      hBlankSpectra->Draw();
+      uPbPb_R4_Bayes[i]->Draw("same");
+   Fit_R4_Bayes[i] = new TF1(Form("Fit_R4_Bayes%d",i),"[0]*pow(x+[2],[1])"); //create function
+   Fit_R4_Bayes[i]->SetParameters(1e10,-5,0);
+   Fit_R4_Bayes[i]->SetLineColor(kBlue);
+   hRatio_R4_Bayes[i] = (TH1F*)uPbPb_R4_Bayes[i]->Clone(Form("PbPb_bayesian_unfolded_spectra_combined_cent%d",i)); //clone histogram hRatio from h
+   uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd); //fit function
+   uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd);
+   uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd);
+   uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd);
+    uPbPb_R4_Bayes[i]->Fit(Form("Fit_R4_Bayes%d",i),"LL","",FitStart,FitEnd);
+   Fit_R4_Bayes[i]->Draw("same");
+
+  hFit_R4_Bayes[i] = (TH1F*)uPbPb_R4_Bayes[i]->Clone(); //clone histogram uPP_R4_Bayes from h
+   for (int iv=1;iv<=uPbPb_R4_Bayes[i]->GetNbinsX();iv++) //Turn the fit line into a histogram so I can take a ratio
+   {
+      double var = Fit_R4_Bayes[i]->Integral(uPbPb_R4_Bayes[i]->GetBinLowEdge(iv),uPbPb_R4_Bayes[i]->GetBinLowEdge(iv+1))/uPbPb_R4_Bayes[i]->GetBinWidth(iv);
+      hFit_R4_Bayes[i]->SetBinContent(iv,var);
+   }
+      drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
+
+  }
+  putCMSPrel();
+  putPbPbLumi();
+  drawText(Form("Anti-k_{T} R=0.2 %s %s Jets",algo,jet_type),0.2,0.23,16);
+  cPbPb_PowerLaw_R4->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFit_PbPb_R4_%d.pdf",date.GetDate()),"RECREATE"); 
+
+  TCanvas *cPbPb_PowerLawRat_R4 = new TCanvas("cPbPb_PowerLawRat_R4","PbPb unfolded spectra/Power Law Fit",1200,800);
+  makeMultiPanelCanvas(cPbPb_PowerLawRat_R4,3,2,0.0,0.0,0.2,0.15,0.07);
+
+    for(int i = 0; i<nbins_cent; ++i){
+      cPbPb_PowerLawRat_R4->cd(nbins_cent-i);
+      cPbPb_PowerLawRat_R4->cd(nbins_cent-i)->SetLogx();
+      hRatio_R4_Bayes[i]->SetMarkerStyle(21);
+      hRatio_R4_Bayes[i]->SetMarkerColor(kBlue);
+      hRatio_R4_Bayes[i]->SetAxisRange(unfoldingCut, 300, "X");
+      hRatio_R4_Bayes[i]->Divide(hFit_R4_Bayes[i]);
+      makeHistTitle(hBlankRatio," "," Jet p_{T} (GeV/c)","Bayesian unfolded data/Power law fit");
+      hBlankRatio->Draw();
+      hRatio_R4_Bayes[i]->Draw("same");
+      lineRatio->Draw("same");
+      drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
+  }
+  putCMSPrel();
+  putPbPbLumi();
+  drawText(Form("Anti-k_{T} R=0.4 %s %s Jets",algo,jet_type),0.2,0.23,16);
+ cPbPb_PowerLawRat_R4->SaveAs(Form("Plots/Final_paper_plots_spectraPowerLawFitRatio_PbPb_R4_%d.pdf",date.GetDate()),"RECREATE"); 
+// //     uPbPb_R2_Bayes[i]->Scale(ScaleFactor[i+1]);
+// //     uPbPb_R2_Bayes[i]->SetMarkerStyle(20);
+// //     uPbPb_R2_Bayes[i]->SetMarkerColor(kRed);
+// //     uPbPb_R2_Bayes[i]->Draw("same");
+// //   }
 
 // //   TCanvas * cSpectra = new TCanvas("cSpectra","",1200,1000);
 // //   //makeMultiPanelCanvas(cSpectra,3,1,0.0,0.0,0.2,0.15,0.07);
