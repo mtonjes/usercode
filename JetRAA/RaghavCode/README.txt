@@ -48,24 +48,25 @@ match is done with akPu3CaloJets no matter the radius of the PF jets (akPu2Calo 
 **********************************
 
 Can run some of Marguerite's JetID studies:
-https://github.com/mtonjes/usercode/tree/master/JetRAA/RAA_plot_jetidvariables_cutPass_jet55.C
-https://github.com/mtonjes/usercode/tree/master/JetRAA/eMaxCutGen_study.C
+root -l https://github.com/mtonjes/usercode/tree/master/JetRAA/RAA_plot_jetidvariables_cutPass_jet55.C+
+root -l https://github.com/mtonjes/usercode/tree/master/JetRAA/eMaxCutGen_study.C+
 
 
 Next for analysis, run this code from Raghav to get the spectra including cuts from the matched and unmatched trees (we colloquially call them ntuples):
-https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency_pp.C
-https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency.C
+root -l https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency_pp.C+
+root -l https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency.C+
 
 Output looks like:
 /export/d00/scratch/rkunnawa/rootfiles/RAA/apil16/
 PbPb_CutEfficiency_YetkinCuts_matched_slantedlinecalopfpt_addingunmatched_exclusionhighertriggers_eMaxSumcand_A_R0p3.root
 Pp_CutEfficiency_YetkinCuts_matched_slantedlinecalopfpt_addingunmatched_exclusionhighertriggers_eMaxSumcand_A_R0p3.root
 --> CutA is included in these root files above (only on eMax/sumCand(!PFElectron))
+--> Note that histograms are made without cuts should one prefer to pick those up
 
 Can make plots from Marguerite's code on it:
-https://github.com/mtonjes/usercode/tree/master/JetRAA/RAA_plot_CutA_BasicPlots.C
+root -l https://github.com/mtonjes/usercode/tree/master/JetRAA/RAA_plot_CutA_BasicPlots.C+
 Later version from Owen:
-https://github.com/obaron/CMScode/blob/master/drawfiles/RAA_plot_CutA_BasicPlots.C
+root -l https://github.com/obaron/CMScode/blob/master/drawfiles/RAA_plot_CutA_BasicPlots.C+
 
 Next, run data driven unfolding (Raghav code) - this fixes error bars after unfolding
 root -l https://github.com/rkunnawa/RAA/blob/master/RAA_dataDrivenUnfoldingErrorCheck.C+
