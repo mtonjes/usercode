@@ -1,22 +1,87 @@
+**********************************
+INTRODUCTION:
+**********************************
 Modified to run in the following directory at hepcms-in1.umd.edu
 /home/belt/wrk/JetRAA/MatchNtuples/AnalysisPlots/16April2015
 
 Have most of the input files in:
-/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/16april
+UMD: /data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/16april (all but matched ntuples)
+UMD: /data/users/belt/JetRAA/MatchNtuples (for matched ntuples)
+MIT: /export/d00/scratch/rkunnawa/rootfiles/RAA/apil16 (all but matched ntuples)
+MIT: /export/d00/scratch/rkunnawa/rootfiles (matched ntuples)
 
-A couple more in:
+A couple more files can be found (if you are missing them in):
 /net/hisrv0001/home/rkunnawa/WORK/RAA/CMSSW_5_3_20/src/Output
+--> Note that some macros have booleans and don't actually run code which takes other files you may be mising
+
+Don't forget to pick up Raghav's full Headers directory from github and point to it when running. His code assumes:
+../../Output
+../../Plots
+Marguerite's code assumes:
+Output/
+Plots/
+
+github areas:
+https://github.com/rkunnawa/RAA
+https://github.com/mtonjes/usercode/tree/master/JetRAA
+https://github.com/obaron/CMScode/tree/master/drawfiles
+
 **********************************
-Analysis plots set take input from:
+We do not expect you to run this step yourself as it requires condor jobs:
+--> Take input from:
 /export/d00/scratch/rkunnawa/rootfiles/
+(produced with Raghav's code https://github.com/rkunnawa/RAA/RAA_calo_pf_JetCorrelation_v2.C)
 With names like:
+PbPb_MC_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root
+PbPb_Data_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root
+pp_MC_calo_pf_jet_correlation_deltaR_0p2_ak3_20150331.root
+pp_Data_calo_pf_jet_correlation_deltaR_0p2_ak3_20150331.root
+
+--> Cuts included in these root files:
+jet |eta|<2
+jet pT>30 (Calo and PF)
+supernova/pileup removal
+pHBHEFilter (not MC)
+pCollisionEventSelection (PbPb data & MC)
+pACollisionEventSelection (pp data & MC)
+match is done with akPu3CaloJets no matter the radius of the PF jets (akPu2Calo and akPu4Calo not available in data hiForest)
+**********************************
+
+Can run some of Marguerite's JetID studies:
+https://github.com/mtonjes/usercode/tree/master/JetRAA/RAA_plot_jetidvariables_cutPass_jet55.C
+https://github.com/mtonjes/usercode/tree/master/JetRAA/eMaxCutGen_study.C
 
 
+Next for analysis, run this code from Raghav to get the spectra including cuts from the matched and unmatched trees (we colloquially call them ntuples):
+https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency_pp.C
+https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency.C
+
+Output looks like:
+/export/d00/scratch/rkunnawa/rootfiles/RAA/apil16/
+PbPb_CutEfficiency_YetkinCuts_matched_slantedlinecalopfpt_addingunmatched_exclusionhighertriggers_eMaxSumcand_A_R0p3.root
+Pp_CutEfficiency_YetkinCuts_matched_slantedlinecalopfpt_addingunmatched_exclusionhighertriggers_eMaxSumcand_A_R0p3.root
+--> CutA is included in these root files above (only on eMax/sumCand(!PFElectron))
+
+Can make plots from Marguerite's code on it:
+https://github.com/mtonjes/usercode/tree/master/JetRAA/RAA_plot_CutA_BasicPlots.C
+Later version from Owen:
+https://github.com/obaron/CMScode/blob/master/drawfiles/RAA_plot_CutA_BasicPlots.C
+
+Next, run data driven unfolding (Raghav code) - this fixes error bars after unfolding
+root -l https://github.com/rkunnawa/RAA/blob/master/RAA_dataDrivenUnfoldingErrorCheck.C+
+outputs: PbPb_R3_pp_R3_n20_eta_p20_unfoldingCut_60_data_driven_correction_akPuPF_20150417.root
+NOTE: this file has pp residual data-driven JEC applied (currently April 17th 12:20am this is disfavored): PbPb_R3_pp_withresiduals_R3_n20_eta_p20_unfoldingCut_60_data_driven_correction_akPuPF_20150417.root
+
+Then run actual unfolding and RAA calculation (need input files above with "CutEfficiency" and "data_driven_correction")
+root -l https://github.com/rkunnawa/RAA/blob/master/RAA_analyze.C+
+
+This outputs files as shown below
 **********************************
 Final plots set:
 
 The files which are input to these below have names like:
-/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/NoResidual/PbPb_pp_calopfpt_jetidcut_R0p3_unfold_mcclosure_oppside_trgMC_n20_eta_p20_60GeVCut_akPF_20150415.root
+/export/d00/scratch/rkunnawa/rootfiles/RAA/apil16/PbPb_pp_calopfpt_jetidcut_R0p3_unfold_mcclosure_oppside_trgMC_n20_eta_p20_60GeVCut_akPF_20150417.root
+/data/users/belt/JetRAA/MatchNtuples/AnalysisRootFiles/april16/PbPb_pp_calopfpt_jetidcut_R0p3_unfold_mcclosure_oppside_trgMC_n20_eta_p20_60GeVCut_akPF_20150417.root
 
 You will have to change the input file names to those mentioned above (since I run them locally on hidsk). 
 https://github.com/rkunnawa/RAA/blob/master/RAA_plot.C - to run: $ root -l RAA_plot.C 
@@ -32,3 +97,8 @@ This makes the final RAA paper plots which are
 1) Spectra for pp and PbPb with artificial scaling introduced to separate the differner curves. showing data points as filled circles and MC as lines. 
 2) Bayesian unfolded RAA for R=0.2, 0.3, 0.4 in the different centrality bins. 
 3) RAA as a function of N_part for the different radii. 
+--> Note, Marguerite and Owen have modified versions of this to (Marguerite's) look prettier and (Owen's) draw fine binned response matrix.
+https://github.com/mtonjes/usercode/blob/master/JetRAA/RaghavCode/RAA_plot_finalpaper.C
+
+Power Law Fit comparison for pp and PbPb unfolded spectra:
+https://github.com/mtonjes/usercode/blob/master/JetRAA/RAA_plot_PowerLaw.C
