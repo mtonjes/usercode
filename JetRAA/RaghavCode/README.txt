@@ -55,6 +55,7 @@ root -l https://github.com/mtonjes/usercode/tree/master/JetRAA/eMaxCutGen_study.
 Next for analysis, run this code from Raghav to get the spectra including cuts from the matched and unmatched trees (we colloquially call them ntuples):
 root -l https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency_pp.C+
 root -l https://github.com/rkunnawa/RAA/blob/master/RAA_plot_yetkinCutEfficiency.C+
+--> Note when I (Marguerite) run this code, I get empty canvases but the histograms and pdfs are usually ok.
 
 Output looks like:
 /export/d00/scratch/rkunnawa/rootfiles/RAA/apil16/
@@ -68,10 +69,21 @@ root -l https://github.com/mtonjes/usercode/tree/master/JetRAA/RAA_plot_CutA_Bas
 Later version from Owen:
 root -l https://github.com/obaron/CMScode/blob/master/drawfiles/RAA_plot_CutA_BasicPlots.C+
 
+--> Download and install RooUnfold http://hepunx.rl.ac.uk/~adye/software/unfold/RooUnfold.html (RooUnfold-1.1.1)
+--> Make sure you have a running ROOT environment (5_3_20 and above on SL6)
+untar (see directions at the RooUnfold site)
+make
+--> Have in your .rootlogon.C the following line pointing to your compiled library:
+gSystem->Load("/afs/cern.ch/work/r/rkunnawa/WORK/RAA/CMSSW_5_3_18/src/Headers/RooUnfold-1.1.1/libRooUnfold.so");
+
 Next, run data driven unfolding (Raghav code) - this fixes error bars after unfolding
 root -l https://github.com/rkunnawa/RAA/blob/master/RAA_dataDrivenUnfoldingErrorCheck.C+
 outputs: PbPb_R3_pp_R3_n20_eta_p20_unfoldingCut_60_data_driven_correction_akPuPF_20150417.root
 NOTE: this file has pp residual data-driven JEC applied (currently April 17th 12:20am this is disfavored): PbPb_R3_pp_withresiduals_R3_n20_eta_p20_unfoldingCut_60_data_driven_correction_akPuPF_20150417.root
+
+You will need for the RAA_analyze.C code these files (I don't know which macro makes them):
+/net/hisrv0001/home/belt/wrk/JetRAA/matchAnalysis/raghav_files/PbPb_MC_calo_pf_jet_correlation_mcclosure_histograms_deltaR_0p2_akPu*_20150413.root
+/net/hisrv0001/home/belt/wrk/JetRAA/matchAnalysis/raghav_files/pp_MC_calo_pf_jet_correlation_deltaR_0p2_ak*_20150412.root
 
 Then run actual unfolding and RAA calculation (need input files above with "CutEfficiency" and "data_driven_correction")
 root -l https://github.com/rkunnawa/RAA/blob/master/RAA_analyze.C+
@@ -99,7 +111,7 @@ This makes the final RAA paper plots which are
 2) Bayesian unfolded RAA for R=0.2, 0.3, 0.4 in the different centrality bins. 
 3) RAA as a function of N_part for the different radii. 
 --> Note, Marguerite and Owen have modified versions of this to (Marguerite's) look prettier and (Owen's) draw fine binned response matrix.
-https://github.com/mtonjes/usercode/blob/master/JetRAA/RaghavCode/RAA_plot_finalpaper.C
+https://github.com/mtonjes/usercode/blob/master/JetRAA/RaghavCode/RAA_plot_finalpaper.C+
 
 Power Law Fit comparison for pp and PbPb unfolded spectra:
 https://github.com/mtonjes/usercode/blob/master/JetRAA/RAA_plot_PowerLaw.C
