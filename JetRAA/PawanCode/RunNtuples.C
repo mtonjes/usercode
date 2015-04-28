@@ -57,6 +57,8 @@ const char *ccent[ncen] = {"0-5%","5-10%","10-30%","30-50%","50-70%","70-90%","9
 
 double ptbins[] ={40, 50 ,60 ,70 ,80 ,90 ,100, 110, 120, 130, 140, 160, 200, 250, 300, 400, 548};
 const int nbins = sizeof(ptbins)/sizeof(double) - 1;
+// double ptbinsfine[] ={30,35,40, 45,50,55,60,65 ,70,75 ,80,85 ,90,95 ,100,105, 110, 115,120, 125,130,135, 140,150, 160, 170,180, 200,225, 250, 300, 350, 400, 548};
+// const int nbinsfine = sizeof(ptbinsfine)/sizeof(double) - 1;
 
 const double etabins[] = {-2.000, -1.4000, -0.4500, 0.000, 0.4500, 1.400, 2.000};
 const int neta = sizeof(etabins)/sizeof(double) - 1;
@@ -88,6 +90,7 @@ int RunNtuples(std::string kSpecies="PbPb")
   cout << endl;
   cout <<" Running for " << kSpecies.c_str() << endl;
   cout << " # of ptbins : " << nbins << endl;
+//   cout << " # of fine ptbins : " << nbinsfine << endl;
   //return 0;
 
   int iSave=1;
@@ -315,10 +318,12 @@ int RunNtuples(std::string kSpecies="PbPb")
     
     //! Efficiency & Fake
     TH1F *hPtAll [ncen], *hPtEff [2][ncen];
+    TH1F *hPtAll_etalt1pt6 [ncen], *hPtEff_etalt1pt6 [2][ncen];    
     TH1F *hEtaAll[ncen], *hEtaEff[2][ncen];
     TH1F *hPhiAll[ncen], *hPhiEff[2][ncen];
 
     TH1F *hPtFakeAll[ncen], *hPtFake[2][ncen];
+    TH1F *hPtFakeAll_etalt1pt6[ncen], *hPtFake_etalt1pt6[2][ncen];
     TH1F *hEtaFakeAll_20[ncen],*hEtaFakeAll_30[ncen], *hEtaFakeAll_40[ncen],*hEtaFakeAll_45[ncen], *hEtaFakeAll_50[ncen], *hEtaFakeAll_60[ncen];
     TH1F *hPhiFakeAll_20[ncen],*hPhiFakeAll_30[ncen], *hPhiFakeAll_40[ncen],*hPhiFakeAll_45[ncen], *hPhiFakeAll_50[ncen], *hPhiFakeAll_60[ncen];
     TH1F *hEtaFake_20[2][ncen],*hEtaFake_30[2][ncen], *hEtaFake_40[2][ncen],*hEtaFake_45[2][ncen], *hEtaFake_50[2][ncen], *hEtaFake_60[2][ncen];
@@ -346,18 +351,23 @@ int RunNtuples(std::string kSpecies="PbPb")
     TH1F *havbkgpt_wjid_j80 [2][ncen][nbins], *havbkgpt_m_wjid_j80 [2][ncen][nbins], *havbkgpt_um_wjid_j80 [2][ncen][nbins];
     TH1F *havbkgpt_wojid_j80[2][ncen][nbins], *havbkgpt_m_wojid_j80[2][ncen][nbins], *havbkgpt_um_wojid_j80[2][ncen][nbins];
 
+// i is the with or without jetID loop, NOT the nj loop! 0 == no JetID, 1== JetID
     for(int i=0; i<2; i++){
       for(int ic=0; ic<ncen; ic++){
     	if(i==0){
-    	  hPtAll[ic] = new TH1F(Form("hPtAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),25,20,620);
+    	  hPtAll[ic] = new TH1F(Form("hPtAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
     	  hPtAll[ic]->Sumw2();
+    	  hPtAll_etalt1pt6[ic] = new TH1F(Form("hPtAll_etalt1pt6_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator pT for algorithm %s %s, |eta|<1.6",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
+    	  hPtAll_etalt1pt6[ic]->Sumw2();
     	  hEtaAll[ic] = new TH1F(Form("hEtaAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
     	  hEtaAll[ic]->Sumw2();
     	  hPhiAll[ic] = new TH1F(Form("hPhiAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	  hPhiAll[ic]->Sumw2();
 
-    	  hPtFakeAll[ic] = new TH1F(Form("hPtFakeAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),25,20,620);
+    	  hPtFakeAll[ic] = new TH1F(Form("hPtFakeAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
     	  hPtFakeAll[ic]->Sumw2();
+    	  hPtFakeAll_etalt1pt6[ic] = new TH1F(Form("hPtFakeAll_etalt1pt6_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All Denominator pT for algorithm %s %s, |eta|<1.6",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
+    	  hPtFakeAll_etalt1pt6[ic]->Sumw2();
 
     	  hEtaFakeAll_20[ic] = new TH1F(Form("hEtaFakeAll_20_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 20 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
     	  hEtaFakeAll_20[ic]->Sumw2();
@@ -390,16 +400,20 @@ int RunNtuples(std::string kSpecies="PbPb")
     	  hPhiFakeAll_60[ic]->Sumw2();
 
     	}
-    	hPtEff [i][ic] = new TH1F(Form("hPtEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator eff pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),25,20,620);
+    	hPtEff [i][ic] = new TH1F(Form("hPtEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator eff pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
     	hPtEff [i][ic]->Sumw2();
+    	hPtEff_etalt1pt6[i][ic] = new TH1F(Form("hPtEff_etalt1pt6_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator eff pT for algorithm %s %s, |eta|<1.6",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
+    	hPtEff_etalt1pt6[i][ic]->Sumw2();    	
     	hEtaEff[i][ic] = new TH1F(Form("hEtaEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator eff eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
     	hEtaEff[i][ic]->Sumw2();
     	hPhiEff[i][ic] = new TH1F(Form("hPhiEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator  eff phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiEff[i][ic]->Sumw2();
       
-    	hPtFake [i][ic] = new TH1F(Form("hPtFake_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator fake pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),25,20,620);
+    	hPtFake [i][ic] = new TH1F(Form("hPtFake_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator fake pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
     	hPtFake [i][ic]->Sumw2();
-      
+     	hPtFake_etalt1pt6[i][ic] = new TH1F(Form("hPtFake_etalt1pt6_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator fake pT for algorithm %s %s, |eta|<1.6",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),50,20,620);
+    	hPtFake_etalt1pt6[i][ic]->Sumw2();
+    	     
     	hEtaFake_20[i][ic] = new TH1F(Form("hEtaFake_20_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 20 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
     	hEtaFake_20[i][ic]->Sumw2();
     	hPhiFake_20[i][ic] = new TH1F(Form("hPhiFake_20_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 20 fake phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
@@ -809,6 +823,9 @@ int RunNtuples(std::string kSpecies="PbPb")
       if(iCent<0 || iCent>=ncen)continue;
 
       hPtFakeAll[iCent]->Fill(pfpt_2);
+      if(fabs(pfeta_2)<1.6){
+          hPtFakeAll_etalt1pt6[iCent]->Fill(pfpt_2);
+      }
       if( pfpt_2 > 20.) {
     	hEtaFakeAll_20 [iCent]->Fill(pfeta_2);
     	hPhiFakeAll_20 [iCent]->Fill(pfphi_2);
@@ -835,7 +852,15 @@ int RunNtuples(std::string kSpecies="PbPb")
       }   
       if( refpt_2 < 0 ){
     	hPtFake [0][iCent]->Fill(pfpt_2);
-    	if( wJetId )hPtFake [1][iCent]->Fill(pfpt_2);
+    	if(fabs(pfeta_2)<1.6){
+    	 hPtFake_etalt1pt6[0][iCent]->Fill(pfpt_2);
+    	}
+    	if( wJetId ){
+    	   hPtFake [1][iCent]->Fill(pfpt_2);
+    	   if(fabs(pfeta_2)<1.6){
+    	    hPtFake_etalt1pt6[1][iCent]->Fill(pfpt_2);
+    	   }
+    	}
     	if(pfpt_2 > 20.){
     	  hEtaFake_20[0][iCent]->Fill(pfeta_2);
     	  hPhiFake_20[0][iCent]->Fill(pfphi_2);
@@ -888,15 +913,24 @@ int RunNtuples(std::string kSpecies="PbPb")
 
       if( subid_2 == 0 && refpt_2 > 0){
     	hPtAll  [iCent]->Fill(refpt_2,weight_2);
+        if(fabs(pfeta_2)<1.6){    	
+    	  hPtAll_etalt1pt6[iCent]->Fill(refpt_2,weight_2);
+        }
     	hEtaAll [iCent]->Fill(refeta_2,weight_2);
     	hPhiAll [iCent]->Fill(refphi_2,weight_2);
 
     	if( refdrjt_2 < kdelrcut ){
-    	  hPtEff [0][iCent]->Fill(refpt_2 ,weight_2);
+    	  hPtEff[0][iCent]->Fill(refpt_2 ,weight_2);
+    	  if(fabs(pfeta_2)<1.6){
+    	       hPtEff_etalt1pt6[0][iCent]->Fill(refpt_2 ,weight_2);
+          }
     	  hEtaEff[0][iCent]->Fill(refeta_2,weight_2);
     	  hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
     	  if( wJetId ){
-    	    hPtEff [1][iCent]->Fill(refpt_2 ,weight_2);
+    	    hPtEff[1][iCent]->Fill(refpt_2 ,weight_2);
+    	    if(fabs(pfeta_2)<1.6){
+    	        hPtEff_etalt1pt6[1][iCent]->Fill(refpt_2 ,weight_2);
+    	    }
     	    hEtaEff[1][iCent]->Fill(refeta_2,weight_2);
     	    hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
     	  }
@@ -1014,6 +1048,9 @@ int RunNtuples(std::string kSpecies="PbPb")
       if(iCent<0 || iCent>=ncen)continue;
 
       hPtFakeAll[iCent]->Fill(pfpt_2);
+      if(fabs(pfeta_2)<1.6){
+            hPtFakeAll_etalt1pt6[iCent]->Fill(pfpt_2);
+      }
       if( pfpt_2 > 20.) {
     	hEtaFakeAll_20 [iCent]->Fill(pfeta_2);
     	hPhiFakeAll_20 [iCent]->Fill(pfphi_2);
@@ -1040,7 +1077,15 @@ int RunNtuples(std::string kSpecies="PbPb")
       }
       if( refpt_2 < 0 ){
     	hPtFake [0][iCent]->Fill(pfpt_2);
-    	if( wJetId )hPtFake [1][iCent]->Fill(pfpt_2);
+    	if(fabs(pfeta_2)<1.6){
+    	    hPtFake_etalt1pt6[0][iCent]->Fill(pfpt_2);
+        }
+    	if( wJetId ){
+    	   hPtFake [1][iCent]->Fill(pfpt_2);
+    	   if(fabs(pfeta_2)<1.6){
+    	      hPtFake_etalt1pt6[1][iCent]->Fill(pfpt_2);
+    	   }
+    	}
     	if(pfpt_2 > 20.){
     	  hEtaFake_20[0][iCent]->Fill(pfeta_2);
     	  hPhiFake_20[0][iCent]->Fill(pfphi_2);
@@ -1092,17 +1137,26 @@ int RunNtuples(std::string kSpecies="PbPb")
       }
 
       if( subid_2 == 0 && refpt_2 > 0 ){
-    	hPtAll  [iCent]->Fill(refpt_2,weight_2);
+    	hPtAll[iCent]->Fill(refpt_2,weight_2);
+    	if(fabs(pfeta_2)<1.6){
+    	    	hPtAll_etalt1pt6[iCent]->Fill(refpt_2,weight_2);
+	    }
     	hEtaAll [iCent]->Fill(refeta_2,weight_2);
     	hPhiAll [iCent]->Fill(refphi_2,weight_2);
       
     	if( refdrjt_2 < kdelrcut ){
 	
-    	  hPtEff [0][iCent]->Fill(refpt_2 ,weight_2);
+    	  hPtEff[0][iCent]->Fill(refpt_2 ,weight_2);
+    	  if(fabs(pfeta_2)<1.6){
+    	      	hPtEff_etalt1pt6[0][iCent]->Fill(refpt_2 ,weight_2);
+          }
     	  hEtaEff[0][iCent]->Fill(refeta_2,weight_2);
     	  hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
     	  if( wJetId ){
     	    hPtEff [1][iCent]->Fill(refpt_2,weight_2);
+    	    if(fabs(pfeta_2)<1.6){
+    	       hPtEff_etalt1pt6[1][iCent]->Fill(refpt_2,weight_2);
+    	    }
     	    hEtaEff[1][iCent]->Fill(refeta_2,weight_2);
     	    hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
     	  }
