@@ -46,7 +46,7 @@ double delphi(double /*phi1*/, double /*phi2*/);
 double deltaR(float /*eta1*/, float /*phi1*/,
               float /*eta2*/, float /*phi2*/);
 
-const double ketacut=2.0;
+const double ketacut=1.8;
 const double kptrawcut =0.0;
 const double kptrecocut=1.0;
 const double kdelrcut=0.3;
@@ -125,7 +125,7 @@ int RunNtuplesEtaBins_reduced(std::string kSpecies="PbPb")
     fMC   = new TFile("/mnt/hadoop/cms/store/user/pawan/ntuples/JetRaa_akPu234_PbPb_MC.root","r");
   }
 
-  TFile *fout = new TFile(Form("Histos/OutputHist_ntuples_reduced_%s.root",kSpecies.c_str()),"RECREATE");
+  TFile *fout = new TFile(Form("Histos/OutputHist_ntuples_reduced_eta_lt1pt8_%s.root",kSpecies.c_str()),"RECREATE");
 
   for (int nj=0; nj<knj; nj++){
     cout <<"\t  \t " << (kAlgName+srad[nj]+kjetType).c_str() << endl;
@@ -1471,125 +1471,126 @@ int RunNtuplesEtaBins_reduced(std::string kSpecies="PbPb")
       
       if( refpt_2 > 2.*pthat_2 )continue;
       if( pfpt_2 < kptrecocut )continue;
-
+//      if( fabs(pfeta_2) >=ketacut )continue;
+      
       int iCent = -1;
       if( kSpecies == "PbPb")iCent = GetCentBin(hiBin_2);
       else iCent = ncen-1;
       if(iCent<0 || iCent>=ncen)continue;
-
-      hPtFakeAll[iCent]->Fill(pfpt_2);
+      
+      if( fabs(pfeta_2) <ketacut ) hPtFakeAll[iCent]->Fill(pfpt_2);
       if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
 //         cout<<"going to fill hPtFakeAll_etabin because of selection between: "<<etabins[myeta_2]<<", and "<<etabins[myeta_2+1]<<endl;
-          hPtFakeAll_etabin[iCent][myeta_2]->Fill(pfpt_2);
+           if( fabs(pfeta_2) <ketacut ) hPtFakeAll_etabin[iCent][myeta_2]->Fill(pfpt_2);
       }
 //      cout<<"did fill that histo hPtFakeAll_etabin"<<endl;
       if( pfpt_2 > 20.) {
     	hEtaFakeAll_20 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_20 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_20 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 30.) {
     	hEtaFakeAll_30 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_30 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_30 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 40.) {
     	hEtaFakeAll_40 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_40 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_40 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 45.) {
     	hEtaFakeAll_45 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_45 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_45 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 50.) {
     	hEtaFakeAll_50 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_50 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_50 [iCent]->Fill(pfphi_2);
       }
        if( pfpt_2 > 60.) {
     	hEtaFakeAll_60 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_60 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_60 [iCent]->Fill(pfphi_2);
       }   
        if( pfpt_2 > 70.) {
     	hEtaFakeAll_70 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_70 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_70 [iCent]->Fill(pfphi_2);
       }   
        if( pfpt_2 > 80.) {
     	hEtaFakeAll_80 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_80 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_80 [iCent]->Fill(pfphi_2);
       }   
       if( refpt_2 < 0 ){
-    	hPtFake [0][iCent]->Fill(pfpt_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPtFake [0][iCent]->Fill(pfpt_2);
     	if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
 //         cout<<"going to fill hPtFake_etabin noJetID because of selection between: "<<etabins[myeta_2]<<", and "<<etabins[myeta_2+1]<<endl;    	
-    	 hPtFake_etabin[0][iCent][myeta_2]->Fill(pfpt_2);
+    	  if( fabs(pfeta_2) <ketacut ) hPtFake_etabin[0][iCent][myeta_2]->Fill(pfpt_2);
     	}
     	if( wJetId ){
-    	   hPtFake [1][iCent]->Fill(pfpt_2);
+    	    if( fabs(pfeta_2) <ketacut ) hPtFake [1][iCent]->Fill(pfpt_2);
     	   if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
  //   	    cout<<"going to fill hPtFake_etabin with jetID because of selection between: "<<etabins[myeta_2]<<", and "<<etabins[myeta_2+1]<<endl;
-    	    hPtFake_etabin[1][iCent][myeta_2]->Fill(pfpt_2);
+    	     if( fabs(pfeta_2) <ketacut ) hPtFake_etabin[1][iCent][myeta_2]->Fill(pfpt_2);
     	   }
     	}
     	if(pfpt_2 > 20.){
     	  hEtaFake_20[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_20[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_20[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_20[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_20[1][iCent]->Fill(pfphi_2);
+    	   if( fabs(pfeta_2) <ketacut )   hPhiFake_20[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 30.){
     	  hEtaFake_30[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_30[0][iCent]->Fill(pfphi_2);
+    	   if( fabs(pfeta_2) <ketacut ) hPhiFake_30[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_30[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_30[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_30[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 40.){
     	  hEtaFake_40[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_40[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_40[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_40[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_40[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_40[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 45.){
     	  hEtaFake_45[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_45[0][iCent]->Fill(pfphi_2);
+    	   if( fabs(pfeta_2) <ketacut ) hPhiFake_45[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_45[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_45[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_45[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 50.){
     	  hEtaFake_50[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_50[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_50[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_50[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_50[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_50[1][iCent]->Fill(pfphi_2);
     	  }
     	}
      	if(pfpt_2 > 60.){
     	  hEtaFake_60[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_60[0][iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut )   hPhiFake_60[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_60[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_60[1][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )    hPhiFake_60[1][iCent]->Fill(pfphi_2);
     	  }
     	}   
      	if(pfpt_2 > 70.){
     	  hEtaFake_70[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_70[0][iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut )   hPhiFake_70[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_70[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_70[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_70[1][iCent]->Fill(pfphi_2);
     	  }
     	}   	
      	if(pfpt_2 > 80.){
     	  hEtaFake_80[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_80[0][iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut )   hPhiFake_80[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_80[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_80[1][iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut )     hPhiFake_80[1][iCent]->Fill(pfphi_2);
     	  }
     	}   	 	
       }
@@ -1597,36 +1598,38 @@ int RunNtuplesEtaBins_reduced(std::string kSpecies="PbPb")
 
       //!  Efficiency 
       if( subid_2 == 0 && refpt_2 > 0){
-    	hPtAll  [0][iCent]->Fill(refpt_2,weight_2);
+    if( fabs(pfeta_2) <ketacut )  	hPtAll  [0][iCent]->Fill(refpt_2,weight_2);
     	hEtaAll [0][iCent]->Fill(refeta_2,weight_2);
-    	hPhiAll [0][iCent]->Fill(refphi_2,weight_2);
+     if( fabs(pfeta_2) <ketacut ) 	hPhiAll [0][iCent]->Fill(refphi_2,weight_2);
 	if( wJetId ){
-	  hPtAll  [1][iCent]->Fill(refpt_2,weight_2);
+	 if( fabs(pfeta_2) <ketacut )   hPtAll  [1][iCent]->Fill(refpt_2,weight_2);
 	  hEtaAll [1][iCent]->Fill(refeta_2,weight_2);
-	  hPhiAll [1][iCent]->Fill(refphi_2,weight_2);
+	 if( fabs(pfeta_2) <ketacut )   hPhiAll [1][iCent]->Fill(refphi_2,weight_2);
 	}
         if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){ 
  //         cout<<"going to fill hPtAll_etabin because of selection between: "<<etabins[myeta_2]<<", and "<<etabins[myeta_2+1]<<endl;   	
-    	  hPtAll_etabin[0][iCent][myeta_2]->Fill(refpt_2,weight_2);
-    	  if( wJetId )hPtAll_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPtAll_etabin[0][iCent][myeta_2]->Fill(refpt_2,weight_2);
+    	  if( wJetId ){
+    	      if( fabs(pfeta_2) <ketacut )  hPtAll_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
+    	  }
         }
 
 
     	if( refdrjt_2 < kdelrcut ){
-    	  hPtEff [0][iCent]->Fill(refpt_2 ,weight_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPtEff [0][iCent]->Fill(refpt_2 ,weight_2);
     	  hEtaEff[0][iCent]->Fill(refeta_2,weight_2);
-    	  hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
 
     	  if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-	    hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
+	    if( fabs(pfeta_2) <ketacut )  hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
           }
 
     	  if( wJetId ){
-    	    hPtEff[1][iCent]->Fill(refpt_2 ,weight_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPtEff[1][iCent]->Fill(refpt_2 ,weight_2);
     	    hEtaEff[1][iCent]->Fill(refeta_2,weight_2);
-    	    hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
     	    if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-	      hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
+	      if( fabs(pfeta_2) <ketacut )  hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
     	    }
     	  }
     	}
@@ -1946,155 +1949,158 @@ int RunNtuplesEtaBins_reduced(std::string kSpecies="PbPb")
 
       if( refpt_2 > 2.*pthat_2 )continue;
       if( pfpt_2 < kptrecocut )continue;
+   //   if( fabs(pfeta_2) >=ketacut )continue;
 
       int iCent = -1;
       if( kSpecies == "PbPb")iCent = GetCentBin(hiBin_2);
       else iCent = ncen-1;
       if(iCent<0 || iCent>=ncen)continue;
 
-      hPtFakeAll[iCent]->Fill(pfpt_2);
+       if( fabs(pfeta_2) <ketacut ) hPtFakeAll[iCent]->Fill(pfpt_2);
       if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-            hPtFakeAll_etabin[iCent][myeta_2]->Fill(pfpt_2);
+            if( fabs(pfeta_2) <ketacut )  hPtFakeAll_etabin[iCent][myeta_2]->Fill(pfpt_2);
       }
       if( pfpt_2 > 20.) {
     	hEtaFakeAll_20 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_20 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_20 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 30.) {
     	hEtaFakeAll_30 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_30 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_30 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 40.) {
     	hEtaFakeAll_40 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_40 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_40 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 45.) {
     	hEtaFakeAll_45 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_45 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_45 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 50.) {
     	hEtaFakeAll_50 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_50 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_50 [iCent]->Fill(pfphi_2);
       }
       if( pfpt_2 > 60.) {
     	hEtaFakeAll_60 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_60 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_60 [iCent]->Fill(pfphi_2);
       }
        if( pfpt_2 > 70.) {
     	hEtaFakeAll_70 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_70 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_70 [iCent]->Fill(pfphi_2);
       }   
        if( pfpt_2 > 80.) {
     	hEtaFakeAll_80 [iCent]->Fill(pfeta_2);
-    	hPhiFakeAll_80 [iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiFakeAll_80 [iCent]->Fill(pfphi_2);
       }   
       if( refpt_2 < 0 ){
-    	hPtFake [0][iCent]->Fill(pfpt_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPtFake [0][iCent]->Fill(pfpt_2);
     	if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-    	    hPtFake_etabin[0][iCent][myeta_2]->Fill(pfpt_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPtFake_etabin[0][iCent][myeta_2]->Fill(pfpt_2);
         }
     	if( wJetId ){
-    	   hPtFake [1][iCent]->Fill(pfpt_2);
+    	    if( fabs(pfeta_2) <ketacut ) hPtFake [1][iCent]->Fill(pfpt_2);
     	   if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-    	      hPtFake_etabin[1][iCent][myeta_2]->Fill(pfpt_2);
+    	      if( fabs(pfeta_2) <ketacut )  hPtFake_etabin[1][iCent][myeta_2]->Fill(pfpt_2);
     	   }
     	}
     	if(pfpt_2 > 20.){
     	  hEtaFake_20[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_20[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_20[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_20[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_20[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_20[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 30.){
     	  hEtaFake_30[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_30[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_30[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_30[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_30[1][iCent]->Fill(pfphi_2);
+    	   if( fabs(pfeta_2) <ketacut )   hPhiFake_30[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 40.){
     	  hEtaFake_40[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_40[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_40[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_40[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_40[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_40[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 45.){
     	  hEtaFake_45[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_45[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_45[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_45[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_45[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_45[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 50.){
     	  hEtaFake_50[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_50[0][iCent]->Fill(pfphi_2);
+    	 if( fabs(pfeta_2) <ketacut )   hPhiFake_50[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_50[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_50[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_50[1][iCent]->Fill(pfphi_2);
     	  }
     	}
     	if(pfpt_2 > 60.){
     	  hEtaFake_60[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_60[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_60[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_60[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_60[1][iCent]->Fill(pfphi_2);
+    	   if( fabs(pfeta_2) <ketacut )   hPhiFake_60[1][iCent]->Fill(pfphi_2);
     	  }
     	}    	
      	if(pfpt_2 > 70.){
     	  hEtaFake_70[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_70[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_70[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_70[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_70[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_70[1][iCent]->Fill(pfphi_2);
     	  }
     	}   	
      	if(pfpt_2 > 80.){
     	  hEtaFake_80[0][iCent]->Fill(pfeta_2);
-    	  hPhiFake_80[0][iCent]->Fill(pfphi_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPhiFake_80[0][iCent]->Fill(pfphi_2);
     	  if( wJetId ){
     	    hEtaFake_80[1][iCent]->Fill(pfeta_2);
-    	    hPhiFake_80[1][iCent]->Fill(pfphi_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPhiFake_80[1][iCent]->Fill(pfphi_2);
     	  }
     	}   
       }
 
       if( subid_2 == 0 && refpt_2 > 0 ){
-    	hPtAll  [0][iCent]->Fill(refpt_2,weight_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPtAll  [0][iCent]->Fill(refpt_2,weight_2);
     	hEtaAll [0][iCent]->Fill(refeta_2,weight_2);
-    	hPhiAll [0][iCent]->Fill(refphi_2,weight_2);
+    	 if( fabs(pfeta_2) <ketacut ) hPhiAll [0][iCent]->Fill(refphi_2,weight_2);
 	if( wJetId ){
-	  hPtAll  [1][iCent]->Fill(refpt_2,weight_2);
+	  if( fabs(pfeta_2) <ketacut )  hPtAll  [1][iCent]->Fill(refpt_2,weight_2);
 	  hEtaAll [1][iCent]->Fill(refeta_2,weight_2);
-	  hPhiAll [1][iCent]->Fill(refphi_2,weight_2);
+	   if( fabs(pfeta_2) <ketacut ) hPhiAll [1][iCent]->Fill(refphi_2,weight_2);
 	}
     	if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-	  hPtAll_etabin[0][iCent][myeta_2]->Fill(refpt_2,weight_2);
-	  if( wJetId )hPtAll_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
+	   if( fabs(pfeta_2) <ketacut ) hPtAll_etabin[0][iCent][myeta_2]->Fill(refpt_2,weight_2);
+	  if( wJetId ){
+	      if( fabs(pfeta_2) <ketacut ) hPtAll_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
+	  }
 	}
 
       
     	if( refdrjt_2 < kdelrcut ){
 	  
-    	  hPtEff[0][iCent]->Fill(refpt_2 ,weight_2);
+    	  if( fabs(pfeta_2) <ketacut )  hPtEff[0][iCent]->Fill(refpt_2 ,weight_2);
     	  hEtaEff[0][iCent]->Fill(refeta_2,weight_2);
-    	  hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
+    	   if( fabs(pfeta_2) <ketacut ) hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
     	  if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-	    hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
+	     if( fabs(pfeta_2) <ketacut ) hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
           }
 
     	  if( wJetId ){
-    	    hPtEff [1][iCent]->Fill(refpt_2,weight_2);
+    	    if( fabs(pfeta_2) <ketacut )  hPtEff [1][iCent]->Fill(refpt_2,weight_2);
     	    hEtaEff[1][iCent]->Fill(refeta_2,weight_2);
-    	    hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
+    	     if( fabs(pfeta_2) <ketacut ) hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
     	    if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-	      hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
+	      if( fabs(pfeta_2) <ketacut )  hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
     	    }
     	  }
     	}

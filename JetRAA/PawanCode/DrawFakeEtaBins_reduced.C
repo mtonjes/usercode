@@ -41,6 +41,7 @@ const char *ccent[ncen] = {"0-5%","5-10%","10-30%","30-50%","50-70%","70-90%","9
 
 // const double etabins[] = {-2.000, -1.4000, -0.4500, 0.000, 0.4500, 1.400, 2.000};
 // const int neta = sizeof(etabins)/sizeof(double) - 1;
+const double ketacut=1.8;
 const double etabins[] = {0, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0};
 const int neta = sizeof(etabins)/sizeof(double) - 1;
 const char *seta[neta] = {"|eta|<1.0","1.0<|eta|<1.1","1.1<|eta|<1.2","1.2<|eta|<1.3","1.3<|eta|<1.4","1.4<|eta|<1.5","1.5<|eta|<1.6","1.6<|eta|<1.7","1.7<|eta|<1.8","1.8<|eta|<1.9","1.9<|eta|<2.0"};
@@ -107,7 +108,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
     TH1F *hEtaFake_70[2][ncen], *hEtaFake_80[2][ncen];
     TH1F *hPhiFake_70[2][ncen], *hPhiFake_80[2][ncen];
     
-  TFile *fin = new TFile(Form("Histos/OutputHist_ntuples_reduced_%s.root",kSpecies.c_str()),"r");
+  TFile *fin = new TFile(Form("Histos/OutputHist_ntuples_reduced_eta_lt1pt8_%s.root",kSpecies.c_str()),"r");
 // radius loop
     for(int nj=0; nj<knj; nj++){
     // i is the with or without jetID loop, NOT the nj loop! 0 == no JetID, 1== JetID
@@ -291,7 +292,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hEtaFakeRatio_30[1][ic]->SetMarkerColor(kPink);  hEtaFakeRatio_30[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hEtaFakeRatio_30[1][ic]->SetMarkerColor(kYellow); hEtaFakeRatio_30[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>30 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>30 GeV/c",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
          hBlankRatio->GetXaxis()->SetTitle("Reco jet eta");
          hBlankRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankRatio->Draw();
@@ -321,7 +322,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hEtaFakeRatio_40[1][ic]->SetMarkerColor(kPink);  hEtaFakeRatio_40[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hEtaFakeRatio_40[1][ic]->SetMarkerColor(kYellow); hEtaFakeRatio_40[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>40 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>40 GeV/c",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
          hBlankRatio->GetXaxis()->SetTitle("Reco jet eta");
          hBlankRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankRatio->Draw();
@@ -351,7 +352,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hEtaFakeRatio_50[1][ic]->SetMarkerColor(kPink);  hEtaFakeRatio_50[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hEtaFakeRatio_50[1][ic]->SetMarkerColor(kYellow); hEtaFakeRatio_50[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>50 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>50 GeV/c",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
          hBlankRatio->GetXaxis()->SetTitle("Reco jet eta");
          hBlankRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankRatio->Draw();
@@ -381,7 +382,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hEtaFakeRatio_60[1][ic]->SetMarkerColor(kPink);  hEtaFakeRatio_60[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hEtaFakeRatio_60[1][ic]->SetMarkerColor(kYellow); hEtaFakeRatio_60[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>60 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>60 GeV/c",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
          hBlankRatio->GetXaxis()->SetTitle("Reco jet eta");
          hBlankRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankRatio->Draw();
@@ -404,7 +405,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hEtaFakeRatio_70[1][ic]->SetMarkerColor(kPink);  hEtaFakeRatio_70[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hEtaFakeRatio_70[1][ic]->SetMarkerColor(kYellow); hEtaFakeRatio_70[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>70 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>70 GeV/c",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
          hBlankRatio->GetXaxis()->SetTitle("Reco jet eta");
          hBlankRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankRatio->Draw();
@@ -427,7 +428,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hEtaFakeRatio_80[1][ic]->SetMarkerColor(kPink);  hEtaFakeRatio_80[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hEtaFakeRatio_80[1][ic]->SetMarkerColor(kYellow); hEtaFakeRatio_80[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>80 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankRatio->SetTitle(Form(" %s, %s, jetID, pT>80 GeV/c",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
          hBlankRatio->GetXaxis()->SetTitle("Reco jet eta");
          hBlankRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankRatio->Draw();
@@ -459,7 +460,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hPhiFakeRatio_30[1][ic]->SetMarkerColor(kPink);  hPhiFakeRatio_30[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hPhiFakeRatio_30[1][ic]->SetMarkerColor(kYellow); hPhiFakeRatio_30[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>30 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>30 GeV/c |eta|<%.2f",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str(),ketacut));
          hBlankPhiRatio->GetXaxis()->SetTitle("Reco jet Phi");
          hBlankPhiRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankPhiRatio->Draw();
@@ -481,7 +482,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hPhiFakeRatio_40[1][ic]->SetMarkerColor(kPink);  hPhiFakeRatio_40[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hPhiFakeRatio_40[1][ic]->SetMarkerColor(kYellow); hPhiFakeRatio_40[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>40 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>40 GeV/c |eta|<%.2f",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str(),ketacut));
          hBlankPhiRatio->GetXaxis()->SetTitle("Reco jet Phi");
          hBlankPhiRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankPhiRatio->Draw();
@@ -503,7 +504,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hPhiFakeRatio_50[1][ic]->SetMarkerColor(kPink);  hPhiFakeRatio_50[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hPhiFakeRatio_50[1][ic]->SetMarkerColor(kYellow); hPhiFakeRatio_50[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>50 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>50 GeV/c |eta|<%.2f",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str(),ketacut));
          hBlankPhiRatio->GetXaxis()->SetTitle("Reco jet Phi");
          hBlankPhiRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankPhiRatio->Draw();
@@ -525,7 +526,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hPhiFakeRatio_60[1][ic]->SetMarkerColor(kPink);  hPhiFakeRatio_60[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hPhiFakeRatio_60[1][ic]->SetMarkerColor(kYellow); hPhiFakeRatio_60[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>60 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>60 GeV/c |eta|<%.2f",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str(),ketacut));
          hBlankPhiRatio->GetXaxis()->SetTitle("Reco jet Phi");
          hBlankPhiRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankPhiRatio->Draw();
@@ -547,7 +548,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hPhiFakeRatio_70[1][ic]->SetMarkerColor(kPink);  hPhiFakeRatio_70[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hPhiFakeRatio_70[1][ic]->SetMarkerColor(kYellow); hPhiFakeRatio_70[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>70 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>70 GeV/c |eta|<%.2f",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str(),ketacut));
          hBlankPhiRatio->GetXaxis()->SetTitle("Reco jet Phi");
          hBlankPhiRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankPhiRatio->Draw();
@@ -569,7 +570,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==4){ hPhiFakeRatio_80[1][ic]->SetMarkerColor(kPink);  hPhiFakeRatio_80[1][ic]->SetLineColor(kPink);}
        if(ic==5){ hPhiFakeRatio_80[1][ic]->SetMarkerColor(kYellow); hPhiFakeRatio_80[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
-         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>80 GeV/c ",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
+         hBlankPhiRatio->SetTitle(Form(" %s, %s, jetID, pT>80 GeV/c |eta|<%.2f",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str(),ketacut));
          hBlankPhiRatio->GetXaxis()->SetTitle("Reco jet Phi");
          hBlankPhiRatio->GetYaxis()->SetTitle("Fake rate");
          hBlankPhiRatio->Draw();
@@ -593,7 +594,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==5){ hPtFakeRatio[1][ic]->SetMarkerColor(kYellow); hPtFakeRatio[1][ic]->SetLineColor(kYellow);}
        if(ic==0){
          hBlankPt->SetTitle(Form(" %s, %s, jetID",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
-         hBlankPt->GetXaxis()->SetTitle("Reco jet pT (GeV/c)");
+         hBlankPt->GetXaxis()->SetTitle(Form("Reco jet pT (GeV/c) |eta|<%.2f",ketacut));
          hBlankPt->GetYaxis()->SetTitle("Fake rate");
          hBlankPt->Draw();
        }
@@ -662,7 +663,7 @@ void DrawFakeEtaBins_reduced(std::string kSpecies="PbPb"){
        if(ic==5){ hPtEffRatio[0][ic]->SetMarkerColor(kYellow); hPtEffRatio[0][ic]->SetLineColor(kYellow);}
        if(ic==0){
          hBlankPtEff->SetTitle(Form(" %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),kSpeciesLong.c_str()));
-         hBlankPtEff->GetXaxis()->SetTitle(Form("Reco jet pT (GeV/c) |eta|<2.0"));
+         hBlankPtEff->GetXaxis()->SetTitle(Form("Reco jet pT (GeV/c) |eta|<%.2f",ketacut));
          hBlankPtEff->GetYaxis()->SetTitle("Efficiency");
          hBlankPtEff->Draw();
        }
