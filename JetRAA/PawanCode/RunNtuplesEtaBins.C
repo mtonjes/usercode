@@ -59,8 +59,8 @@ const char *ccent[ncen] = {"0-5%","5-10%","10-30%","30-50%","50-70%","70-90%","9
 double ptbins[] = {
   3, 4, 5, 7, 9, 12, 
   15, 18, 21, 24, 28,
-  32, 37, 43, 49, 56,
-  64, 74, 84, 97, 114,
+  32,33,34, 35,36,37, 38,39,40,41,42,43, 44,45,46,47,48,49, 50,51,52,53,54,55,56,57,58,59,
+  60,61,62,63,64,65,66,67,68,69,70,71,72,73,74, 84, 97, 114,
   133, 153, 174, 196,
   220, 245, 272, 300, 
   330, 362, 395, 430,
@@ -88,7 +88,7 @@ double rbinh=2.0;
 
 
 TStopwatch timer;
-int RunNtuplesEtaBins(std::string kSpecies="pp")
+int RunNtuplesEtaBins(std::string kSpecies="PbPb")
 {
 
   timer.Start();
@@ -332,10 +332,10 @@ int RunNtuplesEtaBins(std::string kSpecies="pp")
     TH1F *hrescrpt[2][ncen][nbins], *hrescrpt_m[2][ncen][nbins], *hrescrpt_um[2][ncen][nbins];
     
     //! Efficiency & Fake
-    TH1F *hPtAll [ncen], *hPtEff [2][ncen];
-    TH1F *hPtAll_etabin[ncen][neta], *hPtEff_etabin[2][ncen][neta];    
-    TH1F *hEtaAll[ncen], *hEtaEff[2][ncen];
-    TH1F *hPhiAll[ncen], *hPhiEff[2][ncen];
+    TH1F *hPtAll   [2][ncen], *hPtEff [2][ncen];
+    TH1F *hPtAll_etabin[2][ncen][neta], *hPtEff_etabin[2][ncen][neta];    
+    TH1F *hEtaAll[2][ncen], *hEtaEff[2][ncen];
+    TH1F *hPhiAll[2][ncen], *hPhiEff[2][ncen];
 
     TH1F *hPtFakeAll[ncen], *hPtFake[2][ncen];
     TH1F *hPtFakeAll_etabin[ncen][neta], *hPtFake_etabin[2][ncen][neta];
@@ -388,57 +388,67 @@ int RunNtuplesEtaBins(std::string kSpecies="pp")
 // for the background plots, i is 0 == Data, 1== MC
     for(int i=0; i<2; i++){
       for(int ic=0; ic<ncen; ic++){
+
+	hPtAll[i][ic] = new TH1F(Form("hPtAll_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),nbins,ptbins);
+	hPtAll[i][ic]->Sumw2();
+
+	hEtaAll[i][ic] = new TH1F(Form("hEtaAll_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
+	hEtaAll[i][ic]->Sumw2();
+	hPhiAll[i][ic] = new TH1F(Form("hPhiAll_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
+	hPhiAll[i][ic]->Sumw2();
+
+	for(int in=0; in<neta; in++){
+	  hPtAll_etabin[i][ic][in] = new TH1F(Form("hPtAll_etabin_%s_%d_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,in),Form("Denominator pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
+	  hPtAll_etabin[i][ic][in]->Sumw2();
+	}
     	if(i==0){
-    	  hPtAll[ic] = new TH1F(Form("hPtAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),nbins,ptbins);
-    	  hPtAll[ic]->Sumw2();
-    	  hEtaAll[ic] = new TH1F(Form("hEtaAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
-    	  hEtaAll[ic]->Sumw2();
-    	  hPhiAll[ic] = new TH1F(Form("hPhiAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
-    	  hPhiAll[ic]->Sumw2();
-
-    	  hPtFakeAll[ic] = new TH1F(Form("hPtFakeAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),nbins,ptbins);
-    	  hPtFakeAll[ic]->Sumw2();
+	  hPtFakeAll[ic] = new TH1F(Form("hPtFakeAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All Denominator pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),nbins,ptbins);
+	  hPtFakeAll[ic]->Sumw2();
+	  for(int in=0; in<neta; in++){
+	    hPtFakeAll_etabin[ic][in] = new TH1F(Form("hPtFakeAll_etabin_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic,in),Form("Fake All Denominator pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
+	    hPtFakeAll_etabin[ic][in]->Sumw2();    	  
+	  }
 
 
-    	  hEtaFakeAll_20[ic] = new TH1F(Form("hEtaFakeAll_20_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 20 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	  hEtaFakeAll_20[ic] = new TH1F(Form("hEtaFakeAll_20_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 20 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	  hEtaFakeAll_20[ic]->Sumw2();
     	  hPhiFakeAll_20[ic] = new TH1F(Form("hPhiFakeAll_20_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 20 GeV/c Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	  hPhiFakeAll_20[ic]->Sumw2();
       
-    	  hEtaFakeAll_30[ic] = new TH1F(Form("hEtaFakeAll_30_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 30 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	  hEtaFakeAll_30[ic] = new TH1F(Form("hEtaFakeAll_30_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 30 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	  hEtaFakeAll_30[ic]->Sumw2();
     	  hPhiFakeAll_30[ic] = new TH1F(Form("hPhiFakeAll_30_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 30 GeV/c Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	  hPhiFakeAll_30[ic]->Sumw2();
       
-    	  hEtaFakeAll_40[ic] = new TH1F(Form("hEtaFakeAll_40_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 40 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	  hEtaFakeAll_40[ic] = new TH1F(Form("hEtaFakeAll_40_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 40 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	  hEtaFakeAll_40[ic]->Sumw2();
     	  hPhiFakeAll_40[ic] = new TH1F(Form("hPhiFakeAll_40_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 40 GeV/c Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	  hPhiFakeAll_40[ic]->Sumw2();
 
-    	  hEtaFakeAll_45[ic] = new TH1F(Form("hEtaFakeAll_45_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 45 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	  hEtaFakeAll_45[ic] = new TH1F(Form("hEtaFakeAll_45_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 45 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	  hEtaFakeAll_45[ic]->Sumw2();
     	  hPhiFakeAll_45[ic] = new TH1F(Form("hPhiFakeAll_45_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 45 GeV/c Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	  hPhiFakeAll_45[ic]->Sumw2();
 
-    	  hEtaFakeAll_50[ic] = new TH1F(Form("hEtaFakeAll_50_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 50 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	  hEtaFakeAll_50[ic] = new TH1F(Form("hEtaFakeAll_50_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 50 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	  hEtaFakeAll_50[ic]->Sumw2();
     	  hPhiFakeAll_50[ic] = new TH1F(Form("hPhiFakeAll_50_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 50 GeV/c Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	  hPhiFakeAll_50[ic]->Sumw2();
     	  
-    	  hEtaFakeAll_60[ic] = new TH1F(Form("hEtaFakeAll_60_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 60 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	  hEtaFakeAll_60[ic] = new TH1F(Form("hEtaFakeAll_60_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 60 GeV/c Denominator eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	  hEtaFakeAll_60[ic]->Sumw2();
     	  hPhiFakeAll_60[ic] = new TH1F(Form("hPhiFakeAll_60_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic),Form("Fake All 60 GeV/c Denominator  phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	  hPhiFakeAll_60[ic]->Sumw2();
-          for(int in=0; in<neta; in++){
-    	    hPtFakeAll_etabin[ic][in] = new TH1F(Form("hPtFakeAll_etabin_%s_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),ic,seta[in]),Form("Fake All Denominator pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
-    	    hPtFakeAll_etabin[ic][in]->Sumw2();    	  
-    	    hPtAll_etabin[ic][in] = new TH1F(Form("hPtAll_etabin_%s_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),ic,seta[in]),Form("Denominator pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
-    	    hPtAll_etabin[ic][in]->Sumw2();
-    	  }
+//           for(int in=0; in<neta; in++){
+//     	    hPtFakeAll_etabin[ic][in] = new TH1F(Form("hPtFakeAll_etabin_%s_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),ic,seta[in]),Form("Fake All Denominator pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
+//     	    hPtFakeAll_etabin[ic][in]->Sumw2();    	  
+//     	    hPtAll_etabin[ic][in] = new TH1F(Form("hPtAll_etabin_%s_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),ic,seta[in]),Form("Denominator pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
+//     	    hPtAll_etabin[ic][in]->Sumw2();
+//     	  }
     	}
     	hPtEff [i][ic] = new TH1F(Form("hPtEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator eff pT for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),nbins,ptbins);
     	hPtEff [i][ic]->Sumw2();
-    	hEtaEff[i][ic] = new TH1F(Form("hEtaEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator eff eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	hEtaEff[i][ic] = new TH1F(Form("hEtaEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator eff eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	hEtaEff[i][ic]->Sumw2();
     	hPhiEff[i][ic] = new TH1F(Form("hPhiEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator  eff phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiEff[i][ic]->Sumw2();
@@ -447,40 +457,40 @@ int RunNtuplesEtaBins(std::string kSpecies="pp")
     	hPtFake [i][ic]->Sumw2();
 
     	
-    	hEtaFake_20[i][ic] = new TH1F(Form("hEtaFake_20_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 20 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	hEtaFake_20[i][ic] = new TH1F(Form("hEtaFake_20_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 20 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	hEtaFake_20[i][ic]->Sumw2();
     	hPhiFake_20[i][ic] = new TH1F(Form("hPhiFake_20_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 20 fake phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiFake_20[i][ic]->Sumw2();
 
-    	hEtaFake_30[i][ic] = new TH1F(Form("hEtaFake_30_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 30 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	hEtaFake_30[i][ic] = new TH1F(Form("hEtaFake_30_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 30 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	hEtaFake_30[i][ic]->Sumw2();
     	hPhiFake_30[i][ic] = new TH1F(Form("hPhiFake_30_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 30 fake phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiFake_30[i][ic]->Sumw2();
 
-    	hEtaFake_40[i][ic] = new TH1F(Form("hEtaFake_40_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 40 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	hEtaFake_40[i][ic] = new TH1F(Form("hEtaFake_40_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 40 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	hEtaFake_40[i][ic]->Sumw2();
     	hPhiFake_40[i][ic] = new TH1F(Form("hPhiFake_40_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 40 fake phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiFake_40[i][ic]->Sumw2();
 
-    	hEtaFake_45[i][ic] = new TH1F(Form("hEtaFake_45_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 45 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	hEtaFake_45[i][ic] = new TH1F(Form("hEtaFake_45_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 45 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	hEtaFake_45[i][ic]->Sumw2();
     	hPhiFake_45[i][ic] = new TH1F(Form("hPhiFake_45_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 45 fake phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiFake_45[i][ic]->Sumw2();
 
-    	hEtaFake_50[i][ic] = new TH1F(Form("hEtaFake_50_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 50 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	hEtaFake_50[i][ic] = new TH1F(Form("hEtaFake_50_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 50 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	hEtaFake_50[i][ic]->Sumw2();
     	hPhiFake_50[i][ic] = new TH1F(Form("hPhiFake_50_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 50 fake phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiFake_50[i][ic]->Sumw2();
 
-    	hEtaFake_60[i][ic] = new TH1F(Form("hEtaFake_60_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 60 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 20, -2.0,2.0);
+    	hEtaFake_60[i][ic] = new TH1F(Form("hEtaFake_60_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 60 fake eta  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]), 40, -2.0,2.0);
     	hEtaFake_60[i][ic]->Sumw2();
     	hPhiFake_60[i][ic] = new TH1F(Form("hPhiFake_60_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),Form("Numerator 60 fake phi  for algorithm %s %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic]),18,-pi,pi);
     	hPhiFake_60[i][ic]->Sumw2();
         for(int in=0; in<neta; in++){
-    	   hPtEff_etabin[i][ic][in] = new TH1F(Form("hPtEff_etabin_%s_%d_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,seta[in]),Form("Numerator eff pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
-    	   hPtEff_etabin[i][ic][in]->Sumw2();    	   	
-     	   hPtFake_etabin[i][ic][in] = new TH1F(Form("hPtFake_etabin_%s_%d_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,seta[in]),Form("Numerator fake pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
-    	   hPtFake_etabin[i][ic][in]->Sumw2();
+	  hPtEff_etabin[i][ic][in] = new TH1F(Form("hPtEff_etabin_%s_%d_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,in),Form("Numerator eff pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
+	  hPtEff_etabin[i][ic][in]->Sumw2();    	   	
+	  hPtFake_etabin[i][ic][in] = new TH1F(Form("hPtFake_etabin_%s_%d_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,in),Form("Numerator fake pT for algorithm %s %s, %s",(kAlgName+srad[nj]+kjetType).c_str(),ccent[ic],seta[in]),nbins,ptbins);
+	  hPtFake_etabin[i][ic][in]->Sumw2();
         }
 	hchfrc_m_wjid[i][ic] = new TProfile(Form("hchfrc_m_wjid_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic),"chargedMax/recopt",nbins,ptbins);
 	hchfrc_m_wjid[i][ic]->Sumw2();			 
@@ -1417,7 +1427,7 @@ int RunNtuplesEtaBins(std::string kSpecies="pp")
       if( printDebug && mnentry==1000 )break;
 
       Float_t Sumcand = chSum_2 + phSum_2 + neSum_2 + muSum_2;
-      Float_t ePFSel  = (18./7.*calopt_1/pfpt_1) - 9./7.;
+      Float_t ePFSel  = (18./7.*calopt_2/pfpt_2) - 9./7.;
       myeta_2= GetEtaBin(pfeta_2);
 //      cout<<"myeta_2: "<<myeta_2<<", pfeta_2: "<<pfeta_2<<endl;
       
@@ -1529,29 +1539,40 @@ int RunNtuplesEtaBins(std::string kSpecies="pp")
     	}   	
       }
 
+
+      //!  Efficiency 
       if( subid_2 == 0 && refpt_2 > 0){
-    	hPtAll  [iCent]->Fill(refpt_2,weight_2);
+    	hPtAll  [0][iCent]->Fill(refpt_2,weight_2);
+    	hEtaAll [0][iCent]->Fill(refeta_2,weight_2);
+    	hPhiAll [0][iCent]->Fill(refphi_2,weight_2);
+	if( wJetId ){
+	  hPtAll  [1][iCent]->Fill(refpt_2,weight_2);
+	  hEtaAll [1][iCent]->Fill(refeta_2,weight_2);
+	  hPhiAll [1][iCent]->Fill(refphi_2,weight_2);
+	}
         if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){ 
  //         cout<<"going to fill hPtAll_etabin because of selection between: "<<etabins[myeta_2]<<", and "<<etabins[myeta_2+1]<<endl;   	
-    	  hPtAll_etabin[iCent][myeta_2]->Fill(refpt_2,weight_2);
+    	  hPtAll_etabin[0][iCent][myeta_2]->Fill(refpt_2,weight_2);
+    	  if( wJetId )hPtAll_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
         }
-    	hEtaAll [iCent]->Fill(refeta_2,weight_2);
-    	hPhiAll [iCent]->Fill(refphi_2,weight_2);
+
 
     	if( refdrjt_2 < kdelrcut ){
-    	  hPtEff[0][iCent]->Fill(refpt_2 ,weight_2);
-    	  if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-    	       hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
-          }
+    	  hPtEff [0][iCent]->Fill(refpt_2 ,weight_2);
     	  hEtaEff[0][iCent]->Fill(refeta_2,weight_2);
     	  hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
+
+    	  if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
+	    hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
+          }
+
     	  if( wJetId ){
     	    hPtEff[1][iCent]->Fill(refpt_2 ,weight_2);
-    	    if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-    	        hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
-    	    }
     	    hEtaEff[1][iCent]->Fill(refeta_2,weight_2);
     	    hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
+    	    if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
+	      hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
+    	    }
     	  }
     	}
       }
@@ -1966,28 +1987,36 @@ int RunNtuplesEtaBins(std::string kSpecies="pp")
       }
 
       if( subid_2 == 0 && refpt_2 > 0 ){
-    	hPtAll[iCent]->Fill(refpt_2,weight_2);
+    	hPtAll  [0][iCent]->Fill(refpt_2,weight_2);
+    	hEtaAll [0][iCent]->Fill(refeta_2,weight_2);
+    	hPhiAll [0][iCent]->Fill(refphi_2,weight_2);
+	if( wJetId ){
+	  hPtAll  [1][iCent]->Fill(refpt_2,weight_2);
+	  hEtaAll [1][iCent]->Fill(refeta_2,weight_2);
+	  hPhiAll [1][iCent]->Fill(refphi_2,weight_2);
+	}
     	if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-    	    	hPtAll_etabin[iCent][myeta_2]->Fill(refpt_2,weight_2);
-	    }
-    	hEtaAll [iCent]->Fill(refeta_2,weight_2);
-    	hPhiAll [iCent]->Fill(refphi_2,weight_2);
+	  hPtAll_etabin[0][iCent][myeta_2]->Fill(refpt_2,weight_2);
+	  if( wJetId )hPtAll_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
+	}
+
       
     	if( refdrjt_2 < kdelrcut ){
-	
+	  
     	  hPtEff[0][iCent]->Fill(refpt_2 ,weight_2);
-    	  if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-    	      	hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
-          }
     	  hEtaEff[0][iCent]->Fill(refeta_2,weight_2);
     	  hPhiEff[0][iCent]->Fill(refphi_2,weight_2);
+    	  if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
+	    hPtEff_etabin[0][iCent][myeta_2]->Fill(refpt_2 ,weight_2);
+          }
+
     	  if( wJetId ){
     	    hPtEff [1][iCent]->Fill(refpt_2,weight_2);
-    	    if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
-    	       hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
-    	    }
     	    hEtaEff[1][iCent]->Fill(refeta_2,weight_2);
     	    hPhiEff[1][iCent]->Fill(refphi_2,weight_2);
+    	    if(fabs(pfeta_2)>=etabins[myeta_2] && fabs(pfeta_2)<etabins[myeta_2+1]){
+	      hPtEff_etabin[1][iCent][myeta_2]->Fill(refpt_2,weight_2);
+    	    }
     	  }
     	}
       }

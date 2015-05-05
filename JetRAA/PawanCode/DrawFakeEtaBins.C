@@ -85,10 +85,10 @@ void DrawFakeEtaBins(std::string kSpecies="PbPb"){
   TH2F * hBlankPtEff= new TH2F("hBlankPtEff","",50,20,350,50,0.6,1.1);
 
 
-    TH1F *hPtAll [ncen], *hPtEff [2][ncen];
+    TH1F *hPtAll [2][ncen], *hPtEff [2][ncen];
     TH1F *hPtFakeAll[ncen], *hPtFake[2][ncen];
     TH1F *hPtFakeRatio[2][ncen];
-    TH1F *hPtAll_etabin[ncen][neta], *hPtEff_etabin[2][ncen][neta];    
+    TH1F *hPtAll_etabin[2][ncen][neta], *hPtEff_etabin[2][ncen][neta];    
     TH1F *hPtFakeAll_etabin[ncen][neta], *hPtFake_etabin[2][ncen][neta];
     TH1F *hPtFakeRatio_etabin[2][ncen][neta];   
     TH1F *hPtEffRatio_etabin[2][ncen][neta];     
@@ -108,8 +108,6 @@ void DrawFakeEtaBins(std::string kSpecies="PbPb"){
  // centrality loop    
       for(int ic=0; ic<ncen; ic++){
     	if(i==0){
-     	  hPtAll[ic] = (TH1F*)fin->Get(Form("hPtAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic));
-     	  hPtAll[ic]->Print("base");
      	  hPtFakeAll[ic] = (TH1F*)fin->Get(Form("hPtFakeAll_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic)); 
      	  hPtFakeAll[ic]->Print("base");  	  
     	  hEtaFakeAll_20[ic] = (TH1F*)fin->Get(Form("hEtaFakeAll_20_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic)); 
@@ -136,14 +134,14 @@ void DrawFakeEtaBins(std::string kSpecies="PbPb"){
     	  hEtaFakeAll_60[ic]->Print("base");
     	  hPhiFakeAll_60[ic] = (TH1F*)fin->Get(Form("hPhiFakeAll_60_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic)); 
           hPhiFakeAll_60[ic]->Print("base");
-           for(int in=0; in<neta; in++){
-              hPtAll_etabin[ic][in] = (TH1F*)fin->Get(Form("hPtAll_etabin_%s_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),ic,seta[in])); 
-     	      hPtAll_etabin[ic][in]->Print("base");           
-              hPtFakeAll_etabin[ic][in] = (TH1F*)fin->Get(Form("hPtFakeAll_etabin_%s_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),ic,seta[in])); 
+           for(int in=0; in<neta; in++){    
+              hPtFakeAll_etabin[ic][in] = (TH1F*)fin->Get(Form("hPtFakeAll_etabin_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic,in)); 
      	      hPtFakeAll_etabin[ic][in]->Print("base");  
       	  }
    	  
     	}
+     	  hPtAll[i][ic] = (TH1F*)fin->Get(Form("hPtAll_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic));
+     	  hPtAll[i][ic]->Print("base");    	
     	// end if i=0 (no jetID)
      	hPtEff[i][ic] = (TH1F*)fin->Get(Form("hPtEff_%s_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic)); 
      	hPtEff[i][ic]->Print("base");
@@ -210,19 +208,21 @@ void DrawFakeEtaBins(std::string kSpecies="PbPb"){
     	hPtFakeRatio[i][ic]->Divide(hPtFakeAll[ic]);    
     	hPtFakeRatio[i][ic]->SetMarkerSize(2.5);	
         for(int in=0; in<neta; in++){
-     	   hPtEff_etabin[i][ic][in] = (TH1F*)fin->Get(Form("hPtEff_etabin_%s_%d_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,seta[in])); 
+            hPtAll_etabin[i][ic][in] = (TH1F*)fin->Get(Form("hPtAll_etabin_%s_%d_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,in)); 
+     	   hPtAll_etabin[i][ic][in]->Print("base");       
+     	   hPtEff_etabin[i][ic][in] = (TH1F*)fin->Get(Form("hPtEff_etabin_%s_%d_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,in)); 
      	   hPtEff_etabin[i][ic][in]->Print("base");
-    	   hPtFake_etabin[i][ic][in] = (TH1F*)fin->Get(Form("hPtFake_etabin_%s_%d_%d_%s",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,seta[in])); 
+    	   hPtFake_etabin[i][ic][in] = (TH1F*)fin->Get(Form("hPtFake_etabin_%s_%d_%d_%d",(kAlgName+srad[nj]+kjetType).c_str(),i,ic,in)); 
            hPtFake_etabin[i][ic][in]->Print("base");    	
-    	   hPtFakeRatio_etabin[i][ic][in]=(TH1F*)hPtFake_etabin[i][ic][in]->Clone(Form("hPtEffRatio_etabin%d_%s_%d_%d",in,(kAlgName+srad[nj]+kjetType).c_str(),i,ic));
+    	   hPtFakeRatio_etabin[i][ic][in]=(TH1F*)hPtFake_etabin[i][ic][in]->Clone(Form("hPtFakeRatio_etabin%d_%s_%d_%d",in,(kAlgName+srad[nj]+kjetType).c_str(),i,ic));
     	   hPtFakeRatio_etabin[i][ic][in]->Divide(hPtFakeAll_etabin[ic][in]);    
     	   hPtFakeRatio_etabin[i][ic][in]->SetMarkerSize(2.5);	
     	   hPtEffRatio_etabin[i][ic][in]=(TH1F*)hPtEff_etabin[i][ic][in]->Clone(Form("hPtEffRatio_etabin%d_%s_%d",in,(kAlgName+srad[nj]+kjetType).c_str(),ic));
-    	   hPtEffRatio_etabin[i][ic][in]->Divide(hPtAll_etabin[ic][in]);    
+    	   hPtEffRatio_etabin[i][ic][in]->Divide(hPtAll_etabin[i][ic][in]);    
     	   hPtEffRatio_etabin[i][ic][in]->SetMarkerSize(2.5);	
     	}
     	   hPtEffRatio[i][ic]=(TH1F*)hPtEff[i][ic]->Clone(Form("hPtEffRatio_%s_%d",(kAlgName+srad[nj]+kjetType).c_str(),ic));
-    	   hPtEffRatio[i][ic]->Divide(hPtAll[ic]);    
+    	   hPtEffRatio[i][ic]->Divide(hPtAll[i][ic]);    
     	   hPtEffRatio[i][ic]->SetMarkerSize(2.5);	
     	
        }
