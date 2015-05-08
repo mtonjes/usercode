@@ -266,13 +266,6 @@ int jetmatch_MinBias(std::string kSpecies="pbpb",
       tch_hlt->SetBranchAddress("HLT_HIJet65_v1_Prescl",&jet65_prescl);
       tch_hlt->SetBranchAddress("HLT_HIJet80_v1",&jet80);
       tch_hlt->SetBranchAddress("HLT_HIJet80_v1_Prescl",&jet80_prescl);
-    }else{
-      tch_hlt->SetBranchAddress("HLT_HIJet55_v7",&jet55);
-      tch_hlt->SetBranchAddress("HLT_HIJet55_v7_Prescl",&jet55_prescl);
-      tch_hlt->SetBranchAddress("HLT_HIJet65_v7",&jet65);
-      tch_hlt->SetBranchAddress("HLT_HIJet65_v7_Prescl",&jet65_prescl);
-      tch_hlt->SetBranchAddress("HLT_HIJet80_v7",&jet80);
-      tch_hlt->SetBranchAddress("HLT_HIJet80_v7_Prescl",&jet80_prescl);
       tch_hlt->SetBranchAddress("HLT_HIMinBiasHfOrBSC_v1",&jetMB);
       tch_hlt->SetBranchAddress("HLT_HIMinBiasHfOrBSC_v1_Prescl",&jetMB_prescl);
       tch_hlt->SetBranchAddress("L1_ZeroBias",&L1_MB);
@@ -281,7 +274,13 @@ int jetmatch_MinBias(std::string kSpecies="pbpb",
       tch_hlt->SetBranchAddress("L1_SingleJet36_BptxAND_Prescl",&L1_sj36_p);
       tch_hlt->SetBranchAddress("L1_SingleJet52_BptxAND",&L1_sj52);
       tch_hlt->SetBranchAddress("L1_SingleJet52_BptxAND_Prescl",&L1_sj52_p);    
-      
+    }else{
+      tch_hlt->SetBranchAddress("HLT_HIJet55_v7",&jet55);
+      tch_hlt->SetBranchAddress("HLT_HIJet55_v7_Prescl",&jet55_prescl);
+      tch_hlt->SetBranchAddress("HLT_HIJet65_v7",&jet65);
+      tch_hlt->SetBranchAddress("HLT_HIJet65_v7_Prescl",&jet65_prescl);
+      tch_hlt->SetBranchAddress("HLT_HIJet80_v7",&jet80);
+      tch_hlt->SetBranchAddress("HLT_HIJet80_v7_Prescl",&jet80_prescl); 
     }
   }else {
     tch_hlt->SetBranchAddress("HLT_PAJet40_NoJetID_v1",&jet40);
@@ -459,10 +458,14 @@ int jetmatch_MinBias(std::string kSpecies="pbpb",
       tch_pfjet->SetBranchStatus("HLT_HIJet65_v1_Prescl",1,0);
       tch_pfjet->SetBranchStatus("HLT_HIJet80_v1",1,0);
       tch_pfjet->SetBranchStatus("HLT_HIJet80_v1_Prescl",1,0);
-      // tch_pfjet->SetBranchStatus("L1_SingleJet36_BptxAND",1,0);
-      // tch_pfjet->SetBranchStatus("L1_SingleJet36_BptxAND_Prescl",1,0);
-      // tch_pfjet->SetBranchStatus("L1_SingleJet52_BptxAND",1,0);
-      // tch_pfjet->SetBranchStatus("L1_SingleJet52_BptxAND_Prescl",1,0);
+       tch_pfjet->SetBranchStatus("HLT_HIMinBiasHfOrBSC_v1",1,0);
+       tch_pfjet->SetBranchStatus("HLT_HIMinBiasHfOrBSC_v1_Prescl",1,0);      
+       tch_pfjet->SetBranchStatus("L1_ZeroBias",1,0);
+       tch_pfjet->SetBranchStatus("L1_ZeroBias_Prescl",1,0);
+       tch_pfjet->SetBranchStatus("L1_SingleJet36_BptxAND",1,0);
+       tch_pfjet->SetBranchStatus("L1_SingleJet36_BptxAND_Prescl",1,0);
+       tch_pfjet->SetBranchStatus("L1_SingleJet52_BptxAND",1,0);
+       tch_pfjet->SetBranchStatus("L1_SingleJet52_BptxAND_Prescl",1,0);
     }else{
       tch_pfjet->SetBranchStatus("HLT_HIJet55_v7",1,0);
       tch_pfjet->SetBranchStatus("HLT_HIJet55_v7_Prescl",1,0);
@@ -470,10 +473,6 @@ int jetmatch_MinBias(std::string kSpecies="pbpb",
       tch_pfjet->SetBranchStatus("HLT_HIJet65_v7_Prescl",1,0);
       tch_pfjet->SetBranchStatus("HLT_HIJet80_v7",1,0);
       tch_pfjet->SetBranchStatus("HLT_HIJet80_v7_Prescl",1,0);
-//       tch_pfjet->SetBranchAddress("HLT_HIMinBiasHfOrBSC_v1",1,0);
-//       tch_pfjet->SetBranchAddress("HLT_HIMinBiasHfOrBSC_v1_Prescl",1,0);
-//       tch_pfjet->SetBranchAddress("L1_ZeroBias",1,0);
-//       tch_pfjet->SetBranchAddress("L1_ZeroBias_Prescl",1,0);
 //       tch_pfjet->SetBranchAddress("L1_SingleJet36_BptxAND",1,0);
 //       tch_pfjet->SetBranchAddress("L1_SingleJet36_BptxAND_Prescl",1,0);
 //       tch_pfjet->SetBranchAddress("L1_SingleJet52_BptxAND",1,0);
