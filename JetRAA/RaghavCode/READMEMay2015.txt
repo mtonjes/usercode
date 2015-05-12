@@ -83,6 +83,10 @@ untar (see directions at the RooUnfold site)
 make
 --> Have in your .rootlogon.C the following line pointing to your compiled library:
 gSystem->Load("/afs/cern.ch/work/r/rkunnawa/WORK/RAA/CMSSW_5_3_18/src/Headers/RooUnfold-1.1.1/libRooUnfold.so");
+You can IGNORE these type of warnings when you run root:
+Warning in <TEnvRec::ChangeValue>: duplicate entry <Library.vector<Double_t>=libRooUnfold.so libCore.so libHist.so libGraf.so libTree.so libMatrix.so libMathCore.so> for level 0; ignored
+Warning in <TEnvRec::ChangeValue>: duplicate entry <Library.vector<Int_t>=libRooUnfold.so libCore.so libHist.so libGraf.so libTree.so libMatrix.so libMathCore.so> for level 0; ignored
+Warning in <TEnvRec::ChangeValue>: duplicate entry <Library.TSVDUnfold=libRooUnfold.so libCore.so libHist.so libGraf.so libTree.so libMatrix.so libMathCore.so> for level 0; ignored
 
 3) Next, run data driven unfolding (Raghav code) - this fixes error bars after unfolding 
 --> run for each radius
@@ -91,6 +95,7 @@ outputs: PbPb_R3_pp_R3_n20_eta_p20_unfoldingCut_60_data_driven_correction_akPuPF
 NOTE: this file has pp residual data-driven JEC applied: PbPb_R3_pp_withresiduals_R3_n20_eta_p20_unfoldingCut_60_data_driven_correction_akPuPF_20150417.root
 
 4) Then run actual unfolding and RAA calculation (need input files above with "CutEfficiency" and "data_driven_correction")
+--> also need: /net/hisrv0001/home/pawan/Validation/CMSSW_7_1_1/src/JetRaa/Histogram_pp_PbPb_unfoldMatrix.root
 root -l https://github.com/rkunnawa/RAA/blob/master/RAA_analyze.C+
 --> run for each radius
 
