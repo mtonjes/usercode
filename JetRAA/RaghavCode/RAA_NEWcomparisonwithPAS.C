@@ -1611,7 +1611,7 @@ cout<<"about to get things from f_unfold_R2"<<endl;
       PbPb_measured_fine[1][i]->GetYaxis()->SetMoreLogLabels(kFALSE);
       PbPb_measured_fine[1][i]->Draw();
     
-      //PASPbPb_measured[i]->Scale(1./4);
+      PASPbPb_measured[i]->Scale(1.16);
       PASPbPb_measured[i]->SetMarkerStyle(27);
       PASPbPb_measured[i]->SetMarkerColor(kBlue);
       PASPbPb_measured[i]->Draw("same");
@@ -1622,7 +1622,7 @@ cout<<"about to get things from f_unfold_R2"<<endl;
     cPbPb_sigma->cd(1);
     TLegend *PbPb_sigma = myLegend(0.25,0.6,0.5,0.9);
     PbPb_sigma->AddEntry(PbPb_measured[1][0],"13-005, chMax/jtpt > 0.01, jetID","pl");
-    PbPb_sigma->AddEntry(PASPbPb_measured[0],"12-004, trkMax/jtpt > 0.01","pl");
+    PbPb_sigma->AddEntry(PASPbPb_measured[0],"(12-004, trkMax/jtpt > 0.01)*1.16","pl");
     PbPb_sigma->SetTextSize(0.04);
     PbPb_sigma->Draw();
 
@@ -1644,6 +1644,20 @@ cout<<"about to get things from f_unfold_R2"<<endl;
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   if(doPPSpectra){
+
+    TH1F *NewOverOldPP=(TH1F*)PP_measured_fine[1]->Clone("NewOverOldPP");
+    NewOverOldPP->Divide(PASPP_measured);
+    NewOverOldPP->SetMarkerStyle(28);
+    NewOverOldPP->SetMarkerColor(kBlack);
+    NewOverOldPP->SetTitle(" ");
+    NewOverOldPP->SetXTitle("Jet p_{T} (GeV/c)");
+    NewOverOldPP->SetYTitle("HIN-13-005 jetID,chMax/HIN-12-004 trkMax");
+    
+    TCanvas *cPP_ratio = new TCanvas("cPP_ratio","PP inclusive jet invariant cross section",600,400);
+    cPP_ratio->SetLogy();
+    cPP_ratio->SetLogx();
+    NewOverOldPP->Draw();
+        
     TCanvas *cPP_sigma = new TCanvas("cPP_sigma","PP inclusive jet invariant cross section",600,400);
     cPP_sigma->SetLogy();
     cPP_sigma->SetLogx();
@@ -1656,14 +1670,16 @@ cout<<"about to get things from f_unfold_R2"<<endl;
     PP_measured_fine[1]->SetAxisRange(30,500,"X");
     PP_measured_fine[1]->Draw();
 
-    PASPP_measured->Scale(4.);
+
+
+    PASPP_measured->Scale(25.);
     PASPP_measured->SetMarkerColor(kBlue);
     PASPP_measured->SetMarkerStyle(27);
     PASPP_measured->Draw("same");
 
     TLegend *PP_sigma = myLegend(0.43,0.65,0.75,0.9);
-    PP_sigma->AddEntry(PP_measured_fine[1],"chMax/jtpt> 0.01, latest Jet ID cut","pl");
-    PP_sigma->AddEntry(PASPP_measured,"2012 PAS, trxMax/jtpt > 0.01","pl");
+    PP_sigma->AddEntry(PP_measured_fine[1],"13-005 chMax/jtpt> 0.01, Jet ID","pl");
+    PP_sigma->AddEntry(PASPP_measured,"(12-004, trxMax/jtpt > 0.01)* 25","pl");
     PP_sigma->SetTextSize(0.04);
     PP_sigma->Draw();
 
