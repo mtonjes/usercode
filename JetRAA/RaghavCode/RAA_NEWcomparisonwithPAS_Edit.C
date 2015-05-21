@@ -1065,6 +1065,9 @@ cout<<"about to get things from f_unfold_R2"<<endl;
   bool doPPSpectra = true;
 
   if(doRAA){
+  // in case you want to remove the scale or apply or something
+       // float CorFac[6] = {1.0331,1.0331,1.0300,1.0259,1.0217,1.0114};
+
     //plot1 - 6 panel plot of RAA, at R=0.3, in the old PAS and now.
     TCanvas *cRAA = new TCanvas("cRAA","RAA",1200,800);
     makeMultiPanelCanvasWithGap(cRAA,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
@@ -1653,13 +1656,15 @@ cout<<"about to get things from f_unfold_R2"<<endl;
 	break;
 	
       }// switch
-
+//      RAA_bayesian[1][i]->Scale(1./CorFac[i]);
       RAA_bayesian[1][i]->Draw("same E1");
+// remove scale from PAS
+//      PASRAA_bayesian[1][i]->Scale(CorFac[i]);
       PASRAA_bayesian[1][i]->Draw("same E1");
 
     }// centrality loop
 
-    tRAA->AddEntry(RAA_bayesian[1][0],"13-005, JetID, chMax/jtpt > 0.01, no scale","pl");
+    tRAA->AddEntry(RAA_bayesian[1][0],"13-005, JetID no scale","pl");
     tRAA->AddEntry(PASRAA_bayesian[1][0],"12-004, trkMax/jtpt > 0.01","pl");
     tRAA->SetTextSize(0.04);
 
@@ -1711,7 +1716,7 @@ cout<<"about to get things from f_unfold_R2"<<endl;
 
     cPbPb_sigma->cd(1);
     TLegend *PbPb_sigma = myLegend(0.25,0.6,0.5,0.9);
-    PbPb_sigma->AddEntry(PbPb_measured[1][0],"13-005, jetID, chMax/jtpt > 0.01","pl");
+    PbPb_sigma->AddEntry(PbPb_measured[1][0],"13-005, jetID","pl");
     PbPb_sigma->AddEntry(PASPbPb_measured[0],"(12-004, trkMax/jtpt > 0.01)*(145/129)","pl");
     PbPb_sigma->SetTextSize(0.04);
     PbPb_sigma->Draw();
@@ -1741,7 +1746,7 @@ cout<<"about to get things from f_unfold_R2"<<endl;
     NewOverOldPP->SetMarkerColor(kBlack);
     NewOverOldPP->SetTitle(" ");
     NewOverOldPP->SetXTitle("Jet p_{T} (GeV/c)");
-    NewOverOldPP->SetYTitle("HIN-13-005 chMax/HIN-12-004 trkMax");
+    NewOverOldPP->SetYTitle("HIN-13-005/HIN-12-004 trkMax");
     
     TCanvas *cPP_ratio = new TCanvas("cPP_ratio","PP inclusive jet invariant cross section",600,400);
     cPP_ratio->SetLogy();
@@ -1768,7 +1773,7 @@ cout<<"about to get things from f_unfold_R2"<<endl;
     PASPP_measured->Draw("same");
 
     TLegend *PP_sigma = myLegend(0.43,0.65,0.75,0.9);
-    PP_sigma->AddEntry(PP_measured_fine[1],"13-005, chMax/jtpt > 0.01","pl");
+    PP_sigma->AddEntry(PP_measured_fine[1],"13-005","pl");
     PP_sigma->AddEntry(PASPP_measured,"(12-004, trxMax/jtpt > 0.01)*(5300/212)","pl");
     PP_sigma->SetTextSize(0.04);
     PP_sigma->Draw();
