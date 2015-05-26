@@ -1,30 +1,18 @@
-again as I said this is for MB && !HLT80
 R=0.2 etaWidth = 20_eta_20 etaLabel=2.0 < |#eta| < 2.0
- weight  57670
- weight  40202.4
- weight  20532
- weight  3943.96
- weight  2071.39
- weight  2039.39 
+
  
 R=0.3 etaWidth = 20_eta_20 etaLabel=2.0 < |#eta| < 2.0
- weight  54226.4
- weight  36161.8
- weight  15558.5
- weight  2270.33
- weight  1195.82
- weight  1271.59
+
  
 R=0.4 etaWidth = 20_eta_20 etaLabel=2.0 < |#eta| < 2.0
- weight  51478.2
- weight  33460
- weight  12349.8
- weight  1570.67
- weight  645.559
- weight  925.724
+
  
   TFile *fcentin = TFile::Open("MinBiasHLTRatioWeightsVZ.root");
   TH1F *hCentWeight = (TH1F*)fcentin->Get("hBinEvents");
-  Float_t weight_cent = hCentWeight->GetBinContent(hCentWeight->FindBin(hiBin_1));
+call Float_t weight_cent = hCentWeight->GetBinContent(hCentWeight->FindBin(hiBin_1));
+after it is in the for loop of entries of ntuples
+ 
   when you fill MB plots
   ok so this file makes the MinBias cent look like HLT
+  
+  1) do MinBias eta and phi plots
