@@ -61,7 +61,7 @@ const char *ksp="pbpb";
 
 int RAA_hiBin0_data_ntuple(std::string kAlgName="akPu3",char* etaWidth = (char*)"20_eta_30",
                   std::string foname="hiBin0_PbPb_data.root", 
-				  Int_t radius = 4)
+				  Int_t radius = 3)
 {
   TH1::SetDefaultSumw2();
   TH2::SetDefaultSumw2();
@@ -250,7 +250,7 @@ int RAA_hiBin0_data_ntuple(std::string kAlgName="akPu3",char* etaWidth = (char*)
 
     Int_t cBin = findBin(hiBin_1);
     if(cBin == -1 || cBin >= nbins_cent) continue;
-    if(cBin==0){
+    if(hiBin_1==0){
          calopt_3=calopt_1;
          pfpt_3=pfpt_1;
          eMax_3=eMax_1;
@@ -269,6 +269,7 @@ int RAA_hiBin0_data_ntuple(std::string kAlgName="akPu3",char* etaWidth = (char*)
          eta_3=eta_1;
          phi_3=phi_1;
          pfrawpt_3=pfrawpt_1; 
+         Data_matched_hiBin0->Fill();
     }
   }
   // data ntuple loop
@@ -283,7 +284,7 @@ int RAA_hiBin0_data_ntuple(std::string kAlgName="akPu3",char* etaWidth = (char*)
     Data_unmatched->GetEntry(nentry);
     Int_t cBin = findBin(hiBin_1);
     if(cBin == -1 || cBin >= nbins_cent) continue;
-     if(cBin==0){
+     if(hiBin_1==0){
          pfpt_3=pfpt_1;
          eMax_3=eMax_1;
          chMax_3=chMax_1;
@@ -301,6 +302,7 @@ int RAA_hiBin0_data_ntuple(std::string kAlgName="akPu3",char* etaWidth = (char*)
          eta_3=eta_1;
          phi_3=phi_1;
          pfrawpt_3=pfrawpt_1;   
+         Data_unmatched_hiBin0->Fill();
     }   
   }  
    // data unmatched loop
@@ -308,7 +310,7 @@ int RAA_hiBin0_data_ntuple(std::string kAlgName="akPu3",char* etaWidth = (char*)
 //  Data_unmatched->Write();
   Data_matched_hiBin0->Write();
   Data_unmatched_hiBin0->Write();
-  fout->Write();
+  //fout->Write();
   fout->Close();   
   return 1;
 
