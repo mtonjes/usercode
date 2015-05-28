@@ -33,19 +33,20 @@
 #define pi 3.14159265
 using namespace std;
 
-#include "/data/users/belt/JetRAA/MatchNtuples/JetIDVariables/Headers/plot.h"
-void eMaxCutGen_study(){
+#include "/net/hisrv0001/home/belt/wrk/JetRAA/RaghavCode/Headers/plot.h"
+void eMaxCutGen_study(Int_t radius = 3){
 
   TH1::SetDefaultSumw2();
+  TFile * fData, * fMC;
+  fData = TFile::Open("/mnt/hadoop/cms/store/user/pawan/ntuples/JetRaa_akPu234_PbPb_Data.root");
+  fMC = TFile::Open("/mnt/hadoop/cms/store/user/pawan/ntuples/JetRaa_akPu234_PbPb_MC.root");
   
+  TTree * Data_matched= (TTree*)fData->Get(Form("akPu%dJetAnalyzer/matchedJets",radius));
+  TTree * Data_unmatched = (TTree*)fData->Get(Form("akPu%dJetAnalyzer/unmatchedPFJets",radius));
 
-   TFile * fData = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_Data_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
-   TTree * Data_matched = (TTree*)fData->Get("matchedJets");
-   TTree * Data_unmatched = (TTree*)fData->Get("unmatchedPFJets");
+  TTree * MC_matched = (TTree*)fMC->Get(Form("akPu%dJetAnalyzer/matchedJets",radius));
+  TTree * MC_unmatched = (TTree*)fMC->Get(Form("akPu%dJetAnalyzer/unmatchedPFJets",radius));
 
-  TFile * fMC = TFile::Open("/data/users/belt/JetRAA/MatchNtuples/PbPb_MC_calo_pf_jet_correlation_deltaR_0p2_akPu3_20150331.root");
-  TTree * MC_matched = (TTree*)fMC->Get("matchedJets");
-  TTree * MC_unmatched = (TTree*)fMC->Get("unmatchedPFJets");
 
   TH1F * hMC_AllTrig_noCut_pfrefOverpfpt = new TH1F(" hMC_AllTrig_noCut_pfrefOverpfpt","",1000,-40,10);
   TH1F * hMC_AllTrig_CutA_pfrefOverpfpt_rej = new TH1F("hMC_AllTrig_CutA_pfrefOverpfpt_rej","",1000,-40,10);
@@ -140,7 +141,7 @@ void eMaxCutGen_study(){
   MC_matched->SetBranchAddress("phSum",&phSum_2);
   MC_matched->SetBranchAddress("neSum",&neSum_2);
   MC_matched->SetBranchAddress("muSum",&muSum_2);
-  MC_matched->SetBranchAddress("pfrefpt",&pfrefpt_2);
+  MC_matched->SetBranchAddress("refpt",&pfrefpt_2);
   MC_matched->SetBranchAddress("jet55",&jet55_2);
   MC_matched->SetBranchAddress("jet65",&jet65_2);
   MC_matched->SetBranchAddress("jet80",&jet80_2);
@@ -153,7 +154,7 @@ void eMaxCutGen_study(){
   MC_unmatched->SetBranchAddress("phSum",&phSum_2);
   MC_unmatched->SetBranchAddress("neSum",&neSum_2);
   MC_unmatched->SetBranchAddress("muSum",&muSum_2);
-  MC_unmatched->SetBranchAddress("pfrefpt",&pfrefpt_2);
+  MC_unmatched->SetBranchAddress("refpt",&pfrefpt_2);
   MC_unmatched->SetBranchAddress("jet55",&jet55_2);
   MC_unmatched->SetBranchAddress("jet65",&jet65_2);
   MC_unmatched->SetBranchAddress("jet80",&jet80_2);
@@ -165,7 +166,7 @@ void eMaxCutGen_study(){
   cout<<" looking at matched MC ntuple "<<endl;
   for(long nentry = 0; nentry < nentries; ++nentry){
 
-    if(nentry%10000 == 0) cout<<" nentry = "<<nentry<<endl;
+    if(nentry%100000 == 0) cout<<nentry<<"/"<<nentries<<endl;
     MC_matched->GetEntry(nentry);
     
     Float_t Sumcand = chSum_2 + phSum_2 + neSum_2 + muSum_2;
@@ -370,7 +371,7 @@ void eMaxCutGen_study(){
   cout<<" looking at unmatched MC ntuple"<<endl;
   for(long nentry = 0; nentry < entries; ++nentry){
 
-    if(nentry%10000 == 0) cout<<" nentry = "<<nentry<<endl;
+    if(nentry%100000 == 0) cout<<nentry<<"/"<<entries<<endl;
     MC_unmatched->GetEntry(nentry);
     
     Float_t Sumcand = chSum_2 + phSum_2 + neSum_2 + muSum_2;
@@ -463,7 +464,7 @@ void eMaxCutGen_study(){
   
 
 
-  TFile fout("PbPb_MCGenStudy_YetkinCuts_matched_slantedlinecalopfpt_addingunmatched_exclusionhighertriggers_eMaxSumcand_A.root","RECREATE");
+  TFile fout(Form("Plots/PbPb_MCGenStudy_YetkinCuts_matched_slantedlinecalopfpt_addingunmatched_exclusionhighertriggers_eMaxSumcand_A_R0p%d.root",radius),"RECREATE");
    hMC_AllTrig_noCut_pfrefOverpfpt->Write();
    hMC_AllTrig_CutA_pfrefOverpfpt_rej->Write();
    hMC_AllTrig_CutA_pfrefOverpfpt_keep->Write();
@@ -526,7 +527,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_full->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_rej,Form("Matched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_rej),"pl");
       LpfrefOverpfpt_full->Draw();
       
-  cGenJetMC->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_fullrange_subid.pdf","RECREATE");
+  cGenJetMC->SaveAs(Form("Plots/R%d/hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_fullrange_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_pfrefptgt0 = new TCanvas("cGenJetMC_pfrefptgt0","",800,600);
   cGenJetMC_pfrefptgt0->SetLogy();
@@ -557,7 +558,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej,Form("Matched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_pfrefptgt0_rej),"p");
       LpfrefOverpfpt->Draw();
       
-  cGenJetMC_pfrefptgt0->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_pfrefptgt0->SaveAs(Form("Plots/R%d/hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_pfrefptgt0_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn = new TCanvas("cGenJetMC_matchAndUn","",800,600);
   cGenJetMC_matchAndUn->SetLogy();
@@ -588,7 +589,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_full->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_full->Draw();
       
-  cGenJetMC_matchAndUn->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn->SaveAs(Form("Plots/R%d/hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_pfrefptgt0 = new TCanvas("cGenJetMC_matchAndUn_pfrefptgt0","",800,600);
   cGenJetMC_matchAndUn_pfrefptgt0->SetLogy();
@@ -619,7 +620,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn->AddEntry(hMC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject CutA: %d entries",MC_AllTrig_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn->Draw();
       
-  cGenJetMC_matchAndUn_pfrefptgt0->SaveAs("hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_pfrefptgt0->SaveAs(Form("Plots/R%d/hMC_AllTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_NoTrig = new TCanvas("cGenJetMC_matchAndUn_NoTrig","",800,600);
   cGenJetMC_matchAndUn_NoTrig->SetLogy();
@@ -650,7 +651,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_NoTrig_full->AddEntry(hMC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject NoTrig CutA: %d entries",MC_NoTrig_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_NoTrig_full->Draw();
       
-  cGenJetMC_matchAndUn_NoTrig->SaveAs("hMC_NoTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_NoTrig->SaveAs(Form("Plots/R%d/hMC_NoTrig_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
 
   TCanvas * cGenJetMC_matchAndUn_Jet55 = new TCanvas("cGenJetMC_matchAndUn_Jet55","",800,600);
@@ -682,7 +683,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet55_full->AddEntry(hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject Jet55 CutA: %d entries",MC_Jet55_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_Jet55_full->Draw();
       
-  cGenJetMC_matchAndUn_Jet55->SaveAs("hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet55->SaveAs(Form("Plots/R%d/hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55 = new TCanvas("cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55","",800,600);
   cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55->SetLogy();
@@ -713,7 +714,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet55->AddEntry(hMC_Jet55_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject Jet55 CutA: %d entries",MC_Jet55_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn_Jet55->Draw();
       
-  cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55->SaveAs("hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet55_pfrefptgt0_Jet55->SaveAs(Form("Plots/R%d/hMC_Jet55_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet65 = new TCanvas("cGenJetMC_matchAndUn_Jet65","",800,600);
   cGenJetMC_matchAndUn_Jet65->SetLogy();
@@ -744,7 +745,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet65_full->AddEntry(hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject Jet65 CutA: %d entries",MC_Jet65_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_Jet65_full->Draw();
       
-  cGenJetMC_matchAndUn_Jet65->SaveAs("hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet65->SaveAs(Form("Plots/R%d/hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65 = new TCanvas("cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65","",800,600);
   cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65->SetLogy();
@@ -775,7 +776,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet65->AddEntry(hMC_Jet65_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject Jet65 CutA: %d entries",MC_Jet65_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn_Jet65->Draw();
       
-  cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65->SaveAs("hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet65_pfrefptgt0_Jet65->SaveAs(Form("Plots/R%d/hMC_Jet65_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet80 = new TCanvas("cGenJetMC_matchAndUn_Jet80","",800,600);
   cGenJetMC_matchAndUn_Jet80->SetLogy();
@@ -806,7 +807,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet80_full->AddEntry(hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_rej,Form("Matched and Unmatched MC reject Jet80 CutA: %d entries",MC_Jet80_CutA_pfrefOverpfpt_matchAndUn_rej),"pl");
       LpfrefOverpfpt_matchAndUn_Jet80_full->Draw();
       
-  cGenJetMC_matchAndUn_Jet80->SaveAs("hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet80->SaveAs(Form("Plots/R%d/hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_fullrange_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
   TCanvas * cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80 = new TCanvas("cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80","",800,600);
   cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80->SetLogy();
@@ -837,7 +838,7 @@ hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_keep->Write();
       LpfrefOverpfpt_matchAndUn_Jet80->AddEntry(hMC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej,Form("Matched and Unmatched MC reject Jet80 CutA: %d entries",MC_Jet80_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_rej),"p");
       LpfrefOverpfpt_matchAndUn_Jet80->Draw();
       
-  cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80->SaveAs("hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid.pdf","RECREATE");
+  cGenJetMC_matchAndUn_Jet80_pfrefptgt0_Jet80->SaveAs(Form("Plots/R%d/hMC_Jet80_YetkinCuts_CutA_pfrefOverpfpt_matchAndUn_pfrefptgt0_subid_R0p%d.pdf",radius,radius),"RECREATE");
 
 
 }

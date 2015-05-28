@@ -907,7 +907,7 @@ if(pfpt_1>=ptCutData){
   cout<<"Unmatched Data ntuple "<<endl;
   for(long nentry = 0; nentry < entries; ++nentry ){
 
-    if(nentry%10000 == 0) cout<<" nentry = "<<nentry<<endl;
+    if(nentry%100000 == 0) cout<<nentry<<"/"<<entries<<endl;
     Data_unmatched->GetEntry(nentry);
     Int_t cBin = findBin(hiBin_1);
     if(cBin == -1 || cBin >= nbins_cent) continue;
@@ -1000,7 +1000,7 @@ if(pfpt_1>=ptCutData){
   cout<<" looking at matched MC ntuple "<<endl;
   for(long nentry = 0; nentry < entries; ++nentry){
 
-    if(nentry%10000 == 0) cout<<" nentry = "<<nentry<<endl;
+    if(nentry%100000 == 0) cout<<nentry<<"/"<<entries<<endl;
     MC_matched->GetEntry(nentry);
     
     Float_t Sumcand = chSum_2 + phSum_2 + neSum_2 + muSum_2;
