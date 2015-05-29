@@ -135,7 +135,7 @@ void PowerLawFitRatio_ATLASpp(Int_t nfit=6, Int_t FitStart=50, Int_t FitEnd=450)
    } 
 //   fitppATLAS->Draw("same");
    Double_t xAxis1[31] = {3, 4, 5, 7, 9, 12, 15, 18, 21, 24, 28, 32, 37, 43, 49, 56, 64, 74, 84, 97, 114, 133, 153, 174, 196, 220, 245, 300, 330, 362, 395}; 
-   
+// should get from here, but use hard coded for now: Pawan_ntuple_PbPb_pp_calopfpt_ppNoJetidcut_R0p4_without80FakeRemoval_unfold_mcclosure_oppside_trgMC_noSmear_20_eta_20_50GeVCut_akPF_20150521.root   
    TH1F *PP_bayesian_unfolded_spectra = new TH1F("PP_bayesian_unfolded_spectra","Unfolded pp Bayes",30, xAxis1);
    PP_bayesian_unfolded_spectra->SetBinContent(1,9.536424);
    PP_bayesian_unfolded_spectra->SetBinContent(2,11.68343);
