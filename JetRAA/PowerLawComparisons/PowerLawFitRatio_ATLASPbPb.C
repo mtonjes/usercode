@@ -77,7 +77,7 @@ fData = TFile::Open("Pawan_ntuple_PbPb_pp_calopfpt_ppNoJetidcut_R0p4_SevilFakeMB
    TH1F *hRatioATLAS_cent4 = (TH1F*)PbPb_bayesian_unfolded_spectra_combined_cent4->Clone("hRatioATLAS_cent4"); //clone histogram hRatio from h
    TH1F *hRatioATLAS_cent5 = (TH1F*)PbPb_bayesian_unfolded_spectra_combined_cent5->Clone("hRatioATLAS_cent5"); //clone histogram hRatio from h
 // set up a blank ratio histogram for later
-   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,52,300);
+   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,65,300);
    hRatioBlank->SetMinimum(0);
    hRatioBlank->SetMaximum(1.2);
    hRatioBlank->SetDirectory(0);
