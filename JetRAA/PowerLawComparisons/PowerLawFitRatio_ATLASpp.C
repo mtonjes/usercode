@@ -272,6 +272,7 @@ void PowerLawFitRatio_ATLASpp(Int_t nfit=6, Int_t FitStart=50, Int_t FitEnd=450)
    grae->Draw("ap,same");
    PP_bayesian_unfolded_spectra->Draw("same E1");
    leg->Draw();
+   cATLAS_pp->SaveAs("Plots/CMShist_ATLASfit_spectra_pp.pdf");
    TH1F *hRatioATLAS = (TH1F*)PP_bayesian_unfolded_spectra->Clone("hRatioATLAS"); //clone histogram hRatio from h
    TCanvas *cRatio_pp = new TCanvas("cRatio_pp", "",0,0,1200,1000);
    gStyle->SetOptFit(1);
@@ -295,7 +296,7 @@ void PowerLawFitRatio_ATLASpp(Int_t nfit=6, Int_t FitStart=50, Int_t FitEnd=450)
 //   hfunctionATLAS->Draw();
 //   hATLASpp->Draw();
    hRatioATLAS->Divide(hfunctionATLAS);
-   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,50,450);
+   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,50,300);
    hRatioBlank->SetMinimum(0);
    hRatioBlank->SetMaximum(1.2);
    hRatioBlank->SetDirectory(0);
@@ -311,7 +312,7 @@ void PowerLawFitRatio_ATLASpp(Int_t nfit=6, Int_t FitStart=50, Int_t FitEnd=450)
    hRatioBlank->GetXaxis()->SetLabelSize(0.045);
    hRatioBlank->GetXaxis()->SetTitleSize(0.055);
    hRatioBlank->GetXaxis()->SetTitleFont(42);
-   hRatioBlank->GetYaxis()->SetTitle("CMS/ATLAS #frac{d^{2}#sigma}{dp_{T} d#eta} nb");
+   hRatioBlank->GetYaxis()->SetTitle("CMS*(5.3/4)/ATLAS #frac{d^{2}#sigma}{dp_{T} d#eta} nb");
    hRatioBlank->GetYaxis()->SetLabelFont(42);
    hRatioBlank->GetYaxis()->SetLabelOffset(0.01);
    hRatioBlank->GetYaxis()->SetLabelSize(0.045);
@@ -323,9 +324,10 @@ void PowerLawFitRatio_ATLASpp(Int_t nfit=6, Int_t FitStart=50, Int_t FitEnd=450)
    hRatioBlank->GetZaxis()->SetTitleSize(0.035);
    hRatioBlank->GetZaxis()->SetTitleFont(42);
    hRatioBlank->Draw();   
+   hRatioATLAS->Scale(5.3/4);
    hRatioATLAS->Draw("ap,same");
    
-   hRatioATLAS->SaveAs("Plots/CMShist_ATLASfit_ratio_pp.pdf");
+   cRatio_pp->SaveAs("Plots/CMShist_ATLASfit_ratio_pp.pdf");
   // TH1F* hBinByBinCor = (TH1F*)functionHist(f,hBinByBinCorRaw,Form("hBinByBinCor_cent%d",i));
 //    TH1F *hRatioATLAS = (TH1F*)g->Clone("hRatioATLAS"); //clone histogram hRatio from h
   
