@@ -131,18 +131,23 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   // get the latest histograms 
   // first array index corresponds to radius 
   TH1F *PbPb_bayesian[3][nbins_cent], *PbPb_binbybin[3][nbins_cent], *PbPb_measured[3][nbins_cent];
-  TH1F *PbPb_measured_fine[nbins_cent];
+  TH1F *PbPb_measured_fine[3][nbins_cent];
   TH1F *PP_bayesian[3], *PP_binbybin[3], *PP_measured[3];
   TH1F *PP_measured_fine[3];
   TH1F *RAA_measured[3][nbins_cent];
   TH1F *RAA_binbybin[3][nbins_cent];
   TH1F *RAA_bayesian[3][nbins_cent];
   TH1F * PbPb_MBSub[3][nbins_cent];
-  TH1F *hRatioNowPAS_c0, *hRatioNowPAS_c1, *hRatioNowPAS_c2, *hRatioNowPAS_c3, *hRatioNowPAS_c4, *hRatioNowPAS_c5 ;
+  TH1F *hRatioNowPAS[3][nbins_cent] ;
+  TH1F *hRatioNowPAS_PP[3];
+  TLine *lineRAA = new TLine(100,1,350,1);
+  lineRAA->SetLineStyle(2);
+  lineRAA->SetLineWidth(2);  
+  
 // set up a blank ratio histogram for later
-   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,65,300);
+   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,100,350);
    hRatioBlank->SetMinimum(0);
-   hRatioBlank->SetMaximum(1.2);
+   hRatioBlank->SetMaximum(2.0);
    hRatioBlank->SetDirectory(0);
    hRatioBlank->SetStats(0);
    hRatioBlank->SetFillColor(1);
@@ -156,7 +161,7 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
    hRatioBlank->GetXaxis()->SetLabelSize(0.045);
    hRatioBlank->GetXaxis()->SetTitleSize(0.055);
    hRatioBlank->GetXaxis()->SetTitleFont(42);
-   hRatioBlank->GetYaxis()->SetTitle("HIN-13-005/HIN-12-004");
+   hRatioBlank->GetYaxis()->SetTitle("HIN-13-005/HIN-12-004*(145/129)");
    hRatioBlank->GetYaxis()->SetLabelFont(42);
    hRatioBlank->GetYaxis()->SetLabelOffset(0.01);
    hRatioBlank->GetYaxis()->SetLabelSize(0.045);
@@ -166,8 +171,7 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
    hRatioBlank->GetZaxis()->SetLabelFont(42);
    hRatioBlank->GetZaxis()->SetLabelSize(0.045);
    hRatioBlank->GetZaxis()->SetTitleSize(0.035);
-   hRatioBlank->GetZaxis()->SetTitleFont(42);  
-
+   hRatioBlank->GetZaxis()->SetTitleFont(42);
  Double_t xAxis1[48] = {30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480, 490, 500}; 
 
   Float_t bin_no = 1;
@@ -203,11 +207,11 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
     PbPb_binbybin[2][i] = (TH1F*)f_unfold_R4->Get(Form("PbPb_BinByBin_unfolded_spectra_combined_cent%d",i));
 
     // this can be HLT80 or HLTComb, check with both: 
- //   PbPb_measured_fine[0][i] = (TH1F*)fPbPb_data_R2->Get(Form("hpbpb_HLTComb_R2_20_eta_20_cent%d",i));
+    PbPb_measured_fine[0][i] = (TH1F*)fPbPb_data_R2->Get(Form("hpbpb_HLTComb_R2_20_eta_20_cent%d",i));
     //divideBinWidth(PbPb_measured_fine[0][i]);
-    PbPb_measured_fine[i] = (TH1F*)fPbPb_data_R3->Get(Form("hpbpb_HLTComb_R3_20_eta_20_cent%d",i));
-    //divideBinWidth(PbPb_measured_fine[i]);
- //   PbPb_measured_fine[2][i] = (TH1F*)fPbPb_data_R4->Get(Form("hpbpb_HLTComb_R4_20_eta_20_cent%d",i));
+    PbPb_measured_fine[1][i] = (TH1F*)fPbPb_data_R3->Get(Form("hpbpb_HLTComb_R3_20_eta_20_cent%d",i));
+    //divideBinWidth(PbPb_measured_fine[1][i]);
+    PbPb_measured_fine[2][i] = (TH1F*)fPbPb_data_R4->Get(Form("hpbpb_HLTComb_R4_20_eta_20_cent%d",i));
     //divideBinWidth(PbPb_measured_fine[2][i]);
 
     Float_t bincon_R2=cutarray_R2[i]; 
@@ -252,39 +256,39 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
       PbPb_MBSub[2][i]->SetBinError(k,0);
     }
     
-//     bin_no    = PbPb_measured_fine[0][i]->FindBin(15);
-//     bin_end   = PbPb_measured_fine[0][i]->FindBin(25);
-//     
-//     bin_nomb  = PbPb_MBSub[0][i]->FindBin(15);
-//     bin_endmb = PbPb_MBSub[0][i]->FindBin(25);
-//     
-//     scalerangeweight = PbPb_measured_fine[0][i]->Integral(bin_no,bin_end)/PbPb_MBSub[0][i]->Integral(bin_nomb,bin_endmb);
-//     PbPb_MBSub[0][i]->Scale(scalerangeweight);
-//     PbPb_measured_fine[0][i]->Add(PbPb_MBSub[0][i], -1);
+    bin_no    = PbPb_measured_fine[0][i]->FindBin(15);
+    bin_end   = PbPb_measured_fine[0][i]->FindBin(25);
+    
+    bin_nomb  = PbPb_MBSub[0][i]->FindBin(15);
+    bin_endmb = PbPb_MBSub[0][i]->FindBin(25);
+    
+    scalerangeweight = PbPb_measured_fine[0][i]->Integral(bin_no,bin_end)/PbPb_MBSub[0][i]->Integral(bin_nomb,bin_endmb);
+    PbPb_MBSub[0][i]->Scale(scalerangeweight);
+    PbPb_measured_fine[0][i]->Add(PbPb_MBSub[0][i], -1);
 
-    bin_no    = PbPb_measured_fine[i]->FindBin(15);
-    bin_end   = PbPb_measured_fine[i]->FindBin(25);
+    bin_no    = PbPb_measured_fine[1][i]->FindBin(15);
+    bin_end   = PbPb_measured_fine[1][i]->FindBin(25);
     
     bin_nomb  = PbPb_MBSub[1][i]->FindBin(15);
     bin_endmb = PbPb_MBSub[0][i]->FindBin(25);
     
-    scalerangeweight = PbPb_measured_fine[i]->Integral(bin_no,bin_end)/PbPb_MBSub[1][i]->Integral(bin_nomb,bin_endmb);
+    scalerangeweight = PbPb_measured_fine[1][i]->Integral(bin_no,bin_end)/PbPb_MBSub[1][i]->Integral(bin_nomb,bin_endmb);
     PbPb_MBSub[1][i]->Scale(scalerangeweight);
-    PbPb_measured_fine[i]->Add(PbPb_MBSub[1][i], -1);
+    PbPb_measured_fine[1][i]->Add(PbPb_MBSub[1][i], -1);
 
-//     bin_no    = PbPb_measured_fine[2][i]->FindBin(15);
-//     bin_end   = PbPb_measured_fine[2][i]->FindBin(25);
-//     
-//     bin_nomb  = PbPb_MBSub[2][i]->FindBin(15);
-//     bin_endmb = PbPb_MBSub[0][i]->FindBin(25);
-//     
-//     scalerangeweight = PbPb_measured_fine[2][i]->Integral(bin_no,bin_end)/PbPb_MBSub[2][i]->Integral(bin_nomb,bin_endmb);
-//     PbPb_MBSub[2][i]->Scale(scalerangeweight);
-//     PbPb_measured_fine[2][i]->Add(PbPb_MBSub[2][i], -1);
+    bin_no    = PbPb_measured_fine[2][i]->FindBin(15);
+    bin_end   = PbPb_measured_fine[2][i]->FindBin(25);
+    
+    bin_nomb  = PbPb_MBSub[2][i]->FindBin(15);
+    bin_endmb = PbPb_MBSub[0][i]->FindBin(25);
+    
+    scalerangeweight = PbPb_measured_fine[2][i]->Integral(bin_no,bin_end)/PbPb_MBSub[2][i]->Integral(bin_nomb,bin_endmb);
+    PbPb_MBSub[2][i]->Scale(scalerangeweight);
+    PbPb_measured_fine[2][i]->Add(PbPb_MBSub[2][i], -1);
 
-//    PbPb_measured_fine[0][i] = (TH1F*)PbPb_measured_fine[0][i]->Rebin(37,Form("PbPb_measured_rebin_R2_c%d",i),xAxis1);
-    PbPb_measured_fine[i] = (TH1F*)PbPb_measured_fine[i]->Rebin(37,Form("PbPb_measured_rebin_R3_c%d",i),xAxis1);
-//    PbPb_measured_fine[2][i] = (TH1F*)PbPb_measured_fine[2][i]->Rebin(37,Form("PbPb_measured_rebin_R4_c%d",i),xAxis1);
+    PbPb_measured_fine[0][i] = (TH1F*)PbPb_measured_fine[0][i]->Rebin(47,Form("PbPb_measured_rebin_R2_c%d",i),xAxis1);
+    PbPb_measured_fine[1][i] = (TH1F*)PbPb_measured_fine[1][i]->Rebin(47,Form("PbPb_measured_rebin_R3_c%d",i),xAxis1);
+    PbPb_measured_fine[2][i] = (TH1F*)PbPb_measured_fine[2][i]->Rebin(47,Form("PbPb_measured_rebin_R4_c%d",i),xAxis1);
 
     
     RAA_bayesian[0][i] = (TH1F*)f_unfold_R2->Get(Form("RAA_bayesian_cent%d",i));
@@ -325,13 +329,13 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   PP_binbybin[2] = (TH1F*)f_unfold_R4->Get("PP_binbybin_unfolded_spectra");
   
   PP_measured_fine[0] = (TH1F*)fPP_data_R2->Get("hpp_HLTComb_R2_20_eta_20");
-  PP_measured_fine[0] = (TH1F*)PP_measured_fine[0]->Rebin(37,"PP_measured_rebin_R2",xAxis1);
+  PP_measured_fine[0] = (TH1F*)PP_measured_fine[0]->Rebin(47,"PP_measured_rebin_R2",xAxis1);
   //divideBinWidth(PP_measured_fine[0]);
   PP_measured_fine[1] = (TH1F*)fPP_data_R3->Get("hpp_HLTComb_R3_20_eta_20");
-  PP_measured_fine[1] = (TH1F*)PP_measured_fine->Rebin(37,"PP_measured_rebin_R3",xAxis1);
-  //divideBinWidth(PP_measured_fine);
+  PP_measured_fine[1] = (TH1F*)PP_measured_fine[1]->Rebin(47,"PP_measured_rebin_R3",xAxis1);
+  //divideBinWidth(PP_measured_fine[1]);
   PP_measured_fine[2] = (TH1F*)fPP_data_R4->Get("hpp_HLTComb_R4_20_eta_20");
-  PP_measured_fine[2] = (TH1F*)PP_measured_fine[2]->Rebin(37,"PP_measured_rebin_R4",xAxis1);
+  PP_measured_fine[2] = (TH1F*)PP_measured_fine[2]->Rebin(47,"PP_measured_rebin_R4",xAxis1);
   //divideBinWidth(PP_measured_fine[2]);
   
   cout<<"loaded pp histograms "<<endl;
@@ -1157,7 +1161,7 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   makeMultiPanelCanvasWithGap(cRAA,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
 
   TLegend *tRAA = myLegend(0.15,0.75,0.85,0.9);
-  TLine *lineRAA = new TLine(100,1,299,1);
+  TLine *lineRAA = new TLine(100,1,350,1);
   lineRAA->SetLineStyle(2);
   lineRAA->SetLineWidth(2);
 
@@ -1761,25 +1765,14 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   drawText("|#eta|<2",0.1,0.3,16);
   drawText("|vz|<15, HBHEfilter, pCES",0.1,0.2,16);
   cRAA->cd(3);
-  drawText("Trig Combined with MinBias&&!Jet80 subtracted",0.06,0.2,16);
+  drawText("Trig Combined with MinBias !Jet80 subtracted - measured",0.06,0.2,16);
 
   cRAA->SaveAs(Form("Plots/RAA_newComparingwithPAS_ak%s3%s_%d.pdf",algo,jet_type,date.GetDate()),"RECREATE");
 #endif
   
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-       hRatioNowPAS_c0 = PbPb_measured_fine[0]->Clone("hRatioNowPAS_c0");
-       hRatioNowPas_c0->Divide(PASPbPb_measured[0]);
-       hRatioNowPAS_c1 = PbPb_measured_fine[1]->Clone("hRatioNowPAS_c1");
-       hRatioNowPas_c1->Divide(PASPbPb_measured[1]);
-       hRatioNowPAS_c2 = PbPb_measured_fine[2]->Clone("hRatioNowPAS_c2");
-       hRatioNowPas_c2->Divide(PASPbPb_measured[2]);
-       hRatioNowPAS_c3 = PbPb_measured_fine[3]->Clone("hRatioNowPAS_c3");
-       hRatioNowPas_c3->Divide(PASPbPb_measured[3]);
-       hRatioNowPAS_c4 = PbPb_measured_fine[4]->Clone("hRatioNowPAS_c4");
-       hRatioNowPas_c4->Divide(PASPbPb_measured[4]);
-       hRatioNowPAS_c5 = PbPb_measured_fine[5]->Clone("hRatioNowPAS_c5");
-       hRatioNowPas_c5->Divide(PASPbPb_measured[5]);
+
   // plot 2 - spectra comparison: measured for PbPb - 6 panel plot.
   TCanvas *cPbPb_sigma = new TCanvas("cPbPb_sigma","PbPb inclusive jet invariant cross section",1200,800);
   makeMultiPanelCanvas(cPbPb_sigma,3,2,0.0,0.0,0.2,0.15,0.07); 
@@ -1791,16 +1784,25 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
     cPbPb_sigma->cd(nbins_cent-i)->SetLogx();
     
 
-    makeHistTitle(PbPb_measured_fine[i]," ","Jet p_{T} (GeV/c)","arbitrary units");
-    PbPb_measured_fine[i]->SetMarkerStyle(20);
-    PbPb_measured_fine[i]->SetMarkerColor(kBlack);
-    PbPb_measured_fine[i]->SetAxisRange(1e-1,1e7,"Y");
-    PbPb_measured_fine[i]->SetAxisRange(60,300,"X");
-    PbPb_measured_fine[i]->Draw();
-    
-    //PASPbPb_measured[i]->Scale(1./4);
+    makeHistTitle(PbPb_measured_fine[1][i]," ","Jet p_{T} (GeV/c)","arbitrary units");
+    PbPb_measured_fine[1][i]->SetMarkerStyle(20);
+    PbPb_measured_fine[1][i]->SetMarkerColor(kBlack);
+    PASPbPb_measured[i]->Scale(145./129.);
     PASPbPb_measured[i]->SetMarkerStyle(33);
     PASPbPb_measured[i]->SetMarkerColor(kGreen);
+ //   if(i==0){
+// array is TObject, what? Fix from here: https://root.cern.ch/phpBB3/viewtopic.php?f=3&t=18224    
+//       hRatioNowPAS[1][i] = static_cast<TH1F*>(PASPbPb_measured[i]->Clone(Form("hRatioNowPAS_c%d",i)));
+//       hRatioNowPAS[1][i]->Divide(static_cast<TH1F*>(PbPb_measured_fine[1][i]));
+       hRatioNowPAS[1][i] = static_cast<TH1F*>(PbPb_measured_fine[1][i]->Clone(Form("hRatioNowPAS_c%d",i)));
+       hRatioNowPAS[1][i]->Divide(static_cast<TH1F*>(PASPbPb_measured[i]));
+ //   }
+    PbPb_measured_fine[1][i]->SetAxisRange(1e-1,1e7,"Y");
+    PbPb_measured_fine[1][i]->SetAxisRange(100,300,"X");
+    PbPb_measured_fine[1][i]->Draw();
+    
+    //PASPbPb_measured[i]->Scale(1./4);
+
     PASPbPb_measured[i]->Draw("same");
 
     drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.75,0.8,20);
@@ -1808,7 +1810,7 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
 
   cPbPb_sigma->cd(1);
   TLegend *PbPb_sigma = myLegend(0.25,0.7,0.5,0.9);
-  PbPb_sigma->AddEntry(PbPb_measured[1][0],"13-005 Letest Jet ID cut","pl");
+  PbPb_sigma->AddEntry(PbPb_measured[1][0],"13-005 Latest Jet ID cut","pl");
   PbPb_sigma->AddEntry(PASPbPb_measured[0],"12-004 (trkMax/jtpt > 0.01) *(145/129)","pl");
   PbPb_sigma->SetTextSize(0.04);
   PbPb_sigma->Draw();
@@ -1825,7 +1827,7 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   drawText("|vz|<15, pCES, HBHE",0.15,0.25,16);
   //drawText("hiNpix_1 > 38000 - 500*NJet",0.15,0.15,16);
   //cPbPb_sigma->cd(3);
-  drawText("Trig Combined with MinBias subtracted",0.11,0.15,16);
+  drawText("Trig Combined with MinBias !HLT80 subtracted - measured ",0.11,0.15,16);
 
   cPbPb_sigma->SaveAs(Form("Plots/PbPb_spectra_newComparingwithPAS_ak%s3%s_%d.pdf",algo,jet_type,date.GetDate()),"RECREATE");
   cPbPb_sigma->SaveAs(Form("Plots/PbPb_spectra_newComparingwithPAS_ak%s3%s_%d.C",algo,jet_type,date.GetDate()),"RECREATE");
@@ -1838,14 +1840,14 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   cPP_sigma->SetLogy();
   cPP_sigma->SetLogx();
 
-  PP_measured_fine->SetMarkerStyle(20);
-  PP_measured_fine->SetMarkerColor(kBlack);
-  PP_measured_fine->SetTitle(" ");
-  PP_measured_fine->SetXTitle("Jet p_{T} (GeV/c)");
-  PP_measured_fine->SetYTitle("arbitrary units");
-  PP_measured_fine->SetAxisRange(50,400,"X");
-  PP_measured_fine->SetAxisRange(1,1e9,"Y");
-  PP_measured_fine->Draw();
+  PP_measured_fine[1]->SetMarkerStyle(20);
+  PP_measured_fine[1]->SetMarkerColor(kBlack);
+  PP_measured_fine[1]->SetTitle(" ");
+  PP_measured_fine[1]->SetXTitle("Jet p_{T} (GeV/c)");
+  PP_measured_fine[1]->SetYTitle("arbitrary units");
+  PP_measured_fine[1]->SetAxisRange(50,400,"X");
+  PP_measured_fine[1]->SetAxisRange(1,1e9,"Y");
+  PP_measured_fine[1]->Draw();
 
   PASPP_measured->Scale(5300./212.);
   PASPP_measured->SetMarkerColor(kGreen);
@@ -1853,7 +1855,7 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   PASPP_measured->Draw("same");
 
   TLegend *PP_sigma = myLegend(0.4,0.7,0.75,0.9);
-  PP_sigma->AddEntry(PP_measured_fine," latest pp 2013","pl");
+  PP_sigma->AddEntry(PP_measured_fine[1]," latest pp 2013","pl");
   PP_sigma->AddEntry(PASPP_measured,"2012 PAS (trxMax/jtpt > 0.1)* (5300/212)","pl");
   PP_sigma->SetTextSize(0.03);
   PP_sigma->Draw();
@@ -1867,41 +1869,43 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   cPP_sigma->SaveAs(Form("Plots/PP_spectra_newComparingwithPAS_ak3%s_%d.pdf",jet_type,date.GetDate()),"RECREATE");
   cPP_sigma->SaveAs(Form("Plots/PP_spectra_newComparingwithPAS_ak3%s_%d.C",jet_type,date.GetDate()),"RECREATE");
   cPP_sigma->SaveAs(Form("Plots/PP_spectra_newComparingwithPAS_ak3%s_%d.root",jet_type,date.GetDate()),"RECREATE");
-
-#if 0
+//cout<<"going to make ratio canvas"<<endl;
   TCanvas *cPbPb_sigmaRatio = new TCanvas("cPbPb_sigmaRatio","PbPb inclusive jet invariant cross section ratio",1200,800);
   makeMultiPanelCanvas(cPbPb_sigmaRatio,3,2,0.0,0.0,0.2,0.15,0.07); 
-
+cout<<"going to loop over centrality for ratio plot"<<endl;
   for(int i = 0;i<nbins_cent;i++){
-
+    cout<<"cd to pad: "<<nbins_cent-i<<endl;  
     cPbPb_sigmaRatio->cd(nbins_cent-i);
 //    cPbPb_sigmaRatio->cd(nbins_cent-i)->SetLogy();
-    cPbPb_sigmaRatio->cd(nbins_cent-i)->SetLogx();
+//    cPbPb_sigmaRatio->cd(nbins_cent-i)->SetLogx();
     
 
-//     makeHistTitle(PbPb_measured_fine[i]," ","Jet p_{T} (GeV/c)","arbitrary units");
-//     PbPb_measured_fine[i]->SetMarkerStyle(20);
-//     PbPb_measured_fine[i]->SetMarkerColor(kBlack);
-//     PbPb_measured_fine[i]->SetAxisRange(1e-1,1e7,"Y");
-//     PbPb_measured_fine[i]->SetAxisRange(60,300,"X");
+//     makeHistTitle(PbPb_measured_fine[1][i]," ","Jet p_{T} (GeV/c)","arbitrary units");
+//     PbPb_measured_fine[1][i]->SetMarkerStyle(20);
+//     PbPb_measured_fine[1][i]->SetMarkerColor(kBlack);
+//     PbPb_measured_fine[1][i]->SetAxisRange(1e-1,1e7,"Y");
+//cout<<" set axis range for hRatioNowPAS"<<endl;
+ //   hRatioNowPAS[1][i]->SetAxisRange(100,300,"X");
+//    cout<<"draw ratio blank"<<endl;
     hRatioBlank->Draw();
-    hRatioNowPas[i]->Draw("ap,same");
-//    PbPb_measured_fine[i]->Draw();
+//    cout<<"draw ratio now pas plot for i:"<<i<<endl;
+    hRatioNowPAS[1][i]->Draw("same");
+//    PbPb_measured_fine[1][i]->Draw();
     
     //PASPbPb_measured[i]->Scale(1./4);
 //     PASPbPb_measured[i]->SetMarkerStyle(33);
 //     PASPbPb_measured[i]->SetMarkerColor(kGreen);
 //     PASPbPb_measured[i]->Draw("same");
-
+    lineRAA->Draw();
     drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.75,0.8,20);
   }
 
   cPbPb_sigmaRatio->cd(1);
-  TLegend *PbPb_sigma = myLegend(0.25,0.7,0.5,0.9);
-  PbPb_sigma->AddEntry(PbPb_measured[1][0],"13-005 Letest Jet ID cut","pl");
-  PbPb_sigma->AddEntry(PASPbPb_measured[0],"12-004 (trkMax/jtpt > 0.01) *(145/129)","pl");
-  PbPb_sigma->SetTextSize(0.04);
-  PbPb_sigma->Draw();
+//  TLegend *PbPb_sigmaRatio = myLegend(0.25,0.7,0.5,0.9);
+//  PbPb_sigmaRatio->AddEntry(PbPb_measured[1][0],"13-005 Letest Jet ID cut","pl");
+// PbPb_sigmaRatio->AddEntry(PASPbPb_measured[0],"12-004 (trkMax/jtpt > 0.01) *(145/129)","pl");
+//  PbPb_sigmaRatio->SetTextSize(0.04);
+//  PbPb_sigmaRatio->Draw();
 
   putCMSPrel();
   cPbPb_sigmaRatio->cd(2);
@@ -1917,11 +1921,48 @@ void RAA_NEWcomparisonwithPAS(char *algo = "Pu", char *jet_type = "PF", char * e
   //cPbPb_sigmaRatio->cd(3);
   drawText("Trig Combined with MinBias subtracted",0.11,0.15,16);
 
-  cPbPb_sigmaRatio->SaveAs(Form("May28_MBnoJet80Cut/PbPb_spectra_newComparingwithPAS_ak%s3%s_%d.pdf",algo,jet_type,date.GetDate()),"RECREATE");
-  cPbPb_sigmaRatio->SaveAs(Form("May28_MBnoJet80Cut/PbPb_spectra_newComparingwithPAS_ak%s3%s_%d.C",algo,jet_type,date.GetDate()),"RECREATE");
-  cPbPb_sigmaRatio->SaveAs(Form("May28_MBnoJet80Cut/PbPb_spectra_newComparingwithPAS_ak%s3%s_%d.root",algo,jet_type,date.GetDate()),"RECREATE");
+  cPbPb_sigmaRatio->SaveAs(Form("Plots/PbPb_spectra_newComparingwithPAS_ratio_ak%s3%s_%d.pdf",algo,jet_type,date.GetDate()),"RECREATE");
+  cPbPb_sigmaRatio->SaveAs(Form("Plots/PbPb_spectra_newComparingwithPAS_ratio_ak%s3%s_%d.C",algo,jet_type,date.GetDate()),"RECREATE");
+  cPbPb_sigmaRatio->SaveAs(Form("Plots/PbPb_spectra_newComparingwithPAS_ratio_ak%s3%s_%d.root",algo,jet_type,date.GetDate()),"RECREATE");
+  
+// PP ratio next
+  TCanvas *cPP_sigmaRatio = new TCanvas("cPP_sigmaRatio","PP inclusive jet invariant cross section ratio",600,400);
+//  cPP_sigmaRatio->SetLogy();
+//  cPP_sigmaRatio->SetLogx();
 
-#endif
+  PP_measured_fine[1]->SetMarkerStyle(20);
+  PP_measured_fine[1]->SetMarkerColor(kBlack);
+  PP_measured_fine[1]->SetTitle(" ");
+  PP_measured_fine[1]->SetXTitle("Jet p_{T} (GeV/c)");
+  PP_measured_fine[1]->SetYTitle("arbitrary units");
+//  PP_measured_fine[1]->SetAxisRange(100,400,"X");
+//  PP_measured_fine[1]->SetAxisRange(1,1e9,"Y");
+//  PP_measured_fine[1]->Draw();
+
+       
+//  PASPP_measured->Scale(5300./212.);
+  PASPP_measured->SetMarkerColor(kGreen);
+  PASPP_measured->SetMarkerStyle(33);
+  
+      hRatioNowPAS_PP[1] = static_cast<TH1F*>(PP_measured_fine[1]->Clone("hRatioNowPAS_PP"));
+       hRatioNowPAS_PP[1]->Divide(static_cast<TH1F*>(PASPP_measured));  
+       
+  hRatioBlank->GetYaxis()->SetTitle("HIN-13-005/HIN-12-004*(5300/212)");     
+  hRatioBlank->Draw();
+  lineRAA->Draw();
+  hRatioNowPAS_PP[1]->GetYaxis()->SetTitle("HIN-13-005/HIN-12-004*(5300/212)");  
+   hRatioNowPAS_PP[1]->Draw("same");
+ // PASPP_measured->Draw("same");
+
+  putCMSPrel(0.1,0.9,0.04);
+  putPPLumi(0.1, 0.37,0.04);
+  drawText(Form("Anti-k_{T} %s Jets R=0.3",jet_type),0.2,0.23,16);
+  drawText("|#eta|<2, |vz|<15",0.2,0.30,16);
+  drawText("measured spectra",0.2,0.16,16);
+  
+  cPP_sigmaRatio->SaveAs(Form("Plots/PP_spectra_ratio_newComparingwithPAS_ak3%s_%d.pdf",jet_type,date.GetDate()),"RECREATE");
+  cPP_sigmaRatio->SaveAs(Form("Plots/PP_spectra_ratio_newComparingwithPAS_ak3%s_%d.C",jet_type,date.GetDate()),"RECREATE");
+  cPP_sigmaRatio->SaveAs(Form("Plots/PP_spectra_ratio_newComparingwithPAS_ak3%s_%d.root",jet_type,date.GetDate()),"RECREATE");
   //
   timer.Stop();
   cout<<" Total time taken CPU = "<<timer.CpuTime()<<endl;
