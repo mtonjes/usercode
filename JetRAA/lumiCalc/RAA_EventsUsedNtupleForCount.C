@@ -90,7 +90,8 @@ void RAA_EventsUsedNtupleForCount(char* etaWidth = (char*)"20_eta_20",
   Int_t Short=0;
   long TestEntries=100000;
   long entries;
-  
+// CMSSW/FWCore/PythonUtilities/python/LumiList.py  NOPE
+// python CMSSW_5_3_20/src/FWCore/PythonUtilities/scripts/csv2json.py PartialCSV_Pawan.txt  YES
   TH1::SetDefaultSumw2();
   
   // the cut is a 3 step cut based on the different value of the calopt/pfpt - copy the following lines into your loop (with the corresponding branch address set)
@@ -368,13 +369,13 @@ Int_t run_1, evt_1, lumi_1;
        matched=-999;
   	 for(int ieid=0;ieid<(eidnow+1);ieid++){
   	   if(matched==1){ 
-//  	      cout<<"breaking out of loop at ieid: "<<ieid<<", eidnow: "<<eidnow<<" due to matched: "<<matched<<", at entry: "<<nentry<<endl; 
+//  	      cout<<"matched=1 at the start of my loop, so I am breaking out of loop at ieid: "<<ieid<<", eidnow: "<<eidnow<<" due to matched: "<<matched<<", at entry: "<<nentry<<endl; 
   	      continue; 
   	   }
 //  	   cout<<"looping at ieid: "<<ieid<<", eidnow: "<<eidnow<<endl;
 	   if(run_1==run[ieid] && lumi_1==lumi[ieid]){
 	    matched=1;
-//	    cout<<"I found a matched="<<matched<<" with run[ieid]: "<<run[ieid]<<" && lumi[ieid]:"<<lumi[ieid]<<" for run: "<<run_1<<", lumi: "<<lumi_1<<endl;
+//	    cout<<"I found a matched="<<matched<<" with run[ieid]: "<<run[ieid]<<" && lumi[ieid]:"<<lumi[ieid]<<" for run: "<<run_1<<", lumi: "<<lumi_1<<", ieid: "<<ideid<<endl;
 	   } else {
 //	    cout<<"unmatched: run, lumi: "<<run_1<<", "<<lumi_1<<", eidnow: "<<eidnow<<", ieid: "<<ieid<<", at entry: "<<nentry<<endl;
         matched=0;
@@ -383,7 +384,8 @@ Int_t run_1, evt_1, lumi_1;
 	 if(matched==0){
 	     run[eidnow]=run_1;
 	     lumi[eidnow]=lumi_1;
-	     cout<<"\""<<run[eidnow]<<"\":"<<" [["<<lumi[eidnow]<<","<<lumi[eidnow]<<"]], "<<endl;	     
+//	     cout<<"\""<<run[eidnow]<<"\":"<<" [["<<lumi[eidnow]<<","<<lumi[eidnow]<<"]], "<<endl;	
+          cout<<run[eidnow]<<","<<lumi[eidnow]<<endl;     
 //	     cout<<"unique run&&lumi: run of "<<run_1<<" should = "<<run[eidnow]<<", lumi:"<<lumi_1<<" should equal: "<<lumi[eidnow]<<", eidnow: "<<eidnow<<", at entry: "<<nentry<<endl;
 	     eidnow++; 
     } 
@@ -431,7 +433,8 @@ Int_t run_1, evt_1, lumi_1;
 	 if(matched==0){
 	     run[eidnow]=run_1;
 	     lumi[eidnow]=lumi_1;
-	     cout<<"\""<<run[eidnow]<<"\":"<<" [["<<lumi[eidnow]<<","<<lumi[eidnow]<<"]], "<<endl;	     
+//	     cout<<"\""<<run[eidnow]<<"\":"<<" [["<<lumi[eidnow]<<","<<lumi[eidnow]<<"]], "<<endl;	
+	     cout<<run[eidnow]<<","<<lumi[eidnow]<<endl;        
 //	     cout<<"unique run&&lumi: run of "<<run_1<<" should = "<<run[eidnow]<<", lumi:"<<lumi_1<<" should equal: "<<lumi[eidnow]<<", eidnow: "<<eidnow<<", at entry: "<<nentry<<endl;
 	     eidnow++; 
     } 
