@@ -1,0 +1,30 @@
+CRAB at MIT:
+cd $CMSSW_BASE/src
+cmsenv
+source /cvmfs/cms.cern.ch/crab/crab.sh
+voms-proxy-init --valid 168:00 -voms cms
+source /cvmfs/grid.cern.ch/emi-wn-3.7.3-1_sl6v2/etc/profile.d/setup-emi3-wn-example.sh
+
+My aliases for that are:
+source_CRAB
+getProxy
+source_glite
+---------------------------
+Build on this tag:
+JetRAA_DataForest_v1_jet55or65or80
+------------------------------
+Make working area:
+
+cmsrel CMSSW_5_3_20
+cd CMSSW_5_3_20/src
+cmsenv
+git cms-merge-topic -u CmsHI:JetRAA_DataForest_v1_jet55or65or80
+scram build -j20
+
+cd $CMSSW_BASE/src/
+*** Get Marguerite's modified cff HiReRecoJets_HI_MatchEqR_cff.py
+cp HiForestProduction/JetRAA_PYTHIA_HYJDET/HeavyIonsAnalysis/JetAnalysis/python/jets/HiReRecoJets_HI_MatchEqR_cff.py HeavyIonsAnalysis/JetAnalysis/python/jets/.
+scramv1 b
+
+*** Get Marguerite's modified .py and run that:
+HiForestProduction/JetRAA_PYTHIA_HYJDET/runForestAndPF_PbPb_MIX_MatchEqR_53X_clusterCut.py
