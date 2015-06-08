@@ -73,7 +73,7 @@ static const double boundaries_pt[nbins_pt+1] = {  3, 4, 5, 7, 9, 12, 15, 18, 21
 using namespace std;
 
 
-void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
+void RAA_read_jetIDVariables_trkMax(char* etaWidth = (char*)"20_eta_20",
 				  Int_t radius = 3,
 				  Int_t etaLow = 20,
 				  Int_t etaHigh = 20)
@@ -87,7 +87,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   cout<<"Radius = "<<radius<<endl;
 
   Float_t pfptmin=30;
-
+  Float_t trMaxCut=0.01; 
+  
   Int_t Short=0;
   long TestEntries=10000;
   long entries;
@@ -705,6 +706,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   Float_t trMax_1[1000], trMax_2[1000];
   Float_t eSum_1[1000], eSum_2[1000];  
   Float_t chSum_1[1000], chSum_2[1000];
+//  Float_t trSum_1[1000], trSum_2[1000];
   Float_t phSum_1[1000], phSum_2[1000];
   Float_t neSum_1[1000], neSum_2[1000];
   Float_t muSum_1[1000], muSum_2[1000];
@@ -927,7 +929,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hData_Jet55_noCut->Fill(pfpt_1[g], Jet55_prescl* wght);
 	  hpbpb_Data_Jet55_noCut[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 
-	  if(calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
 	    hData_Jet55_CutA->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl* wght);
@@ -942,13 +944,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_chSumJtpt_jet55_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
+  //           hData_trSumJtpt_jet55_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_eSumJtpt_jet55_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
         }
 	  }
-	  if(calopt_1[g]/pfpt_1[g] > 0.85){
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] > 0.85){
 	    hData_Jet55_CutA->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl* wght);
@@ -963,13 +966,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_chSumJtpt_jet55_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
+//             hData_trSumJtpt_jet55_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_eSumJtpt_jet55_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
         }	    
 	  }
-	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
 	    hData_Jet55_CutA->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl* wght);
@@ -984,6 +988,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_chSumJtpt_jet55_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
+//             hData_trSumJtpt_jet55_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_eSumJtpt_jet55_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
@@ -1000,6 +1005,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet55_rej[cBin]->Fill(phMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muMaxJtpt_jet55_rej[cBin]->Fill(muMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_chSumJtpt_jet55_rej[cBin]->Fill(chSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
+ //            hData_trSumJtpt_jet55_rej[cBin]->Fill(trSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_eSumJtpt_jet55_rej[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_rej[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
@@ -1016,6 +1022,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet55_rej[cBin]->Fill(phMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muMaxJtpt_jet55_rej[cBin]->Fill(muMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_chSumJtpt_jet55_rej[cBin]->Fill(chSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
+//             hData_trSumJtpt_jet55_rej[cBin]->Fill(trSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_eSumJtpt_jet55_rej[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_rej[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
@@ -1030,7 +1037,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hData_Jet65_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet65_noCut[cBin]->Fill(pfpt_1[g], wght);
 	    
-	  if(calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)){
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)){
 	    hData_Jet65_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
@@ -1045,13 +1052,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet65_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+ //            hData_trSumJtpt_jet65_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet65_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(calopt_1[g]/pfpt_1[g] > 0.85) {
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] > 0.85) {
 	    hData_Jet65_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1066,13 +1074,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet65_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+ //            hData_trSumJtpt_jet65_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet65_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
 	    hData_Jet65_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1087,6 +1096,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet65_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+ //            hData_trSumJtpt_jet65_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet65_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1129,7 +1139,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     
 	  hData_Jet80_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet80_noCut[cBin]->Fill(pfpt_1[g], wght);   
-	  if(calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
 	    hData_Jet80_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1144,13 +1154,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet80_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+  //           hData_trSumJtpt_jet80_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet80_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(calopt_1[g]/pfpt_1[g] > 0.85){
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] > 0.85){
 	    hData_Jet80_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1165,13 +1176,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet80_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+//             hData_trSumJtpt_jet80_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet80_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05){
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05){
 	    hData_Jet80_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1186,6 +1198,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet80_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+//             hData_trSumJtpt_jet80_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet80_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1202,6 +1215,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet80_rej[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet80_rej[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet80_rej[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+//             hData_trSumJtpt_jet80_rej[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet80_rej[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet80_rej[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1218,6 +1232,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet80_rej[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet80_rej[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet80_rej[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+ //            hData_trSumJtpt_jet80_rej[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet80_rej[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet80_rej[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1235,7 +1250,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hData_unmatched_Jet55_noCut->Fill(pfpt_1[g], Jet55_prescl*wght);
 	  hpbpb_Data_Jet55_noCut[cBin]->Fill(pfpt_1[g], Jet55_prescl*wght);
 
-	  if(eMax_1[g]/Sumcand < 0.05 ){
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && eMax_1[g]/Sumcand < 0.05 ){
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl*wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl*wght);
 	    hpbpb_anaBin_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl*wght);
@@ -1250,6 +1265,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_chSumJtpt_jet55_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
+ //            hData_trSumJtpt_jet55_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_eSumJtpt_jet55_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
@@ -1266,6 +1282,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet55_rej[cBin]->Fill(phMax_1[g]/pfpt_1[g]);
              hData_muMaxJtpt_jet55_rej[cBin]->Fill(muMax_1[g]/pfpt_1[g]);
              hData_chSumJtpt_jet55_rej[cBin]->Fill(chSum_1[g]/pfpt_1[g]);
+//             hData_trSumJtpt_jet55_rej[cBin]->Fill(trSum_1[g]/pfpt_1[g]);
              hData_eSumJtpt_jet55_rej[cBin]->Fill(eSum_1[g]/pfpt_1[g]);
              hData_neSumJtpt_jet55_rej[cBin]->Fill(neSum_1[g]/pfpt_1[g]);
              hData_phSumJtpt_jet55_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g]);
@@ -1279,7 +1296,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hData_unmatched_Jet65_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet65_noCut[cBin]->Fill(pfpt_1[g], wght);
 
-	  if(eMax_1[g]/Sumcand < 0.05  ){
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && eMax_1[g]/Sumcand < 0.05  ){
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfrawpt_1[g], wght);
 	    hpbpb_anaBin_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
@@ -1294,6 +1311,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet65_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+//             hData_trSumJtpt_jet65_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet65_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1310,6 +1328,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet65_rej[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet65_rej[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet65_rej[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+ //            hData_trSumJtpt_jet65_rej[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet65_rej[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet65_rej[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1323,7 +1342,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hData_unmatched_Jet80_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet80_noCut[cBin]->Fill(pfpt_1[g], wght);
 
-	  if(eMax_1[g]/Sumcand < 0.05  ){
+	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && eMax_1[g]/Sumcand < 0.05  ){
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
 	    hpbpb_anaBin_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
@@ -1338,6 +1357,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet80_keep[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+//             hData_trSumJtpt_jet80_keep[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet80_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1354,6 +1374,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_phMaxJtpt_jet80_rej[cBin]->Fill(phMax_1[g]/pfpt_1[g], wght);
              hData_muMaxJtpt_jet80_rej[cBin]->Fill(muMax_1[g]/pfpt_1[g], wght);
              hData_chSumJtpt_jet80_rej[cBin]->Fill(chSum_1[g]/pfpt_1[g], wght);
+//             hData_trSumJtpt_jet80_rej[cBin]->Fill(trSum_1[g]/pfpt_1[g], wght);
              hData_eSumJtpt_jet80_rej[cBin]->Fill(eSum_1[g]/pfpt_1[g], wght);
              hData_neSumJtpt_jet80_rej[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
@@ -1481,19 +1502,19 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 
       if(isCaloMatch_2[g] == 1){
     
-	if(calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
+	if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
 	
 	}
-	if(calopt_2[g]/pfpt_2[g] > 0.85) {
+	if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
 	
 	}
-	if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
@@ -1507,7 +1528,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hMC_Jet55_noCut->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_MC_Jet55_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 
-	  if(calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
 	    hMC_Jet55_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1534,13 +1555,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g],weight);
              hMC_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g],weight);
              hMC_chSumJtpt_jet55_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g],weight);
+ //            hMC_trSumJtpt_jet55_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g],weight);
              hMC_eSumJtpt_jet55_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g],weight);
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
              hMC_muSumJtpt_jet55_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g],weight); 
     }	    
 	  }
-	  if(calopt_2[g]/pfpt_2[g] > 0.85) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	    hMC_Jet55_CutA->Fill(pfrefpt_2[refid], weight);
 	
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1567,6 +1589,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g],weight);
              hMC_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g],weight);
              hMC_chSumJtpt_jet55_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g],weight);
+ //            hMC_trSumJtpt_jet55_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g],weight);
              hMC_eSumJtpt_jet55_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g],weight);
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
@@ -1574,7 +1597,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     }
 	
 	  }
-	  if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	    hMC_Jet55_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1601,6 +1624,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g],weight);
              hMC_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g],weight);
              hMC_chSumJtpt_jet55_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g],weight);
+//             hMC_trSumJtpt_jet55_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g],weight);
              hMC_eSumJtpt_jet55_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g],weight);
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
@@ -1618,6 +1642,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet55_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g],weight);
              hMC_muMaxJtpt_jet55_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g],weight);
              hMC_chSumJtpt_jet55_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g],weight);
+//             hMC_trSumJtpt_jet55_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g],weight);
              hMC_eSumJtpt_jet55_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g],weight);
              hMC_neSumJtpt_jet55_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_rej[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
@@ -1634,6 +1659,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet55_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g],weight);
              hMC_muMaxJtpt_jet55_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g],weight);
              hMC_chSumJtpt_jet55_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g],weight);
+//             hMC_trSumJtpt_jet55_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g],weight);
              hMC_eSumJtpt_jet55_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g],weight);
              hMC_neSumJtpt_jet55_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_rej[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
@@ -1647,7 +1673,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hMC_Jet65_noCut->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_MC_Jet65_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 
-	  if(calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
 	    hMC_Jet65_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1674,13 +1700,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet65_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet65_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet65_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	
 	  }
-	  if(calopt_2[g]/pfpt_2[g] > 0.85) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	    hMC_Jet65_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1707,13 +1734,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet65_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+//             hMC_trSumJtpt_jet65_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet65_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	
 	  }
-	  if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	    hMC_Jet65_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1740,6 +1768,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet65_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet65_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet65_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -1757,6 +1786,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet65_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet65_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet65_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet65_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet65_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet65_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_rej[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -1772,6 +1802,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neMaxJtpt_jet65_rej[cBin]->Fill(neMax_2[g]/pfpt_2[g], weight);
              hMC_phMaxJtpt_jet65_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet65_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
+  //           hMC_trSumJtpt_jet65_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet65_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet65_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet65_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
@@ -1788,7 +1819,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hMC_Jet80_noCut->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_MC_Jet80_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
  
-	  if(calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
 	    hMC_Jet80_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1814,6 +1845,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neMaxJtpt_jet80_keep[cBin]->Fill(neMax_2[g]/pfpt_2[g], weight);
              hMC_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet80_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet80_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet80_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
@@ -1821,7 +1853,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	
 	  }
-	  if(calopt_2[g]/pfpt_2[g] > 0.85) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	    hMC_Jet80_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1849,13 +1881,14 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet80_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet80_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet80_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }
 	  }
-	  if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	    hMC_Jet80_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1883,6 +1916,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet80_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+  //           hMC_trSumJtpt_jet80_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet80_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -1900,6 +1934,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet80_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet80_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet80_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet80_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet80_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet80_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_rej[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -1916,6 +1951,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet80_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet80_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet80_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+//             hMC_trSumJtpt_jet80_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet80_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet80_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_rej[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -1941,7 +1977,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	if(jet55_2 == 1 && jet65_2==0 && jet80_2 == 0){
 	  hpbpb_MC_Jet55_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 	  hMC_unmatched_Jet55_noCut->Fill(pfrefpt_2[refid], weight);
-	  if(eMax_2[g]/Sumcand < 0.05  ){
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && eMax_2[g]/Sumcand < 0.05  ){
 
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	    hpbpb_Jet55_GenSmear[cBin]->Fill(pfrefpt_2[refid] + rnd.Gaus(0,1), weight);
@@ -1967,6 +2003,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet55_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g],weight);
              hMC_muMaxJtpt_jet55_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g],weight);
              hMC_chSumJtpt_jet55_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g],weight);
+//             hMC_trSumJtpt_jet55_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g],weight);
              hMC_eSumJtpt_jet55_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g],weight);
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
@@ -1998,7 +2035,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	if(jet65_2 == 1 && jet80_2 == 0){
 	  hpbpb_MC_Jet65_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 	  hMC_unmatched_Jet65_noCut->Fill(pfrefpt_2[refid], weight);
-	  if(eMax_2[g]/Sumcand < 0.05  ){
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && eMax_2[g]/Sumcand < 0.05  ){
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	    hpbpb_Jet65_GenSmear[cBin]->Fill(pfrefpt_2[refid] + rnd.Gaus(0,1), weight);
@@ -2024,6 +2061,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet65_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet65_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet65_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet65_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet65_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -2040,6 +2078,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet65_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet65_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet65_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet65_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet65_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet65_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_rej[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -2052,7 +2091,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	if(jet80_2 == 1){
 	  hpbpb_MC_Jet80_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 	  hMC_unmatched_Jet80_noCut->Fill(pfrefpt_2[refid], weight);
-	  if(eMax_2[g]/Sumcand < 0.05  ){
+	  if(trMax_2[g]/pfpt_2[g]>trMaxCut && eMax_2[g]/Sumcand < 0.05  ){
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	    hpbpb_Jet80_GenSmear[cBin]->Fill(pfrefpt_2[refid] + rnd.Gaus(0,1), weight);
@@ -2078,6 +2117,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet80_keep[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet80_keep[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet80_keep[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+//             hMC_trSumJtpt_jet80_keep[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet80_keep[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -2093,6 +2133,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_phMaxJtpt_jet80_rej[cBin]->Fill(phMax_2[g]/pfpt_2[g], weight);
              hMC_muMaxJtpt_jet80_rej[cBin]->Fill(muMax_2[g]/pfpt_2[g], weight);
              hMC_chSumJtpt_jet80_rej[cBin]->Fill(chSum_2[g]/pfpt_2[g], weight);
+ //            hMC_trSumJtpt_jet80_rej[cBin]->Fill(trSum_2[g]/pfpt_2[g], weight);
              hMC_eSumJtpt_jet80_rej[cBin]->Fill(eSum_2[g]/pfpt_2[g], weight);
              hMC_neSumJtpt_jet80_rej[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_rej[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
@@ -2229,7 +2270,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   }
 #endif
 
-  TFile fout(Form("%s_TTree_PbPb_Data_MC_subid0_spectra_JetID_CutA_finebins_%s_R0p%d_test.root",ntuple,etaWidth,radius),"RECREATE");
+  TFile fout(Form("%s_TTree_PbPb_Data_MC_subid0_spectra_JetID_CutA_finebins_%s_R0p%d_trkMaxJtptGt1percent.root",ntuple,etaWidth,radius),"RECREATE");
   fout.cd();
   
   for(int i = 0;i<nbins_cent;++i){
@@ -2725,7 +2766,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   hData_Jet80_CutA_eff->SetAxisRange(0.85,1.1,"Y");
   hData_Jet80_CutA_eff->SetXTitle(Form("akPu%dPF p_{T}",radius));
   hData_Jet80_CutA_eff->SetTitle("Data");
-  hData_Jet80_CutA_eff->SetYTitle("Jet80_Cut efficiency");
+  hData_Jet80_CutA_eff->SetYTitle("Jet80_Cut efficiency (and trkMax/jtpt>0.01)");
   hData_Jet80_CutA_eff->Draw();
   // hData_Jet80_CutB_eff->Rebin(20);
   // hData_Jet80_CutB_eff->Scale(1./20);
@@ -2743,7 +2784,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   hMC_Jet80_CutA_eff->SetAxisRange(0.85,1.1,"Y");
   hMC_Jet80_CutA_eff->SetXTitle(Form("akPu%dPF ref p_{T}",radius));
   hMC_Jet80_CutA_eff->SetTitle("MC");
-  hMC_Jet80_CutA_eff->SetYTitle("Jet80_Cut efficiency");
+  hMC_Jet80_CutA_eff->SetYTitle("Jet80_Cut efficiency (and trkMax/jtpt>0.01)");
   hMC_Jet80_CutA_eff->Draw();
   // hMC_Jet80_CutB_eff->Rebin(20);
   // hMC_Jet80_CutB_eff->Scale(1./20);
@@ -2752,7 +2793,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   // hMC_Jet80_CutB_eff->SetAxisRange(30,300,"X");
   // hMC_Jet80_CutB_eff->Draw("same");
 
-  cJet80_CutEfficiency_Jet80->SaveAs(Form("Plots/PbPb_YetkinCuts_Jet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_R0p%d_zoomed.pdf",radius),"RECREATE");
+  cJet80_CutEfficiency_Jet80->SaveAs(Form("Plots_trMaxJtptGt1percent/PbPb_YetkinCuts_Jet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_R0p%d_zoomed.pdf",radius),"RECREATE");
 
   // TCanvas * cCutRejection_Jet80 = new TCanvas("cCutRejection_Jet80","",1000,800);
 
@@ -2787,7 +2828,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   hData_Jet55_CutA_eff->SetAxisRange(0.85,1.1,"Y");
   hData_Jet55_CutA_eff->SetXTitle(Form("akPu%dPF p_{T}",radius));
   hData_Jet55_CutA_eff->SetTitle("Data");
-  hData_Jet55_CutA_eff->SetYTitle("Jet55_Cut efficiency");
+  hData_Jet55_CutA_eff->SetYTitle("Jet55_Cut efficiency (and trkMax/jtpt>0.01)");
   hData_Jet55_CutA_eff->Draw();
   // hData_Jet55_CutB_eff->Rebin(20);
   // hData_Jet55_CutB_eff->Scale(1./20);
@@ -2806,7 +2847,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   hMC_Jet55_CutA_eff->SetAxisRange(0.85,1.1,"Y");
   hMC_Jet55_CutA_eff->SetXTitle(Form("akPu%dPF ref p_{T}",radius));
   hMC_Jet55_CutA_eff->SetTitle("MC");
-  hMC_Jet55_CutA_eff->SetYTitle("Jet55_Cut efficiency");
+  hMC_Jet55_CutA_eff->SetYTitle("Jet55_Cut efficiency (and trkMax/jtpt>0.01)");
   hMC_Jet55_CutA_eff->Draw();
   // hMC_Jet55_CutB_eff->Rebin(20);
   // hMC_Jet55_CutB_eff->Scale(1./20);
@@ -2815,7 +2856,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   // hMC_Jet55_CutB_eff->SetAxisRange(30,300,"X");
   // hMC_Jet55_CutB_eff->Draw("same");
 
-  cJet55_CutEfficiency_Jet55->SaveAs(Form("Plots/PbPb_YetkinCuts_Jet55_noJet65noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius),"RECREATE");
+  cJet55_CutEfficiency_Jet55->SaveAs(Form("Plots_trMaxJtptGt1percent/PbPb_YetkinCuts_Jet55_noJet65noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius),"RECREATE");
 
   // TCanvas * cCutRejection_Jet55 = new TCanvas("cCutRejection_Jet55","",1000,800);
 
@@ -2850,7 +2891,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   hData_Jet65_CutA_eff->SetAxisRange(0.85,1.1,"Y");
   hData_Jet65_CutA_eff->SetXTitle(Form("matched akPu%dPF p_{T}",radius));
   hData_Jet65_CutA_eff->SetTitle("Data");
-  hData_Jet65_CutA_eff->SetYTitle("Jet65_Cut efficiency");
+  hData_Jet65_CutA_eff->SetYTitle("Jet65_Cut efficiency (and trkMax/jtpt>0.01)");
   hData_Jet65_CutA_eff->Draw();
   // hData_Jet65_CutB_eff->Rebin(20);
   // hData_Jet65_CutB_eff->Scale(1./20);
@@ -2868,7 +2909,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   hMC_Jet65_CutA_eff->SetAxisRange(0.85,1.1,"Y");
   hMC_Jet65_CutA_eff->SetXTitle(Form("matched akPu%dPF ref p_{T}",radius));
   hMC_Jet65_CutA_eff->SetTitle("MC");
-  hMC_Jet65_CutA_eff->SetYTitle("Jet65_Cut efficiency");
+  hMC_Jet65_CutA_eff->SetYTitle("Jet65_Cut efficiency (and trkMax/jtpt>0.01)");
   hMC_Jet65_CutA_eff->Draw();
   // hMC_Jet65_CutB_eff->Rebin(20);
   // hMC_Jet65_CutB_eff->Scale(1./20);
@@ -2877,7 +2918,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   // hMC_Jet65_CutB_eff->SetAxisRange(30,300,"X");
   // hMC_Jet65_CutB_eff->Draw("same");
 
-  cJet65_CutEfficiency_Jet65->SaveAs(Form("Plots/PbPb_YetkinCuts_Jet65_noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius),"RECREATE");
+  cJet65_CutEfficiency_Jet65->SaveAs(Form("Plots_trMaxJtptGt1percent/PbPb_YetkinCuts_Jet65_noJet80_eMaxSumcand_A_chMaxJtpt_calopfpt_Eff_including_unmatched_R0p%d_zoomed.pdf",radius),"RECREATE");
 
   // TCanvas * cCutRejection_Jet65 = new TCanvas("cCutRejection_Jet65","",1000,800);
 
@@ -2943,17 +2984,17 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 
   hMC_noCut_Combined->Print("base");
   
-  TH1F * hData_Combined_Efficiency = (TH1F*)hData_Combined->Clone("hData_Combined_Efficiency");
+  TH1F * hData_Combined_Efficiency = (TH1F*)hData_Combined->Clone("hData_Combined_efficiency (and trkMax/jtpt>0.01)");
   hData_Combined_Efficiency->Divide(hData_noCut_Combined);
   hData_Combined_Efficiency->Print("base");
   
-  TH1F * hMC_Combined_Efficiency = (TH1F*)hMC_Combined->Clone("hMC_Combined_Efficiency");
+  TH1F * hMC_Combined_Efficiency = (TH1F*)hMC_Combined->Clone("hMC_Combined_efficiency (and trkMax/jtpt>0.01)");
   hMC_Combined_Efficiency->Divide(hMC_noCut_Combined);
   hMC_Combined_Efficiency->Print("base");
   
   TCanvas * cCombinedEff = new TCanvas("cCombinedEff","",800,600);
   hData_Combined_Efficiency->SetXTitle("Jet p_{T}");
-  hData_Combined_Efficiency->SetYTitle("Combined Jet ID cut efficiency");
+  hData_Combined_Efficiency->SetYTitle("Combined Jet ID cut efficiency (and trkMax/jtpt>0.01)");
   hData_Combined_Efficiency->SetMarkerStyle(20);
   hData_Combined_Efficiency->SetMarkerColor(kBlack);
   hData_Combined_Efficiency->Rebin(10);
@@ -2967,7 +3008,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   hMC_Combined_Efficiency->Scale(1/10);
   hMC_Combined_Efficiency->Draw("same");
 
-  cCombinedEff->SaveAs(Form("Plots/Combined_trigger_efficiency_YetkinCut_R0p%d.pdf",radius),"RECREATE");
+  cCombinedEff->SaveAs(Form("Plots_trMaxJtptGt1percent/Combined_trigger_efficiency_YetkinCut_R0p%d.pdf",radius),"RECREATE");
   
   TCanvas * cTriggerCombination = new TCanvas("cTriggerCombination","",800,600);
   cTriggerCombination->SetLogy();
@@ -2992,7 +3033,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 
   //drawText()
 
-  cTriggerCombination->SaveAs(Form("Plots/TriggerCombination_YetkinCuts_R0p%d.pdf",radius),"RECREATE");
+  cTriggerCombination->SaveAs(Form("Plots_trMaxJtptGt1percent/TriggerCombination_YetkinCuts_R0p%d.pdf",radius),"RECREATE");
 //#if 0
   TCanvas * cchMaxJtpt_jet55_keep[nbins_cent];
   
@@ -3004,7 +3045,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_chMaxJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_chMaxJtpt_jet55_keep[i]->Print("base");
     hMC_chMaxJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_chMaxJtpt_jet55_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_chMaxJtpt_jet55_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_chMaxJtpt_jet55_keep[i]=hMC_chMaxJtpt_jet55_keep[i]->GetEntries();
     if (nMC_chMaxJtpt_jet55_keep[i]>0){
        hMC_chMaxJtpt_jet55_keep[i]->DrawNormalized();
@@ -3017,7 +3058,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chMaxJtpt_jet55_keep[i]<=0){
         hData_chMaxJtpt_jet55_keep[i]->Print("base");
         hData_chMaxJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet55_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_chMaxJtpt_jet55_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chMaxJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3031,7 +3072,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots/chMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   
@@ -3045,7 +3086,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_eMaxJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_eMaxJtpt_jet55_keep[i]->Print("base");
     hMC_eMaxJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_eMaxJtpt_jet55_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_eMaxJtpt_jet55_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_eMaxJtpt_jet55_keep[i]=hMC_eMaxJtpt_jet55_keep[i]->GetEntries();
     if (nMC_eMaxJtpt_jet55_keep[i]>0){
        hMC_eMaxJtpt_jet55_keep[i]->DrawNormalized();
@@ -3058,7 +3099,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eMaxJtpt_jet55_keep[i]<=0){
         hData_eMaxJtpt_jet55_keep[i]->Print("base");
         hData_eMaxJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet55_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_eMaxJtpt_jet55_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eMaxJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3072,7 +3113,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots/eMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 
@@ -3086,7 +3127,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_phMaxJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_phMaxJtpt_jet55_keep[i]->Print("base");
     hMC_phMaxJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_phMaxJtpt_jet55_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_phMaxJtpt_jet55_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_phMaxJtpt_jet55_keep[i]=hMC_phMaxJtpt_jet55_keep[i]->GetEntries();
     if (nMC_phMaxJtpt_jet55_keep[i]>0){
        hMC_phMaxJtpt_jet55_keep[i]->DrawNormalized();
@@ -3099,7 +3140,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phMaxJtpt_jet55_keep[i]<=0){
         hData_phMaxJtpt_jet55_keep[i]->Print("base");
         hData_phMaxJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet55_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_phMaxJtpt_jet55_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phMaxJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3113,7 +3154,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots/phMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet55_keep[nbins_cent];
@@ -3126,7 +3167,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_neMaxJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_neMaxJtpt_jet55_keep[i]->Print("base");
     hMC_neMaxJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_neMaxJtpt_jet55_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_neMaxJtpt_jet55_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_neMaxJtpt_jet55_keep[i]=hMC_neMaxJtpt_jet55_keep[i]->GetEntries();
     if (nMC_neMaxJtpt_jet55_keep[i]>0){
        hMC_neMaxJtpt_jet55_keep[i]->DrawNormalized();
@@ -3139,7 +3180,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neMaxJtpt_jet55_keep[i]<=0){
         hData_neMaxJtpt_jet55_keep[i]->Print("base");
         hData_neMaxJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet55_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_neMaxJtpt_jet55_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neMaxJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3153,7 +3194,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots/neMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet55_keep[nbins_cent];
@@ -3166,7 +3207,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_muMaxJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_muMaxJtpt_jet55_keep[i]->Print("base");
     hMC_muMaxJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_muMaxJtpt_jet55_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_muMaxJtpt_jet55_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_muMaxJtpt_jet55_keep[i]=hMC_muMaxJtpt_jet55_keep[i]->GetEntries();
     if (nMC_muMaxJtpt_jet55_keep[i]>0){
        hMC_muMaxJtpt_jet55_keep[i]->DrawNormalized();
@@ -3179,7 +3220,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muMaxJtpt_jet55_keep[i]<=0){
         hData_muMaxJtpt_jet55_keep[i]->Print("base");
         hData_muMaxJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet55_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_muMaxJtpt_jet55_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muMaxJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3193,7 +3234,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots/muMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -3207,7 +3248,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_chSumJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_chSumJtpt_jet55_keep[i]->Print("base");
     hMC_chSumJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_chSumJtpt_jet55_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_chSumJtpt_jet55_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_chSumJtpt_jet55_keep[i]=hMC_chSumJtpt_jet55_keep[i]->GetEntries();
     if (nMC_chSumJtpt_jet55_keep[i]>0){
        hMC_chSumJtpt_jet55_keep[i]->DrawNormalized();
@@ -3220,7 +3261,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chSumJtpt_jet55_keep[i]<=0){
         hData_chSumJtpt_jet55_keep[i]->Print("base");
         hData_chSumJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_chSumJtpt_jet55_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_chSumJtpt_jet55_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chSumJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3234,7 +3275,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet55_keep[i]->SaveAs(Form("Plots/chSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchSumJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet55_keep[nbins_cent];
@@ -3247,7 +3288,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_eSumJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_eSumJtpt_jet55_keep[i]->Print("base");
     hMC_eSumJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_eSumJtpt_jet55_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_eSumJtpt_jet55_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_eSumJtpt_jet55_keep[i]=hMC_eSumJtpt_jet55_keep[i]->GetEntries();
     if (nMC_eSumJtpt_jet55_keep[i]>0){
        hMC_eSumJtpt_jet55_keep[i]->DrawNormalized();
@@ -3260,7 +3301,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eSumJtpt_jet55_keep[i]<=0){
         hData_eSumJtpt_jet55_keep[i]->Print("base");
         hData_eSumJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_eSumJtpt_jet55_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_eSumJtpt_jet55_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eSumJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3274,7 +3315,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet55_keep[i]->SaveAs(Form("Plots/eSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceSumJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet55_keep[nbins_cent];
@@ -3287,7 +3328,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_phSumJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_phSumJtpt_jet55_keep[i]->Print("base");
     hMC_phSumJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_phSumJtpt_jet55_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_phSumJtpt_jet55_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_phSumJtpt_jet55_keep[i]=hMC_phSumJtpt_jet55_keep[i]->GetEntries();
     if (nMC_phSumJtpt_jet55_keep[i]>0){
        hMC_phSumJtpt_jet55_keep[i]->DrawNormalized();
@@ -3300,7 +3341,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phSumJtpt_jet55_keep[i]<=0){
         hData_phSumJtpt_jet55_keep[i]->Print("base");
         hData_phSumJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_phSumJtpt_jet55_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_phSumJtpt_jet55_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phSumJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3314,7 +3355,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet55_keep[i]->SaveAs(Form("Plots/phSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphSumJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet55_keep[nbins_cent];
@@ -3327,7 +3368,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_neSumJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_neSumJtpt_jet55_keep[i]->Print("base");
     hMC_neSumJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_neSumJtpt_jet55_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_neSumJtpt_jet55_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_neSumJtpt_jet55_keep[i]=hMC_neSumJtpt_jet55_keep[i]->GetEntries();
     if (nMC_neSumJtpt_jet55_keep[i]>0){
        hMC_neSumJtpt_jet55_keep[i]->DrawNormalized();
@@ -3340,7 +3381,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neSumJtpt_jet55_keep[i]<=0){
         hData_neSumJtpt_jet55_keep[i]->Print("base");
         hData_neSumJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_neSumJtpt_jet55_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_neSumJtpt_jet55_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neSumJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3354,7 +3395,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet55_keep[i]->SaveAs(Form("Plots/neSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneSumJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet55_keep[nbins_cent];
@@ -3367,7 +3408,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_muSumJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_muSumJtpt_jet55_keep[i]->Print("base");
     hMC_muSumJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_muSumJtpt_jet55_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));
+    hMC_muSumJtpt_jet55_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_muSumJtpt_jet55_keep[i]=hMC_muSumJtpt_jet55_keep[i]->GetEntries();
     if (nMC_muSumJtpt_jet55_keep[i]>0){
        hMC_muSumJtpt_jet55_keep[i]->DrawNormalized();
@@ -3380,7 +3421,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muSumJtpt_jet55_keep[i]<=0){
         hData_muSumJtpt_jet55_keep[i]->Print("base");
         hData_muSumJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_muSumJtpt_jet55_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_muSumJtpt_jet55_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muSumJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -3394,7 +3435,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet55_keep[i]->SaveAs(Form("Plots/muSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuSumJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cchMaxJtpt_jet55_rej[nbins_cent];
@@ -3420,7 +3461,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chMaxJtpt_jet55_rej[i]<=0){
         hData_chMaxJtpt_jet55_rej[i]->Print("base");
         hData_chMaxJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet55_rej[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_chMaxJtpt_jet55_rej[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chMaxJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3434,7 +3475,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots/chMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   
@@ -3461,7 +3502,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eMaxJtpt_jet55_rej[i]<=0){
         hData_eMaxJtpt_jet55_rej[i]->Print("base");
         hData_eMaxJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet55_rej[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_eMaxJtpt_jet55_rej[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eMaxJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3475,7 +3516,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots/eMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 
@@ -3502,7 +3543,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phMaxJtpt_jet55_rej[i]<=0){
         hData_phMaxJtpt_jet55_rej[i]->Print("base");
         hData_phMaxJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet55_rej[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_phMaxJtpt_jet55_rej[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phMaxJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3516,7 +3557,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots/phMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet55_rej[nbins_cent];
@@ -3542,7 +3583,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neMaxJtpt_jet55_rej[i]<=0){
         hData_neMaxJtpt_jet55_rej[i]->Print("base");
         hData_neMaxJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet55_rej[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_neMaxJtpt_jet55_rej[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neMaxJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3556,7 +3597,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots/neMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet55_rej[nbins_cent];
@@ -3582,7 +3623,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muMaxJtpt_jet55_rej[i]<=0){
         hData_muMaxJtpt_jet55_rej[i]->Print("base");
         hData_muMaxJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet55_rej[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_muMaxJtpt_jet55_rej[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muMaxJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3596,7 +3637,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots/muMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuMaxJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muMaxJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -3623,7 +3664,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chSumJtpt_jet55_rej[i]<=0){
         hData_chSumJtpt_jet55_rej[i]->Print("base");
         hData_chSumJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_chSumJtpt_jet55_rej[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_chSumJtpt_jet55_rej[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chSumJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3637,7 +3678,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet55_rej[i]->SaveAs(Form("Plots/chSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchSumJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet55_rej[nbins_cent];
@@ -3663,7 +3704,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eSumJtpt_jet55_rej[i]<=0){
         hData_eSumJtpt_jet55_rej[i]->Print("base");
         hData_eSumJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_eSumJtpt_jet55_rej[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_eSumJtpt_jet55_rej[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eSumJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3677,7 +3718,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet55_rej[i]->SaveAs(Form("Plots/eSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceSumJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet55_rej[nbins_cent];
@@ -3703,7 +3744,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phSumJtpt_jet55_rej[i]<=0){
         hData_phSumJtpt_jet55_rej[i]->Print("base");
         hData_phSumJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_phSumJtpt_jet55_rej[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_phSumJtpt_jet55_rej[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phSumJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3717,7 +3758,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet55_rej[i]->SaveAs(Form("Plots/phSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphSumJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet55_rej[nbins_cent];
@@ -3743,7 +3784,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neSumJtpt_jet55_rej[i]<=0){
         hData_neSumJtpt_jet55_rej[i]->Print("base");
         hData_neSumJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_neSumJtpt_jet55_rej[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_neSumJtpt_jet55_rej[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neSumJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3757,7 +3798,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet55_rej[i]->SaveAs(Form("Plots/neSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneSumJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet55_rej[nbins_cent];
@@ -3783,7 +3824,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muSumJtpt_jet55_rej[i]<=0){
         hData_muSumJtpt_jet55_rej[i]->Print("base");
         hData_muSumJtpt_jet55_rej[i]->SetTitle(" ");
-        hData_muSumJtpt_jet55_rej[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet55, pass CutA",radius));      
+        hData_muSumJtpt_jet55_rej[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muSumJtpt_jet55_rej[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet55_rej[i]->DrawNormalized("same");
@@ -3797,7 +3838,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet55_rej[i]->SaveAs(Form("Plots/muSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuSumJtpt_jet55_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muSumJtpt_jet55_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   } 
 //#endif
@@ -3811,7 +3852,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_chMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_chMaxJtpt_jet65_keep[i]->Print("base");
     hMC_chMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_chMaxJtpt_jet65_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_chMaxJtpt_jet65_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_chMaxJtpt_jet65_keep[i]=hMC_chMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_chMaxJtpt_jet65_keep[i]>0){
        hMC_chMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -3824,7 +3865,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chMaxJtpt_jet65_keep[i]<=0){
         hData_chMaxJtpt_jet65_keep[i]->Print("base");
         hData_chMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet65_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_chMaxJtpt_jet65_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -3838,7 +3879,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots/chMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   
@@ -3852,7 +3893,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_eMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_eMaxJtpt_jet65_keep[i]->Print("base");
     hMC_eMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_eMaxJtpt_jet65_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_eMaxJtpt_jet65_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_eMaxJtpt_jet65_keep[i]=hMC_eMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_eMaxJtpt_jet65_keep[i]>0){
        hMC_eMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -3865,7 +3906,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eMaxJtpt_jet65_keep[i]<=0){
         hData_eMaxJtpt_jet65_keep[i]->Print("base");
         hData_eMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet65_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_eMaxJtpt_jet65_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -3879,7 +3920,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots/eMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 
@@ -3893,7 +3934,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_phMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_phMaxJtpt_jet65_keep[i]->Print("base");
     hMC_phMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_phMaxJtpt_jet65_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_phMaxJtpt_jet65_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_phMaxJtpt_jet65_keep[i]=hMC_phMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_phMaxJtpt_jet65_keep[i]>0){
        hMC_phMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -3906,7 +3947,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phMaxJtpt_jet65_keep[i]<=0){
         hData_phMaxJtpt_jet65_keep[i]->Print("base");
         hData_phMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet65_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_phMaxJtpt_jet65_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -3920,7 +3961,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots/phMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet65_keep[nbins_cent];
@@ -3933,7 +3974,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_neMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_neMaxJtpt_jet65_keep[i]->Print("base");
     hMC_neMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_neMaxJtpt_jet65_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_neMaxJtpt_jet65_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_neMaxJtpt_jet65_keep[i]=hMC_neMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_neMaxJtpt_jet65_keep[i]>0){
        hMC_neMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -3946,7 +3987,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neMaxJtpt_jet65_keep[i]<=0){
         hData_neMaxJtpt_jet65_keep[i]->Print("base");
         hData_neMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet65_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_neMaxJtpt_jet65_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -3960,7 +4001,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots/neMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet65_keep[nbins_cent];
@@ -3973,7 +4014,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_muMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_muMaxJtpt_jet65_keep[i]->Print("base");
     hMC_muMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_muMaxJtpt_jet65_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_muMaxJtpt_jet65_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_muMaxJtpt_jet65_keep[i]=hMC_muMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_muMaxJtpt_jet65_keep[i]>0){
        hMC_muMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -3986,7 +4027,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muMaxJtpt_jet65_keep[i]<=0){
         hData_muMaxJtpt_jet65_keep[i]->Print("base");
         hData_muMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet65_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_muMaxJtpt_jet65_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -4000,7 +4041,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots/muMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -4014,7 +4055,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_chSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_chSumJtpt_jet65_keep[i]->Print("base");
     hMC_chSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_chSumJtpt_jet65_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_chSumJtpt_jet65_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_chSumJtpt_jet65_keep[i]=hMC_chSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_chSumJtpt_jet65_keep[i]>0){
        hMC_chSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -4027,7 +4068,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chSumJtpt_jet65_keep[i]<=0){
         hData_chSumJtpt_jet65_keep[i]->Print("base");
         hData_chSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_chSumJtpt_jet65_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_chSumJtpt_jet65_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -4041,7 +4082,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet65_keep[i]->SaveAs(Form("Plots/chSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchSumJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet65_keep[nbins_cent];
@@ -4054,7 +4095,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_eSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_eSumJtpt_jet65_keep[i]->Print("base");
     hMC_eSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_eSumJtpt_jet65_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_eSumJtpt_jet65_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_eSumJtpt_jet65_keep[i]=hMC_eSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_eSumJtpt_jet65_keep[i]>0){
        hMC_eSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -4067,7 +4108,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eSumJtpt_jet65_keep[i]<=0){
         hData_eSumJtpt_jet65_keep[i]->Print("base");
         hData_eSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_eSumJtpt_jet65_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_eSumJtpt_jet65_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -4081,7 +4122,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet65_keep[i]->SaveAs(Form("Plots/eSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceSumJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet65_keep[nbins_cent];
@@ -4094,7 +4135,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_phSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_phSumJtpt_jet65_keep[i]->Print("base");
     hMC_phSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_phSumJtpt_jet65_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_phSumJtpt_jet65_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_phSumJtpt_jet65_keep[i]=hMC_phSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_phSumJtpt_jet65_keep[i]>0){
        hMC_phSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -4107,7 +4148,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phSumJtpt_jet65_keep[i]<=0){
         hData_phSumJtpt_jet65_keep[i]->Print("base");
         hData_phSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_phSumJtpt_jet65_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_phSumJtpt_jet65_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -4121,7 +4162,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet65_keep[i]->SaveAs(Form("Plots/phSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphSumJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet65_keep[nbins_cent];
@@ -4134,7 +4175,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_neSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_neSumJtpt_jet65_keep[i]->Print("base");
     hMC_neSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_neSumJtpt_jet65_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_neSumJtpt_jet65_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_neSumJtpt_jet65_keep[i]=hMC_neSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_neSumJtpt_jet65_keep[i]>0){
        hMC_neSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -4147,7 +4188,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neSumJtpt_jet65_keep[i]<=0){
         hData_neSumJtpt_jet65_keep[i]->Print("base");
         hData_neSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_neSumJtpt_jet65_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_neSumJtpt_jet65_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -4161,7 +4202,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet65_keep[i]->SaveAs(Form("Plots/neSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneSumJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet65_keep[nbins_cent];
@@ -4174,7 +4215,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_muSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_muSumJtpt_jet65_keep[i]->Print("base");
     hMC_muSumJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_muSumJtpt_jet65_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));
+    hMC_muSumJtpt_jet65_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_muSumJtpt_jet65_keep[i]=hMC_muSumJtpt_jet65_keep[i]->GetEntries();
     if (nMC_muSumJtpt_jet65_keep[i]>0){
        hMC_muSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -4187,7 +4228,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muSumJtpt_jet65_keep[i]<=0){
         hData_muSumJtpt_jet65_keep[i]->Print("base");
         hData_muSumJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_muSumJtpt_jet65_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_muSumJtpt_jet65_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muSumJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -4201,7 +4242,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet65_keep[i]->SaveAs(Form("Plots/muSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuSumJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cchMaxJtpt_jet65_rej[nbins_cent];
@@ -4227,7 +4268,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chMaxJtpt_jet65_rej[i]<=0){
         hData_chMaxJtpt_jet65_rej[i]->Print("base");
         hData_chMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet65_rej[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_chMaxJtpt_jet65_rej[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4241,7 +4282,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots/chMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   
@@ -4268,7 +4309,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eMaxJtpt_jet65_rej[i]<=0){
         hData_eMaxJtpt_jet65_rej[i]->Print("base");
         hData_eMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet65_rej[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_eMaxJtpt_jet65_rej[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4282,7 +4323,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots/eMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 
@@ -4309,7 +4350,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phMaxJtpt_jet65_rej[i]<=0){
         hData_phMaxJtpt_jet65_rej[i]->Print("base");
         hData_phMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet65_rej[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_phMaxJtpt_jet65_rej[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4323,7 +4364,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots/phMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet65_rej[nbins_cent];
@@ -4349,7 +4390,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neMaxJtpt_jet65_rej[i]<=0){
         hData_neMaxJtpt_jet65_rej[i]->Print("base");
         hData_neMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet65_rej[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_neMaxJtpt_jet65_rej[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4363,7 +4404,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots/neMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet65_rej[nbins_cent];
@@ -4389,7 +4430,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muMaxJtpt_jet65_rej[i]<=0){
         hData_muMaxJtpt_jet65_rej[i]->Print("base");
         hData_muMaxJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet65_rej[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_muMaxJtpt_jet65_rej[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muMaxJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4403,7 +4444,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots/muMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuMaxJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muMaxJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -4430,7 +4471,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chSumJtpt_jet65_rej[i]<=0){
         hData_chSumJtpt_jet65_rej[i]->Print("base");
         hData_chSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_chSumJtpt_jet65_rej[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_chSumJtpt_jet65_rej[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4444,7 +4485,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet65_rej[i]->SaveAs(Form("Plots/chSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchSumJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet65_rej[nbins_cent];
@@ -4470,7 +4511,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eSumJtpt_jet65_rej[i]<=0){
         hData_eSumJtpt_jet65_rej[i]->Print("base");
         hData_eSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_eSumJtpt_jet65_rej[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_eSumJtpt_jet65_rej[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4484,7 +4525,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet65_rej[i]->SaveAs(Form("Plots/eSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceSumJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet65_rej[nbins_cent];
@@ -4510,7 +4551,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phSumJtpt_jet65_rej[i]<=0){
         hData_phSumJtpt_jet65_rej[i]->Print("base");
         hData_phSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_phSumJtpt_jet65_rej[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_phSumJtpt_jet65_rej[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4524,7 +4565,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet65_rej[i]->SaveAs(Form("Plots/phSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphSumJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet65_rej[nbins_cent];
@@ -4550,7 +4591,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neSumJtpt_jet65_rej[i]<=0){
         hData_neSumJtpt_jet65_rej[i]->Print("base");
         hData_neSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_neSumJtpt_jet65_rej[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_neSumJtpt_jet65_rej[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4564,7 +4605,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet65_rej[i]->SaveAs(Form("Plots/neSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneSumJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet65_rej[nbins_cent];
@@ -4590,7 +4631,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muSumJtpt_jet65_rej[i]<=0){
         hData_muSumJtpt_jet65_rej[i]->Print("base");
         hData_muSumJtpt_jet65_rej[i]->SetTitle(" ");
-        hData_muSumJtpt_jet65_rej[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet65, pass CutA",radius));      
+        hData_muSumJtpt_jet65_rej[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muSumJtpt_jet65_rej[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet65_rej[i]->DrawNormalized("same");
@@ -4604,7 +4645,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet65_rej[i]->SaveAs(Form("Plots/muSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuSumJtpt_jet65_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muSumJtpt_jet65_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }  
 
@@ -4619,7 +4660,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_chMaxJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_chMaxJtpt_jet80_keep[i]->Print("base");
     hMC_chMaxJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_chMaxJtpt_jet80_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_chMaxJtpt_jet80_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_chMaxJtpt_jet80_keep[i]=hMC_chMaxJtpt_jet80_keep[i]->GetEntries();
     if (nMC_chMaxJtpt_jet80_keep[i]>0){
        hMC_chMaxJtpt_jet80_keep[i]->DrawNormalized();
@@ -4632,7 +4673,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chMaxJtpt_jet80_keep[i]<=0){
         hData_chMaxJtpt_jet80_keep[i]->Print("base");
         hData_chMaxJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet80_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_chMaxJtpt_jet80_keep[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chMaxJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4646,7 +4687,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots/chMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   
@@ -4660,7 +4701,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_eMaxJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_eMaxJtpt_jet80_keep[i]->Print("base");
     hMC_eMaxJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_eMaxJtpt_jet80_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_eMaxJtpt_jet80_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_eMaxJtpt_jet80_keep[i]=hMC_eMaxJtpt_jet80_keep[i]->GetEntries();
     if (nMC_eMaxJtpt_jet80_keep[i]>0){
        hMC_eMaxJtpt_jet80_keep[i]->DrawNormalized();
@@ -4673,7 +4714,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eMaxJtpt_jet80_keep[i]<=0){
         hData_eMaxJtpt_jet80_keep[i]->Print("base");
         hData_eMaxJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet80_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_eMaxJtpt_jet80_keep[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eMaxJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4687,7 +4728,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots/eMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 
@@ -4701,7 +4742,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_phMaxJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_phMaxJtpt_jet80_keep[i]->Print("base");
     hMC_phMaxJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_phMaxJtpt_jet80_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_phMaxJtpt_jet80_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_phMaxJtpt_jet80_keep[i]=hMC_phMaxJtpt_jet80_keep[i]->GetEntries();
     if (nMC_phMaxJtpt_jet80_keep[i]>0){
        hMC_phMaxJtpt_jet80_keep[i]->DrawNormalized();
@@ -4714,7 +4755,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phMaxJtpt_jet80_keep[i]<=0){
         hData_phMaxJtpt_jet80_keep[i]->Print("base");
         hData_phMaxJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet80_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_phMaxJtpt_jet80_keep[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phMaxJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4728,7 +4769,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots/phMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet80_keep[nbins_cent];
@@ -4741,7 +4782,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_neMaxJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_neMaxJtpt_jet80_keep[i]->Print("base");
     hMC_neMaxJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_neMaxJtpt_jet80_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_neMaxJtpt_jet80_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_neMaxJtpt_jet80_keep[i]=hMC_neMaxJtpt_jet80_keep[i]->GetEntries();
     if (nMC_neMaxJtpt_jet80_keep[i]>0){
        hMC_neMaxJtpt_jet80_keep[i]->DrawNormalized();
@@ -4754,7 +4795,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neMaxJtpt_jet80_keep[i]<=0){
         hData_neMaxJtpt_jet80_keep[i]->Print("base");
         hData_neMaxJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet80_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_neMaxJtpt_jet80_keep[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neMaxJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4768,7 +4809,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots/neMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet80_keep[nbins_cent];
@@ -4781,7 +4822,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_muMaxJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_muMaxJtpt_jet80_keep[i]->Print("base");
     hMC_muMaxJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_muMaxJtpt_jet80_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_muMaxJtpt_jet80_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_muMaxJtpt_jet80_keep[i]=hMC_muMaxJtpt_jet80_keep[i]->GetEntries();
     if (nMC_muMaxJtpt_jet80_keep[i]>0){
        hMC_muMaxJtpt_jet80_keep[i]->DrawNormalized();
@@ -4794,7 +4835,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muMaxJtpt_jet80_keep[i]<=0){
         hData_muMaxJtpt_jet80_keep[i]->Print("base");
         hData_muMaxJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet80_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_muMaxJtpt_jet80_keep[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muMaxJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4808,7 +4849,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots/muMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuMaxJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muMaxJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -4822,7 +4863,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_chSumJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_chSumJtpt_jet80_keep[i]->Print("base");
     hMC_chSumJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_chSumJtpt_jet80_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_chSumJtpt_jet80_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_chSumJtpt_jet80_keep[i]=hMC_chSumJtpt_jet80_keep[i]->GetEntries();
     if (nMC_chSumJtpt_jet80_keep[i]>0){
        hMC_chSumJtpt_jet80_keep[i]->DrawNormalized();
@@ -4835,7 +4876,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chSumJtpt_jet80_keep[i]<=0){
         hData_chSumJtpt_jet80_keep[i]->Print("base");
         hData_chSumJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_chSumJtpt_jet80_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_chSumJtpt_jet80_keep[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chSumJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4849,7 +4890,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet80_keep[i]->SaveAs(Form("Plots/chSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchSumJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet80_keep[nbins_cent];
@@ -4862,7 +4903,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_eSumJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_eSumJtpt_jet80_keep[i]->Print("base");
     hMC_eSumJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_eSumJtpt_jet80_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_eSumJtpt_jet80_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_eSumJtpt_jet80_keep[i]=hMC_eSumJtpt_jet80_keep[i]->GetEntries();
     if (nMC_eSumJtpt_jet80_keep[i]>0){
        hMC_eSumJtpt_jet80_keep[i]->DrawNormalized();
@@ -4875,7 +4916,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eSumJtpt_jet80_keep[i]<=0){
         hData_eSumJtpt_jet80_keep[i]->Print("base");
         hData_eSumJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_eSumJtpt_jet80_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_eSumJtpt_jet80_keep[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eSumJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4889,7 +4930,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet80_keep[i]->SaveAs(Form("Plots/eSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceSumJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet80_keep[nbins_cent];
@@ -4902,7 +4943,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_phSumJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_phSumJtpt_jet80_keep[i]->Print("base");
     hMC_phSumJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_phSumJtpt_jet80_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_phSumJtpt_jet80_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_phSumJtpt_jet80_keep[i]=hMC_phSumJtpt_jet80_keep[i]->GetEntries();
     if (nMC_phSumJtpt_jet80_keep[i]>0){
        hMC_phSumJtpt_jet80_keep[i]->DrawNormalized();
@@ -4915,7 +4956,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phSumJtpt_jet80_keep[i]<=0){
         hData_phSumJtpt_jet80_keep[i]->Print("base");
         hData_phSumJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_phSumJtpt_jet80_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_phSumJtpt_jet80_keep[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phSumJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4929,7 +4970,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet80_keep[i]->SaveAs(Form("Plots/phSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphSumJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet80_keep[nbins_cent];
@@ -4942,7 +4983,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_neSumJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_neSumJtpt_jet80_keep[i]->Print("base");
     hMC_neSumJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_neSumJtpt_jet80_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_neSumJtpt_jet80_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_neSumJtpt_jet80_keep[i]=hMC_neSumJtpt_jet80_keep[i]->GetEntries();
     if (nMC_neSumJtpt_jet80_keep[i]>0){
        hMC_neSumJtpt_jet80_keep[i]->DrawNormalized();
@@ -4955,7 +4996,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neSumJtpt_jet80_keep[i]<=0){
         hData_neSumJtpt_jet80_keep[i]->Print("base");
         hData_neSumJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_neSumJtpt_jet80_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_neSumJtpt_jet80_keep[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neSumJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -4969,7 +5010,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet80_keep[i]->SaveAs(Form("Plots/neSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneSumJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet80_keep[nbins_cent];
@@ -4982,7 +5023,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_muSumJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_muSumJtpt_jet80_keep[i]->Print("base");
     hMC_muSumJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_muSumJtpt_jet80_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));
+    hMC_muSumJtpt_jet80_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_muSumJtpt_jet80_keep[i]=hMC_muSumJtpt_jet80_keep[i]->GetEntries();
     if (nMC_muSumJtpt_jet80_keep[i]>0){
        hMC_muSumJtpt_jet80_keep[i]->DrawNormalized();
@@ -4995,7 +5036,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muSumJtpt_jet80_keep[i]<=0){
         hData_muSumJtpt_jet80_keep[i]->Print("base");
         hData_muSumJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_muSumJtpt_jet80_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_muSumJtpt_jet80_keep[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muSumJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -5009,7 +5050,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet80_keep[i]->SaveAs(Form("Plots/muSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuSumJtpt_jet80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muSumJtpt_jet80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cchMaxJtpt_jet80_rej[nbins_cent];
@@ -5035,7 +5076,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chMaxJtpt_jet80_rej[i]<=0){
         hData_chMaxJtpt_jet80_rej[i]->Print("base");
         hData_chMaxJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_chMaxJtpt_jet80_rej[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_chMaxJtpt_jet80_rej[i]->SetXTitle(Form("chMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chMaxJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_chMaxJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5049,7 +5090,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots/chMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   
@@ -5076,7 +5117,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eMaxJtpt_jet80_rej[i]<=0){
         hData_eMaxJtpt_jet80_rej[i]->Print("base");
         hData_eMaxJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_eMaxJtpt_jet80_rej[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_eMaxJtpt_jet80_rej[i]->SetXTitle(Form("eMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eMaxJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_eMaxJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5090,7 +5131,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots/eMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 
@@ -5117,7 +5158,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phMaxJtpt_jet80_rej[i]<=0){
         hData_phMaxJtpt_jet80_rej[i]->Print("base");
         hData_phMaxJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_phMaxJtpt_jet80_rej[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_phMaxJtpt_jet80_rej[i]->SetXTitle(Form("phMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phMaxJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_phMaxJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5131,7 +5172,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots/phMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneMaxJtpt_jet80_rej[nbins_cent];
@@ -5157,7 +5198,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neMaxJtpt_jet80_rej[i]<=0){
         hData_neMaxJtpt_jet80_rej[i]->Print("base");
         hData_neMaxJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_neMaxJtpt_jet80_rej[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_neMaxJtpt_jet80_rej[i]->SetXTitle(Form("neMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neMaxJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_neMaxJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5171,7 +5212,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots/neMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuMaxJtpt_jet80_rej[nbins_cent];
@@ -5197,7 +5238,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muMaxJtpt_jet80_rej[i]<=0){
         hData_muMaxJtpt_jet80_rej[i]->Print("base");
         hData_muMaxJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_muMaxJtpt_jet80_rej[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_muMaxJtpt_jet80_rej[i]->SetXTitle(Form("muMax/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muMaxJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_muMaxJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5211,7 +5252,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots/muMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuMaxJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muMaxJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }    
 // draw some Sum variables
@@ -5238,7 +5279,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_chSumJtpt_jet80_rej[i]<=0){
         hData_chSumJtpt_jet80_rej[i]->Print("base");
         hData_chSumJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_chSumJtpt_jet80_rej[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_chSumJtpt_jet80_rej[i]->SetXTitle(Form("chSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_chSumJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_chSumJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5252,7 +5293,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cchSumJtpt_jet80_rej[i]->SaveAs(Form("Plots/chSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cchSumJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/chSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * ceSumJtpt_jet80_rej[nbins_cent];
@@ -5278,7 +5319,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_eSumJtpt_jet80_rej[i]<=0){
         hData_eSumJtpt_jet80_rej[i]->Print("base");
         hData_eSumJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_eSumJtpt_jet80_rej[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_eSumJtpt_jet80_rej[i]->SetXTitle(Form("eSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_eSumJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_eSumJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5292,7 +5333,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ceSumJtpt_jet80_rej[i]->SaveAs(Form("Plots/eSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ceSumJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/eSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cphSumJtpt_jet80_rej[nbins_cent];
@@ -5318,7 +5359,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_phSumJtpt_jet80_rej[i]<=0){
         hData_phSumJtpt_jet80_rej[i]->Print("base");
         hData_phSumJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_phSumJtpt_jet80_rej[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_phSumJtpt_jet80_rej[i]->SetXTitle(Form("phSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_phSumJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_phSumJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5332,7 +5373,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cphSumJtpt_jet80_rej[i]->SaveAs(Form("Plots/phSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cphSumJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/phSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
   TCanvas * cneSumJtpt_jet80_rej[nbins_cent];
@@ -5358,7 +5399,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_neSumJtpt_jet80_rej[i]<=0){
         hData_neSumJtpt_jet80_rej[i]->Print("base");
         hData_neSumJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_neSumJtpt_jet80_rej[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_neSumJtpt_jet80_rej[i]->SetXTitle(Form("neSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_neSumJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_neSumJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5372,7 +5413,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cneSumJtpt_jet80_rej[i]->SaveAs(Form("Plots/neSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cneSumJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/neSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
     TCanvas * cmuSumJtpt_jet80_rej[nbins_cent];
@@ -5398,7 +5439,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_muSumJtpt_jet80_rej[i]<=0){
         hData_muSumJtpt_jet80_rej[i]->Print("base");
         hData_muSumJtpt_jet80_rej[i]->SetTitle(" ");
-        hData_muSumJtpt_jet80_rej[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet80, pass CutA",radius));      
+        hData_muSumJtpt_jet80_rej[i]->SetXTitle(Form("muSum/(ak%dPuPF jet p_{T}) jet80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_muSumJtpt_jet80_rej[i]->DrawNormalized();
       } else {
       hData_muSumJtpt_jet80_rej[i]->DrawNormalized("same");
@@ -5412,7 +5453,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    cmuSumJtpt_jet80_rej[i]->SaveAs(Form("Plots/muSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    cmuSumJtpt_jet80_rej[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/muSumJtpt_jet80_rej_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }    
   TCanvas * ctrMaxJtpt_jet55_keep[nbins_cent];
@@ -5425,7 +5466,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_trMaxJtpt_jet55_keep[i]->SetMarkerStyle(25);
     hMC_trMaxJtpt_jet55_keep[i]->Print("base");
     hMC_trMaxJtpt_jet55_keep[i]->SetTitle(" ");
-    hMC_trMaxJtpt_jet55_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, pass CutA ",radius));
+    hMC_trMaxJtpt_jet55_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_trMaxJtpt_jet55_keep[i]=hMC_trMaxJtpt_jet55_keep[i]->GetEntries();
     if (nMC_trMaxJtpt_jet55_keep[i]>0){
        hMC_trMaxJtpt_jet55_keep[i]->DrawNormalized();
@@ -5438,7 +5479,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_trMaxJtpt_jet55_keep[i]<=0){
         hData_trMaxJtpt_jet55_keep[i]->Print("base");
         hData_trMaxJtpt_jet55_keep[i]->SetTitle(" ");
-        hData_trMaxJtpt_jet55_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, pass CutA ",radius));      
+        hData_trMaxJtpt_jet55_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_trMaxJtpt_jet55_keep[i]->DrawNormalized();
       } else {
       hData_trMaxJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -5452,7 +5493,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ctrMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ctrMaxJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/trMaxJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 //     TCanvas * ctrSumJtpt_jet55_keep[nbins_cent];
@@ -5465,7 +5506,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //     hMC_trSumJtpt_jet55_keep[i]->SetMarkerStyle(25);
 //     hMC_trSumJtpt_jet55_keep[i]->Print("base");
 //     hMC_trSumJtpt_jet55_keep[i]->SetTitle(" ");
-//     hMC_trSumJtpt_jet55_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet55, pass CutA ",radius));
+//     hMC_trSumJtpt_jet55_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));
 //     nMC_trSumJtpt_jet55_keep[i]=hMC_trSumJtpt_jet55_keep[i]->GetEntries();
 //     if (nMC_trSumJtpt_jet55_keep[i]>0){
 //        hMC_trSumJtpt_jet55_keep[i]->DrawNormalized();
@@ -5478,7 +5519,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //       if(nMC_trSumJtpt_jet55_keep[i]<=0){
 //         hData_trSumJtpt_jet55_keep[i]->Print("base");
 //         hData_trSumJtpt_jet55_keep[i]->SetTitle(" ");
-//         hData_trSumJtpt_jet55_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet55, pass CutA ",radius));      
+//         hData_trSumJtpt_jet55_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet55, pass CutA (and trkMax/jtpt>0.01)",radius));      
 //         hData_trSumJtpt_jet55_keep[i]->DrawNormalized();
 //       } else {
 //       hData_trSumJtpt_jet55_keep[i]->DrawNormalized("same");
@@ -5492,7 +5533,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //     leg->SetTextSize(0.04);
 //     leg->Draw();
 //     
-//     ctrSumJtpt_jet55_keep[i]->SaveAs(Form("Plots/trSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+//     ctrSumJtpt_jet55_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/trSumJtpt_jet55_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 // 
 //   }
   TCanvas * ctrMaxJtpt_jet65_keep[nbins_cent];
@@ -5505,7 +5546,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_trMaxJtpt_jet65_keep[i]->SetMarkerStyle(25);
     hMC_trMaxJtpt_jet65_keep[i]->Print("base");
     hMC_trMaxJtpt_jet65_keep[i]->SetTitle(" ");
-    hMC_trMaxJtpt_jet65_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, pass CutA ",radius));
+    hMC_trMaxJtpt_jet65_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_trMaxJtpt_jet65_keep[i]=hMC_trMaxJtpt_jet65_keep[i]->GetEntries();
     if (nMC_trMaxJtpt_jet65_keep[i]>0){
        hMC_trMaxJtpt_jet65_keep[i]->DrawNormalized();
@@ -5518,7 +5559,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_trMaxJtpt_jet65_keep[i]<=0){
         hData_trMaxJtpt_jet65_keep[i]->Print("base");
         hData_trMaxJtpt_jet65_keep[i]->SetTitle(" ");
-        hData_trMaxJtpt_jet65_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, pass CutA ",radius));      
+        hData_trMaxJtpt_jet65_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_trMaxJtpt_jet65_keep[i]->DrawNormalized();
       } else {
       hData_trMaxJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -5532,7 +5573,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ctrMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ctrMaxJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/trMaxJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 //     TCanvas * ctrSumJtpt_jet65_keep[nbins_cent];
@@ -5545,7 +5586,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //     hMC_trSumJtpt_jet65_keep[i]->SetMarkerStyle(25);
 //     hMC_trSumJtpt_jet65_keep[i]->Print("base");
 //     hMC_trSumJtpt_jet65_keep[i]->SetTitle(" ");
-//     hMC_trSumJtpt_jet65_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet65, pass CutA ",radius));
+//     hMC_trSumJtpt_jet65_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));
 //     nMC_trSumJtpt_jet65_keep[i]=hMC_trSumJtpt_jet65_keep[i]->GetEntries();
 //     if (nMC_trSumJtpt_jet65_keep[i]>0){
 //        hMC_trSumJtpt_jet65_keep[i]->DrawNormalized();
@@ -5558,7 +5599,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //       if(nMC_trSumJtpt_jet65_keep[i]<=0){
 //         hData_trSumJtpt_jet65_keep[i]->Print("base");
 //         hData_trSumJtpt_jet65_keep[i]->SetTitle(" ");
-//         hData_trSumJtpt_jet65_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet65, pass CutA ",radius));      
+//         hData_trSumJtpt_jet65_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) jet65, pass CutA (and trkMax/jtpt>0.01)",radius));      
 //         hData_trSumJtpt_jet65_keep[i]->DrawNormalized();
 //       } else {
 //       hData_trSumJtpt_jet65_keep[i]->DrawNormalized("same");
@@ -5572,7 +5613,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //     leg->SetTextSize(0.04);
 //     leg->Draw();
 //     
-//     ctrSumJtpt_jet65_keep[i]->SaveAs(Form("Plots/trSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+//     ctrSumJtpt_jet65_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/trSumJtpt_jet65_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 // 
 //   }
   TCanvas * ctrMaxJtpt_80_keep[nbins_cent];
@@ -5585,7 +5626,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_trMaxJtpt_jet80_keep[i]->SetMarkerStyle(25);
     hMC_trMaxJtpt_jet80_keep[i]->Print("base");
     hMC_trMaxJtpt_jet80_keep[i]->SetTitle(" ");
-    hMC_trMaxJtpt_jet80_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, pass CutA ",radius));
+    hMC_trMaxJtpt_jet80_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, pass CutA (and trkMax/jtpt>0.01)",radius));
     nMC_trMaxJtpt_jet80_keep[i]=hMC_trMaxJtpt_jet80_keep[i]->GetEntries();
     if (nMC_trMaxJtpt_jet80_keep[i]>0){
        hMC_trMaxJtpt_jet80_keep[i]->DrawNormalized();
@@ -5598,7 +5639,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
       if(nMC_trMaxJtpt_jet80_keep[i]<=0){
         hData_trMaxJtpt_jet80_keep[i]->Print("base");
         hData_trMaxJtpt_jet80_keep[i]->SetTitle(" ");
-        hData_trMaxJtpt_jet80_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, pass CutA ",radius));      
+        hData_trMaxJtpt_jet80_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, pass CutA (and trkMax/jtpt>0.01)",radius));      
         hData_trMaxJtpt_jet80_keep[i]->DrawNormalized();
       } else {
       hData_trMaxJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -5612,7 +5653,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     leg->SetTextSize(0.04);
     leg->Draw();
     
-    ctrMaxJtpt_80_keep[i]->SaveAs(Form("Plots/trMaxJtpt_80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+    ctrMaxJtpt_80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/trMaxJtpt_80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 
   }
 //     TCanvas * ctrSumJtpt_80_keep[nbins_cent];
@@ -5625,7 +5666,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //     hMC_trSumJtpt_jet80_keep[i]->SetMarkerStyle(25);
 //     hMC_trSumJtpt_jet80_keep[i]->Print("base");
 //     hMC_trSumJtpt_jet80_keep[i]->SetTitle(" ");
-//     hMC_trSumJtpt_jet80_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) 80, pass CutA ",radius));
+//     hMC_trSumJtpt_jet80_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) 80, pass CutA (and trkMax/jtpt>0.01)",radius));
 //     nMC_trSumJtpt_jet80_keep[i]=hMC_trSumJtpt_jet80_keep[i]->GetEntries();
 //     if (nMC_trSumJtpt_jet80_keep[i]>0){
 //        hMC_trSumJtpt_jet80_keep[i]->DrawNormalized();
@@ -5638,7 +5679,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //       if(nMC_trSumJtpt_jet80_keep[i]<=0){
 //         hData_trSumJtpt_jet80_keep[i]->Print("base");
 //         hData_trSumJtpt_jet80_keep[i]->SetTitle(" ");
-//         hData_trSumJtpt_jet80_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) 80, pass CutA ",radius));      
+//         hData_trSumJtpt_jet80_keep[i]->SetXTitle(Form("trSum/(ak%dPuPF jet p_{T}) 80, pass CutA (and trkMax/jtpt>0.01)",radius));      
 //         hData_trSumJtpt_jet80_keep[i]->DrawNormalized();
 //       } else {
 //       hData_trSumJtpt_jet80_keep[i]->DrawNormalized("same");
@@ -5652,7 +5693,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //     leg->SetTextSize(0.04);
 //     leg->Draw();
 //     
-//     ctrSumJtpt_80_keep[i]->SaveAs(Form("Plots/trSumJtpt_80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+//     ctrSumJtpt_80_keep[i]->SaveAs(Form("Plots_trMaxJtptGt1percent/trSumJtpt_80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 // 
 //   }     
 }
