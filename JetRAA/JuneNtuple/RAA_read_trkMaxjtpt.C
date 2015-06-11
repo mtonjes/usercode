@@ -88,7 +88,7 @@ int findPtBin(float inpt)
 using namespace std;
 
 
-void RAA_read_trkMaxPlots(
+void RAA_read_trkMaxjtpt(
 				  Int_t radius = 3
 )
 {
@@ -195,29 +195,29 @@ char* etaWidth = (char*)"20_eta_20";
   TH2F* hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet80[ptSelection];  
   for(int a = 0;a<ptSelection; ++a) {
 
-    hData_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hData_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_eMaxSumcand_calopfpt_refptselection_jet55[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_refptselection_jet55_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
+    hData_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hData_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_eMaxSumcand_calopfpt_refptselection_jet55[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_refptselection_jet55_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
     
-    hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet55[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet55_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
+    hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet55_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet55[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet55_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
 
-    hData_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hData_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_eMaxSumcand_calopfpt_refptselection_jet65[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_refptselection_jet65_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
+    hData_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hData_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_eMaxSumcand_calopfpt_refptselection_jet65[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_refptselection_jet65_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
     
-    hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet65[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet65_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
+    hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet65_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet65[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet65_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
 
-    hData_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hData_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_eMaxSumcand_calopfpt_refptselection_jet80[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_refptselection_jet80_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
+    hData_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hData_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_eMaxSumcand_calopfpt_refptselection_jet80[a] = new TH2F(Form("hMC_eMaxSumcand_calopfpt_refptselection_jet80_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
     
-    hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
-    hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet80[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet80_%d",a),"",100, 0, 2.5, 100, 0, 1.2);
+    hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet80_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
+    hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet80[a] = new TH2F(Form("hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet80_%d",a),"",100, 0, 1.2, 100, 0, 1.2);
 
   }  
   // 1 - Data, 2 - MC
@@ -425,13 +425,13 @@ char* etaWidth = (char*)"20_eta_20";
 
 	if(jet55_1 == 1 && jet65_1 == 0 && jet80_1 == 0 ) {
 	 if(calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
-	  hData_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
+	  hData_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
     }
     if(calopt_1[g]/pfpt_1[g] > 0.85){
-	  hData_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
+	  hData_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
     }
  	if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
-	  hData_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
+	  hData_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
     }   
 //	  hData_Jet55_noCut->Fill(pfpt_1[g], Jet55_prescl* wght);
 //	  hpbpb_Data_Jet55_noCut[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
@@ -439,25 +439,25 @@ char* etaWidth = (char*)"20_eta_20";
           
 	if(jet65_1 == 1 && jet80_1 == 0 ) {
 	 if(calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
-	  hData_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
+	  hData_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
     }
     if(calopt_1[g]/pfpt_1[g] > 0.85){
-	  hData_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
+	  hData_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
     }
  	if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
-	  hData_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
+	  hData_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
     }   
 	}
 
 	if(jet80_1 == 1) {
 	 if(calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
-	  hData_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
+	  hData_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
     }
     if(calopt_1[g]/pfpt_1[g] > 0.85){
-	  hData_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
+	  hData_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
     }
  	if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
-	  hData_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
+	  hData_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);    
     }   
 	}
       }
@@ -466,17 +466,17 @@ char* etaWidth = (char*)"20_eta_20";
       	
 	if(jet55_1 == 1 && jet65_1 == 0 && jet80_1 == 0 ) {
 	   if(eMax_1[g]/Sumcand < 0.05 ){
-		hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
+		hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
 		}
 	}
 	if(jet65_1 == 1 && jet80_1 == 0 ) {
 	   if(eMax_1[g]/Sumcand < 0.05 ){	
-		hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
+		hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
 	   }
 	}
 	if(jet80_1 == 1) {
 	   if(eMax_1[g]/Sumcand < 0.05 ){	
-		hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/chMax_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
+		hData_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_1[g]/pfpt_1[g]),(neSum_1[g]+phSum_1[g])/Sumcand);
 	   }
 	}
  
@@ -575,21 +575,21 @@ char* etaWidth = (char*)"20_eta_20";
 //	hpbpb_MC_noCut[cBin]->Fill(pfrefpt_2[refid], weight);
 	if(jet55_2 == 1 && jet65_2==0 && jet80_2 == 0){
 	 if(calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
-      hMC_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
     }
     if(calopt_2[g]/pfpt_2[g] > 0.85){
-      hMC_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }      
     }
  	if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
-      hMC_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
     }   
 //	  hMC_Jet55_noCut->Fill(pfrefpt_2[refid], weight);
@@ -597,42 +597,42 @@ char* etaWidth = (char*)"20_eta_20";
 	}
 	if(jet65_2 == 1 && jet80_2 == 0){
 	 if(calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
-      hMC_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
     }
     if(calopt_2[g]/pfpt_2[g] > 0.85){
-      hMC_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }      
     }
  	if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
-      hMC_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
     }   
 	}
     
 	if(jet80_2 == 1){
 	 if(calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
-      hMC_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
     }
     if(calopt_2[g]/pfpt_2[g] > 0.85){
-      hMC_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }      
     }
  	if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
-      hMC_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+      hMC_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
     }   
 	}// jet 80 selection
@@ -646,25 +646,25 @@ char* etaWidth = (char*)"20_eta_20";
 
 	if(jet55_2 == 1 && jet65_2==0 && jet80_2 == 0){
 		if(eMax_2[g]/Sumcand < 0.05 ){
-		hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+		hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet55[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
         }
 	}   
 	if(jet65_2 == 1 && jet80_2 == 0){
 	  if(eMax_2[g]/Sumcand < 0.05 ){
-		hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+		hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet65[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }
       }
 	}
 	if(jet80_2 == 1){
 			if(eMax_2[g]/Sumcand < 0.05 ){
-		hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+		hMC_unmatch_eMaxSumcand_calopfpt_ptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       if(ptbin==refptbin){
-        hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/chMax_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
+        hMC_unmatch_eMaxSumcand_calopfpt_refptselection_jet80[ptbin]->Fill((trMax_2[g]/pfpt_2[g]),(neSum_2[g]+phSum_2[g])/Sumcand);
       }      
       }
 	}
@@ -828,7 +828,7 @@ char* etaWidth = (char*)"20_eta_20";
     ceMaxSumcand_jet55[a]->Divide(3,1);
     ceMaxSumcand_jet55[a]->cd(1);
     ceMaxSumcand_jet55[a]->cd(1)->SetLogz();
-    hData_eMaxSumcand_calopfpt_ptselection_jet55[a]->SetXTitle("trMax/chMax");
+    hData_eMaxSumcand_calopfpt_ptselection_jet55[a]->SetXTitle("trMax/Jet pT");
     hData_eMaxSumcand_calopfpt_ptselection_jet55[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hData_eMaxSumcand_calopfpt_ptselection_jet55[a]->Draw("colz");
     drawText(Form("%d < pfpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -837,7 +837,7 @@ char* etaWidth = (char*)"20_eta_20";
     
     ceMaxSumcand_jet55[a]->cd(2);
     ceMaxSumcand_jet55[a]->cd(2)->SetLogz();
-    hMC_eMaxSumcand_calopfpt_ptselection_jet55[a]->SetXTitle("trMax/chMax");
+    hMC_eMaxSumcand_calopfpt_ptselection_jet55[a]->SetXTitle("trMax/Jet pT");
     hMC_eMaxSumcand_calopfpt_ptselection_jet55[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hMC_eMaxSumcand_calopfpt_ptselection_jet55[a]->Draw("colz");
     drawText(Form("%d < pfpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -846,7 +846,7 @@ char* etaWidth = (char*)"20_eta_20";
 
     ceMaxSumcand_jet55[a]->cd(3);
     ceMaxSumcand_jet55[a]->cd(3)->SetLogz();
-    hMC_eMaxSumcand_calopfpt_refptselection_jet55[a]->SetXTitle("trMax/chMax");
+    hMC_eMaxSumcand_calopfpt_refptselection_jet55[a]->SetXTitle("trMax/Jet pT");
     hMC_eMaxSumcand_calopfpt_refptselection_jet55[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hMC_eMaxSumcand_calopfpt_refptselection_jet55[a]->Draw("colz");
     drawText(Form("%d < pfpt, refpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -860,7 +860,7 @@ char* etaWidth = (char*)"20_eta_20";
     ceMaxSumcand_jet65[a]->Divide(3,1);
     ceMaxSumcand_jet65[a]->cd(1);
     ceMaxSumcand_jet65[a]->cd(1)->SetLogz();
-    hData_eMaxSumcand_calopfpt_ptselection_jet65[a]->SetXTitle("trMax/chMax");
+    hData_eMaxSumcand_calopfpt_ptselection_jet65[a]->SetXTitle("trMax/Jet pT");
     hData_eMaxSumcand_calopfpt_ptselection_jet65[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hData_eMaxSumcand_calopfpt_ptselection_jet65[a]->Draw("colz");
     drawText(Form("%d < pfpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -869,7 +869,7 @@ char* etaWidth = (char*)"20_eta_20";
     
     ceMaxSumcand_jet65[a]->cd(2);
     ceMaxSumcand_jet65[a]->cd(2)->SetLogz();
-    hMC_eMaxSumcand_calopfpt_ptselection_jet65[a]->SetXTitle("trMax/chMax");
+    hMC_eMaxSumcand_calopfpt_ptselection_jet65[a]->SetXTitle("trMax/Jet pT");
     hMC_eMaxSumcand_calopfpt_ptselection_jet65[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hMC_eMaxSumcand_calopfpt_ptselection_jet65[a]->Draw("colz");
     drawText(Form("%d < pfpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -878,7 +878,7 @@ char* etaWidth = (char*)"20_eta_20";
 
     ceMaxSumcand_jet65[a]->cd(3);
     ceMaxSumcand_jet65[a]->cd(3)->SetLogz();
-    hMC_eMaxSumcand_calopfpt_refptselection_jet65[a]->SetXTitle("trMax/chMax");
+    hMC_eMaxSumcand_calopfpt_refptselection_jet65[a]->SetXTitle("trMax/Jet pT");
     hMC_eMaxSumcand_calopfpt_refptselection_jet65[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hMC_eMaxSumcand_calopfpt_refptselection_jet65[a]->Draw("colz");
     drawText(Form("%d < pfpt, refpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -891,7 +891,7 @@ char* etaWidth = (char*)"20_eta_20";
     ceMaxSumcand_jet80[a]->Divide(3,1);
     ceMaxSumcand_jet80[a]->cd(1);
     ceMaxSumcand_jet80[a]->cd(1)->SetLogz();
-    hData_eMaxSumcand_calopfpt_ptselection_jet80[a]->SetXTitle("trMax/chMax");
+    hData_eMaxSumcand_calopfpt_ptselection_jet80[a]->SetXTitle("trMax/Jet pT");
     hData_eMaxSumcand_calopfpt_ptselection_jet80[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hData_eMaxSumcand_calopfpt_ptselection_jet80[a]->Draw("colz");
     drawText(Form("%d < pfpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -900,7 +900,7 @@ char* etaWidth = (char*)"20_eta_20";
     
     ceMaxSumcand_jet80[a]->cd(2);
     ceMaxSumcand_jet80[a]->cd(2)->SetLogz();
-    hMC_eMaxSumcand_calopfpt_ptselection_jet80[a]->SetXTitle("trMax/chMax");
+    hMC_eMaxSumcand_calopfpt_ptselection_jet80[a]->SetXTitle("trMax/Jet pT");
     hMC_eMaxSumcand_calopfpt_ptselection_jet80[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hMC_eMaxSumcand_calopfpt_ptselection_jet80[a]->Draw("colz");
     drawText(Form("%d < pfpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
@@ -909,14 +909,14 @@ char* etaWidth = (char*)"20_eta_20";
 
     ceMaxSumcand_jet80[a]->cd(3);
     ceMaxSumcand_jet80[a]->cd(3)->SetLogz();
-    hMC_eMaxSumcand_calopfpt_refptselection_jet80[a]->SetXTitle("trMax/chMax");
+    hMC_eMaxSumcand_calopfpt_refptselection_jet80[a]->SetXTitle("trMax/Jet pT");
     hMC_eMaxSumcand_calopfpt_refptselection_jet80[a]->SetYTitle("(neSum+phSum)/(chSum+phSum+neSum+muSum)");
     hMC_eMaxSumcand_calopfpt_refptselection_jet80[a]->Draw("colz");
     drawText(Form("%d < pfpt, refpt < %d", ptBoundary[a], ptBoundary[a+1]),0.2,0.7,14);
     drawText("MC - jet80",0.25,0.8,14);
 
 
-    ceMaxSumcand_jet80[a]->SaveAs(Form("Plots_nePlusphOverSumCand/nePlusphSumOverSumCand_trMaxOverchMax_PbPb_jet80_fullstat_R0p%d_%d_ptrange_%d.pdf",radius, ptBoundary[a], ptBoundary[a+1]),"RECREATE");
+    ceMaxSumcand_jet80[a]->SaveAs(Form("Plots_nePlusphOverSumCand_trkMaxJtPt/nePlusphSumOverSumCand_trMaxOverJtpt_PbPb_jet80_fullstat_R0p%d_%d_ptrange_%d.pdf",radius, ptBoundary[a], ptBoundary[a+1]),"RECREATE");
     
   }
 

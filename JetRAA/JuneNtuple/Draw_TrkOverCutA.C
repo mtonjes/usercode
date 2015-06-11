@@ -91,8 +91,8 @@ void Draw_TrkOverCutA(Int_t radius=3)
   for(int i=0;i<nbins_cent;i++){
     hTrkPbPb[i] = (TH1F*)fTrk->Get(Form("hpbpb_HLTComb_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLTComb_R%d_20_eta_20_cent%d",radius,i));
-    hRatioPbPb[i]=(TH1F*)[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
-    hRatioPbPb[i]->Divide(hCutAPbPbhTrkPbPb[i]);
+    hRatioPbPb[i]=(TH1F*)hCutAPbPb[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+    hRatioPbPb[i]->Divide(hTrkPbPb[i]);
     hRatioPbPb[i]->SetMarkerStyle(20);
     hRatioPbPb[i]->SetMarkerColor(kBlue);
   }
