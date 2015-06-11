@@ -103,8 +103,8 @@ void Draw_TrkOverCutA(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio->cd(nbins_cent-i);
-      hRatioPbPb[i]->Rebin(5.);
-      hRatioPbPb[i]->Scale(1./5.);
+      hRatioPbPb[i]->Rebin(10.);
+      hRatioPbPb[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb[i]->Draw("same");
       lineRatio->Draw("same");

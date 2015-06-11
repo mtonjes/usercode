@@ -56,7 +56,7 @@ static const double boundaries_pt[nbins_pt+1] = {  3, 4, 5, 7, 9, 12, 15, 18, 21
 
 //  const int ptSelection = 17;
 //  const int ptBoundary[ptSelection+1] = {30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200};
-  const int ptSelection = 17;
+  const int ptSelection = 18;
   const int ptBoundary[ptSelection+1] = {40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340};
   
 int findPtBin(float inpt)
@@ -795,7 +795,7 @@ char* etaWidth = (char*)"20_eta_20";
   }
 #endif
 
-  TFile fout(Form("%s_TTree_PbPb_Data_MC_JetID_CutA_finebins_%s_R0p%d_nePlusphOverSumCand.root",ntuple,etaWidth,radius),"RECREATE");
+  TFile fout(Form("%s_TTree_PbPb_Data_MC_JetID_CutA_finebins_%s_R0p%d_nePlusphOverSumCand_trkMaxjtpt.root",ntuple,etaWidth,radius),"RECREATE");
 //  TFile fout(Form("%s_TTree_PbPb_Data_MC_subid0_JetID_CutA_trMaxOverjtptgt1percent_finebins_%s_R0p%d.root",ntuple,etaWidth,radius),"RECREATE");
   fout.cd();
   
@@ -853,7 +853,7 @@ char* etaWidth = (char*)"20_eta_20";
     drawText("MC - jet55 !jet65 !jet80",0.25,0.8,14);
 
 
-    ceMaxSumcand_jet55[a]->SaveAs(Form("Plots_nePlusphOverSumCand/nePlusphSumOverSumCand_trMaxOverchMax_PbPb_jet55_fullstat_R0p%d_%d_ptrange_%d.pdf",radius, ptBoundary[a], ptBoundary[a+1]),"RECREATE");
+    ceMaxSumcand_jet55[a]->SaveAs(Form("Plots_nePlusphOverSumCand_trkMaxJtPt/nePlusphSumOverSumCand_trMaxOverJtpt_PbPb_jet55_fullstat_R0p%d_%d_ptrange_%d.pdf",radius, ptBoundary[a], ptBoundary[a+1]),"RECREATE");
 
 
     ceMaxSumcand_jet65[a] = new TCanvas(Form("ceMaxSumcand_jet65_%d",a),"",1000,800);
@@ -885,7 +885,7 @@ char* etaWidth = (char*)"20_eta_20";
     drawText("MC - jet65 !jet80",0.25,0.8,14);
 
 
-    ceMaxSumcand_jet65[a]->SaveAs(Form("Plots_nePlusphOverSumCand/nePlusphSumOverSumCand_trMaxOverchMax_PbPb_jet65_fullstat_R0p%d_%d_ptrange_%d.pdf",radius, ptBoundary[a], ptBoundary[a+1]),"RECREATE");
+    ceMaxSumcand_jet65[a]->SaveAs(Form("Plots_nePlusphOverSumCand_trkMaxJtPt/nePlusphSumOverSumCand_trMaxOverJtpt_PbPb_jet65_fullstat_R0p%d_%d_ptrange_%d.pdf",radius, ptBoundary[a], ptBoundary[a+1]),"RECREATE");
 
     ceMaxSumcand_jet80[a] = new TCanvas(Form("ceMaxSumcand_jet80_%d",a),"",1000,800);
     ceMaxSumcand_jet80[a]->Divide(3,1);

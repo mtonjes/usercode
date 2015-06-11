@@ -659,11 +659,6 @@ void RAA_read_jetIDVariables_trkMax(char* etaWidth = (char*)"20_eta_20",
     hMC_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet55_keep_cent%d",i),Form("MC trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
     hData_trSumJtpt_jet55_keep[i] = new TH1F(Form("hData_trSumJtpt_jet55_keep_cent%d",i),Form("Data trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
     hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
-
-    hData_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet55_keep_cent%d",i),Form("Data trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet55_keep_cent%d",i),Form("MC trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
-    hData_trSumJtpt_jet55_keep[i] = new TH1F(Form("hData_trSumJtpt_jet55_keep_cent%d",i),Form("Data trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
-    hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
     hData_trMaxJtpt_jet65_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet65_keep_cent%d",i),Form("Data trMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
     hMC_trMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet65_keep_cent%d",i),Form("MC trMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
     hData_trSumJtpt_jet65_keep[i] = new TH1F(Form("hData_trSumJtpt_jet65_keep_cent%d",i),Form("Data trSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,3);
