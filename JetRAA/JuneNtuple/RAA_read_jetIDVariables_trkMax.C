@@ -97,7 +97,7 @@ void RAA_read_jetIDVariables_trkMax(char* etaWidth = (char*)"20_eta_20",
      pfptmin = 30;
   } else if(radius==3){
      pfptmin = 40;
-  } else if(radius=4){
+  } else if(radius==4){
      pfptmin = 50;
   }
 
