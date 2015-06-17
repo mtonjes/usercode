@@ -105,6 +105,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLTComb_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb[i]->Print("base");
     hRatioPbPb[i]=(TH1F*)hCutAPbPb[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+      hRatioPbPb[i]->Rebin(10.);
+      hRatioPbPb[i]->Scale(1./10.);
+      hTrkPbPb[i]->Rebin(10.);
+      hTrkPbPb[i]->Scale(1./10.);
     hRatioPbPb[i]->Divide(hTrkPbPb[i]);
     hRatioPbPb[i]->SetMarkerStyle(20);
     hRatioPbPb[i]->SetMarkerColor(kBlue);
@@ -113,6 +117,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCrec[i] = (TH1F*)fCutA->Get(Form("hpbpb_JetComb_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec[i]->Print("base");
     hRatioPbPb_MCrec[i]=(TH1F*)hCutAPbPb_MCrec[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+      hRatioPbPb_MCrec[i]->Rebin(10.);
+      hRatioPbPb_MCrec[i]->Scale(1./10.);
+      hTrkPbPb_MCrec[i]->Rebin(10.);
+      hTrkPbPb_MCrec[i]->Scale(1./10.);        
     hRatioPbPb_MCrec[i]->Divide(hTrkPbPb_MCrec[i]);
     hRatioPbPb_MCrec[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec[i]->SetMarkerColor(kRed);
@@ -121,6 +129,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCgen[i] = (TH1F*)fCutA->Get(Form("hpbpb_JetComb_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen[i]->Print("base");
     hRatioPbPb_MCgen[i]=(TH1F*)hCutAPbPb_MCgen[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+      hRatioPbPb_MCgen[i]->Rebin(10.);
+      hRatioPbPb_MCgen[i]->Scale(1./10.);
+      hTrkPbPb_MCgen[i]->Rebin(10.);
+      hTrkPbPb_MCgen[i]->Scale(1./10.);                    
     hRatioPbPb_MCgen[i]->Divide(hTrkPbPb_MCgen[i]);
     hRatioPbPb_MCgen[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen[i]->SetMarkerColor(kGreen+1);    
@@ -129,6 +141,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_jet55[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLT55_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_jet55[i]->Print("base");
     hRatioPbPb_jet55[i]=(TH1F*)hCutAPbPb_jet55[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+      hRatioPbPb_jet55[i]->Rebin(10.);
+      hRatioPbPb_jet55[i]->Scale(1./10.);
+      hTrkPbPb_jet55[i]->Rebin(10.);
+      hTrkPbPb_jet55[i]->Scale(1./10.);    
     hRatioPbPb_jet55[i]->Divide(hTrkPbPb_jet55[i]);
     hRatioPbPb_jet55[i]->SetMarkerStyle(20);
     hRatioPbPb_jet55[i]->SetMarkerColor(kBlue);
@@ -137,6 +153,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCrec_jet55[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet55_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec_jet55[i]->Print("base");
     hRatioPbPb_MCrec_jet55[i]=(TH1F*)hCutAPbPb_MCrec_jet55[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+      hRatioPbPb_MCrec_jet55[i]->Rebin(10.);
+      hRatioPbPb_MCrec_jet55[i]->Scale(1./10.);
+      hTrkPbPb_MCrec_jet55[i]->Rebin(10.);
+      hTrkPbPb_MCrec_jet55[i]->Scale(1./10.); 
     hRatioPbPb_MCrec_jet55[i]->Divide(hTrkPbPb_MCrec_jet55[i]);
     hRatioPbPb_MCrec_jet55[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec_jet55[i]->SetMarkerColor(kRed);
@@ -145,6 +165,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCgen_jet55[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet55_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen_jet55[i]->Print("base");
     hRatioPbPb_MCgen_jet55[i]=(TH1F*)hCutAPbPb_MCgen_jet55[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+      hRatioPbPb_MCgen_jet55[i]->Rebin(10.);
+      hRatioPbPb_MCgen_jet55[i]->Scale(1./10.);
+      hTrkPbPb_MCgen_jet55[i]->Rebin(10.);
+      hTrkPbPb_MCgen_jet55[i]->Scale(1./10.);    
     hRatioPbPb_MCgen_jet55[i]->Divide(hTrkPbPb_MCgen_jet55[i]);
     hRatioPbPb_MCgen_jet55[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen_jet55[i]->SetMarkerColor(kGreen+1);    
@@ -153,6 +177,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_jet65[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLT65_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_jet65[i]->Print("base");
     hRatioPbPb_jet65[i]=(TH1F*)hCutAPbPb_jet65[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+      hRatioPbPb_jet65[i]->Rebin(10.);
+      hRatioPbPb_jet65[i]->Scale(1./10.);
+      hTrkPbPb_jet65[i]->Rebin(10.);
+      hTrkPbPb_jet65[i]->Scale(1./10.);    
     hRatioPbPb_jet65[i]->Divide(hTrkPbPb_jet65[i]);
     hRatioPbPb_jet65[i]->SetMarkerStyle(20);
     hRatioPbPb_jet65[i]->SetMarkerColor(kBlue);
@@ -161,6 +189,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCrec_jet65[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet65_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec_jet65[i]->Print("base");
     hRatioPbPb_MCrec_jet65[i]=(TH1F*)hCutAPbPb_MCrec_jet65[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+      hRatioPbPb_MCrec_jet65[i]->Rebin(10.);
+      hRatioPbPb_MCrec_jet65[i]->Scale(1./10.);
+      hTrkPbPb_MCrec_jet65[i]->Rebin(10.);
+      hTrkPbPb_MCrec_jet65[i]->Scale(1./10.);   
     hRatioPbPb_MCrec_jet65[i]->Divide(hTrkPbPb_MCrec_jet65[i]);
     hRatioPbPb_MCrec_jet65[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec_jet65[i]->SetMarkerColor(kRed);
@@ -169,6 +201,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCgen_jet65[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet65_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen_jet65[i]->Print("base");
     hRatioPbPb_MCgen_jet65[i]=(TH1F*)hCutAPbPb_MCgen_jet65[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+      hRatioPbPb_MCgen_jet65[i]->Rebin(10.);
+      hRatioPbPb_MCgen_jet65[i]->Scale(1./10.);
+      hTrkPbPb_MCgen_jet65[i]->Rebin(10.);
+      hTrkPbPb_MCgen_jet65[i]->Scale(1./10.);                
     hRatioPbPb_MCgen_jet65[i]->Divide(hTrkPbPb_MCgen_jet65[i]);
     hRatioPbPb_MCgen_jet65[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen_jet65[i]->SetMarkerColor(kGreen+1);    
@@ -177,6 +213,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_jet80[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLT80_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_jet80[i]->Print("base");
     hRatioPbPb_jet80[i]=(TH1F*)hCutAPbPb_jet80[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+      hRatioPbPb_jet80[i]->Rebin(10.);
+      hRatioPbPb_jet80[i]->Scale(1./10.);
+      hTrkPbPb_jet80[i]->Rebin(10.);
+      hTrkPbPb_jet80[i]->Scale(1./10.);    
     hRatioPbPb_jet80[i]->Divide(hTrkPbPb_jet80[i]);
     hRatioPbPb_jet80[i]->SetMarkerStyle(20);
     hRatioPbPb_jet80[i]->SetMarkerColor(kBlue);
@@ -185,6 +225,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCrec_jet80[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet80_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec_jet80[i]->Print("base");
     hRatioPbPb_MCrec_jet80[i]=(TH1F*)hCutAPbPb_MCrec_jet80[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+      hRatioPbPb_MCrec_jet80[i]->Rebin(10.);
+      hRatioPbPb_MCrec_jet80[i]->Scale(1./10.);
+      hTrkPbPb_MCrec_jet80[i]->Rebin(10.);
+      hTrkPbPb_MCrec_jet80[i]->Scale(1./10.);   
     hRatioPbPb_MCrec_jet80[i]->Divide(hTrkPbPb_MCrec_jet80[i]);
     hRatioPbPb_MCrec_jet80[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec_jet80[i]->SetMarkerColor(kRed);
@@ -193,6 +237,10 @@ void Draw_CutAOverTrk(Int_t radius=3)
     hCutAPbPb_MCgen_jet80[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet80_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen_jet80[i]->Print("base");
     hRatioPbPb_MCgen_jet80[i]=(TH1F*)hCutAPbPb_MCgen_jet80[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+      hRatioPbPb_MCgen_jet80[i]->Rebin(10.);
+      hRatioPbPb_MCgen_jet80[i]->Scale(1./10.);
+      hTrkPbPb_MCgen_jet80[i]->Rebin(10.);
+      hTrkPbPb_MCgen_jet80[i]->Scale(1./10.);    
     hRatioPbPb_MCgen_jet80[i]->Divide(hTrkPbPb_MCgen_jet80[i]);
     hRatioPbPb_MCgen_jet80[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen_jet80[i]->SetMarkerColor(kGreen+1);                
@@ -205,8 +253,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio->cd(nbins_cent-i);
-      hRatioPbPb[i]->Rebin(10.);
-      hRatioPbPb[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb[i]->Draw("same");
       lineRatio->Draw("same");
@@ -220,8 +266,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio_MCrec->cd(nbins_cent-i);
-      hRatioPbPb_MCrec[i]->Rebin(10.);
-      hRatioPbPb_MCrec[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCrec[i]->Draw("same");
       lineRatio->Draw("same");
@@ -235,8 +279,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio_MCgen->cd(nbins_cent-i);
-      hRatioPbPb_MCgen[i]->Rebin(10.);
-      hRatioPbPb_MCgen[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCgen[i]->Draw("same");
       lineRatio->Draw("same");
@@ -249,8 +291,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio55->cd(nbins_cent-i);
-      hRatioPbPb_jet55[i]->Rebin(10.);
-      hRatioPbPb_jet55[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_jet55[i]->Draw("same");
       lineRatio->Draw("same");
@@ -264,8 +304,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio55_MCrec->cd(nbins_cent-i);
-      hRatioPbPb_MCrec_jet55[i]->Rebin(10.);
-      hRatioPbPb_MCrec_jet55[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCrec_jet55[i]->Draw("same");
       lineRatio->Draw("same");
@@ -279,8 +317,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio55_MCgen->cd(nbins_cent-i);
-      hRatioPbPb_MCgen_jet55[i]->Rebin(10.);
-      hRatioPbPb_MCgen_jet55[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCgen_jet55[i]->Draw("same");
       lineRatio->Draw("same");
@@ -293,8 +329,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio65->cd(nbins_cent-i);
-      hRatioPbPb_jet65[i]->Rebin(10.);
-      hRatioPbPb_jet65[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_jet65[i]->Draw("same");
       lineRatio->Draw("same");
@@ -308,8 +342,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio65_MCrec->cd(nbins_cent-i);
-      hRatioPbPb_MCrec_jet65[i]->Rebin(10.);
-      hRatioPbPb_MCrec_jet65[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCrec_jet65[i]->Draw("same");
       lineRatio->Draw("same");
@@ -323,8 +355,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio65_MCgen->cd(nbins_cent-i);
-      hRatioPbPb_MCgen_jet65[i]->Rebin(10.);
-      hRatioPbPb_MCgen_jet65[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCgen_jet65[i]->Draw("same");
       lineRatio->Draw("same");
@@ -337,8 +367,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio80->cd(nbins_cent-i);
-      hRatioPbPb_jet80[i]->Rebin(10.);
-      hRatioPbPb_jet80[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_jet80[i]->Draw("same");
       lineRatio->Draw("same");
@@ -352,8 +380,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio80_MCrec->cd(nbins_cent-i);
-      hRatioPbPb_MCrec_jet80[i]->Rebin(10.);
-      hRatioPbPb_MCrec_jet80[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCrec_jet80[i]->Draw("same");
       lineRatio->Draw("same");
@@ -367,8 +393,6 @@ void Draw_CutAOverTrk(Int_t radius=3)
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio80_MCgen->cd(nbins_cent-i);
-      hRatioPbPb_MCgen_jet80[i]->Rebin(10.);
-      hRatioPbPb_MCgen_jet80[i]->Scale(1./10.);
       hBlankRatio->Draw();
       hRatioPbPb_MCgen_jet80[i]->Draw("same");
       lineRatio->Draw("same");
