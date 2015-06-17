@@ -104,96 +104,96 @@ void Draw_MuOverCutA(Int_t radius=3)
      hTrkPbPb[i]->Print("base");
     hCutAPbPb[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLTComb_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb[i]->Print("base");
-    hRatioPbPb[i]=(TH1F*)hCutAPbPb[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
-    hRatioPbPb[i]->Divide(hTrkPbPb[i]);
+    hRatioPbPb[i]=(TH1F*)hTrkPbPb[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+    hRatioPbPb[i]->Divide(hCutAPbPb[i]);
     hRatioPbPb[i]->SetMarkerStyle(20);
     hRatioPbPb[i]->SetMarkerColor(kBlue);
     hTrkPbPb_MCrec[i] = (TH1F*)fTrk->Get(Form("hpbpb_JetComb_reco_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCrec[i]->Print("base");
     hCutAPbPb_MCrec[i] = (TH1F*)fCutA->Get(Form("hpbpb_JetComb_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec[i]->Print("base");
-    hRatioPbPb_MCrec[i]=(TH1F*)hCutAPbPb_MCrec[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
-    hRatioPbPb_MCrec[i]->Divide(hTrkPbPb_MCrec[i]);
+    hRatioPbPb_MCrec[i]=(TH1F*)hTrkPbPb_MCrec[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+    hRatioPbPb_MCrec[i]->Divide(hCutAPbPb_MCrec[i]);
     hRatioPbPb_MCrec[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec[i]->SetMarkerColor(kRed);
     hTrkPbPb_MCgen[i] = (TH1F*)fTrk->Get(Form("hpbpb_JetComb_gen_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCgen[i]->Print("base");
     hCutAPbPb_MCgen[i] = (TH1F*)fCutA->Get(Form("hpbpb_JetComb_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen[i]->Print("base");
-    hRatioPbPb_MCgen[i]=(TH1F*)hCutAPbPb_MCgen[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
-    hRatioPbPb_MCgen[i]->Divide(hTrkPbPb_MCgen[i]);
+    hRatioPbPb_MCgen[i]=(TH1F*)hTrkPbPb_MCgen[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+    hRatioPbPb_MCgen[i]->Divide(hCutAPbPb_MCgen[i]);
     hRatioPbPb_MCgen[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen[i]->SetMarkerColor(kGreen+1);    
     hTrkPbPb_jet55[i] = (TH1F*)fTrk->Get(Form("hpbpb_HLT55_R%d_20_eta_20_cent%d",radius,i));
      hTrkPbPb_jet55[i]->Print("base");
     hCutAPbPb_jet55[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLT55_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_jet55[i]->Print("base");
-    hRatioPbPb_jet55[i]=(TH1F*)hCutAPbPb_jet55[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
-    hRatioPbPb_jet55[i]->Divide(hTrkPbPb_jet55[i]);
+    hRatioPbPb_jet55[i]=(TH1F*)hTrkPbPb_jet55[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+    hRatioPbPb_jet55[i]->Divide(hCutAPbPb_jet55[i]);
     hRatioPbPb_jet55[i]->SetMarkerStyle(20);
     hRatioPbPb_jet55[i]->SetMarkerColor(kBlue);
     hTrkPbPb_MCrec_jet55[i] = (TH1F*)fTrk->Get(Form("hpbpb_Jet55_reco_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCrec_jet55[i]->Print("base");
     hCutAPbPb_MCrec_jet55[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet55_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec_jet55[i]->Print("base");
-    hRatioPbPb_MCrec_jet55[i]=(TH1F*)hCutAPbPb_MCrec_jet55[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
-    hRatioPbPb_MCrec_jet55[i]->Divide(hTrkPbPb_MCrec_jet55[i]);
+    hRatioPbPb_MCrec_jet55[i]=(TH1F*)hTrkPbPb_MCrec_jet55[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+    hRatioPbPb_MCrec_jet55[i]->Divide(hCutAPbPb_MCrec_jet55[i]);
     hRatioPbPb_MCrec_jet55[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec_jet55[i]->SetMarkerColor(kRed);
     hTrkPbPb_MCgen_jet55[i] = (TH1F*)fTrk->Get(Form("hpbpb_Jet55_gen_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCgen_jet55[i]->Print("base");
     hCutAPbPb_MCgen_jet55[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet55_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen_jet55[i]->Print("base");
-    hRatioPbPb_MCgen_jet55[i]=(TH1F*)hCutAPbPb_MCgen_jet55[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
-    hRatioPbPb_MCgen_jet55[i]->Divide(hTrkPbPb_MCgen_jet55[i]);
+    hRatioPbPb_MCgen_jet55[i]=(TH1F*)hTrkPbPb_MCgen_jet55[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+    hRatioPbPb_MCgen_jet55[i]->Divide(hCutAPbPb_MCgen_jet55[i]);
     hRatioPbPb_MCgen_jet55[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen_jet55[i]->SetMarkerColor(kGreen+1);    
     hTrkPbPb_jet65[i] = (TH1F*)fTrk->Get(Form("hpbpb_HLT65_R%d_20_eta_20_cent%d",radius,i));
      hTrkPbPb_jet65[i]->Print("base");
     hCutAPbPb_jet65[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLT65_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_jet65[i]->Print("base");
-    hRatioPbPb_jet65[i]=(TH1F*)hCutAPbPb_jet65[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
-    hRatioPbPb_jet65[i]->Divide(hTrkPbPb_jet65[i]);
+    hRatioPbPb_jet65[i]=(TH1F*)hTrkPbPb_jet65[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+    hRatioPbPb_jet65[i]->Divide(hCutAPbPb_jet65[i]);
     hRatioPbPb_jet65[i]->SetMarkerStyle(20);
     hRatioPbPb_jet65[i]->SetMarkerColor(kBlue);
     hTrkPbPb_MCrec_jet65[i] = (TH1F*)fTrk->Get(Form("hpbpb_Jet65_reco_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCrec_jet65[i]->Print("base");
     hCutAPbPb_MCrec_jet65[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet65_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec_jet65[i]->Print("base");
-    hRatioPbPb_MCrec_jet65[i]=(TH1F*)hCutAPbPb_MCrec_jet65[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
-    hRatioPbPb_MCrec_jet65[i]->Divide(hTrkPbPb_MCrec_jet65[i]);
+    hRatioPbPb_MCrec_jet65[i]=(TH1F*)hTrkPbPb_MCrec_jet65[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+    hRatioPbPb_MCrec_jet65[i]->Divide(hCutAPbPb_MCrec_jet65[i]);
     hRatioPbPb_MCrec_jet65[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec_jet65[i]->SetMarkerColor(kRed);
     hTrkPbPb_MCgen_jet65[i] = (TH1F*)fTrk->Get(Form("hpbpb_Jet65_gen_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCgen_jet65[i]->Print("base");
     hCutAPbPb_MCgen_jet65[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet65_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen_jet65[i]->Print("base");
-    hRatioPbPb_MCgen_jet65[i]=(TH1F*)hCutAPbPb_MCgen_jet65[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
-    hRatioPbPb_MCgen_jet65[i]->Divide(hTrkPbPb_MCgen_jet65[i]);
+    hRatioPbPb_MCgen_jet65[i]=(TH1F*)hTrkPbPb_MCgen_jet65[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+    hRatioPbPb_MCgen_jet65[i]->Divide(hCutAPbPb_MCgen_jet65[i]);
     hRatioPbPb_MCgen_jet65[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen_jet65[i]->SetMarkerColor(kGreen+1);    
     hTrkPbPb_jet80[i] = (TH1F*)fTrk->Get(Form("hpbpb_HLT80_R%d_20_eta_20_cent%d",radius,i));
      hTrkPbPb_jet80[i]->Print("base");
     hCutAPbPb_jet80[i] = (TH1F*)fCutA->Get(Form("hpbpb_HLT80_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_jet80[i]->Print("base");
-    hRatioPbPb_jet80[i]=(TH1F*)hCutAPbPb_jet80[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
-    hRatioPbPb_jet80[i]->Divide(hTrkPbPb_jet80[i]);
+    hRatioPbPb_jet80[i]=(TH1F*)hTrkPbPb_jet80[i]->Clone(Form("hRatioPbPb_R%d_cent%d",radius,i));
+    hRatioPbPb_jet80[i]->Divide(hCutAPbPb_jet80[i]);
     hRatioPbPb_jet80[i]->SetMarkerStyle(20);
     hRatioPbPb_jet80[i]->SetMarkerColor(kBlue);
     hTrkPbPb_MCrec_jet80[i] = (TH1F*)fTrk->Get(Form("hpbpb_Jet80_reco_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCrec_jet80[i]->Print("base");
     hCutAPbPb_MCrec_jet80[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet80_reco_R%d_20_eta_20_cent%d",radius,i));
     hCutAPbPb_MCrec_jet80[i]->Print("base");
-    hRatioPbPb_MCrec_jet80[i]=(TH1F*)hCutAPbPb_MCrec_jet80[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
-    hRatioPbPb_MCrec_jet80[i]->Divide(hTrkPbPb_MCrec_jet80[i]);
+    hRatioPbPb_MCrec_jet80[i]=(TH1F*)hTrkPbPb_MCrec_jet80[i]->Clone(Form("hRatioPbPb_MCreco_R%d_cent%d",radius,i));
+    hRatioPbPb_MCrec_jet80[i]->Divide(hCutAPbPb_MCrec_jet80[i]);
     hRatioPbPb_MCrec_jet80[i]->SetMarkerStyle(21);
     hRatioPbPb_MCrec_jet80[i]->SetMarkerColor(kRed);
     hTrkPbPb_MCgen_jet80[i] = (TH1F*)fTrk->Get(Form("hpbpb_Jet80_gen_R%d_20_eta_20_cent%d",radius,i));
     hTrkPbPb_MCgen_jet80[i]->Print("base");
     hCutAPbPb_MCgen_jet80[i] = (TH1F*)fCutA->Get(Form("hpbpb_Jet80_gen_R%d_20_eta_20_cent%d",radius,i));
      hCutAPbPb_MCgen_jet80[i]->Print("base");
-    hRatioPbPb_MCgen_jet80[i]=(TH1F*)hCutAPbPb_MCgen_jet80[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
-    hRatioPbPb_MCgen_jet80[i]->Divide(hTrkPbPb_MCgen_jet80[i]);
+    hRatioPbPb_MCgen_jet80[i]=(TH1F*)hTrkPbPb_MCgen_jet80[i]->Clone(Form("hRatioPbPb_MCgen_R%d_cent%d",radius,i));
+    hRatioPbPb_MCgen_jet80[i]->Divide(hCutAPbPb_MCgen_jet80[i]);
     hRatioPbPb_MCgen_jet80[i]->SetMarkerStyle(22);
     hRatioPbPb_MCgen_jet80[i]->SetMarkerColor(kGreen+1);                
     
@@ -201,7 +201,7 @@ void Draw_MuOverCutA(Int_t radius=3)
    
     TCanvas *cRatio = new TCanvas("cRatio","Ratio",1200,800);
     makeMultiPanelCanvasWithGap(cRatio,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio->cd(nbins_cent-i);
@@ -212,11 +212,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio->SaveAs(Form("RatioPlots/PbPb_HLTComb_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio->SaveAs(Form("RatioPlots/PbPb_HLTComb_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio_MCrec = new TCanvas("cRatio_MCrec","Ratio MC reco",1200,800);
     makeMultiPanelCanvasWithGap(cRatio_MCrec,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio_MCrec->cd(nbins_cent-i);
@@ -227,11 +227,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio_MCrec->SaveAs(Form("RatioPlots/PbPb_HLTComb_MCrec_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio_MCrec->SaveAs(Form("RatioPlots/PbPb_HLTComb_MCrec_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio_MCgen = new TCanvas("cRatio_MCgen","Ratio MC gen",1200,800);
     makeMultiPanelCanvasWithGap(cRatio_MCgen,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio_MCgen->cd(nbins_cent-i);
@@ -242,10 +242,10 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio_MCgen->SaveAs(Form("RatioPlots/PbPb_HLTComb_MCgen_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE");  
+  cRatio_MCgen->SaveAs(Form("RatioPlots/PbPb_HLTComb_MCgen_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE");  
     TCanvas *cRatio55 = new TCanvas("cRatio55","Ratio",1200,800);
     makeMultiPanelCanvasWithGap(cRatio55,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data jet55",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data jet55",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio55->cd(nbins_cent-i);
@@ -256,11 +256,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio55->SaveAs(Form("RatioPlots/PbPb_Jet55_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio55->SaveAs(Form("RatioPlots/PbPb_Jet55_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio55_MCrec = new TCanvas("cRatio55_MCrec","Ratio MC reco",1200,800);
     makeMultiPanelCanvasWithGap(cRatio55_MCrec,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco jet55",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco jet55",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio55_MCrec->cd(nbins_cent-i);
@@ -271,11 +271,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio55_MCrec->SaveAs(Form("RatioPlots/PbPb_Jet55_MCrec_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio55_MCrec->SaveAs(Form("RatioPlots/PbPb_Jet55_MCrec_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio55_MCgen = new TCanvas("cRatio55_MCgen","Ratio MC gen",1200,800);
     makeMultiPanelCanvasWithGap(cRatio55_MCgen,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen jet55",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen jet55",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio55_MCgen->cd(nbins_cent-i);
@@ -286,10 +286,10 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio55_MCgen->SaveAs(Form("RatioPlots/PbPb_Jet55_MCgen_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE");   
+  cRatio55_MCgen->SaveAs(Form("RatioPlots/PbPb_Jet55_MCgen_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE");   
     TCanvas *cRatio65 = new TCanvas("cRatio65","Ratio",1200,800);
     makeMultiPanelCanvasWithGap(cRatio65,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data jet65",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data jet65",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio65->cd(nbins_cent-i);
@@ -300,11 +300,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio65->SaveAs(Form("RatioPlots/PbPb_Jet65_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio65->SaveAs(Form("RatioPlots/PbPb_Jet65_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio65_MCrec = new TCanvas("cRatio65_MCrec","Ratio MC reco",1200,800);
     makeMultiPanelCanvasWithGap(cRatio65_MCrec,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco jet65",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco jet65",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio65_MCrec->cd(nbins_cent-i);
@@ -315,11 +315,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio65_MCrec->SaveAs(Form("RatioPlots/PbPb_Jet65_MCrec_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio65_MCrec->SaveAs(Form("RatioPlots/PbPb_Jet65_MCrec_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio65_MCgen = new TCanvas("cRatio65_MCgen","Ratio MC gen",1200,800);
     makeMultiPanelCanvasWithGap(cRatio65_MCgen,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen jet65",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen jet65",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio65_MCgen->cd(nbins_cent-i);
@@ -330,10 +330,10 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio65_MCgen->SaveAs(Form("RatioPlots/PbPb_Jet65_MCgen_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE");   
+  cRatio65_MCgen->SaveAs(Form("RatioPlots/PbPb_Jet65_MCgen_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE");   
     TCanvas *cRatio80 = new TCanvas("cRatio80","Ratio",1200,800);
     makeMultiPanelCanvasWithGap(cRatio80,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data jet80",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) PbPb data jet80",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio80->cd(nbins_cent-i);
@@ -344,11 +344,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio80->SaveAs(Form("RatioPlots/PbPb_Jet80_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio80->SaveAs(Form("RatioPlots/PbPb_Jet80_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio80_MCrec = new TCanvas("cRatio80_MCrec","Ratio MC reco",1200,800);
     makeMultiPanelCanvasWithGap(cRatio80_MCrec,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco jet80",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC reco jet80",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio80_MCrec->cd(nbins_cent-i);
@@ -359,11 +359,11 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio80_MCrec->SaveAs(Form("RatioPlots/PbPb_Jet80_MCrec_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE"); 
+  cRatio80_MCrec->SaveAs(Form("RatioPlots/PbPb_Jet80_MCrec_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE"); 
 
     TCanvas *cRatio80_MCgen = new TCanvas("cRatio80_MCgen","Ratio MC gen",1200,800);
     makeMultiPanelCanvasWithGap(cRatio80_MCgen,3,2,0.01,0.01,0.16,0.2,0.04,0.04);
-    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen jet80",radius),"CutA/(muMax/SumAllCand<0.975 & CutA)");    
+    makeHistTitle(hBlankRatio,"",Form("akPu%dPF Jet p_{T} (GeV/c) MC gen jet80",radius),"(muMax/SumCand<0.975 & CutA)/CutA");    
     
     for(int i = 0;i<nbins_cent;i++){
       cRatio80_MCgen->cd(nbins_cent-i);
@@ -374,5 +374,5 @@ void Draw_MuOverCutA(Int_t radius=3)
       lineRatio->Draw("same");
       drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.6,0.8,20);
    }
-  cRatio80_MCgen->SaveAs(Form("RatioPlots/PbPb_Jet80_MCgen_CutAOvermuMaxOSumAlllt0pt975_R0p%d.pdf",radius),"RECREATE");          
+  cRatio80_MCgen->SaveAs(Form("RatioPlots/PbPb_Jet80_MCgen_muMaxOSumAlllt0pt975OverCutA_R0p%d.pdf",radius),"RECREATE");          
 }
