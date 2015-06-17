@@ -926,7 +926,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hData_Jet55_noCut->Fill(pfpt_1[g], Jet55_prescl* wght);
 	  hpbpb_Data_Jet55_noCut[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
 	    hData_Jet55_CutA->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl* wght);
@@ -948,7 +948,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
         }
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.85){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.85){
 	    hData_Jet55_CutA->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl* wght);
@@ -970,7 +970,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
 	    hData_Jet55_CutA->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl* wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl* wght);
@@ -992,7 +992,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand >= 0.05) {
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut || (calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand >= 0.05)) {
 	       hData_Jet55_CutA_rej->Fill(pfpt_1[g], Jet55_prescl* wght);
 	       if(pfpt_1[g]>pfptmin){
              hData_muMaxOSumAlllt0pt975_jet55_rej[cBin]->Fill(chMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
@@ -1009,7 +1009,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet55_rej[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 	       
 	       }
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut || (calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7))){
 	      hData_Jet55_CutA_rej->Fill(pfpt_1[g], Jet55_prescl* wght);
 	      if(pfpt_1[g]>pfptmin){
              hData_muMaxOSumAlllt0pt975_jet55_rej[cBin]->Fill(chMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
@@ -1034,7 +1034,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hData_Jet65_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet65_noCut[cBin]->Fill(pfpt_1[g], wght);
 	    
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)){
 	    hData_Jet65_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
@@ -1056,7 +1056,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.85) {
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.85) {
 	    hData_Jet65_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1078,7 +1078,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
 	    hData_Jet65_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1100,7 +1100,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand >= 0.05){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut || (calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand >= 0.05)){
 	     hData_Jet65_CutA_rej->Fill(pfpt_1[g], wght);
 	         hData_muMaxOSumAlllt0pt975_jet65_rej[cBin]->Fill(chMax_1[g]/pfpt_1[g], wght);
 	         hData_trMaxJtpt_jet65_rej[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);	         
@@ -1115,7 +1115,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_phSumJtpt_jet65_rej[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet65_rej[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 	     
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut || (calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7))){
 	   hData_Jet65_CutA_rej->Fill(pfpt_1[g], wght);
 	         hData_muMaxOSumAlllt0pt975_jet65_rej[cBin]->Fill(chMax_1[g]/pfpt_1[g], wght);
 	         hData_trMaxJtpt_jet65_rej[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);	         
@@ -1136,7 +1136,7 @@ void RAA_read_jetIDVariables_MuCutTry(
     
 	  hData_Jet80_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet80_noCut[cBin]->Fill(pfpt_1[g], wght);   
-	  if(trMax_1[g]/pfpt_1[g]>trMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)) {
 	    hData_Jet80_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1158,7 +1158,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.85){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] > 0.85){
 	    hData_Jet80_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1180,7 +1180,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05){
 	    hData_Jet80_CutA->Fill(pfpt_1[g], wght);
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
@@ -1202,7 +1202,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && eMax_1[g]/Sumcand >= 0.05){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])>=muMaxCut || eMax_1[g]/Sumcand >= 0.05){
 	    hData_Jet80_CutA_rej->Fill(pfpt_1[g], wght);
 	    if(pfpt_1[g]>pfptmin){
 	         hData_muMaxOSumAlllt0pt975_jet80_rej[cBin]->Fill(chMax_1[g]/pfpt_1[g], wght);
@@ -1219,7 +1219,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hData_muSumJtpt_jet80_rej[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut && calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7)){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])>=muMaxCut || ( calopt_1[g]/pfpt_1[g] > 0.5 && calopt_1[g]/pfpt_1[g] <= 0.85 && eMax_1[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_1[g]/pfpt_1[g] - (Float_t)9/7))){
 	    hData_Jet80_CutA_rej->Fill(pfpt_1[g], wght);
 	    if(pfpt_1[g]>pfptmin){
 	         hData_muMaxOSumAlllt0pt975_jet80_rej[cBin]->Fill(chMax_1[g]/pfpt_1[g], wght);
@@ -1247,7 +1247,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hData_unmatched_Jet55_noCut->Fill(pfpt_1[g], Jet55_prescl*wght);
 	  hpbpb_Data_Jet55_noCut[cBin]->Fill(pfpt_1[g], Jet55_prescl*wght);
 
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && eMax_1[g]/Sumcand < 0.05 ){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && eMax_1[g]/Sumcand < 0.05 ){
 	    hpbpb_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl*wght);
 	    hpbpb_raw_TrgObj55[cBin]->Fill(pfrawpt_1[g], Jet55_prescl*wght);
 	    hpbpb_anaBin_TrgObj55[cBin]->Fill(pfpt_1[g], Jet55_prescl*wght);
@@ -1293,7 +1293,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hData_unmatched_Jet65_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet65_noCut[cBin]->Fill(pfpt_1[g], wght);
 
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && eMax_1[g]/Sumcand < 0.05  ){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && eMax_1[g]/Sumcand < 0.05  ){
 	    hpbpb_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj65[cBin]->Fill(pfrawpt_1[g], wght);
 	    hpbpb_anaBin_TrgObj65[cBin]->Fill(pfpt_1[g], wght);
@@ -1339,7 +1339,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hData_unmatched_Jet80_noCut->Fill(pfpt_1[g], wght);
 	  hpbpb_Data_Jet80_noCut[cBin]->Fill(pfpt_1[g], wght);
 
-	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g])<muMaxCut && eMax_1[g]/Sumcand < 0.05  ){
+	  if(muMax_1[g]/(neMax_1[g]+phMax_1[g]+chMax_1[g]+muMax_1[g]+eMax_1[g])<muMaxCut && eMax_1[g]/Sumcand < 0.05  ){
 	    hpbpb_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
 	    hpbpb_raw_TrgObj80[cBin]->Fill(pfrawpt_1[g], wght);
 	    hpbpb_anaBin_TrgObj80[cBin]->Fill(pfpt_1[g], wght);
@@ -1499,19 +1499,19 @@ void RAA_read_jetIDVariables_MuCutTry(
 
       if(isCaloMatch_2[g] == 1){
     
-	if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
+	if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
 	
 	}
-	if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
+	if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
 	
 	}
-	if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
@@ -1525,7 +1525,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hMC_Jet55_noCut->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_MC_Jet55_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
 	    hMC_Jet55_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1559,7 +1559,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet55_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g],weight); 
     }	    
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	    hMC_Jet55_CutA->Fill(pfrefpt_2[refid], weight);
 	
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1594,7 +1594,7 @@ void RAA_read_jetIDVariables_MuCutTry(
     }
 	
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	    hMC_Jet55_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1629,7 +1629,7 @@ void RAA_read_jetIDVariables_MuCutTry(
     }
 	
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand >= 0.05){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut || ( calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand >= 0.05)){
 	      hMC_Jet55_CutA_rej->Fill(pfrefpt_2[refid], weight);
     if(pfpt_2[g]>pfptmin){
              hMC_muMaxOSumAlllt0pt975_jet55_rej[cBin]->Fill(chMax_2[g]/pfpt_2[g],weight);
@@ -1646,7 +1646,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet55_rej[cBin]->Fill(muSum_2[g]/pfpt_2[g],weight);
     }	      
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut || (calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7))){
 	     hMC_Jet55_CutA_rej->Fill(pfrefpt_2[refid], weight);
     if(pfpt_2[g]>pfptmin){
              hMC_muMaxOSumAlllt0pt975_jet55_rej[cBin]->Fill(chMax_2[g]/pfpt_2[g],weight);
@@ -1670,7 +1670,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hMC_Jet65_noCut->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_MC_Jet65_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
 	    hMC_Jet65_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1704,7 +1704,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	    hMC_Jet65_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1738,7 +1738,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	    hMC_Jet65_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1773,7 +1773,7 @@ void RAA_read_jetIDVariables_MuCutTry(
         }	
 	  }
 
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand >= 0.05){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut || (calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand >= 0.05)){
 	   hMC_Jet65_CutA_rej->Fill(pfrefpt_2[refid], weight);
 	    if(pfpt_2[g]>pfptmin){
 	         hMC_muMaxOSumAlllt0pt975_jet65_rej[cBin]->Fill(chMax_2[g]/pfpt_2[g], weight);
@@ -1790,7 +1790,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet65_rej[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	   
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut || (calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7))){
 	    hMC_Jet65_CutA_rej->Fill(pfrefpt_2[refid], weight);
 	    if(pfpt_2[g]>pfptmin){
 	         hMC_muMaxOSumAlllt0pt975_jet65_rej[cBin]->Fill(chMax_2[g]/pfpt_2[g], weight);
@@ -1816,7 +1816,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	  hMC_Jet80_noCut->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_MC_Jet80_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
  
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand < ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)) {
 	    hMC_Jet80_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1850,7 +1850,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] > 0.85) {
 	    hMC_Jet80_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1885,7 +1885,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	    hMC_Jet80_CutA->Fill(pfrefpt_2[refid], weight);
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1921,7 +1921,7 @@ void RAA_read_jetIDVariables_MuCutTry(
         }
 	  }
       
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut && calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand >= 0.05){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut || (calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand >= 0.05)){
 	    hMC_Jet80_CutA_rej->Fill(pfrefpt_2[refid], weight);
 	    if(pfpt_2[g]>pfptmin){
 	         hMC_muMaxOSumAlllt0pt975_jet80_rej[cBin]->Fill(chMax_2[g]/pfpt_2[g], weight);
@@ -1938,7 +1938,7 @@ void RAA_read_jetIDVariables_MuCutTry(
              hMC_muSumJtpt_jet80_rej[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
         }	    
 	  }
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut && calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7)){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])>=muMaxCut || ( calopt_2[g]/pfpt_2[g] > 0.5 && calopt_2[g]/pfpt_2[g] <= 0.85 && eMax_2[g]/Sumcand >= ((Float_t)18/7 *(Float_t)calopt_2[g]/pfpt_2[g] - (Float_t)9/7))){
 	    hMC_Jet80_CutA_rej->Fill(pfrefpt_2[refid], weight);
 	    if(pfpt_2[g]>pfptmin){
 	         hMC_muMaxOSumAlllt0pt975_jet80_rej[cBin]->Fill(chMax_2[g]/pfpt_2[g], weight);
@@ -1974,7 +1974,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	if(jet55_2 == 1 && jet65_2==0 && jet80_2 == 0){
 	  hpbpb_MC_Jet55_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 	  hMC_unmatched_Jet55_noCut->Fill(pfrefpt_2[refid], weight);
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && eMax_2[g]/Sumcand < 0.05  ){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && eMax_2[g]/Sumcand < 0.05  ){
 
 	    hpbpb_Jet55_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	    hpbpb_Jet55_GenSmear[cBin]->Fill(pfrefpt_2[refid] + rnd.Gaus(0,1), weight);
@@ -2032,7 +2032,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	if(jet65_2 == 1 && jet80_2 == 0){
 	  hpbpb_MC_Jet65_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 	  hMC_unmatched_Jet65_noCut->Fill(pfrefpt_2[refid], weight);
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && eMax_2[g]/Sumcand < 0.05  ){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && eMax_2[g]/Sumcand < 0.05  ){
 
 	    hpbpb_Jet65_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	    hpbpb_Jet65_GenSmear[cBin]->Fill(pfrefpt_2[refid] + rnd.Gaus(0,1), weight);
@@ -2088,7 +2088,7 @@ void RAA_read_jetIDVariables_MuCutTry(
 	if(jet80_2 == 1){
 	  hpbpb_MC_Jet80_noCut[cBin]->Fill(pfrefpt_2[refid],weight);
 	  hMC_unmatched_Jet80_noCut->Fill(pfrefpt_2[refid], weight);
-	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g])<muMaxCut && eMax_2[g]/Sumcand < 0.05  ){
+	  if(muMax_2[g]/(neMax_2[g]+phMax_2[g]+chMax_2[g]+muMax_2[g]+eMax_2[g])<muMaxCut && eMax_2[g]/Sumcand < 0.05  ){
 
 	    hpbpb_Jet80_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	    hpbpb_Jet80_GenSmear[cBin]->Fill(pfrefpt_2[refid] + rnd.Gaus(0,1), weight);
