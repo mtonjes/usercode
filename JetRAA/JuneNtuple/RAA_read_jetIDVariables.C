@@ -73,15 +73,15 @@ static const double boundaries_pt[nbins_pt+1] = {  3, 4, 5, 7, 9, 12, 15, 18, 21
 using namespace std;
 
 
-void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
-				  Int_t radius = 3,
-				  Int_t etaLow = 20,
-				  Int_t etaHigh = 20)
+void RAA_read_jetIDVariables(
+				  Int_t radius = 3)
 {
   
   TH1::SetDefaultSumw2();
   TH2::SetDefaultSumw2();
-
+				  Int_t etaLow = 20;
+				  Int_t etaHigh = 20 ;
+				  char* etaWidth = (char*)"20_eta_20";
   // char * etaWidth = (char*)Form("%d_eta_%d",etaLow, etaHigh);
   cout<<"etaWidth = "<<etaWidth<<endl;
   cout<<"Radius = "<<radius<<endl;
@@ -423,6 +423,26 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   TH1F * hData_trMaxJtpt_jet80_rej[nbins_cent], * hData_trSumJtpt_jet80_rej[nbins_cent] ;
   TH1F * hMC_trMaxJtpt_jet80_rej[nbins_cent], * hMC_trSumJtpt_jet80_rej[nbins_cent] ;
 
+  TH1F *hData_trMaxJtpt_Matched_keep[nbins_cent], *hMC_trMaxJtpt_Matched_keep[nbins_cent];
+  TH1F *hData_trMaxJtpt_Unmatched_keep[nbins_cent], *hMC_trMaxJtpt_Unmatched_keep[nbins_cent];
+  TH1F *hData_trMaxJtpt_jet55_Matched_keep[nbins_cent], *hMC_trMaxJtpt_jet55_Matched_keep[nbins_cent];
+  TH1F *hData_trMaxJtpt_jet55_Unmatched_keep[nbins_cent], *hMC_trMaxJtpt_jet55_Unmatched_keep[nbins_cent];
+  TH1F *hData_trMaxJtpt_jet65_Matched_keep[nbins_cent], *hMC_trMaxJtpt_jet65_Matched_keep[nbins_cent];
+  TH1F *hData_trMaxJtpt_jet65_Unmatched_keep[nbins_cent], *hMC_trMaxJtpt_jet65_Unmatched_keep[nbins_cent];
+  TH1F *hData_trMaxJtpt_jet80_Matched_keep[nbins_cent], *hMC_trMaxJtpt_jet80_Matched_keep[nbins_cent];
+  TH1F *hData_trMaxJtpt_jet80_Unmatched_keep[nbins_cent], *hMC_trMaxJtpt_jet80_Unmatched_keep[nbins_cent];
+  TH1F *hMC_trMaxJtpt_Matched_NoTrig_keep[nbins_cent], *hMC_trMaxJtpt_Unmatched_NoTrig_keep[nbins_cent];
+
+  Double_t nData_trMaxJtpt_Matched_keep[nbins_cent], nMC_trMaxJtpt_Matched_keep[nbins_cent];
+  Double_t nData_trMaxJtpt_Unmatched_keep[nbins_cent], nMC_trMaxJtpt_Unmatched_keep[nbins_cent];
+  Double_t nData_trMaxJtpt_jet55_Matched_keep[nbins_cent], nMC_trMaxJtpt_jet55_Matched_keep[nbins_cent];
+  Double_t nData_trMaxJtpt_jet55_Unmatched_keep[nbins_cent], nMC_trMaxJtpt_jet55_Unmatched_keep[nbins_cent];
+  Double_t nData_trMaxJtpt_jet65_Matched_keep[nbins_cent], nMC_trMaxJtpt_jet65_Matched_keep[nbins_cent];
+  Double_t nData_trMaxJtpt_jet65_Unmatched_keep[nbins_cent], nMC_trMaxJtpt_jet65_Unmatched_keep[nbins_cent];
+  Double_t nData_trMaxJtpt_jet80_Matched_keep[nbins_cent], nMC_trMaxJtpt_jet80_Matched_keep[nbins_cent];
+  Double_t nData_trMaxJtpt_jet80_Unmatched_keep[nbins_cent], nMC_trMaxJtpt_jet80_Unmatched_keep[nbins_cent];
+   Double_t nMC_trMaxJtpt_Matched_NoTrig_keep[nbins_cent], nMC_trMaxJtpt_Unmatched_NoTrig_keep[nbins_cent];
+
   Double_t  nData_chMaxJtpt_jet55_keep[nbins_cent],  nData_phMaxJtpt_jet55_keep[nbins_cent],  nData_neMaxJtpt_jet55_keep[nbins_cent],  nData_muMaxJtpt_jet55_keep[nbins_cent],  nData_eMaxJtpt_jet55_keep[nbins_cent];
   Double_t  nData_chSumJtpt_jet55_keep[nbins_cent],  nData_phSumJtpt_jet55_keep[nbins_cent],  nData_neSumJtpt_jet55_keep[nbins_cent],  nData_muSumJtpt_jet55_keep[nbins_cent],  nData_eSumJtpt_jet55_keep[nbins_cent];  
   
@@ -654,10 +674,10 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hData_muSumJtpt_jet80_rej[i] = new TH1F(Form("hData_muSumJtpt_jet80_rej_cent%d",i),Form("Data muSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,1);
     hMC_muSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_muSumJtpt_jet80_rej_cent%d",i),Form("MC muSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,1);
 
-    hData_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet55_keep_cent%d",i),Form("Data trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet55_keep_cent%d",i),Form("MC trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
-    hData_trSumJtpt_jet55_keep[i] = new TH1F(Form("hData_trSumJtpt_jet55_keep_cent%d",i),Form("Data trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
-    hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
+//     hData_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet55_keep_cent%d",i),Form("Data trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
+//     hMC_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet55_keep_cent%d",i),Form("MC trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
+//     hData_trSumJtpt_jet55_keep[i] = new TH1F(Form("hData_trSumJtpt_jet55_keep_cent%d",i),Form("Data trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
+//     hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
 
     hData_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet55_keep_cent%d",i),Form("Data trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
     hMC_trMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet55_keep_cent%d",i),Form("MC trMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
@@ -684,6 +704,26 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hMC_trMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_trMaxJtpt_jet80_rej_cent%d",i),Form("MC trMax/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,1);
     hData_trSumJtpt_jet80_rej[i] = new TH1F(Form("hData_trSumJtpt_jet80_rej_cent%d",i),Form("Data trSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,3);
     hMC_trSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_trSumJtpt_jet80_rej_cent%d",i),Form("MC trSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,3);
+
+    hData_trMaxJtpt_Matched_keep[i] = new TH1F(Form("hData_trMaxJtpt_Matched_keep_cent%d",i),Form("Data trMax/Jtpt, matched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_Matched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_Matched_keep_cent%d",i),Form("MC trMax/Jtpt, jet 55 or 65 or 80, matched pass cutA in centrality bin %d",i),100,0,1);
+    hData_trMaxJtpt_jet55_Matched_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet55_Matched_keep_cent%d",i),Form("Data trMax/Jtpt, jet55 matched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_jet55_Matched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet55_Matched_keep_cent%d",i),Form("MC trMax/Jtpt, jet55 matched pass cutA in centrality bin %d",i),100,0,1);
+    hData_trMaxJtpt_jet65_Matched_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet65_Matched_keep_cent%d",i),Form("Data trMax/Jtpt, jet65 matched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_jet65_Matched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet65_Matched_keep_cent%d",i),Form("MC trMax/Jtpt, jet65 matched pass cutA in centrality bin %d",i),100,0,1);
+    hData_trMaxJtpt_jet80_Matched_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet80_Matched_keep_cent%d",i),Form("Data trMax/Jtpt, jet80 matched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_jet80_Matched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet80_Matched_keep_cent%d",i),Form("MC trMax/Jtpt, jet80 matched pass cutA in centrality bin %d",i),100,0,1);
+
+    hData_trMaxJtpt_Unmatched_keep[i] = new TH1F(Form("hData_trMaxJtpt_Unmatched_keep_cent%d",i),Form("Data trMax/Jtpt, Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_Unmatched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_Unmatched_keep_cent%d",i),Form("MC trMax/Jtpt, jet 55 or 65 or 80, Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hData_trMaxJtpt_jet55_Unmatched_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet55_Unmatched_keep_cent%d",i),Form("Data trMax/Jtpt, jet55 Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_jet55_Unmatched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet55_Unmatched_keep_cent%d",i),Form("MC trMax/Jtpt, jet55 Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hData_trMaxJtpt_jet65_Unmatched_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet65_Unmatched_keep_cent%d",i),Form("Data trMax/Jtpt, jet65 Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_jet65_Unmatched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet65_Unmatched_keep_cent%d",i),Form("MC trMax/Jtpt, jet65 Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hData_trMaxJtpt_jet80_Unmatched_keep[i] = new TH1F(Form("hData_trMaxJtpt_jet80_Unmatched_keep_cent%d",i),Form("Data trMax/Jtpt, jet80 Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_jet80_Unmatched_keep[i] = new TH1F(Form("hMC_trMaxJtpt_jet80_Unmatched_keep_cent%d",i),Form("MC trMax/Jtpt, jet80 Unmatched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_Matched_NoTrig_keep[i] = new TH1F(Form("hMC_trMaxJtpt_Matched_NoTrig_keep_cent%d",i),Form("MC trMax/Jtpt, no trig, matched pass cutA in centrality bin %d",i),100,0,1);
+    hMC_trMaxJtpt_Unmatched_NoTrig_keep[i] = new TH1F(Form("hMC_trMaxJtpt_Unmatched_NoTrig_keep_cent%d",i),Form("MC trMax/Jtpt, no trig, Unmatched pass cutA in centrality bin %d",i),100,0,1);
 
   }
     
@@ -945,7 +985,9 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_eSumJtpt_jet55_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
-             hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
+             hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
+             hData_trMaxJtpt_jet55_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght); 
         }
 	  }
 	  if(calopt_1[g]/pfpt_1[g] > 0.85){
@@ -967,6 +1009,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
+             hData_trMaxJtpt_jet55_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght);              
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
@@ -988,6 +1032,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 
+             hData_trMaxJtpt_jet55_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght);             
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand >= 0.05) {
@@ -1049,6 +1095,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet65_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);              
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] > 0.85) {
@@ -1070,6 +1118,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet65_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05) {
@@ -1091,6 +1141,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet65_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght); 
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand >= 0.05){
@@ -1148,6 +1200,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet80_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);              
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] > 0.85){
@@ -1169,6 +1223,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet80_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);              
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand < 0.05){
@@ -1190,6 +1246,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet80_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);              
         }	    
 	  }
 	  if(calopt_1[g]/pfpt_1[g] <= 0.5 && eMax_1[g]/Sumcand >= 0.05){
@@ -1253,7 +1311,9 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_eSumJtpt_jet55_keep[cBin]->Fill(eSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_neSumJtpt_jet55_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
              hData_phSumJtpt_jet55_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], Jet55_prescl* wght);
-             hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 	      
+             hData_muSumJtpt_jet55_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], Jet55_prescl* wght); 	   
+             hData_trMaxJtpt_jet55_Unmatched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght);
+             hData_trMaxJtpt_Unmatched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], Jet55_prescl* wght);                
 	      }
 	  }
 	  else{
@@ -1298,6 +1358,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet65_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet65_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet65_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet65_Unmatched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Unmatched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);              
         }	    
 	    }
 	  else {
@@ -1342,6 +1404,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hData_neSumJtpt_jet80_keep[cBin]->Fill(neSum_1[g]/pfpt_1[g], wght);
              hData_phSumJtpt_jet80_keep[cBin]->Fill(phSum_1[g]/pfpt_1[g], wght);
              hData_muSumJtpt_jet80_keep[cBin]->Fill(muSum_1[g]/pfpt_1[g], wght); 
+             hData_trMaxJtpt_jet80_Unmatched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);
+             hData_trMaxJtpt_Unmatched_keep[cBin]->Fill(trMax_1[g]/pfpt_1[g], wght);              
         }	    
 	 }
 	  else{
@@ -1485,19 +1549,25 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
-	
+    if(pfpt_2[g]>pfptmin){
+             hMC_trMaxJtpt_Matched_NoTrig_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight); 
+    }	  
 	}
 	if(calopt_2[g]/pfpt_2[g] > 0.85) {
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
-	
+    if(pfpt_2[g]>pfptmin){
+             hMC_trMaxJtpt_Matched_NoTrig_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight); 
+    }	
 	}
 	if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
-	
+    if(pfpt_2[g]>pfptmin){
+             hMC_trMaxJtpt_Matched_NoTrig_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight); 
+    }	
 	}
 
 	hpbpb_MC_noCut[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1538,6 +1608,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
              hMC_muSumJtpt_jet55_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g],weight); 
+             hMC_trMaxJtpt_jet55_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);             
     }	    
 	  }
 	  if(calopt_2[g]/pfpt_2[g] > 0.85) {
@@ -1571,6 +1643,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
              hMC_muSumJtpt_jet55_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g],weight);  
+             hMC_trMaxJtpt_jet55_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);              
     }
 	
 	  }
@@ -1605,6 +1679,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
              hMC_muSumJtpt_jet55_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g],weight); 
+             hMC_trMaxJtpt_jet55_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);              
     }
 	
 	  }
@@ -1678,6 +1754,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+             hMC_trMaxJtpt_jet65_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);              
         }	
 	  }
 	  if(calopt_2[g]/pfpt_2[g] > 0.85) {
@@ -1711,6 +1789,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+             hMC_trMaxJtpt_jet65_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);              
         }	
 	  }
 	  if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
@@ -1744,6 +1824,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+             hMC_trMaxJtpt_jet65_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);              
         }	
 	  }
 
@@ -1819,6 +1901,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+              hMC_trMaxJtpt_jet80_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);             
         }	
 	  }
 	  if(calopt_2[g]/pfpt_2[g] > 0.85) {
@@ -1853,6 +1937,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+             hMC_trMaxJtpt_jet80_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);              
         }
 	  }
 	  if(calopt_2[g]/pfpt_2[g] <= 0.5 && eMax_2[g]/Sumcand < 0.05) {
@@ -1887,6 +1973,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+             hMC_trMaxJtpt_jet80_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Matched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);              
         }
 	  }
       
@@ -1933,7 +2021,9 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 	  hpbpb_gen[cBin]->Fill(pfrefpt_2[refid], weight);
 	  hpbpb_reco[cBin]->Fill(pfpt_2[g], weight);
 	  hpbpb_matrix[cBin]->Fill(pfrefpt_2[refid], pfpt_2[g], weight);
-
+    if(pfpt_2[g]>pfptmin){
+             hMC_trMaxJtpt_Unmatched_NoTrig_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight); 
+    }
 	}
 
 	hpbpb_MC_noCut[cBin]->Fill(pfrefpt_2[refid], weight);
@@ -1971,6 +2061,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet55_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g],weight);
              hMC_phSumJtpt_jet55_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g],weight);
              hMC_muSumJtpt_jet55_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g],weight); 
+              hMC_trMaxJtpt_jet55_Unmatched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Unmatched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);             
     }
     	    
 
@@ -2028,6 +2120,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet65_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet65_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet65_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+              hMC_trMaxJtpt_jet65_Unmatched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Unmatched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);             
         }
 	  }
 	  else{
@@ -2082,6 +2176,8 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
              hMC_neSumJtpt_jet80_keep[cBin]->Fill(neSum_2[g]/pfpt_2[g], weight);
              hMC_phSumJtpt_jet80_keep[cBin]->Fill(phSum_2[g]/pfpt_2[g], weight);
              hMC_muSumJtpt_jet80_keep[cBin]->Fill(muSum_2[g]/pfpt_2[g], weight); 
+              hMC_trMaxJtpt_jet80_Unmatched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);
+             hMC_trMaxJtpt_Unmatched_keep[cBin]->Fill(trMax_2[g]/pfpt_2[g], weight);             
         }
 	  }else{
 	   hMC_unmatched_Jet80_CutA_rej->Fill(pfrefpt_2[refid], weight);
@@ -2229,7 +2325,7 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
   }
 #endif
 
-  TFile fout(Form("%s_TTree_PbPb_Data_MC_subid0_spectra_JetID_CutA_finebins_%s_R0p%d_test.root",ntuple,etaWidth,radius),"RECREATE");
+  TFile fout(Form("%s_TTree_PbPb_Data_MC_subid0_spectra_JetID_CutA_finebins_%s_R0p%d.root",ntuple,etaWidth,radius),"RECREATE");
   fout.cd();
   
   for(int i = 0;i<nbins_cent;++i){
@@ -2575,7 +2671,29 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
     hData_trMaxJtpt_jet80_keep[i]->Write();
     hMC_trMaxJtpt_jet80_keep[i]->Write();
 //    hData_trSumJtpt_jet80_keep[i]->Write();
-//    hMC_trSumJtpt_jet80_keep[i]->Write();             
+//    hMC_trSumJtpt_jet80_keep[i]->Write();   
+  hMC_trMaxJtpt_Matched_NoTrig_keep[i]->Write();
+hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->Write();
+
+
+  hData_trMaxJtpt_Matched_keep[i]->Write();
+hMC_trMaxJtpt_Matched_keep[i]->Write();
+  hData_trMaxJtpt_Unmatched_keep[i]->Write();
+hMC_trMaxJtpt_Unmatched_keep[i]->Write();
+  hData_trMaxJtpt_jet55_Matched_keep[i]->Write();
+hMC_trMaxJtpt_jet55_Matched_keep[i]->Write();
+  hData_trMaxJtpt_jet55_Unmatched_keep[i]->Write();
+hMC_trMaxJtpt_jet55_Unmatched_keep[i]->Write();
+  hData_trMaxJtpt_jet65_Matched_keep[i]->Write();
+hMC_trMaxJtpt_jet65_Matched_keep[i]->Write();
+  hData_trMaxJtpt_jet65_Unmatched_keep[i]->Write();
+hMC_trMaxJtpt_jet65_Unmatched_keep[i]->Write();
+  hData_trMaxJtpt_jet80_Matched_keep[i]->Write();
+hMC_trMaxJtpt_jet80_Matched_keep[i]->Write();
+  hData_trMaxJtpt_jet80_Unmatched_keep[i]->Write();
+hMC_trMaxJtpt_jet80_Unmatched_keep[i]->Write();
+  hMC_trMaxJtpt_Matched_NoTrig_keep[i]->Write();
+hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->Write();          
   }
 
 
@@ -5654,5 +5772,408 @@ void RAA_read_jetIDVariables(char* etaWidth = (char*)"20_eta_20",
 //     
 //     ctrSumJtpt_80_keep[i]->SaveAs(Form("Plots/trSumJtpt_80_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
 // 
-//   }     
+//   } 
+  TCanvas * ctrMaxJtpt_Matched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_Matched_keep[i] = new TCanvas(Form("ctrMaxJtpt_Matched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_Matched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_Matched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_Matched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_Matched_keep[i]->Print("base");
+    hMC_trMaxJtpt_Matched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55||jet65||jet80, pass CutA ",radius));
+    nMC_trMaxJtpt_Matched_keep[i]=hMC_trMaxJtpt_Matched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_Matched_keep[i]>0){
+       hMC_trMaxJtpt_Matched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_Matched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_Matched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_Matched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_Matched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_Matched_keep[i]=hData_trMaxJtpt_Matched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_Matched_keep[i]>0){
+      if(nMC_trMaxJtpt_Matched_keep[i]<=0){
+        hData_trMaxJtpt_Matched_keep[i]->Print("base");
+        hData_trMaxJtpt_Matched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55||jet65||jet80, matched pass CutA ",radius));      
+        hData_trMaxJtpt_Matched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_Matched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_Matched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_Matched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_Matched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_Matched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_Matched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_Matched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+
+  TCanvas * ctrMaxJtpt_jet55_Matched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_jet55_Matched_keep[i] = new TCanvas(Form("ctrMaxJtpt_jet55_Matched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_jet55_Matched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_jet55_Matched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_jet55_Matched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_jet55_Matched_keep[i]->Print("base");
+    hMC_trMaxJtpt_jet55_Matched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_jet55_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, matched pass CutA ",radius));
+    nMC_trMaxJtpt_jet55_Matched_keep[i]=hMC_trMaxJtpt_jet55_Matched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_jet55_Matched_keep[i]>0){
+       hMC_trMaxJtpt_jet55_Matched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_jet55_Matched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_jet55_Matched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_jet55_Matched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_jet55_Matched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_jet55_Matched_keep[i]=hData_trMaxJtpt_jet55_Matched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_jet55_Matched_keep[i]>0){
+      if(nMC_trMaxJtpt_jet55_Matched_keep[i]<=0){
+        hData_trMaxJtpt_jet55_Matched_keep[i]->Print("base");
+        hData_trMaxJtpt_jet55_Matched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_jet55_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, matched pass CutA ",radius));      
+        hData_trMaxJtpt_jet55_Matched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_jet55_Matched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_jet55_Matched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_jet55_Matched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_jet55_Matched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_jet55_Matched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_jet55_Matched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet55_Matched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+  TCanvas * ctrMaxJtpt_jet65_Matched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_jet65_Matched_keep[i] = new TCanvas(Form("ctrMaxJtpt_jet65_Matched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_jet65_Matched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_jet65_Matched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_jet65_Matched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_jet65_Matched_keep[i]->Print("base");
+    hMC_trMaxJtpt_jet65_Matched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_jet65_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, matched pass CutA ",radius));
+    nMC_trMaxJtpt_jet65_Matched_keep[i]=hMC_trMaxJtpt_jet65_Matched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_jet65_Matched_keep[i]>0){
+       hMC_trMaxJtpt_jet65_Matched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_jet65_Matched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_jet65_Matched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_jet65_Matched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_jet65_Matched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_jet65_Matched_keep[i]=hData_trMaxJtpt_jet65_Matched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_jet65_Matched_keep[i]>0){
+      if(nMC_trMaxJtpt_jet65_Matched_keep[i]<=0){
+        hData_trMaxJtpt_jet65_Matched_keep[i]->Print("base");
+        hData_trMaxJtpt_jet65_Matched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_jet65_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, matched pass CutA ",radius));      
+        hData_trMaxJtpt_jet65_Matched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_jet65_Matched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_jet65_Matched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_jet65_Matched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_jet65_Matched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_jet65_Matched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_jet65_Matched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet65_Matched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+  TCanvas * ctrMaxJtpt_jet80_Matched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_jet80_Matched_keep[i] = new TCanvas(Form("ctrMaxJtpt_jet80_Matched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_jet80_Matched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_jet80_Matched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_jet80_Matched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_jet80_Matched_keep[i]->Print("base");
+    hMC_trMaxJtpt_jet80_Matched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_jet80_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, matched pass CutA ",radius));
+    nMC_trMaxJtpt_jet80_Matched_keep[i]=hMC_trMaxJtpt_jet80_Matched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_jet80_Matched_keep[i]>0){
+       hMC_trMaxJtpt_jet80_Matched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_jet80_Matched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_jet80_Matched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_jet80_Matched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_jet80_Matched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_jet80_Matched_keep[i]=hData_trMaxJtpt_jet80_Matched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_jet80_Matched_keep[i]>0){
+      if(nMC_trMaxJtpt_jet80_Matched_keep[i]<=0){
+        hData_trMaxJtpt_jet80_Matched_keep[i]->Print("base");
+        hData_trMaxJtpt_jet80_Matched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_jet80_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, matched pass CutA ",radius));      
+        hData_trMaxJtpt_jet80_Matched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_jet80_Matched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_jet80_Matched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_jet80_Matched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_jet80_Matched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_jet80_Matched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_jet80_Matched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet80_Matched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+  TCanvas * ctrMaxJtpt_Unmatched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_Unmatched_keep[i] = new TCanvas(Form("ctrMaxJtpt_Unmatched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_Unmatched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_Unmatched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_Unmatched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_Unmatched_keep[i]->Print("base");
+    hMC_trMaxJtpt_Unmatched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55||jet65||jet80, pass CutA ",radius));
+    nMC_trMaxJtpt_Unmatched_keep[i]=hMC_trMaxJtpt_Unmatched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_Unmatched_keep[i]>0){
+       hMC_trMaxJtpt_Unmatched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_Unmatched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_Unmatched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_Unmatched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_Unmatched_keep[i]=hData_trMaxJtpt_Unmatched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_Unmatched_keep[i]>0){
+      if(nMC_trMaxJtpt_Unmatched_keep[i]<=0){
+        hData_trMaxJtpt_Unmatched_keep[i]->Print("base");
+        hData_trMaxJtpt_Unmatched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55||jet65||jet80, Unmatched pass CutA ",radius));      
+        hData_trMaxJtpt_Unmatched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_Unmatched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_Unmatched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_Unmatched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_Unmatched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_Unmatched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_Unmatched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+
+  TCanvas * ctrMaxJtpt_jet55_Unmatched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_jet55_Unmatched_keep[i] = new TCanvas(Form("ctrMaxJtpt_jet55_Unmatched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_jet55_Unmatched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_jet55_Unmatched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_jet55_Unmatched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_jet55_Unmatched_keep[i]->Print("base");
+    hMC_trMaxJtpt_jet55_Unmatched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_jet55_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, pass CutA ",radius));
+    nMC_trMaxJtpt_jet55_Unmatched_keep[i]=hMC_trMaxJtpt_jet55_Unmatched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_jet55_Unmatched_keep[i]>0){
+       hMC_trMaxJtpt_jet55_Unmatched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_jet55_Unmatched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_jet55_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_jet55_Unmatched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_jet55_Unmatched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_jet55_Unmatched_keep[i]=hData_trMaxJtpt_jet55_Unmatched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_jet55_Unmatched_keep[i]>0){
+      if(nMC_trMaxJtpt_jet55_Unmatched_keep[i]<=0){
+        hData_trMaxJtpt_jet55_Unmatched_keep[i]->Print("base");
+        hData_trMaxJtpt_jet55_Unmatched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_jet55_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet55, Unmatched pass CutA ",radius));      
+        hData_trMaxJtpt_jet55_Unmatched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_jet55_Unmatched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_jet55_Unmatched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_jet55_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_jet55_Unmatched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_jet55_Unmatched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_jet55_Unmatched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet55_Unmatched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+  TCanvas * ctrMaxJtpt_jet65_Unmatched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_jet65_Unmatched_keep[i] = new TCanvas(Form("ctrMaxJtpt_jet65_Unmatched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_jet65_Unmatched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_jet65_Unmatched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_jet65_Unmatched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_jet65_Unmatched_keep[i]->Print("base");
+    hMC_trMaxJtpt_jet65_Unmatched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_jet65_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, Unmatched pass CutA ",radius));
+    nMC_trMaxJtpt_jet65_Unmatched_keep[i]=hMC_trMaxJtpt_jet65_Unmatched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_jet65_Unmatched_keep[i]>0){
+       hMC_trMaxJtpt_jet65_Unmatched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_jet65_Unmatched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_jet65_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_jet65_Unmatched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_jet65_Unmatched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_jet65_Unmatched_keep[i]=hData_trMaxJtpt_jet65_Unmatched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_jet65_Unmatched_keep[i]>0){
+      if(nMC_trMaxJtpt_jet65_Unmatched_keep[i]<=0){
+        hData_trMaxJtpt_jet65_Unmatched_keep[i]->Print("base");
+        hData_trMaxJtpt_jet65_Unmatched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_jet65_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) jet65, Unmatched pass CutA ",radius));      
+        hData_trMaxJtpt_jet65_Unmatched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_jet65_Unmatched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_jet65_Unmatched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_jet65_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_jet65_Unmatched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_jet65_Unmatched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_jet65_Unmatched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet65_Unmatched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+  TCanvas * ctrMaxJtpt_jet80_Unmatched_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_jet80_Unmatched_keep[i] = new TCanvas(Form("ctrMaxJtpt_jet80_Unmatched_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_jet80_Unmatched_keep[i]->SetLogy();
+    hMC_trMaxJtpt_jet80_Unmatched_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_jet80_Unmatched_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_jet80_Unmatched_keep[i]->Print("base");
+    hMC_trMaxJtpt_jet80_Unmatched_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_jet80_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, unmatched pass CutA ",radius));
+    nMC_trMaxJtpt_jet80_Unmatched_keep[i]=hMC_trMaxJtpt_jet80_Unmatched_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_jet80_Unmatched_keep[i]>0){
+       hMC_trMaxJtpt_jet80_Unmatched_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_jet80_Unmatched_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_jet80_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_jet80_Unmatched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_jet80_Unmatched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_jet80_Unmatched_keep[i]=hData_trMaxJtpt_jet80_Unmatched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_jet80_Unmatched_keep[i]>0){
+      if(nMC_trMaxJtpt_jet80_Unmatched_keep[i]<=0){
+        hData_trMaxJtpt_jet80_Unmatched_keep[i]->Print("base");
+        hData_trMaxJtpt_jet80_Unmatched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_jet80_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}) 80, unmatched pass CutA ",radius));      
+        hData_trMaxJtpt_jet80_Unmatched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_jet80_Unmatched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_jet80_Unmatched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_jet80_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_jet80_Unmatched_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_jet80_Unmatched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_jet80_Unmatched_keep[i]->SaveAs(Form("Plots/trMaxJtpt_jet80_Unmatched_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+  TCanvas * ctrMaxJtpt_Matched_NoTrig_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_Matched_NoTrig_keep[i] = new TCanvas(Form("ctrMaxJtpt_Matched_NoTrig_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_Matched_NoTrig_keep[i]->SetLogy();
+    hMC_trMaxJtpt_Matched_NoTrig_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_Matched_NoTrig_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_Matched_NoTrig_keep[i]->Print("base");
+    hMC_trMaxJtpt_Matched_NoTrig_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_Matched_NoTrig_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}), pass CutA ",radius));
+    nMC_trMaxJtpt_Matched_NoTrig_keep[i]=hMC_trMaxJtpt_Matched_NoTrig_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_Matched_NoTrig_keep[i]>0){
+       hMC_trMaxJtpt_Matched_NoTrig_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_Matched_NoTrig_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_Matched_NoTrig_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_Matched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_Matched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_Matched_keep[i]=hData_trMaxJtpt_Matched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_Matched_keep[i]>0){
+      if(nMC_trMaxJtpt_Matched_keep[i]<=0){
+        hData_trMaxJtpt_Matched_keep[i]->Print("base");
+        hData_trMaxJtpt_Matched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_Matched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}), matched pass CutA ",radius));      
+        hData_trMaxJtpt_Matched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_Matched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_Matched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_Matched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_Matched_NoTrig_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_Matched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_Matched_NoTrig_keep[i]->SaveAs(Form("Plots/trMaxJtpt_Matched_NoTrig_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }
+   TCanvas * ctrMaxJtpt_Unmatched_NoTrig_keep[nbins_cent];
+  
+  for(int i = 0 ; i < nbins_cent ; ++i){
+
+    ctrMaxJtpt_Unmatched_NoTrig_keep[i] = new TCanvas(Form("ctrMaxJtpt_Unmatched_NoTrig_keep_cent%d",i),"",800,600);
+    ctrMaxJtpt_Unmatched_NoTrig_keep[i]->SetLogy();
+    hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->SetMarkerColor(kRed);
+    hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->SetMarkerStyle(25);
+    hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->Print("base");
+    hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->SetTitle(" ");
+    hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}), pass CutA ",radius));
+    nMC_trMaxJtpt_Unmatched_NoTrig_keep[i]=hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->GetEntries();
+    if (nMC_trMaxJtpt_Unmatched_NoTrig_keep[i]>0){
+       hMC_trMaxJtpt_Unmatched_NoTrig_keep[i]->DrawNormalized();
+    } else { cout<<"hMC_trMaxJtpt_Unmatched_NoTrig_keep[i] for i= "<<i<<" has "<<nMC_trMaxJtpt_Unmatched_NoTrig_keep[i]<<" entries and is not drawn"<<endl; }
+
+    hData_trMaxJtpt_Unmatched_keep[i]->SetMarkerStyle(24);
+    hData_trMaxJtpt_Unmatched_keep[i]->SetMarkerColor(kBlack);
+    nData_trMaxJtpt_Unmatched_keep[i]=hData_trMaxJtpt_Unmatched_keep[i]->GetEntries();
+    if (nData_trMaxJtpt_Unmatched_keep[i]>0){
+      if(nMC_trMaxJtpt_Unmatched_NoTrig_keep[i]<=0){
+        hData_trMaxJtpt_Unmatched_keep[i]->Print("base");
+        hData_trMaxJtpt_Unmatched_keep[i]->SetTitle(" ");
+        hData_trMaxJtpt_Unmatched_keep[i]->SetXTitle(Form("trMax/(ak%dPuPF jet p_{T}), Unmatched pass CutA ",radius));      
+        hData_trMaxJtpt_Unmatched_keep[i]->DrawNormalized();
+      } else {
+      hData_trMaxJtpt_Unmatched_keep[i]->DrawNormalized("same");
+      }
+    } else { cout<<"hData_trMaxJtpt_Unmatched_keep[i] for i= "<<i<<" has "<<nData_trMaxJtpt_Unmatched_keep[i]<<" entries and is not drawn"<<endl; }      
+    drawText(Form("%2.0f-%2.0f%%",2.5*boundaries_cent[i],2.5*boundaries_cent[i+1]),0.8,0.8,16);
+
+    TLegend * leg = myLegend(0.15,0.15,0.3,0.3);
+    leg->AddEntry(hMC_trMaxJtpt_Unmatched_NoTrig_keep[0],"MC","pl");
+    leg->AddEntry(hData_trMaxJtpt_Unmatched_keep[0],"Data","pl");
+    leg->SetTextSize(0.04);
+    leg->Draw();
+    
+    ctrMaxJtpt_Unmatched_NoTrig_keep[i]->SaveAs(Form("Plots/trMaxJtpt_Unmatched_NoTrig_keep_cent%deMax_MCweight_R%d.pdf",i,radius),"RECREATE");
+
+  }   
+    
 }
