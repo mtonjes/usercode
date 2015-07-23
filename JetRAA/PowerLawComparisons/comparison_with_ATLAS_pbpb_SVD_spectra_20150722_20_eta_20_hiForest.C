@@ -1,0 +1,1906 @@
+// root -l -q -b PowerLawFitRatio_ATLASpp.C+
+//MIT VERSION UPDATED May 19 2015 for MinBias subtraction MBT
+#include <iostream>
+#include <stdio.h>
+#include <fstream>
+#include <fstream>
+#include <TH1F.h>
+#include <TH1F.h>
+#include <TH2F.h>
+#include <TFile.h>
+#include <TTree.h>
+#include <TF1.h>
+#include <TCanvas.h>
+#include <TLegend.h>
+#include <TGraphErrors.h>
+#include <TGraphAsymmErrors.h>
+#include <TH1.h>
+#include <TH2.h>
+#include <TH3.h>
+#include <TFile.h>
+#include <TStyle.h>
+#include <TStopwatch.h>
+#include <TRandom3.h>
+#include <TChain.h>
+#include <TProfile.h>
+#include <TStopwatch.h>
+#include <TCut.h>
+#include <cstdlib>
+#include <cmath>
+#include "TLegend.h"
+#include "TLatex.h"
+#include "TMath.h"
+#include "TLine.h"
+
+#define pi 3.14159265
+
+#include "/net/hisrv0001/home/belt/wrk/JetRAA/RaghavCode/Headers/plot.h"
+
+void comparison_with_ATLAS_pbpb_SVD_spectra_20150722_20_eta_20_hiForest(Int_t nfit=6, Int_t FitStart=50, Int_t FitEnd=450)
+{
+bool doScale=false;
+float ScaleFactor=145./140.;
+  TH1::SetDefaultSumw2();
+  gStyle->SetOptStat(00000000);
+  TH1F * PbPbATLAS_c0, PbPbCMS_c0, PbPbATLAS_c1, PbPbCMS_c1, PbPbATLAS_c2, PbPbCMS_c2, PbPbATLAS_c3, PbPbCMS_c3, PbPbATLAS_c4, PbPbCMS_c4, PbPbATLAS_c5, PbPbCMS_c5;
+   TF1 *fitPbPbATLAS_c0 = new TF1("fitPbPbATLAS_c0","[0]*pow(x+[2],[1])"); //create function
+   fitPbPbATLAS_c0->SetParameters(1e10,-5,0);
+   fitPbPbATLAS_c0->SetLineColor(kRed);   
+   TF1 *fitPbPbATLAS_c1 = new TF1("fitPbPbATLAS_c1","[0]*pow(x+[2],[1])"); //create function
+   fitPbPbATLAS_c1->SetParameters(1e10,-5,0);
+   fitPbPbATLAS_c1->SetLineColor(kRed);   
+   TF1 *fitPbPbATLAS_c2 = new TF1("fitPbPbATLAS_c2","[0]*pow(x+[2],[1])"); //create function
+   fitPbPbATLAS_c2->SetParameters(1e10,-5,0);
+   fitPbPbATLAS_c2->SetLineColor(kRed);   
+   TF1 *fitPbPbATLAS_c3 = new TF1("fitPbPbATLAS_c3","[0]*pow(x+[2],[1])"); //create function
+   fitPbPbATLAS_c3->SetParameters(1e10,-5,0);
+   fitPbPbATLAS_c3->SetLineColor(kRed);   
+   TF1 *fitPbPbATLAS_c4 = new TF1("fitPbPbATLAS_c4","[0]*pow(x+[2],[1])"); //create function
+   fitPbPbATLAS_c4->SetParameters(1e10,-5,0);
+   fitPbPbATLAS_c4->SetLineColor(kRed);   
+   TF1 *fitPbPbATLAS_c5 = new TF1("fitPbPbATLAS_c5","[0]*pow(x+[2],[1])"); //create function
+   fitPbPbATLAS_c5->SetParameters(1e10,-5,0);
+   fitPbPbATLAS_c5->SetLineColor(kRed);    
+// set up a blank ratio histogram for later
+   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,65,300);
+   hRatioBlank->SetMinimum(0);
+   hRatioBlank->SetMaximum(1.2);
+   hRatioBlank->SetDirectory(0);
+   hRatioBlank->SetStats(0);
+   hRatioBlank->SetFillColor(1);
+   hRatioBlank->SetFillStyle(0);
+   hRatioBlank->SetLineStyle(0);
+   hRatioBlank->SetMarkerStyle(20);
+   hRatioBlank->SetMarkerSize(1);
+   hRatioBlank->GetXaxis()->SetTitle("ak R=0.4 Jet p_{T} (GeV/c)");
+   hRatioBlank->GetXaxis()->SetLabelFont(42);
+   hRatioBlank->GetXaxis()->SetLabelOffset(0.01);
+   hRatioBlank->GetXaxis()->SetLabelSize(0.045);
+   hRatioBlank->GetXaxis()->SetTitleSize(0.055);
+   hRatioBlank->GetXaxis()->SetTitleFont(42);
+   hRatioBlank->GetYaxis()->SetTitle("CMS/ATLAS");
+   hRatioBlank->GetYaxis()->SetLabelFont(42);
+   hRatioBlank->GetYaxis()->SetLabelOffset(0.01);
+   hRatioBlank->GetYaxis()->SetLabelSize(0.045);
+   hRatioBlank->GetYaxis()->SetTitleSize(0.055);
+   hRatioBlank->GetYaxis()->SetTitleOffset(1.5);
+   hRatioBlank->GetYaxis()->SetTitleFont(42);
+   hRatioBlank->GetZaxis()->SetLabelFont(42);
+   hRatioBlank->GetZaxis()->SetLabelSize(0.045);
+   hRatioBlank->GetZaxis()->SetTitleSize(0.035);
+   hRatioBlank->GetZaxis()->SetTitleFont(42);
+// now plot and fit spectra (only fit ATLAS)      
+//=========Macro generated from canvas: cATLAS_pbpb/
+//=========  (Wed Jul 22 23:01:26 2015) by ROOT version5.32/00
+   TCanvas *cATLAS_pbpb = new TCanvas("cATLAS_pbpb", "",0,0,1200,1000);
+   gStyle->SetOptFit(1);
+   gStyle->SetOptStat(0);
+   gStyle->SetOptTitle(0);
+   cATLAS_pbpb->Range(0,0,1,1);
+   cATLAS_pbpb->SetFillColor(0);
+   cATLAS_pbpb->SetBorderMode(0);
+   cATLAS_pbpb->SetBorderSize(2);
+   cATLAS_pbpb->SetFrameBorderMode(0);
+  
+// ------------>Primitives in pad: p_0_0
+   TPad *p_0_0 = new TPad("p_0_0", "p_0_0",0,0.5224719,0.3759095,1);
+   p_0_0->Draw();
+   p_0_0->cd();
+   p_0_0->Range(0,0,1,1);
+   p_0_0->SetFillColor(0);
+   p_0_0->SetBorderMode(0);
+   p_0_0->SetBorderSize(2);
+   p_0_0->SetLeftMargin(0.2);
+   p_0_0->SetRightMargin(0);
+   p_0_0->SetTopMargin(0.07);
+   p_0_0->SetBottomMargin(0);
+   p_0_0->SetFrameBorderMode(0);
+   p_0_0->Modified();
+   cATLAS_pbpb->cd();
+  
+// ------------>Primitives in pad: p_0_1
+   p_0_1 = new TPad("p_0_1", "p_0_1",0,0,0.3759095,0.5224719);
+   p_0_1->Draw();
+   p_0_1->cd();
+   p_0_1->Range(-12.5,-8.588235,350,2);
+   p_0_1->SetFillColor(0);
+   p_0_1->SetBorderMode(0);
+   p_0_1->SetBorderSize(2);
+   p_0_1->SetLogy();
+   p_0_1->SetLeftMargin(0.2);
+   p_0_1->SetRightMargin(0);
+   p_0_1->SetTopMargin(0);
+   p_0_1->SetBottomMargin(0.15);
+   p_0_1->SetFrameBorderMode(0);
+   p_0_1->SetFrameBorderMode(0);
+   
+   TGraphAsymmErrors *grae = new TGraphAsymmErrors(10);
+   grae->SetName("/HepData/8719/d10x1y1");
+   grae->SetTitle("  ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(33);
+   grae->SetMarkerSize(1);
+   grae->SetPoint(0,44.5,30.15873);
+   grae->SetPointError(0,5.5,5.5,2.361534e-05,2.361534e-05);
+   grae->SetPoint(1,56.5,10.75397);
+   grae->SetPointError(1,6.5,6.5,9.526565e-06,9.526565e-06);
+   grae->SetPoint(2,71,3.27381);
+   grae->SetPointError(2,8,8,3.137951e-06,3.137951e-06);
+   grae->SetPoint(3,89.5,0.9166667);
+   grae->SetPointError(3,10.5,10.5,8.184966e-07,8.184966e-07);
+   grae->SetPoint(4,112.5,0.2460317);
+   grae->SetPointError(4,12.5,12.5,2.081612e-07,2.081612e-07);
+   grae->SetPoint(5,141.5,0.06388889);
+   grae->SetPointError(5,16.5,16.5,5.382411e-08,5.382411e-08);
+   grae->SetPoint(6,178.5,0.01515873);
+   grae->SetPointError(6,20.5,20.5,1.317296e-08,1.317296e-08);
+   grae->SetPoint(7,225,0.003174603);
+   grae->SetPointError(7,26,26,2.853702e-09,2.853702e-09);
+   grae->SetPoint(8,283.5,0.000577381);
+   grae->SetPointError(8,32.5,32.5,5.391438e-10,5.391438e-10);
+   grae->SetPoint(9,357,9.226191e-05);
+   grae->SetPointError(9,41,41,8.978956e-11,8.978956e-11);
+   
+   TH1F *Graphd10x1y120 = new TH1F("Graphd10x1y120","  ",100,60,350);
+   Graphd10x1y120->SetMinimum(1e-07);
+   Graphd10x1y120->SetMaximum(100);
+   Graphd10x1y120->SetDirectory(0);
+   Graphd10x1y120->SetStats(0);
+
+   Int_t ci;   // for color index setting
+   ci = TColor::GetColor("#000099");
+   Graphd10x1y120->SetLineColor(ci);
+   Graphd10x1y120->GetXaxis()->SetLabelFont(42);
+   Graphd10x1y120->GetXaxis()->SetLabelSize(0.035);
+   Graphd10x1y120->GetXaxis()->SetTitleSize(0.035);
+   Graphd10x1y120->GetXaxis()->SetTitleFont(42);
+   Graphd10x1y120->GetYaxis()->SetLabelFont(42);
+   Graphd10x1y120->GetYaxis()->SetLabelSize(0.035);
+   Graphd10x1y120->GetYaxis()->SetTitleSize(0.035);
+   Graphd10x1y120->GetYaxis()->SetTitleFont(42);
+   Graphd10x1y120->GetZaxis()->SetLabelFont(42);
+   Graphd10x1y120->GetZaxis()->SetLabelSize(0.035);
+   Graphd10x1y120->GetZaxis()->SetTitleSize(0.035);
+   Graphd10x1y120->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd10x1y120);
+   Graphd10x1y120->Draw();
+   grae->Draw("ap");
+   
+   grae = new TGraphAsymmErrors(9);
+   grae->SetName("/HepData/8719/d11x1y1");
+   grae->SetTitle("  ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(34);
+   grae->SetMarkerSize(1);
+   grae->SetPoint(0,44.5,35.2963);
+   grae->SetPointError(0,5.5,5.5,1.607748e-05,1.607748e-05);
+   grae->SetPoint(1,56.5,12);
+   grae->SetPointError(1,6.5,6.5,6.086804e-06,6.086804e-06);
+   grae->SetPoint(2,71,3.62963);
+   grae->SetPointError(2,8,8,1.942527e-06,1.942527e-06);
+   grae->SetPoint(3,89.5,1.018519);
+   grae->SetPointError(3,10.5,10.5,5.289802e-07,5.289802e-07);
+   grae->SetPoint(4,112.5,0.2714815);
+   grae->SetPointError(4,12.5,12.5,1.358524e-07,1.358524e-07);
+   grae->SetPoint(5,141.5,0.06851852);
+   grae->SetPointError(5,16.5,16.5,3.374818e-08,3.374818e-08);
+   grae->SetPoint(6,178.5,0.01514815);
+   grae->SetPointError(6,20.5,20.5,7.763785e-09,7.763785e-09);
+   grae->SetPoint(7,225,0.002948148);
+   grae->SetPointError(7,26,26,1.594128e-09,1.594128e-09);
+   grae->SetPoint(8,283.5,0.0005);
+   grae->SetPointError(8,32.5,32.5,3.004713e-10,3.004713e-10);
+   
+   TH1F *Graphd11x1y121 = new TH1F("Graphd11x1y121","  ",100,11.3,343.7);
+   Graphd11x1y121->SetMinimum(0.0004499997);
+   Graphd11x1y121->SetMaximum(38.82589);
+   Graphd11x1y121->SetDirectory(0);
+   Graphd11x1y121->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graphd11x1y121->SetLineColor(ci);
+   Graphd11x1y121->GetXaxis()->SetLabelFont(42);
+   Graphd11x1y121->GetXaxis()->SetLabelSize(0.035);
+   Graphd11x1y121->GetXaxis()->SetTitleSize(0.035);
+   Graphd11x1y121->GetXaxis()->SetTitleFont(42);
+   Graphd11x1y121->GetYaxis()->SetLabelFont(42);
+   Graphd11x1y121->GetYaxis()->SetLabelSize(0.035);
+   Graphd11x1y121->GetYaxis()->SetTitleSize(0.035);
+   Graphd11x1y121->GetYaxis()->SetTitleFont(42);
+   Graphd11x1y121->GetZaxis()->SetLabelFont(42);
+   Graphd11x1y121->GetZaxis()->SetLabelSize(0.035);
+   Graphd11x1y121->GetZaxis()->SetTitleSize(0.035);
+   Graphd11x1y121->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd11x1y121);
+   
+   grae->Draw("p");
+   Double_t xAxis2087[15] = {50, 60, 70, 80, 90, 100, 110, 130, 150, 170, 190, 210, 240, 270, 300}; 
+   
+   TH1F *uPbPb_R4_SVD_cent3 = new TH1F("uPbPb_R4_SVD_cent3","Unfold Matrix refpt jtpt from trigger addition R4 20_eta_20 60 - 100 cent",14, xAxis2087);
+   uPbPb_R4_SVD_cent3->SetBinContent(0,295.2319);
+   uPbPb_R4_SVD_cent3->SetBinContent(1,10.43401);
+   uPbPb_R4_SVD_cent3->SetBinContent(2,4.206894);
+   uPbPb_R4_SVD_cent3->SetBinContent(3,2.069001);
+   uPbPb_R4_SVD_cent3->SetBinContent(4,1.048626);
+   uPbPb_R4_SVD_cent3->SetBinContent(5,0.5792734);
+   uPbPb_R4_SVD_cent3->SetBinContent(6,0.3224887);
+   uPbPb_R4_SVD_cent3->SetBinContent(7,0.1527033);
+   uPbPb_R4_SVD_cent3->SetBinContent(8,0.0594088);
+   uPbPb_R4_SVD_cent3->SetBinContent(9,0.02585106);
+   uPbPb_R4_SVD_cent3->SetBinContent(10,0.01209288);
+   uPbPb_R4_SVD_cent3->SetBinContent(11,0.005986578);
+   uPbPb_R4_SVD_cent3->SetBinContent(12,0.002710942);
+   uPbPb_R4_SVD_cent3->SetBinContent(13,0.00116525);
+   uPbPb_R4_SVD_cent3->SetBinContent(14,0.0005360441);
+   uPbPb_R4_SVD_cent3->SetBinContent(15,0.01585595);
+   uPbPb_R4_SVD_cent3->SetBinError(0,0.1846134);
+   uPbPb_R4_SVD_cent3->SetBinError(1,0.02252905);
+   uPbPb_R4_SVD_cent3->SetBinError(2,0.01903883);
+   uPbPb_R4_SVD_cent3->SetBinError(3,0.01208357);
+   uPbPb_R4_SVD_cent3->SetBinError(4,0.005767446);
+   uPbPb_R4_SVD_cent3->SetBinError(5,0.003113736);
+   uPbPb_R4_SVD_cent3->SetBinError(6,0.002080665);
+   uPbPb_R4_SVD_cent3->SetBinError(7,0.0009695176);
+   uPbPb_R4_SVD_cent3->SetBinError(8,0.0005000349);
+   uPbPb_R4_SVD_cent3->SetBinError(9,0.0002741175);
+   uPbPb_R4_SVD_cent3->SetBinError(10,0.0001676338);
+   uPbPb_R4_SVD_cent3->SetBinError(11,0.0001022772);
+   uPbPb_R4_SVD_cent3->SetBinError(12,4.559223e-05);
+   uPbPb_R4_SVD_cent3->SetBinError(13,2.576824e-05);
+   uPbPb_R4_SVD_cent3->SetBinError(14,1.684451e-05);
+   uPbPb_R4_SVD_cent3->SetBinError(15,0.0004334397);
+   uPbPb_R4_SVD_cent3->SetEntries(223);
+   uPbPb_R4_SVD_cent3->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   uPbPb_R4_SVD_cent3->SetLineColor(ci);
+
+   ci = TColor::GetColor("#0000ff");
+   uPbPb_R4_SVD_cent3->SetMarkerColor(ci);
+   uPbPb_R4_SVD_cent3->SetMarkerStyle(24);
+   uPbPb_R4_SVD_cent3->GetXaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent3->GetXaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent3->GetXaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent3->GetXaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent3->GetXaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent3->GetYaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent3->GetYaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent3->GetYaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent3->GetYaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent3->GetYaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent3->GetZaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent3->GetZaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent3->GetZaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent3->GetZaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent3->Draw("same");
+   TBox *box = new TBox(60,3.974138,70,4.43965);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(70,1.947511,80,2.19049);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(80,0.9889526,90,1.108299);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(90,0.5473815,100,0.6111653);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(100,0.3049321,110,0.3400454);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(110,0.1442348,130,0.1611717);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(130,0.05594718,150,0.06287042);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(150,0.02424779,170,0.02745432);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(170,0.01132143,190,0.01286433);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(190,0.00562372,210,0.006349436);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(210,0.002571617,240,0.002850267);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(240,0.001123318,270,0.001207183);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(270,0.0005227073,300,0.0005493808);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+
+// cent3
+   grae->SetHistogram(Graphd10x1y120);
+// ATLAS 30-40%, CMS 30-50%
+   TH1F *hRatioATLAS_cent3 = (TH1F*)uPbPb_R4_SVD_cent3->Clone("hRatioATLAS_cent3"); //clone histogram hRatio from h
+   for(int ia=0; ia<nfit; ++ia){
+     grae->Fit("fitPbPbATLAS_c5","LL","",FitStart,FitEnd); //fit function
+   } 
+   TH1F *hfunctionATLAS_cent3 = (TH1F*)functionHist(fitPbPbATLAS_c5,uPbPb_R4_SVD_cent3,"hfunctionATLAS_cent3");   
+    hRatioATLAS_cent3->Divide(hfunctionATLAS_cent3); 
+       
+   TLegend *leg = new TLegend(0.6,0.65,0.8,0.85,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   TLegendEntry *entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("/HepData/8719/d10x1y1","ATLAS 30-40%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(33);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("/HepData/8719/d11x1y1","ATLAS 40-50%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(34);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("uPbPb_R4_SVD_cent3","CMS 30-50%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+
+   ci = TColor::GetColor("#0000ff");
+   entry->SetMarkerColor(ci);
+   entry->SetMarkerStyle(24);
+   entry->SetMarkerSize(1);
+   leg->Draw();
+   
+   TPaveText *pt = new TPaveText(0.4766544,0.94,0.5233456,0.995,"blNDC");
+   pt->SetName("title");
+   pt->SetBorderSize(0);
+   pt->SetFillColor(0);
+   pt->SetFillStyle(0);
+   pt->SetTextFont(42);
+   TText *text = pt->AddText("  ");
+   pt->Draw();
+   p_0_1->Modified();
+   cATLAS_pbpb->cd();
+  
+// ------------>Primitives in pad: p_1_0
+   p_1_0 = new TPad("p_1_0", "p_1_0",0.3759095,0.5224719,0.6766371,1);
+   p_1_0->Draw();
+   p_1_0->cd();
+   p_1_0->Range(60,-7,350,2.677419);
+   p_1_0->SetFillColor(0);
+   p_1_0->SetBorderMode(0);
+   p_1_0->SetBorderSize(2);
+   p_1_0->SetLogy();
+   p_1_0->SetLeftMargin(0);
+   p_1_0->SetRightMargin(0);
+   p_1_0->SetTopMargin(0.07);
+   p_1_0->SetBottomMargin(0);
+   p_1_0->SetFrameBorderMode(0);
+   p_1_0->SetFrameBorderMode(0);
+   
+   grae = new TGraphAsymmErrors(8);
+   grae->SetName("/HepData/8719/d14x1y1");
+   grae->SetTitle(" ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(33);
+   grae->SetPoint(0,44.5,45);
+   grae->SetPointError(0,5.5,5.5,2.994659e-06,2.994659e-06);
+   grae->SetPoint(1,56.5,13.16667);
+   grae->SetPointError(1,6.5,6.5,9.421147e-07,9.421147e-07);
+   grae->SetPoint(2,71,3.854167);
+   grae->SetPointError(2,8,8,2.559744e-07,2.559744e-07);
+   grae->SetPoint(3,89.5,1.125);
+   grae->SetPointError(3,10.5,10.5,7.343752e-08,7.343752e-08);
+   grae->SetPoint(4,112.5,0.2904167);
+   grae->SetPointError(4,12.5,12.5,1.94353e-08,1.94353e-08);
+   grae->SetPoint(5,141.5,0.07083333);
+   grae->SetPointError(5,16.5,16.5,4.75353e-09,4.75353e-09);
+   grae->SetPoint(6,178.5,0.0155);
+   grae->SetPointError(6,20.5,20.5,1.080383e-09,1.080383e-09);
+   grae->SetPoint(7,225,0.003045833);
+   grae->SetPointError(7,26,26,2.318215e-10,2.318215e-10);
+   
+   TH1F *Graphd14x1y122 = new TH1F("Graphd14x1y122"," ",100,60,350);
+   Graphd14x1y122->SetMinimum(1e-07);
+   Graphd14x1y122->SetMaximum(100);
+   Graphd14x1y122->SetDirectory(0);
+   Graphd14x1y122->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graphd14x1y122->SetLineColor(ci);
+   Graphd14x1y122->GetXaxis()->SetLabelFont(42);
+   Graphd14x1y122->GetXaxis()->SetLabelSize(0.035);
+   Graphd14x1y122->GetXaxis()->SetTitleSize(0.035);
+   Graphd14x1y122->GetXaxis()->SetTitleFont(42);
+   Graphd14x1y122->GetYaxis()->SetLabelFont(42);
+   Graphd14x1y122->GetYaxis()->SetLabelSize(0.035);
+   Graphd14x1y122->GetYaxis()->SetTitleSize(0.035);
+   Graphd14x1y122->GetYaxis()->SetTitleFont(42);
+   Graphd14x1y122->GetZaxis()->SetLabelFont(42);
+   Graphd14x1y122->GetZaxis()->SetLabelSize(0.035);
+   Graphd14x1y122->GetZaxis()->SetTitleSize(0.035);
+   Graphd14x1y122->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd14x1y122);
+   
+   grae->Draw("ap");
+   Double_t xAxis2088[15] = {50, 60, 70, 80, 90, 100, 110, 130, 150, 170, 190, 210, 240, 270, 300}; 
+   
+   TH1F *uPbPb_R4_SVD_cent5 = new TH1F("uPbPb_R4_SVD_cent5","Unfold Matrix refpt jtpt from trigger addition R4 20_eta_20 140 - 180 cent",14, xAxis2088);
+   uPbPb_R4_SVD_cent5->SetBinContent(0,190.736);
+   uPbPb_R4_SVD_cent5->SetBinContent(1,13.65767);
+   uPbPb_R4_SVD_cent5->SetBinContent(2,5.0019);
+   uPbPb_R4_SVD_cent5->SetBinContent(3,2.310236);
+   uPbPb_R4_SVD_cent5->SetBinContent(4,1.139194);
+   uPbPb_R4_SVD_cent5->SetBinContent(5,0.6136845);
+   uPbPb_R4_SVD_cent5->SetBinContent(6,0.348672);
+   uPbPb_R4_SVD_cent5->SetBinContent(7,0.1660029);
+   uPbPb_R4_SVD_cent5->SetBinContent(8,0.06733724);
+   uPbPb_R4_SVD_cent5->SetBinContent(9,0.02847545);
+   uPbPb_R4_SVD_cent5->SetBinContent(10,0.01229976);
+   uPbPb_R4_SVD_cent5->SetBinContent(11,0.005390073);
+   uPbPb_R4_SVD_cent5->SetBinContent(12,0.002327062);
+   uPbPb_R4_SVD_cent5->SetBinContent(13,0.001010307);
+   uPbPb_R4_SVD_cent5->SetBinContent(14,0.0005139101);
+   uPbPb_R4_SVD_cent5->SetBinContent(15,0.01856586);
+   uPbPb_R4_SVD_cent5->SetBinError(0,0.6670098);
+   uPbPb_R4_SVD_cent5->SetBinError(1,0.2022294);
+   uPbPb_R4_SVD_cent5->SetBinError(2,0.0680692);
+   uPbPb_R4_SVD_cent5->SetBinError(3,0.05510674);
+   uPbPb_R4_SVD_cent5->SetBinError(4,0.02482752);
+   uPbPb_R4_SVD_cent5->SetBinError(5,0.01402716);
+   uPbPb_R4_SVD_cent5->SetBinError(6,0.009030463);
+   uPbPb_R4_SVD_cent5->SetBinError(7,0.004138646);
+   uPbPb_R4_SVD_cent5->SetBinError(8,0.002837934);
+   uPbPb_R4_SVD_cent5->SetBinError(9,0.00158972);
+   uPbPb_R4_SVD_cent5->SetBinError(10,0.0009315617);
+   uPbPb_R4_SVD_cent5->SetBinError(11,0.0005454021);
+   uPbPb_R4_SVD_cent5->SetBinError(12,0.0002738324);
+   uPbPb_R4_SVD_cent5->SetBinError(13,0.0001789341);
+   uPbPb_R4_SVD_cent5->SetBinError(14,0.000119822);
+   uPbPb_R4_SVD_cent5->SetBinError(15,0.002872315);
+   uPbPb_R4_SVD_cent5->SetEntries(223);
+   uPbPb_R4_SVD_cent5->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   uPbPb_R4_SVD_cent5->SetLineColor(ci);
+
+   ci = TColor::GetColor("#0000ff");
+   uPbPb_R4_SVD_cent5->SetMarkerColor(ci);
+   uPbPb_R4_SVD_cent5->SetMarkerStyle(24);
+   uPbPb_R4_SVD_cent5->GetXaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent5->GetXaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent5->GetXaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent5->GetXaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent5->GetXaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent5->GetYaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent5->GetYaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent5->GetYaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent5->GetYaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent5->GetYaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent5->GetZaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent5->GetZaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent5->GetZaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent5->GetZaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent5->Draw("same");
+   box = new TBox(60,4.861401,70,5.142398);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(70,2.248948,80,2.371524);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(80,1.107896,90,1.170492);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(90,0.5947044,100,0.6326646);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(100,0.3374075,110,0.3599365);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(110,0.1609266,130,0.1710791);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(130,0.06545184,150,0.06922263);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(150,0.02751875,170,0.02943216);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(170,0.01168494,190,0.01291457);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(190,0.005089429,210,0.005690718);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(210,0.002096736,240,0.002557387);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(240,0.0008366346,270,0.00118398);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(270,0.000412032,300,0.0006157883);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+// cent5
+   TH1F *hRatioATLAS_cent5 = (TH1F*)uPbPb_R4_SVD_cent5->Clone("hRatioATLAS_cent5"); //clone histogram hRatio from h
+   for(int ia=0; ia<nfit; ++ia){
+     grae->Fit("fitPbPbATLAS_c5","LL","",FitStart,FitEnd); //fit function
+   } 
+   TH1F *hfunctionATLAS_cent5 = (TH1F*)functionHist(fitPbPbATLAS_c5,uPbPb_R4_SVD_cent5,"hfunctionATLAS_cent5");   
+    hRatioATLAS_cent5->Divide(hfunctionATLAS_cent5); 
+       
+   leg = new TLegend(0.6,0.65,0.8,0.85,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("/HepData/8719/d14x1y1","ATLAS 70-80%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(33);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("uPbPb_R4_SVD_cent5","CMS 70-90%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+
+   ci = TColor::GetColor("#0000ff");
+   entry->SetMarkerColor(ci);
+   entry->SetMarkerStyle(24);
+   entry->SetMarkerSize(1);
+   leg->Draw();
+   
+   pt = new TPaveText(0.4830492,0.94,0.5169508,0.995,"blNDC");
+   pt->SetName("title");
+   pt->SetBorderSize(0);
+   pt->SetFillColor(0);
+   pt->SetFillStyle(0);
+   pt->SetTextFont(42);
+   text = pt->AddText(" ");
+   pt->Draw();
+   p_1_0->Modified();
+   cATLAS_pbpb->cd();
+  
+// ------------>Primitives in pad: p_1_1
+   p_1_1 = new TPad("p_1_1", "p_1_1",0.3759095,0,0.6766371,0.5224719);
+   p_1_1->Draw();
+   p_1_1->cd();
+   p_1_1->Range(60,-8.588235,350,2);
+   p_1_1->SetFillColor(0);
+   p_1_1->SetBorderMode(0);
+   p_1_1->SetBorderSize(2);
+   p_1_1->SetLogy();
+   p_1_1->SetLeftMargin(0);
+   p_1_1->SetRightMargin(0);
+   p_1_1->SetTopMargin(0);
+   p_1_1->SetBottomMargin(0.15);
+   p_1_1->SetFrameBorderMode(0);
+   p_1_1->SetFrameBorderMode(0);
+   
+   grae = new TGraphAsymmErrors(9);
+   grae->SetName("/HepData/8719/d8x1y1");
+   grae->SetTitle("  ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(33);
+   grae->SetPoint(0,56.5,8.870409);
+   grae->SetPointError(0,6.5,6.5,2.365369e-05,2.365369e-05);
+   grae->SetPoint(1,71,2.564103);
+   grae->SetPointError(1,8,8,7.716252e-06,7.716252e-06);
+   grae->SetPoint(2,89.5,0.7068607);
+   grae->SetPointError(2,10.5,10.5,1.792909e-06,1.792909e-06);
+   grae->SetPoint(3,112.5,0.1975052);
+   grae->SetPointError(3,12.5,12.5,5.048524e-07,5.048524e-07);
+   grae->SetPoint(4,141.5,0.05114345);
+   grae->SetPointError(4,16.5,16.5,1.218617e-07,1.218617e-07);
+   grae->SetPoint(5,178.5,0.01288981);
+   grae->SetPointError(5,20.5,20.5,3.001466e-08,3.001466e-08);
+   grae->SetPoint(6,225,0.002647263);
+   grae->SetPointError(6,26,26,6.65437e-09,6.65437e-09);
+   grae->SetPoint(7,283.5,0.0004830215);
+   grae->SetPointError(7,32.5,32.5,1.316242e-09,1.316242e-09);
+   grae->SetPoint(8,357,7.415107e-05);
+   grae->SetPointError(8,41,41,2.304577e-10,2.304577e-10);
+   
+   TH1F *Graphd8x1y123 = new TH1F("Graphd8x1y123","  ",100,60,350);
+   Graphd8x1y123->SetMinimum(1e-07);
+   Graphd8x1y123->SetMaximum(100);
+   Graphd8x1y123->SetDirectory(0);
+   Graphd8x1y123->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graphd8x1y123->SetLineColor(ci);
+   Graphd8x1y123->GetXaxis()->SetLabelFont(42);
+   Graphd8x1y123->GetXaxis()->SetLabelSize(0.035);
+   Graphd8x1y123->GetXaxis()->SetTitleSize(0.035);
+   Graphd8x1y123->GetXaxis()->SetTitleFont(42);
+   Graphd8x1y123->GetYaxis()->SetLabelFont(42);
+   Graphd8x1y123->GetYaxis()->SetLabelSize(0.035);
+   Graphd8x1y123->GetYaxis()->SetTitleSize(0.035);
+   Graphd8x1y123->GetYaxis()->SetTitleFont(42);
+   Graphd8x1y123->GetZaxis()->SetLabelFont(42);
+   Graphd8x1y123->GetZaxis()->SetLabelSize(0.035);
+   Graphd8x1y123->GetZaxis()->SetTitleSize(0.035);
+   Graphd8x1y123->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd8x1y123);
+   
+   grae->Draw("ap");
+   
+   grae = new TGraphAsymmErrors(9);
+   grae->SetName("/HepData/8719/d9x1y1");
+   grae->SetTitle("  ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(34);
+   grae->SetPoint(0,56.5,8.900344);
+   grae->SetPointError(0,6.5,6.5,1.355058e-05,1.355058e-05);
+   grae->SetPoint(1,71,2.966781);
+   grae->SetPointError(1,8,8,4.497138e-06,4.497138e-06);
+   grae->SetPoint(2,89.5,0.8075602);
+   grae->SetPointError(2,10.5,10.5,1.258835e-06,1.258835e-06);
+   grae->SetPoint(3,112.5,0.2199313);
+   grae->SetPointError(3,12.5,12.5,3.438945e-07,3.438945e-07);
+   grae->SetPoint(4,141.5,0.05704468);
+   grae->SetPointError(4,16.5,16.5,8.247878e-08,8.247878e-08);
+   grae->SetPoint(5,178.5,0.01317297);
+   grae->SetPointError(5,20.5,20.5,1.912115e-08,1.912115e-08);
+   grae->SetPoint(6,225,0.002760596);
+   grae->SetPointError(6,26,26,4.183832e-09,4.183832e-09);
+   grae->SetPoint(7,283.5,0.0005097366);
+   grae->SetPointError(7,32.5,32.5,8.232019e-10,8.232019e-10);
+   grae->SetPoint(8,357,8.281787e-05);
+   grae->SetPointError(8,41,41,1.46696e-10,1.46696e-10);
+   
+   TH1F *Graphd9x1y124 = new TH1F("Graphd9x1y124","  ",100,15.2,432.8);
+   Graphd9x1y124->SetMinimum(7.453595e-05);
+   Graphd9x1y124->SetMaximum(9.790385);
+   Graphd9x1y124->SetDirectory(0);
+   Graphd9x1y124->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graphd9x1y124->SetLineColor(ci);
+   Graphd9x1y124->GetXaxis()->SetLabelFont(42);
+   Graphd9x1y124->GetXaxis()->SetLabelSize(0.035);
+   Graphd9x1y124->GetXaxis()->SetTitleSize(0.035);
+   Graphd9x1y124->GetXaxis()->SetTitleFont(42);
+   Graphd9x1y124->GetYaxis()->SetLabelFont(42);
+   Graphd9x1y124->GetYaxis()->SetLabelSize(0.035);
+   Graphd9x1y124->GetYaxis()->SetTitleSize(0.035);
+   Graphd9x1y124->GetYaxis()->SetTitleFont(42);
+   Graphd9x1y124->GetZaxis()->SetLabelFont(42);
+   Graphd9x1y124->GetZaxis()->SetLabelSize(0.035);
+   Graphd9x1y124->GetZaxis()->SetTitleSize(0.035);
+   Graphd9x1y124->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd9x1y124);
+   
+   grae->Draw("p");
+   Double_t xAxis2089[15] = {50, 60, 70, 80, 90, 100, 110, 130, 150, 170, 190, 210, 240, 270, 300}; 
+   
+   TH1F *uPbPb_R4_SVD_cent2 = new TH1F("uPbPb_R4_SVD_cent2","Unfold Matrix refpt jtpt from trigger addition R4 20_eta_20 20 - 60 cent",14, xAxis2089);
+   uPbPb_R4_SVD_cent2->SetBinContent(0,252.6899);
+   uPbPb_R4_SVD_cent2->SetBinContent(1,10.66442);
+   uPbPb_R4_SVD_cent2->SetBinContent(2,3.345031);
+   uPbPb_R4_SVD_cent2->SetBinContent(3,1.486366);
+   uPbPb_R4_SVD_cent2->SetBinContent(4,0.8212525);
+   uPbPb_R4_SVD_cent2->SetBinContent(5,0.4734635);
+   uPbPb_R4_SVD_cent2->SetBinContent(6,0.2689887);
+   uPbPb_R4_SVD_cent2->SetBinContent(7,0.1295949);
+   uPbPb_R4_SVD_cent2->SetBinContent(8,0.04879236);
+   uPbPb_R4_SVD_cent2->SetBinContent(9,0.02122774);
+   uPbPb_R4_SVD_cent2->SetBinContent(10,0.01001402);
+   uPbPb_R4_SVD_cent2->SetBinContent(11,0.005102823);
+   uPbPb_R4_SVD_cent2->SetBinContent(12,0.002319192);
+   uPbPb_R4_SVD_cent2->SetBinContent(13,0.0009854347);
+   uPbPb_R4_SVD_cent2->SetBinContent(14,0.0004312667);
+   uPbPb_R4_SVD_cent2->SetBinContent(15,0.01256273);
+   uPbPb_R4_SVD_cent2->SetBinError(0,0.2009201);
+   uPbPb_R4_SVD_cent2->SetBinError(1,0.01283627);
+   uPbPb_R4_SVD_cent2->SetBinError(2,0.01151507);
+   uPbPb_R4_SVD_cent2->SetBinError(3,0.005471671);
+   uPbPb_R4_SVD_cent2->SetBinError(4,0.002334041);
+   uPbPb_R4_SVD_cent2->SetBinError(5,0.001702676);
+   uPbPb_R4_SVD_cent2->SetBinError(6,0.001283719);
+   uPbPb_R4_SVD_cent2->SetBinError(7,0.0005730072);
+   uPbPb_R4_SVD_cent2->SetBinError(8,0.0002732771);
+   uPbPb_R4_SVD_cent2->SetBinError(9,0.0001274788);
+   uPbPb_R4_SVD_cent2->SetBinError(10,7.176249e-05);
+   uPbPb_R4_SVD_cent2->SetBinError(11,4.793358e-05);
+   uPbPb_R4_SVD_cent2->SetBinError(12,2.384204e-05);
+   uPbPb_R4_SVD_cent2->SetBinError(13,1.50251e-05);
+   uPbPb_R4_SVD_cent2->SetBinError(14,1.017981e-05);
+   uPbPb_R4_SVD_cent2->SetBinError(15,0.0002689619);
+   uPbPb_R4_SVD_cent2->SetEntries(223);
+   uPbPb_R4_SVD_cent2->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   uPbPb_R4_SVD_cent2->SetLineColor(ci);
+
+   ci = TColor::GetColor("#0000ff");
+   uPbPb_R4_SVD_cent2->SetMarkerColor(ci);
+   uPbPb_R4_SVD_cent2->SetMarkerStyle(24);
+   uPbPb_R4_SVD_cent2->GetXaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent2->GetXaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent2->GetXaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent2->GetXaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent2->GetXaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent2->GetYaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent2->GetYaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent2->GetYaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent2->GetYaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent2->GetYaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent2->GetZaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent2->GetZaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent2->GetZaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent2->GetZaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent2->Draw("same");
+   box = new TBox(60,3.079639,70,3.610424);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(70,1.368116,80,1.604616);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(80,0.7583987,90,0.8841062);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(90,0.4393348,100,0.5075923);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(100,0.2501332,110,0.2878442);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(110,0.120215,130,0.1389749);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(130,0.04494581,150,0.05263891);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(150,0.01945788,170,0.02299759);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(170,0.009120596,190,0.01090745);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(190,0.004656343,210,0.005549304);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(210,0.002115693,240,0.002522691);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(240,0.0008970457,270,0.001073824);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(270,0.000389073,300,0.0004734605);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+// cent2
+   grae->SetHistogram(Graphd8x1y123);
+// use ATLAS 10-20%, CMS is 10-30%
+   TH1F *hRatioATLAS_cent2 = (TH1F*)uPbPb_R4_SVD_cent2->Clone("hRatioATLAS_cent2"); //clone histogram hRatio from h
+  for(int ib=0; ib<nfit; ++ib){
+     grae->Fit("fitPbPbATLAS_c2","LL","",FitStart,FitEnd); //fit function
+   }    
+   TH1F *hfunctionATLAS_cent2 = (TH1F*)functionHist(fitPbPbATLAS_c2,uPbPb_R4_SVD_cent2,"hfunctionATLAS_cent2");   
+    hRatioATLAS_cent2->Divide(hfunctionATLAS_cent2); 
+       
+   leg = new TLegend(0.6,0.65,0.8,0.85,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("/HepData/8719/d8x1y1","ATLAS 10-20%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(33);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("/HepData/8719/d9x1y1","ATLAS 20-30%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(34);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("uPbPb_R4_SVD_cent2","CMS 10-30%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+
+   ci = TColor::GetColor("#0000ff");
+   entry->SetMarkerColor(ci);
+   entry->SetMarkerStyle(24);
+   entry->SetMarkerSize(1);
+   leg->Draw();
+   
+   pt = new TPaveText(0.4760984,0.94,0.5239016,0.995,"blNDC");
+   pt->SetName("title");
+   pt->SetBorderSize(0);
+   pt->SetFillColor(0);
+   pt->SetFillStyle(0);
+   pt->SetTextFont(42);
+   text = pt->AddText("  ");
+   pt->Draw();
+   p_1_1->Modified();
+   cATLAS_pbpb->cd();
+  
+// ------------>Primitives in pad: p_2_0
+   p_2_0 = new TPad("p_2_0", "p_2_0",0.676637,0.5224719,1,1);
+   p_2_0->Draw();
+   p_2_0->cd();
+   p_2_0->Range(60,-7,371.828,2.677419);
+   p_2_0->SetFillColor(0);
+   p_2_0->SetBorderMode(0);
+   p_2_0->SetBorderSize(2);
+   p_2_0->SetLogy();
+   p_2_0->SetLeftMargin(0);
+   p_2_0->SetRightMargin(0.07);
+   p_2_0->SetTopMargin(0.07);
+   p_2_0->SetBottomMargin(0);
+   p_2_0->SetFrameBorderMode(0);
+   p_2_0->SetFrameBorderMode(0);
+   
+   grae = new TGraphAsymmErrors(9);
+   grae->SetName("/HepData/8719/d12x1y1");
+   grae->SetTitle("  ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(33);
+   grae->SetPoint(0,44.5,38.79699);
+   grae->SetPointError(0,5.5,5.5,1.081952e-05,1.081952e-05);
+   grae->SetPoint(1,56.5,12.93233);
+   grae->SetPointError(1,6.5,6.5,3.576525e-06,3.576525e-06);
+   grae->SetPoint(2,71,3.857143);
+   grae->SetPointError(2,8,8,1.081214e-06,1.081214e-06);
+   grae->SetPoint(3,89.5,1.075188);
+   grae->SetPointError(3,10.5,10.5,2.963656e-07,2.963656e-07);
+   grae->SetPoint(4,112.5,0.2977444);
+   grae->SetPointError(4,12.5,12.5,8.163557e-08,8.163557e-08);
+   grae->SetPoint(5,141.5,0.07135338);
+   grae->SetPointError(5,16.5,16.5,1.968254e-08,1.968254e-08);
+   grae->SetPoint(6,178.5,0.01496241);
+   grae->SetPointError(6,20.5,20.5,4.313942e-09,4.313942e-09);
+   grae->SetPoint(7,225,0.00275188);
+   grae->SetPointError(7,26,26,8.801672e-10,8.801672e-10);
+   grae->SetPoint(8,283.5,0.0004571428);
+   grae->SetPointError(8,32.5,32.5,1.710696e-10,1.710696e-10);
+   
+   TH1F *Graphd12x1y125 = new TH1F("Graphd12x1y125","  ",100,60,350);
+   Graphd12x1y125->SetMinimum(1e-07);
+   Graphd12x1y125->SetMaximum(100);
+   Graphd12x1y125->SetDirectory(0);
+   Graphd12x1y125->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graphd12x1y125->SetLineColor(ci);
+   Graphd12x1y125->GetXaxis()->SetLabelFont(42);
+   Graphd12x1y125->GetXaxis()->SetLabelSize(0.035);
+   Graphd12x1y125->GetXaxis()->SetTitleSize(0.035);
+   Graphd12x1y125->GetXaxis()->SetTitleFont(42);
+   Graphd12x1y125->GetYaxis()->SetLabelFont(42);
+   Graphd12x1y125->GetYaxis()->SetLabelSize(0.035);
+   Graphd12x1y125->GetYaxis()->SetTitleSize(0.035);
+   Graphd12x1y125->GetYaxis()->SetTitleFont(42);
+   Graphd12x1y125->GetZaxis()->SetLabelFont(42);
+   Graphd12x1y125->GetZaxis()->SetLabelSize(0.035);
+   Graphd12x1y125->GetZaxis()->SetTitleSize(0.035);
+   Graphd12x1y125->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd12x1y125);
+   
+   grae->Draw("ap");
+   
+   grae = new TGraphAsymmErrors(9);
+   grae->SetName("/HepData/8719/d13x1y1");
+   grae->SetTitle("  ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(34);
+   grae->SetPoint(0,44.5,42.71187);
+   grae->SetPointError(0,5.5,5.5,5.79189e-06,5.79189e-06);
+   grae->SetPoint(1,56.5,13.13559);
+   grae->SetPointError(1,6.5,6.5,1.907665e-06,1.907665e-06);
+   grae->SetPoint(2,71,3.915254);
+   grae->SetPointError(2,8,8,5.322733e-07,5.322733e-07);
+   grae->SetPoint(3,89.5,1.128814);
+   grae->SetPointError(3,10.5,10.5,1.55228e-07,1.55228e-07);
+   grae->SetPoint(4,112.5,0.2949153);
+   grae->SetPointError(4,12.5,12.5,4.130036e-08,4.130036e-08);
+   grae->SetPoint(5,141.5,0.07305085);
+   grae->SetPointError(5,16.5,16.5,1.007646e-08,1.007646e-08);
+   grae->SetPoint(6,178.5,0.01608475);
+   grae->SetPointError(6,20.5,20.5,2.284016e-09,2.284016e-09);
+   grae->SetPoint(7,225,0.003135593);
+   grae->SetPointError(7,26,26,4.806085e-10,4.806085e-10);
+   grae->SetPoint(8,283.5,0.0005508475);
+   grae->SetPointError(8,32.5,32.5,9.458393e-11,9.458393e-11);
+   
+   TH1F *Graphd13x1y126 = new TH1F("Graphd13x1y126","  ",100,11.3,343.7);
+   Graphd13x1y126->SetMinimum(0.0004957626);
+   Graphd13x1y126->SetMaximum(46.983);
+   Graphd13x1y126->SetDirectory(0);
+   Graphd13x1y126->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graphd13x1y126->SetLineColor(ci);
+   Graphd13x1y126->GetXaxis()->SetLabelFont(42);
+   Graphd13x1y126->GetXaxis()->SetLabelSize(0.035);
+   Graphd13x1y126->GetXaxis()->SetTitleSize(0.035);
+   Graphd13x1y126->GetXaxis()->SetTitleFont(42);
+   Graphd13x1y126->GetYaxis()->SetLabelFont(42);
+   Graphd13x1y126->GetYaxis()->SetLabelSize(0.035);
+   Graphd13x1y126->GetYaxis()->SetTitleSize(0.035);
+   Graphd13x1y126->GetYaxis()->SetTitleFont(42);
+   Graphd13x1y126->GetZaxis()->SetLabelFont(42);
+   Graphd13x1y126->GetZaxis()->SetLabelSize(0.035);
+   Graphd13x1y126->GetZaxis()->SetTitleSize(0.035);
+   Graphd13x1y126->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd13x1y126);
+   
+   grae->Draw("p");
+   Double_t xAxis2090[15] = {50, 60, 70, 80, 90, 100, 110, 130, 150, 170, 190, 210, 240, 270, 300}; 
+   
+   TH1F *uPbPb_R4_SVD_cent4 = new TH1F("uPbPb_R4_SVD_cent4","Unfold Matrix refpt jtpt from trigger addition R4 20_eta_20 100 - 140 cent",14, xAxis2090);
+   uPbPb_R4_SVD_cent4->SetBinContent(0,237.1865);
+   uPbPb_R4_SVD_cent4->SetBinContent(1,12.08502);
+   uPbPb_R4_SVD_cent4->SetBinContent(2,4.797168);
+   uPbPb_R4_SVD_cent4->SetBinContent(3,2.314761);
+   uPbPb_R4_SVD_cent4->SetBinContent(4,1.169759);
+   uPbPb_R4_SVD_cent4->SetBinContent(5,0.6217123);
+   uPbPb_R4_SVD_cent4->SetBinContent(6,0.344026);
+   uPbPb_R4_SVD_cent4->SetBinContent(7,0.1683365);
+   uPbPb_R4_SVD_cent4->SetBinContent(8,0.06520171);
+   uPbPb_R4_SVD_cent4->SetBinContent(9,0.02809544);
+   uPbPb_R4_SVD_cent4->SetBinContent(10,0.01340361);
+   uPbPb_R4_SVD_cent4->SetBinContent(11,0.00661259);
+   uPbPb_R4_SVD_cent4->SetBinContent(12,0.002901458);
+   uPbPb_R4_SVD_cent4->SetBinContent(13,0.001106093);
+   uPbPb_R4_SVD_cent4->SetBinContent(14,0.0004331396);
+   uPbPb_R4_SVD_cent4->SetBinContent(15,0.00942827);
+   uPbPb_R4_SVD_cent4->SetBinError(0,0.2304077);
+   uPbPb_R4_SVD_cent4->SetBinError(1,0.05648456);
+   uPbPb_R4_SVD_cent4->SetBinError(2,0.02529723);
+   uPbPb_R4_SVD_cent4->SetBinError(3,0.0166903);
+   uPbPb_R4_SVD_cent4->SetBinError(4,0.01049844);
+   uPbPb_R4_SVD_cent4->SetBinError(5,0.005933457);
+   uPbPb_R4_SVD_cent4->SetBinError(6,0.00334763);
+   uPbPb_R4_SVD_cent4->SetBinError(7,0.001438817);
+   uPbPb_R4_SVD_cent4->SetBinError(8,0.0006859869);
+   uPbPb_R4_SVD_cent4->SetBinError(9,0.0004852208);
+   uPbPb_R4_SVD_cent4->SetBinError(10,0.0003210693);
+   uPbPb_R4_SVD_cent4->SetBinError(11,0.0002109668);
+   uPbPb_R4_SVD_cent4->SetBinError(12,0.0001048058);
+   uPbPb_R4_SVD_cent4->SetBinError(13,5.661996e-05);
+   uPbPb_R4_SVD_cent4->SetBinError(14,3.384844e-05);
+   uPbPb_R4_SVD_cent4->SetBinError(15,0.0008625851);
+   uPbPb_R4_SVD_cent4->SetEntries(223);
+   uPbPb_R4_SVD_cent4->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   uPbPb_R4_SVD_cent4->SetLineColor(ci);
+
+   ci = TColor::GetColor("#0000ff");
+   uPbPb_R4_SVD_cent4->SetMarkerColor(ci);
+   uPbPb_R4_SVD_cent4->SetMarkerStyle(24);
+   uPbPb_R4_SVD_cent4->GetXaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent4->GetXaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent4->GetXaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent4->GetXaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent4->GetXaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent4->GetYaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent4->GetYaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent4->GetYaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent4->GetYaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent4->GetYaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent4->GetZaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent4->GetZaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent4->GetZaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent4->GetZaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent4->Draw("same");
+   box = new TBox(60,4.622927,70,4.971408);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(70,2.223946,80,2.405575);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(80,1.122821,90,1.216697);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(90,0.5969248,100,0.6464997);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(100,0.3300037,110,0.3580482);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(110,0.1612722,130,0.1754007);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(130,0.06238826,150,0.06801517);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(150,0.02677048,170,0.02942039);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(170,0.0127238,190,0.01408343);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(190,0.006245958,210,0.006979222);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(210,0.002713301,240,0.003089615);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(240,0.0009994402,270,0.001212745);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(270,0.0003723532,300,0.000493926);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+// cent4
+   // make ATLAS 50-60%, CMS is 50-70% for cent4
+   grae->SetHistogram(Graphd12x1y125);
+   TH1F *hRatioATLAS_cent4 = (TH1F*)uPbPb_R4_SVD_cent4->Clone("hRatioATLAS_cent4"); //clone histogram hRatio from h
+   for(int ic=0; ic<nfit; ++ic){
+     grae->Fit("fitPbPbATLAS_c4","LL","",FitStart,FitEnd); //fit function
+   } 
+   TH1F *hfunctionATLAS_cent4 = (TH1F*)functionHist(fitPbPbATLAS_c4,uPbPb_R4_SVD_cent4,"hfunctionATLAS_cent4");   
+    hRatioATLAS_cent4->Divide(hfunctionATLAS_cent4); 
+    
+       
+   leg = new TLegend(0.6,0.65,0.8,0.85,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("/HepData/8719/d10x1y1","ATLAS 50-60%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(33);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("/HepData/8719/d11x1y1","ATLAS 60-70%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(34);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("uPbPb_R4_SVD_cent4","CMS 50-70%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+
+   ci = TColor::GetColor("#0000ff");
+   entry->SetMarkerColor(ci);
+   entry->SetMarkerStyle(24);
+   entry->SetMarkerSize(1);
+   leg->Draw();
+   
+   pt = new TPaveText(0.4770715,0.94,0.5229285,0.995,"blNDC");
+   pt->SetName("title");
+   pt->SetBorderSize(0);
+   pt->SetFillColor(0);
+   pt->SetFillStyle(0);
+   pt->SetTextFont(42);
+   text = pt->AddText("  ");
+   pt->Draw();
+   p_2_0->Modified();
+   cATLAS_pbpb->cd();
+  
+// ------------>Primitives in pad: p_2_1
+   p_2_1 = new TPad("p_2_1", "p_2_1",0.676637,0,1,0.5224719);
+   p_2_1->Draw();
+   p_2_1->cd();
+   p_2_1->Range(60,-8.588235,371.828,2);
+   p_2_1->SetFillColor(0);
+   p_2_1->SetBorderMode(0);
+   p_2_1->SetBorderSize(2);
+   p_2_1->SetLogy();
+   p_2_1->SetLeftMargin(0);
+   p_2_1->SetRightMargin(0.07);
+   p_2_1->SetTopMargin(0);
+   p_2_1->SetBottomMargin(0.15);
+   p_2_1->SetFrameBorderMode(0);
+   p_2_1->SetFrameBorderMode(0);
+   
+   grae = new TGraphAsymmErrors(9);
+   grae->SetName("/HepData/8719/d7x1y1");
+   grae->SetTitle("  ");
+   grae->SetFillColor(1);
+   grae->SetMarkerStyle(33);
+   grae->SetPoint(0,56.5,7.974413);
+   grae->SetPointError(0,6.5,6.5,3.04322e-05,3.04322e-05);
+   grae->SetPoint(1,71,2.379531);
+   grae->SetPointError(1,8,8,1.179296e-05,1.179296e-05);
+   grae->SetPoint(2,89.5,0.6439232);
+   grae->SetPointError(2,10.5,10.5,3.363913e-06,3.363913e-06);
+   grae->SetPoint(3,112.5,0.1739872);
+   grae->SetPointError(3,12.5,12.5,7.43971e-07,7.43971e-07);
+   grae->SetPoint(4,141.5,0.04520256);
+   grae->SetPointError(4,16.5,16.5,1.809684e-07,1.809684e-07);
+   grae->SetPoint(5,178.5,0.01113006);
+   grae->SetPointError(5,20.5,20.5,4.389148e-08,4.389148e-08);
+   grae->SetPoint(6,225,0.002430704);
+   grae->SetPointError(6,26,26,1.005884e-08,1.005884e-08);
+   grae->SetPoint(7,283.5,0.0004392324);
+   grae->SetPointError(7,32.5,32.5,2.024494e-09,2.024494e-09);
+   grae->SetPoint(8,357,6.396588e-05);
+   grae->SetPointError(8,41,41,3.648948e-10,3.648948e-10);
+   
+   TH1F *Graphd7x1y127 = new TH1F("Graphd7x1y127","  ",100,60,350);
+   Graphd7x1y127->SetMinimum(1e-07);
+   Graphd7x1y127->SetMaximum(100);
+   Graphd7x1y127->SetDirectory(0);
+   Graphd7x1y127->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   Graphd7x1y127->SetLineColor(ci);
+   Graphd7x1y127->GetXaxis()->SetLabelFont(42);
+   Graphd7x1y127->GetXaxis()->SetLabelSize(0.035);
+   Graphd7x1y127->GetXaxis()->SetTitleSize(0.035);
+   Graphd7x1y127->GetXaxis()->SetTitleFont(42);
+   Graphd7x1y127->GetYaxis()->SetLabelFont(42);
+   Graphd7x1y127->GetYaxis()->SetLabelSize(0.035);
+   Graphd7x1y127->GetYaxis()->SetTitleSize(0.035);
+   Graphd7x1y127->GetYaxis()->SetTitleFont(42);
+   Graphd7x1y127->GetZaxis()->SetLabelFont(42);
+   Graphd7x1y127->GetZaxis()->SetLabelSize(0.035);
+   Graphd7x1y127->GetZaxis()->SetTitleSize(0.035);
+   Graphd7x1y127->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graphd7x1y127);
+   
+   grae->Draw("ap");
+   Double_t xAxis2091[15] = {50, 60, 70, 80, 90, 100, 110, 130, 150, 170, 190, 210, 240, 270, 300}; 
+   
+   TH1F *uPbPb_R4_SVD_cent0 = new TH1F("uPbPb_R4_SVD_cent0","Unfold Matrix refpt jtpt from trigger addition R4 20_eta_20  0 - 10 cent",14, xAxis2091);
+   uPbPb_R4_SVD_cent0->SetBinContent(0,464.5209);
+   uPbPb_R4_SVD_cent0->SetBinContent(1,14.32114);
+   uPbPb_R4_SVD_cent0->SetBinContent(2,2.908396);
+   uPbPb_R4_SVD_cent0->SetBinContent(3,1.239852);
+   uPbPb_R4_SVD_cent0->SetBinContent(4,0.762053);
+   uPbPb_R4_SVD_cent0->SetBinContent(5,0.4358869);
+   uPbPb_R4_SVD_cent0->SetBinContent(6,0.2622426);
+   uPbPb_R4_SVD_cent0->SetBinContent(7,0.1216138);
+   uPbPb_R4_SVD_cent0->SetBinContent(8,0.03953384);
+   uPbPb_R4_SVD_cent0->SetBinContent(9,0.01706986);
+   uPbPb_R4_SVD_cent0->SetBinContent(10,0.00835814);
+   uPbPb_R4_SVD_cent0->SetBinContent(11,0.004458814);
+   uPbPb_R4_SVD_cent0->SetBinContent(12,0.002058754);
+   uPbPb_R4_SVD_cent0->SetBinContent(13,0.0009167699);
+   uPbPb_R4_SVD_cent0->SetBinContent(14,0.0004270198);
+   uPbPb_R4_SVD_cent0->SetBinContent(15,0.01218349);
+   uPbPb_R4_SVD_cent0->SetBinError(0,0.4445547);
+   uPbPb_R4_SVD_cent0->SetBinError(1,0.02937295);
+   uPbPb_R4_SVD_cent0->SetBinError(2,0.01529315);
+   uPbPb_R4_SVD_cent0->SetBinError(3,0.005592285);
+   uPbPb_R4_SVD_cent0->SetBinError(4,0.003834155);
+   uPbPb_R4_SVD_cent0->SetBinError(5,0.002895372);
+   uPbPb_R4_SVD_cent0->SetBinError(6,0.001792921);
+   uPbPb_R4_SVD_cent0->SetBinError(7,0.0006227596);
+   uPbPb_R4_SVD_cent0->SetBinError(8,0.0003636959);
+   uPbPb_R4_SVD_cent0->SetBinError(9,0.0002051498);
+   uPbPb_R4_SVD_cent0->SetBinError(10,0.0001059763);
+   uPbPb_R4_SVD_cent0->SetBinError(11,7.012782e-05);
+   uPbPb_R4_SVD_cent0->SetBinError(12,3.710706e-05);
+   uPbPb_R4_SVD_cent0->SetBinError(13,2.299748e-05);
+   uPbPb_R4_SVD_cent0->SetBinError(14,1.424768e-05);
+   uPbPb_R4_SVD_cent0->SetBinError(15,0.0003089721);
+   uPbPb_R4_SVD_cent0->SetEntries(223);
+   uPbPb_R4_SVD_cent0->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   uPbPb_R4_SVD_cent0->SetLineColor(ci);
+
+   ci = TColor::GetColor("#0000ff");
+   uPbPb_R4_SVD_cent0->SetMarkerColor(ci);
+   uPbPb_R4_SVD_cent0->SetMarkerStyle(24);
+   uPbPb_R4_SVD_cent0->GetXaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent0->GetXaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent0->GetXaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent0->GetXaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent0->GetXaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent0->GetYaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent0->GetYaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent0->GetYaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent0->GetYaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent0->GetYaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent0->GetZaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent0->GetZaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent0->GetZaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent0->GetZaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent0->Draw("same");
+   Double_t xAxis2092[15] = {50, 60, 70, 80, 90, 100, 110, 130, 150, 170, 190, 210, 240, 270, 300}; 
+   
+   TH1F *uPbPb_R4_SVD_cent1 = new TH1F("uPbPb_R4_SVD_cent1","Unfold Matrix refpt jtpt from trigger addition R4 20_eta_20 10 - 20 cent",14, xAxis2092);
+   uPbPb_R4_SVD_cent1->SetBinContent(0,363.31);
+   uPbPb_R4_SVD_cent1->SetBinContent(1,12.28659);
+   uPbPb_R4_SVD_cent1->SetBinContent(2,3.058902);
+   uPbPb_R4_SVD_cent1->SetBinContent(3,1.284019);
+   uPbPb_R4_SVD_cent1->SetBinContent(4,0.7282286);
+   uPbPb_R4_SVD_cent1->SetBinContent(5,0.4334752);
+   uPbPb_R4_SVD_cent1->SetBinContent(6,0.2600217);
+   uPbPb_R4_SVD_cent1->SetBinContent(7,0.1192369);
+   uPbPb_R4_SVD_cent1->SetBinContent(8,0.04196735);
+   uPbPb_R4_SVD_cent1->SetBinContent(9,0.01852094);
+   uPbPb_R4_SVD_cent1->SetBinContent(10,0.0082805);
+   uPbPb_R4_SVD_cent1->SetBinContent(11,0.00439104);
+   uPbPb_R4_SVD_cent1->SetBinContent(12,0.001992684);
+   uPbPb_R4_SVD_cent1->SetBinContent(13,0.0008807333);
+   uPbPb_R4_SVD_cent1->SetBinContent(14,0.0004133745);
+   uPbPb_R4_SVD_cent1->SetBinContent(15,0.01300013);
+   uPbPb_R4_SVD_cent1->SetBinError(0,0.5083608);
+   uPbPb_R4_SVD_cent1->SetBinError(1,0.02350059);
+   uPbPb_R4_SVD_cent1->SetBinError(2,0.01685121);
+   uPbPb_R4_SVD_cent1->SetBinError(3,0.008454463);
+   uPbPb_R4_SVD_cent1->SetBinError(4,0.004287364);
+   uPbPb_R4_SVD_cent1->SetBinError(5,0.002671961);
+   uPbPb_R4_SVD_cent1->SetBinError(6,0.001730546);
+   uPbPb_R4_SVD_cent1->SetBinError(7,0.0007267914);
+   uPbPb_R4_SVD_cent1->SetBinError(8,0.0003728412);
+   uPbPb_R4_SVD_cent1->SetBinError(9,0.0001913907);
+   uPbPb_R4_SVD_cent1->SetBinError(10,0.0001055197);
+   uPbPb_R4_SVD_cent1->SetBinError(11,7.974893e-05);
+   uPbPb_R4_SVD_cent1->SetBinError(12,4.28471e-05);
+   uPbPb_R4_SVD_cent1->SetBinError(13,2.649777e-05);
+   uPbPb_R4_SVD_cent1->SetBinError(14,1.616873e-05);
+   uPbPb_R4_SVD_cent1->SetBinError(15,0.0003863563);
+   uPbPb_R4_SVD_cent1->SetEntries(223);
+   uPbPb_R4_SVD_cent1->SetStats(0);
+
+   ci = TColor::GetColor("#000099");
+   uPbPb_R4_SVD_cent1->SetLineColor(ci);
+
+   ci = TColor::GetColor("#ff0000");
+   uPbPb_R4_SVD_cent1->SetMarkerColor(ci);
+   uPbPb_R4_SVD_cent1->SetMarkerStyle(24);
+   uPbPb_R4_SVD_cent1->GetXaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent1->GetXaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent1->GetXaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent1->GetXaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent1->GetXaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent1->GetYaxis()->CenterTitle(true);
+   uPbPb_R4_SVD_cent1->GetYaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent1->GetYaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent1->GetYaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent1->GetYaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent1->GetZaxis()->SetLabelFont(42);
+   uPbPb_R4_SVD_cent1->GetZaxis()->SetLabelSize(0.035);
+   uPbPb_R4_SVD_cent1->GetZaxis()->SetTitleSize(0.035);
+   uPbPb_R4_SVD_cent1->GetZaxis()->SetTitleFont(42);
+   uPbPb_R4_SVD_cent1->Draw("same");
+   box = new TBox(60,2.425188,70,3.391604);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(70,1.072796,80,1.406909);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(80,0.6630185,90,0.8610874);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(90,0.3855772,100,0.4861967);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(100,0.2314268,110,0.2930583);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(110,0.1057761,130,0.1374516);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(130,0.03432019,150,0.0447475);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(150,0.01484361,170,0.01929611);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(170,0.00730765,190,0.009408629);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(190,0.003879498,210,0.00503813);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(210,0.001774727,240,0.002342782);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(240,0.0007869583,270,0.001046581);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(270,0.0003649753,300,0.0004890644);
+   box->SetFillColor(2);
+   box->SetFillStyle(0);
+   box->SetLineColor(2);
+   box->Draw();
+   box = new TBox(60,2.665817,70,3.451987);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(70,1.155222,80,1.412816);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(80,0.6602763,90,0.7961809);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(90,0.3902366,100,0.4767137);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(100,0.2335985,110,0.2864449);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(110,0.1074668,130,0.131007);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(130,0.03792097,150,0.04601374);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(150,0.01657303,170,0.02046885);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(170,0.007344614,190,0.009216386);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(190,0.003902139,210,0.004879941);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(210,0.001754931,240,0.002230437);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(240,0.0007764488,270,0.0009850178);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+   box = new TBox(270,0.0003609202,300,0.0004658289);
+   box->SetFillColor(3);
+   box->SetFillStyle(0);
+   box->SetLineColor(3);
+   box->Draw();
+// cent0
+   TH1F *hRatioATLAS_cent0 = (TH1F*)uPbPb_R4_SVD_cent0->Clone("hRatioATLAS_cent0"); //clone histogram hRatio from h
+   TH1F *hRatioATLAS_cent1 = (TH1F*)uPbPb_R4_SVD_cent1->Clone("hRatioATLAS_cent1"); //clone histogram hRatio from h
+   for(int id=0; id<nfit; ++id){
+     grae->Fit("fitPbPbATLAS_c0","LL","",FitStart,FitEnd); //fit function
+   }   
+   TH1F *hfunctionATLAS_cent0 = (TH1F*)functionHist(fitPbPbATLAS_c0,uPbPb_R4_SVD_cent0,"hfunctionATLAS_cent0");   
+    hRatioATLAS_cent0->Divide(hfunctionATLAS_cent0);  
+       
+   leg = new TLegend(0.6,0.65,0.8,0.85,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("/HepData/8719/d7x1y1","ATLAS 0-10%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(33);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("uPbPb_R4_SVD_cent0","CMS 0-5%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+
+   ci = TColor::GetColor("#0000ff");
+   entry->SetMarkerColor(ci);
+   entry->SetMarkerStyle(24);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("uPbPb_R4_SVD_cent1","CMS 5-10%","p");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+
+   ci = TColor::GetColor("#ff0000");
+   entry->SetMarkerColor(ci);
+   entry->SetMarkerStyle(24);
+   entry->SetMarkerSize(1);
+   leg->Draw();
+   
+   pt = new TPaveText(0.4770715,0.94,0.5229285,0.995,"blNDC");
+   pt->SetName("title");
+   pt->SetBorderSize(0);
+   pt->SetFillColor(0);
+   pt->SetFillStyle(0);
+   pt->SetTextFont(42);
+   text = pt->AddText("  ");
+   pt->Draw();
+   p_2_1->Modified();
+   cATLAS_pbpb->cd();
+   cATLAS_pbpb->Modified();
+   cATLAS_pbpb->cd();
+   cATLAS_pbpb->SetSelected(cATLAS_pbpb);
+   cATLAS_pbpb->SaveAs("Plots/CMShist_ATLASfit_spectra_PbPb.pdf");
+   
+   TCanvas *cATLAS_pbpbRatio = new TCanvas("cATLAS_pbpbRatio", "",0,0,1200,1000);
+   gStyle->SetOptFit(1);
+   gStyle->SetOptStat(0);
+   gStyle->SetOptTitle(0);
+   cATLAS_pbpbRatio->Range(0,0,1,1);
+   cATLAS_pbpbRatio->SetFillColor(0);
+   cATLAS_pbpbRatio->SetBorderMode(0);
+   cATLAS_pbpbRatio->SetBorderSize(0);
+   cATLAS_pbpbRatio->SetTickx(1);
+   cATLAS_pbpbRatio->SetTicky(1);
+   cATLAS_pbpbRatio->SetLeftMargin(0.17);
+   cATLAS_pbpbRatio->SetRightMargin(0.15);
+   cATLAS_pbpbRatio->SetTopMargin(0.03);
+   cATLAS_pbpbRatio->SetBottomMargin(0.15);
+   cATLAS_pbpbRatio->SetFrameLineColor(0);
+   cATLAS_pbpbRatio->SetFrameBorderMode(0);
+  
+// ------------>Primitives in pad: p_0_0
+   TPad *p_0_0 = new TPad("p_0_0", "p_0_0",0,0.5224719,0.3759095,1);
+   p_0_0->Draw();
+   p_0_0->cd();
+   p_0_0->Range(0,0,1,1);
+   p_0_0->SetFillColor(0);
+   p_0_0->SetBorderMode(0);
+   p_0_0->SetBorderSize(0);
+   p_0_0->SetTickx(1);
+   p_0_0->SetTicky(1);
+   p_0_0->SetLeftMargin(0.2);
+   p_0_0->SetRightMargin(0);
+   p_0_0->SetTopMargin(0.07);
+   p_0_0->SetBottomMargin(0);
+   p_0_0->SetFrameLineColor(0);
+   p_0_0->SetFrameBorderMode(0);
+   p_0_0->Modified();
+   cATLAS_pbpbRatio->cd();
+  
+// ------------>Primitives in pad: p_0_1
+   p_0_1 = new TPad("p_0_1", "p_0_1",0,0,0.3759095,0.5224719);
+   p_0_1->Draw();
+   p_0_1->cd();
+   p_0_1->Range(6.5,-5.058824,299,2);
+   p_0_1->SetFillColor(0);
+   p_0_1->SetBorderMode(0);
+   p_0_1->SetBorderSize(0);
+   p_0_1->SetTickx(1);
+   p_0_1->SetTicky(1);
+   p_0_1->SetLeftMargin(0.2);
+   p_0_1->SetRightMargin(0);
+   p_0_1->SetTopMargin(0);
+   p_0_1->SetBottomMargin(0.15);
+   p_0_1->SetFrameLineColor(0);
+   p_0_1->SetFrameBorderMode(0);
+   p_0_1->SetFrameLineColor(0);
+   p_0_1->SetFrameBorderMode(0);
+   hRatioBlank->GetYaxis()->SetTitle("CMS/ATLAS");
+   hRatioBlank->GetXaxis()->SetTitle("ak R=0.4 Jet p_{T} (GeV/c)");
+
+hRatioBlank->Draw();
+if(doScale) { hRatioATLAS_cent3->Scale(ScaleFactor); }
+hRatioATLAS_cent3->Draw("ap,same");
+   leg = new TLegend(0.15,0.2,0.2,0.25,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("hRatioATLAS_cent3","CMS 30-50%/ATLAS 30-40%","p");
+   leg->Draw();
+   p_0_1->Modified();
+// put a legend here   
+   cATLAS_pbpbRatio->cd();
+// ------------>Primitives in pad: p_1_0
+   p_1_0 = new TPad("p_1_0", "p_1_0",0.3759095,0.5224719,0.6766371,1);
+   p_1_0->Draw();
+   p_1_0->cd();
+   p_1_0->Range(65,-4,299,2.451613);
+   p_1_0->SetFillColor(0);
+   p_1_0->SetBorderMode(0);
+   p_1_0->SetBorderSize(0);
+   p_1_0->SetTickx(1);
+   p_1_0->SetTicky(1);
+   p_1_0->SetLeftMargin(0);
+   p_1_0->SetRightMargin(0);
+   p_1_0->SetTopMargin(0.07);
+   p_1_0->SetBottomMargin(0);
+   p_1_0->SetFrameLineColor(0);
+   p_1_0->SetFrameBorderMode(0);
+   p_1_0->SetFrameLineColor(0);
+   p_1_0->SetFrameBorderMode(0);
+     hRatioBlank->GetXaxis()->SetTitle("");   
+hRatioBlank->Draw();
+if(doScale){ hRatioATLAS_cent5->Scale(ScaleFactor); }
+hRatioATLAS_cent5->Draw("ap,same");    
+   leg = new TLegend(0.15,0.2,0.2,0.25,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("hRatioATLAS_cent5","CMS 70-90%/ATLAS 70-80%","p");
+   leg->Draw();
+// put a legend here
+   p_1_0->Modified();
+   cATLAS_pbpbRatio->cd();
+ // ------------>Primitives in pad: p_1_1
+   p_1_1 = new TPad("p_1_1", "p_1_1",0.3759095,0,0.6766371,0.5224719);
+   p_1_1->Draw();
+   p_1_1->cd();
+   p_1_1->Range(65,-5.058824,299,2);
+   p_1_1->SetFillColor(0);
+   p_1_1->SetBorderMode(0);
+   p_1_1->SetBorderSize(0);
+   p_1_1->SetTickx(1);
+   p_1_1->SetTicky(1);
+   p_1_1->SetLeftMargin(0);
+   p_1_1->SetRightMargin(0);
+   p_1_1->SetTopMargin(0);
+   p_1_1->SetBottomMargin(0.15);
+   p_1_1->SetFrameLineColor(0);
+   p_1_1->SetFrameBorderMode(0);
+   p_1_1->SetFrameLineColor(0);
+   p_1_1->SetFrameBorderMode(0);
+   hRatioBlank->GetXaxis()->SetTitle("ak R=0.4 Jet p_{T} (GeV/c)");
+   hRatioBlank->GetYaxis()->SetTitle("");
+hRatioBlank->Draw();
+if(doScale) { hRatioATLAS_cent2->Scale(ScaleFactor);}
+hRatioATLAS_cent2->Draw("ap,same");    
+// put a legend here
+   leg = new TLegend(0.15,0.2,0.2,0.25,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("hRatioATLAS_cent2","CMS 10-30%/ATLAS 10-20%","p");
+   leg->Draw();
+   p_1_1->Modified();
+   cATLAS_pbpbRatio->cd();
+   
+// ------------>Primitives in pad: p_2_0
+   p_2_0 = new TPad("p_2_0", "p_2_0",0.676637,0.5224719,1,1);
+   p_2_0->Draw();
+   p_2_0->cd();
+   p_2_0->Range(65,-4,316.6129,2.451613);
+   p_2_0->SetFillColor(0);
+   p_2_0->SetBorderMode(0);
+   p_2_0->SetBorderSize(0);
+   p_2_0->SetTickx(1);
+   p_2_0->SetTicky(1);
+   p_2_0->SetLeftMargin(0);
+   p_2_0->SetRightMargin(0.07);
+   p_2_0->SetTopMargin(0.07);
+   p_2_0->SetBottomMargin(0);
+   p_2_0->SetFrameLineColor(0);
+   p_2_0->SetFrameBorderMode(0);
+   p_2_0->SetFrameLineColor(0);
+   p_2_0->SetFrameBorderMode(0);
+     hRatioBlank->GetXaxis()->SetTitle("");
+   hRatioBlank->GetYaxis()->SetTitle("");   
+hRatioBlank->Draw();
+if(doScale) {hRatioATLAS_cent4->Scale(ScaleFactor);}
+hRatioATLAS_cent4->Draw("ap,same");    
+   leg = new TLegend(0.15,0.2,0.2,0.25,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("hRatioATLAS_cent4","CMS 50-70%/ATLAS 50-60%","p");
+   leg->Draw();
+// put a legend here     
+   p_2_0->Modified();
+   cATLAS_pbpbRatio->cd();
+// ------------>Primitives in pad: p_2_1
+   p_2_1 = new TPad("p_2_1", "p_2_1",0.676637,0,1,0.5224719);
+   p_2_1->Draw();
+   p_2_1->cd();
+   p_2_1->Range(65,-5.058824,316.6129,2);
+   p_2_1->SetFillColor(0);
+   p_2_1->SetBorderMode(0);
+   p_2_1->SetBorderSize(0);
+   p_2_1->SetTickx(1);
+   p_2_1->SetTicky(1);
+   p_2_1->SetLeftMargin(0);
+   p_2_1->SetRightMargin(0.07);
+   p_2_1->SetTopMargin(0);
+   p_2_1->SetBottomMargin(0.15);
+   p_2_1->SetFrameLineColor(0);
+   p_2_1->SetFrameBorderMode(0);
+   p_2_1->SetFrameLineColor(0);
+   p_2_1->SetFrameBorderMode(0);
+   hRatioBlank->GetYaxis()->SetTitle("CMS/ATLAS");
+if(doScale)   { hRatioBlank->GetYaxis()->SetTitle("CMS(scaled)/ATLAS"); }  
+   hRatioBlank->GetXaxis()->SetTitle("ak R=0.4 Jet p_{T} (GeV/c)");
+   
+hRatioBlank->Draw();
+if(doScale) {hRatioATLAS_cent0->Scale(ScaleFactor);}
+hRatioATLAS_cent0->Draw("ap,same");    
+// put a legend here        
+   leg = new TLegend(0.15,0.2,0.2,0.25,NULL,"BRNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(1);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(10);
+   leg->SetFillStyle(1001);
+   entry=leg->AddEntry("NULL","","h");
+   entry->SetLineColor(1);
+   entry->SetLineStyle(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry->SetTextFont(62);
+   entry=leg->AddEntry("hRatioATLAS_cent0","CMS 0-5%/ATLAS 0-10%","p");
+   leg->Draw();
+   p_2_1->Modified();
+   cATLAS_pbpbRatio->cd();
+   cATLAS_pbpbRatio->Modified();
+   cATLAS_pbpbRatio->cd();
+   cATLAS_pbpbRatio->SetSelected(cATLAS_pbpbRatio);
+   if(doScale){
+     cATLAS_pbpbRatio->SaveAs("Plots/CMShist_ATLASfit_ratioScaled_PbPb.pdf");
+   } else {
+     cATLAS_pbpbRatio->SaveAs("Plots/CMShist_ATLASfit_ratio_PbPb.pdf");
+   }
+            
+  // TH1F* hBinByBinCor = (TH1F*)functionHist(f,hBinByBinCorRaw,Form("hBinByBinCor_cent%d",i));
+//    TH1F *hRatioATLAS = (TH1F*)g->Clone("hRatioATLAS"); //clone histogram hRatio from h
+ 
+}
