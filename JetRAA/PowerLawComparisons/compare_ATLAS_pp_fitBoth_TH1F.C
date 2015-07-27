@@ -111,7 +111,7 @@ void compare_ATLAS_pp_fitBoth_TH1F(Int_t nfit=6, Int_t FitStart=50, Int_t FitEnd
 
 
 Double_t xAxisATLASpp[13] = {31,39,50,63,79,100,125,158,199,251,316,398,501}; 
-   TH1F *hATLASppHist = new TH1F("hATLASppHist"," ",100,xAxisATLASpp);
+   TH1F *hATLASppHist = new TH1F("hATLASppHist"," ",12,xAxisATLASpp);
    hATLASppHist->SetMinimum(1.090031e-05);
    hATLASppHist->SetMaximum(230.955);
    hATLASppHist->SetDirectory(0);
@@ -140,12 +140,15 @@ Double_t xAxisATLASpp[13] = {31,39,50,63,79,100,125,158,199,251,316,398,501};
    hATLASppHist->SetBinError(11,1.442494e-05);
    hATLASppHist->SetBinContent(12,1.41e-05);
    hATLASppHist->SetBinError(12,1.98855e-06);
+//    c1=new TCanvas();
+// //   c1.cd();
+//    hATLASppHist->Draw();
   // was grae
    for(int i=0; i<nfit; ++i){
-     grae->Fit("fitppATLAS","IL","",FitStart,FitEnd); //fit function
+     grae->Fit("fitppATLAS","","",FitStart,FitEnd); //fit function
    } 
    cout<<"now to fit hATLASppHist"<<endl;
-   for(int i=0; i<nfit; ++i){
+   for(int ib=0; ib<nfit; ++ib){
      hATLASppHist->Fit("fitppATLASHist","IL","",FitStart,FitEnd); //fit function
    } 
 
