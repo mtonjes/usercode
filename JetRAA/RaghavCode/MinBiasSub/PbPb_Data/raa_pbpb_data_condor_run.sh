@@ -28,9 +28,11 @@ outfile=$4
 echo "Processing..."
 
 root -b -l <<EOF
-.x RAA_read_data_pbpb.C+($startfile,$endfile,$radius,"$outfile")
+.x RAA_read_data_pbpb_JetID.C+($startfile,$endfile,$radius,"$outfile")
 .q
 EOF
+pwd
+ls
 
 mv $outfile /mnt/hadoop/cms/store/user/belt/rootfiles/JetRAA/July30/
 
