@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # run this with $ source raa_condor_submit.sh NJobs NFilesPerJob
+# PbPb data: source raa_pbpb_data_condor_submit.sh 181 5
 
 counter=0
 incrementer=1
 
-destination=/mnt/hadoop/cms/store/user/belt/rootfiles/JetRAA/July30/
+destination=/mnt/hadoop/cms/store/user/belt/rootfiles/JetRAA/July30/PbPb_Data
 filelist=jetRAA_PbPb_data_forest.txt
 
 nFiles=`wc -l < $filelist`

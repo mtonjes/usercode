@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # run this with $ source raa_condor_submit.sh NJobs NFilesPerJob
+# source raa_pbpb_mc_condor_submit.sh 9 1
+# note that files must be in correct order for proper pT-hat weighting
 
 counter=0
 incrementer=1
 
-destination=/mnt/hadoop/cms/store/user/belt/rootfiles/JetRAA/July30/
+destination=/mnt/hadoop/cms/store/user/belt/rootfiles/JetRAA/July30/PbPb_MC
 filelist=jetRAA_PbPb_mc_forest.txt
 
 nFiles=`wc -l < $filelist`
@@ -28,7 +30,7 @@ do
         let counter=$1
     fi
 
-    outfile="PbPb_MC_histograms_FromForest_trkMax8OrNeMax8GeVCut_akPu${radius}_20_eta_20_${endfile}.root"
+    outfile="PbPb_MC_histograms_FromForest_JetID_akPu${radius}_20_eta_20_${endfile}.root"
     
     # Condor submit file
     cat > subfile <<EOF

@@ -34,8 +34,8 @@ EOF
 pwd
 ls
 
-mv $outfile /mnt/hadoop/cms/store/user/belt/rootfiles/JetRAA/July30/
+mv $outfile /mnt/hadoop/cms/store/user/belt/rootfiles/JetRAA/July30/PbPb_Data/
 
 echo "Done!"
 
-echo "Copied output files to hadoop rootfiles/JetRAA/June22" 
+echo "Copied output files to hadoop rootfiles/JetRAA/July30" 

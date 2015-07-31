@@ -117,6 +117,19 @@ static const double xsecs[10] = {2.034e-01,
 static const double weight_xsec[9] = { 7.20357e-07, 4.51655e-08, 2.6964e-09, 2.77274e-10, 3.1878e-11, 3.87126e-12, 1.62138e-12, 1.09471e-12, 4.40012e-13};
 static const int nentries_file[9] = { 0, 333206, 250567, 395126, 368126, 366982, 392206, 181018, 50455};
 
+static const double cent_HF_bound[] = {0, 0, 4.18352, 6.93443, 7.81838, 8.54289, 9.23664, 9.88781, 10.5473, 11.1902, 11.8706, 12.5891, 13.319, 14.0674, 14.8253, 15.6046, 16.4299, 17.2737, 18.1496, 19.0479, 20.0015, 20.912, 21.9531, 23.0394, 24.1431, 25.328, 26.5151, 27.8044, 29.0709, 30.4214, 31.8381, 33.283, 34.6493, 36.0984, 37.6395, 39.2199, 40.9588, 42.6406, 44.569, 46.3474, 48.2599, 50.2071, 52.3226, 54.5107, 56.9493, 59.3141, 61.7028, 64.244, 66.8831, 69.5266, 72.3771, 75.4711, 78.4157, 81.5896, 84.769, 88.2238, 91.8252, 95.4077, 98.98, 102.798, 106.782, 110.906, 115.16, 119.625, 124.341, 129.065, 133.87, 138.692, 143.708, 149.042, 154.287, 159.825, 165.462, 171.257, 176.947, 183.167, 189.585, 195.883, 202.593, 209.261, 216.241, 223.538, 231.183, 238.531, 246.204, 254.287, 262.356, 270.439, 278.961, 287.651, 297.26, 306.368, 315.948, 325.339, 335.032, 345.099, 355.337, 365.822, 376.405, 387.344, 399.021, 411.008, 422.029, 433.915, 446.391, 458.551, 470.541, 483.077, 495.431, 508.121, 521.027, 534.43, 548.443, 562.924, 576.951, 592.656, 608.19, 623.398, 639.439, 654.628, 670.442, 686.71, 702.497, 719.216, 736.875, 753.611, 771.997, 790, 809.284, 827.785, 846.916, 866.011, 885.882, 904.369, 924.095, 944.936, 966.012, 987.122, 1009.07, 1031.27, 1054.05, 1076.25, 1099.91, 1122.04, 1144.78, 1167.66, 1191.41, 1216.09, 1241.13, 1267.38, 1293.67, 1321.55, 1350.66, 1378.46, 1407.54, 1434.55, 1462.55, 1490.14, 1520.59, 1550.78, 1581.24, 1613.24, 1645.85, 1678.99, 1711.05, 1745.42, 1778.74, 1812.54, 1846.99, 1884.43, 1922.16, 1958.71, 1997.48, 2037.29, 2076.29, 2114.1, 2155.37, 2196.62, 2237.9, 2279.55, 2324.23, 2371.58, 2415.58, 2465.63, 2515.93, 2562.36, 2612.32, 2663.82, 2719.3, 2770.5, 2829.21, 2890.39, 2948.11, 3011.59, 3073.29, 3135.95, 3202.43, 3270.81, 3340.31, 3429.82, 5805.99};
+static const int nbins_HF_bound = sizeof(cent_HF_bound)/sizeof(double) -1;
+
+int findHFbin(float HF_energy){
+  int ibin = -1;
+  for(int k = 0; k<nbins_HF_bound; ++k){
+    if(HF_energy > cent_HF_bound[k])
+      ibin = 200 - k;
+  }
+  return ibin;
+}
+
+
 int findBin(int bin)
 {
   int ibin=-1;
@@ -176,8 +189,8 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
   timer.Start();
 
   Float_t pfptmin=30;
-  Int_t Short=0;
-  long TestEntries=10000;
+//  Int_t Short=0;
+//  long TestEntries=10000;
   if(radius==2){
      pfptmin = 30;
   } else if(radius==3){
@@ -326,7 +339,14 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
   int evt_F;
   int run_F;
   int lumi_F;
+  int hiNpix_F;
+  int hiNpixelTracks_F;
   int hiBin_F;
+  float hiHF_F;
+  int hiNtracks_F;
+  int hiNtracksPtCut_F;
+  int hiNtracksEtaCut_F;
+  int hiNtracksEtaPtCut_F;
   int pcollisionEventSelection_F;
 
   float calopt_F[1000];
@@ -336,6 +356,13 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
   jetpbpb[4]->SetBranchAddress("run",&run_F);
   jetpbpb[4]->SetBranchAddress("lumi",&lumi_F);
   jetpbpb[4]->SetBranchAddress("hiBin",&hiBin_F);
+  jetpbpb[4]->SetBranchAddress("hiHF", &hiHF_F);
+  jetpbpb[4]->SetBranchAddress("hiNpix",&hiNpix_F);
+  jetpbpb[4]->SetBranchAddress("hiNpixelTracks",&hiNpixelTracks_F);
+  jetpbpb[4]->SetBranchAddress("hiNtracks",&hiNtracks_F);
+  jetpbpb[4]->SetBranchAddress("hiNtracksPtCut",&hiNtracksPtCut_F);
+  jetpbpb[4]->SetBranchAddress("hiNtracksEtaCut",&hiNtracksEtaCut_F);
+  jetpbpb[4]->SetBranchAddress("hiNtracksEtaPtCut",&hiNtracksEtaPtCut_F);
   jetpbpb[4]->SetBranchAddress("vz",&vz_F);
   jetpbpb[1]->SetBranchAddress("pcollisionEventSelection",&pcollisionEventSelection_F);
   //jetpbpb[0]->SetBranchAddress("pHBHENoiseFilter",&pHBHENoiseFilter_F);
@@ -464,6 +491,27 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
   TFile *fout = new TFile(kFoname.c_str(),"RECREATE");
   fout->cd();
 
+
+
+  TH2F * hNpix_vs_hiBin = new TH2F("hNpix_vs_hiBin","",200, 0, 200, 120, 0, 60000);
+  TH2F * hNpixelTracks_vs_hiBin = new TH2F("hNpixelTracks_vs_hiBin","",200, 0, 200, 80, 0, 8000);
+  TH2F * hNTracks_vs_hiBin = new TH2F("hNTracks_vs_hiBin","",200, 0, 200, 100, 0, 5000);
+  TH2F * hNTracksPtCut_vs_hiBin = new TH2F("hNTracksPtCut_vs_hiBin","",200, 0, 200, 100, 0, 5000);
+  TH2F * hNTracksEtaCut_vs_hiBin = new TH2F("hNTracksEtaCut_vs_hiBin","",200, 0, 200, 100, 0, 5000);
+  TH2F * hNTracksEtaPtCut_vs_hiBin = new TH2F("hNTracksEtaPtCut_vs_hiBin","",200, 0, 200, 100, 0, 5000);
+
+  TH2F * hNpix_vs_HF = new TH2F("hNpix_vs_HF","",200, 0, 8000, 120, 0, 60000);
+  TH2F * hNpixelTracks_vs_HF = new TH2F("hNpixelTracks_vs_HF","",200, 0, 8000, 80, 0, 8000);
+  TH2F * hNTracks_vs_HF = new TH2F("hNTracks_vs_HF","",200, 0, 8000, 100, 0, 5000);
+  TH2F * hNTracksPtCut_vs_HF = new TH2F("hNTracksPtCut_vs_HF","",200, 0, 8000, 100, 0, 5000);
+  TH2F * hNTracksEtaCut_vs_HF = new TH2F("hNTracksEtaCut_vs_HF","",200, 0, 8000, 100, 0, 5000);
+  TH2F * hNTracksEtaPtCut_vs_HF = new TH2F("hNTracksEtaPtCut_vs_HF","",200, 0, 8000, 100, 0, 5000);
+
+
+  TH1F * hCentrality_fromHFBound = new TH1F("hCentrality_fromHFBound","",200, 0, 200);
+
+
+
     //get the spectra with the specific trigger object from the different files. 
   TH1F *hpbpb_Jet80_gen[nbins_cent],
     *hpbpb_Jet80_reco[nbins_cent],
@@ -493,6 +541,9 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
     * hpbpb_JetComb_reco_10TrigIneff_Smear[nbins_cent],
     * hpbpb_JetComb_gen_5TrigIneff_Smear[nbins_cent],
     * hpbpb_JetComb_gen_10TrigIneff_Smear[nbins_cent];
+
+  TH1F * hpbpb_Jet55Selection[nbins_cent];
+  TH1F * hpbpb_Jet65Selection[nbins_cent];
   
   TH1F * hpbpb_JetComb_gen2pSmear[nbins_cent],
     * hpbpb_Jet80_gen2pSmear[nbins_cent],
@@ -530,6 +581,12 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
   TH2F * hpbpb_matrix_HLT_BothSmear[nbins_cent];
   TH2F * hpbpb_matrix_HLT_5TrigIneff_Smear[nbins_cent];
   TH2F * hpbpb_matrix_HLT_10TrigIneff_Smear[nbins_cent];
+
+  TH2F * hpbpb_Trans_matrix_HLT_GenSmear[nbins_cent];
+  TH2F * hpbpb_Trans_matrix_HLT_gen2pSmear[nbins_cent];
+  TH2F * hpbpb_Trans_matrix_HLT_RecoSmear[nbins_cent];
+  TH2F * hpbpb_Trans_matrix_HLT_BothSmear[nbins_cent];
+  
   
   TH2F * hpbpb_mcclosure_matrix[nbins_cent];
   TH2F * hpbpb_mcclosure_matrix_HLT[nbins_cent];
@@ -591,6 +648,11 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
   TH1F * hpbpb_anaBin_Jet55_gen[nbins_cent],* hpbpb_anaBin_Jet55_reco[nbins_cent];
   TH1F * hpbpb_anaBin_JetComb_gen[nbins_cent],* hpbpb_anaBin_JetComb_reco[nbins_cent];
 
+  TH2F * hSVD_Matrix_noWeight[nbins_cent];
+  TH2F * hSVD_Matrix_Weight[nbins_cent];
+  TH2F * hSVD_Trans_Matrix_noWeight[nbins_cent];
+  TH2F * hSVD_Trans_Matrix_Weight[nbins_cent];
+  
   TH1F * hMC_chMaxJtpt_jet55_keep[nbins_cent], * hMC_phMaxJtpt_jet55_keep[nbins_cent], * hMC_neMaxJtpt_jet55_keep[nbins_cent], * hMC_muMaxJtpt_jet55_keep[nbins_cent], * hMC_eMaxJtpt_jet55_keep[nbins_cent];
   TH1F * hMC_chSumJtpt_jet55_keep[nbins_cent], * hMC_phSumJtpt_jet55_keep[nbins_cent], * hMC_neSumJtpt_jet55_keep[nbins_cent], * hMC_muSumJtpt_jet55_keep[nbins_cent], * hMC_eSumJtpt_jet55_keep[nbins_cent];  
   TH1F * hMC_chMaxJtpt_jet55_rej[nbins_cent], * hMC_phMaxJtpt_jet55_rej[nbins_cent], * hMC_neMaxJtpt_jet55_rej[nbins_cent], * hMC_muMaxJtpt_jet55_rej[nbins_cent], * hMC_eMaxJtpt_jet55_rej[nbins_cent];
@@ -603,40 +665,34 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
   TH1F * hMC_chSumJtpt_jet80_keep[nbins_cent], * hMC_phSumJtpt_jet80_keep[nbins_cent], * hMC_neSumJtpt_jet80_keep[nbins_cent], * hMC_muSumJtpt_jet80_keep[nbins_cent], * hMC_eSumJtpt_jet80_keep[nbins_cent];  
   TH1F * hMC_chMaxJtpt_jet80_rej[nbins_cent], * hMC_phMaxJtpt_jet80_rej[nbins_cent], * hMC_neMaxJtpt_jet80_rej[nbins_cent], * hMC_muMaxJtpt_jet80_rej[nbins_cent], * hMC_eMaxJtpt_jet80_rej[nbins_cent];
   TH1F * hMC_chSumJtpt_jet80_rej[nbins_cent], * hMC_phSumJtpt_jet80_rej[nbins_cent], * hMC_neSumJtpt_jet80_rej[nbins_cent], * hMC_muSumJtpt_jet80_rej[nbins_cent], * hMC_eSumJtpt_jet80_rej[nbins_cent];  
-  TH1F * hMC_trkMaxJtpt_jet55_keep[nbins_cent], * hMC_trSumJtpt_jet55_keep[nbins_cent] ;
-  TH1F * hMC_trkMaxJtpt_jet65_keep[nbins_cent], * hMC_trSumJtpt_jet65_keep[nbins_cent] ;
-  TH1F * hMC_trkMaxJtpt_jet80_keep[nbins_cent], * hMC_trSumJtpt_jet80_keep[nbins_cent] ;
-  TH1F * hMC_trkMaxJtpt_jet55_rej[nbins_cent], * hMC_trSumJtpt_jet55_rej[nbins_cent] ;
-  TH1F * hMC_trkMaxJtpt_jet65_rej[nbins_cent], * hMC_trSumJtpt_jet65_rej[nbins_cent] ;
-  TH1F * hMC_trkMaxJtpt_jet80_rej[nbins_cent], * hMC_trSumJtpt_jet80_rej[nbins_cent] ;
-  Double_t  nMC_chMaxJtpt_jet55_keep[nbins_cent],  nMC_phMaxJtpt_jet55_keep[nbins_cent],  nMC_neMaxJtpt_jet55_keep[nbins_cent],  nMC_muMaxJtpt_jet55_keep[nbins_cent],  nMC_eMaxJtpt_jet55_keep[nbins_cent];
-  Double_t  nMC_chSumJtpt_jet55_keep[nbins_cent],  nMC_phSumJtpt_jet55_keep[nbins_cent],  nMC_neSumJtpt_jet55_keep[nbins_cent],  nMC_muSumJtpt_jet55_keep[nbins_cent],  nMC_eSumJtpt_jet55_keep[nbins_cent];  
-  Double_t  nMC_chMaxJtpt_jet55_rej[nbins_cent],  nMC_phMaxJtpt_jet55_rej[nbins_cent],  nMC_neMaxJtpt_jet55_rej[nbins_cent],  nMC_muMaxJtpt_jet55_rej[nbins_cent],  nMC_eMaxJtpt_jet55_rej[nbins_cent];
-  Double_t  nMC_chSumJtpt_jet55_rej[nbins_cent],  nMC_phSumJtpt_jet55_rej[nbins_cent],  nMC_neSumJtpt_jet55_rej[nbins_cent],  nMC_muSumJtpt_jet55_rej[nbins_cent],  nMC_eSumJtpt_jet55_rej[nbins_cent];  
-  Double_t  nMC_chMaxJtpt_jet65_keep[nbins_cent],  nMC_phMaxJtpt_jet65_keep[nbins_cent],  nMC_neMaxJtpt_jet65_keep[nbins_cent],  nMC_muMaxJtpt_jet65_keep[nbins_cent],  nMC_eMaxJtpt_jet65_keep[nbins_cent];
-  Double_t  nMC_chSumJtpt_jet65_keep[nbins_cent],  nMC_phSumJtpt_jet65_keep[nbins_cent],  nMC_neSumJtpt_jet65_keep[nbins_cent],  nMC_muSumJtpt_jet65_keep[nbins_cent],  nMC_eSumJtpt_jet65_keep[nbins_cent];  
-  Double_t  nMC_chMaxJtpt_jet65_rej[nbins_cent],  nMC_phMaxJtpt_jet65_rej[nbins_cent],  nMC_neMaxJtpt_jet65_rej[nbins_cent],  nMC_muMaxJtpt_jet65_rej[nbins_cent],  nMC_eMaxJtpt_jet65_rej[nbins_cent];
-  Double_t  nMC_chSumJtpt_jet65_rej[nbins_cent],  nMC_phSumJtpt_jet65_rej[nbins_cent],  nMC_neSumJtpt_jet65_rej[nbins_cent],  nMC_muSumJtpt_jet65_rej[nbins_cent],  nMC_eSumJtpt_jet65_rej[nbins_cent];  
-  Double_t  nMC_chMaxJtpt_jet80_keep[nbins_cent],  nMC_phMaxJtpt_jet80_keep[nbins_cent],  nMC_neMaxJtpt_jet80_keep[nbins_cent],  nMC_muMaxJtpt_jet80_keep[nbins_cent],  nMC_eMaxJtpt_jet80_keep[nbins_cent];
-  Double_t  nMC_chSumJtpt_jet80_keep[nbins_cent],  nMC_phSumJtpt_jet80_keep[nbins_cent],  nMC_neSumJtpt_jet80_keep[nbins_cent],  nMC_muSumJtpt_jet80_keep[nbins_cent],  nMC_eSumJtpt_jet80_keep[nbins_cent];  
-  Double_t  nMC_chMaxJtpt_jet80_rej[nbins_cent],  nMC_phMaxJtpt_jet80_rej[nbins_cent],  nMC_neMaxJtpt_jet80_rej[nbins_cent],  nMC_muMaxJtpt_jet80_rej[nbins_cent],  nMC_eMaxJtpt_jet80_rej[nbins_cent];
-  Double_t  nMC_chSumJtpt_jet80_rej[nbins_cent],  nMC_phSumJtpt_jet80_rej[nbins_cent],  nMC_neSumJtpt_jet80_rej[nbins_cent],  nMC_muSumJtpt_jet80_rej[nbins_cent],  nMC_eSumJtpt_jet80_rej[nbins_cent];  
- Double_t  nMC_trkMaxJtpt_jet55_keep[nbins_cent], nMC_trSumJtpt_jet55_keep[nbins_cent];
- Double_t  nMC_trkMaxJtpt_jet65_keep[nbins_cent], nMC_trSumJtpt_jet65_keep[nbins_cent];
- Double_t  nMC_trkMaxJtpt_jet80_keep[nbins_cent], nMC_trSumJtpt_jet80_keep[nbins_cent];
- Double_t  nMC_trkMaxJtpt_jet55_rej[nbins_cent], nMC_trSumJtpt_jet55_rej[nbins_cent];
- Double_t  nMC_trkMaxJtpt_jet65_rej[nbins_cent], nMC_trSumJtpt_jet65_rej[nbins_cent];
- Double_t  nMC_trkMaxJtpt_jet80_rej[nbins_cent], nMC_trSumJtpt_jet80_rej[nbins_cent];
-  TH1F *hMC_trkMaxJtpt_Matched_keep[nbins_cent];
-  TH1F *hMC_trkMaxJtpt_jet55_Matched_keep[nbins_cent];
-  TH1F *hMC_trkMaxJtpt_jet65_Matched_keep[nbins_cent];
-  TH1F *hMC_trkMaxJtpt_jet80_Matched_keep[nbins_cent];
-  Double_t nMC_trkMaxJtpt_Matched_keep[nbins_cent];
-  Double_t nMC_trkMaxJtpt_jet55_Matched_keep[nbins_cent];
-  Double_t nMC_trkMaxJtpt_jet65_Matched_keep[nbins_cent];
-  Double_t nMC_trkMaxJtpt_jet80_Matched_keep[nbins_cent];
+
+//   TH1F *hMC_trkMaxJtpt_Matched_keep[nbins_cent];
+//   TH1F *hMC_trkMaxJtpt_jet55_Matched_keep[nbins_cent];
+//   TH1F *hMC_trkMaxJtpt_jet65_Matched_keep[nbins_cent];
+//   TH1F *hMC_trkMaxJtpt_jet80_Matched_keep[nbins_cent];
   
+  TH1F * hMC_trkMaxJtpt_jet55_keep[nbins_cent]; 
+  TH1F * hMC_trkMaxJtpt_jet65_keep[nbins_cent]; 
+  TH1F * hMC_trkMaxJtpt_jet80_keep[nbins_cent]; 
+//  TH1F * hMC_trSumJtpt_jet55_keep[nbins_cent] ;
+//  TH1F * hMC_trSumJtpt_jet65_keep[nbins_cent] ;
+//  TH1F * hMC_trSumJtpt_jet80_keep[nbins_cent] ;
+  TH1F * hMC_trkMaxJtpt_jet55_rej[nbins_cent]; 
+  TH1F * hMC_trkMaxJtpt_jet65_rej[nbins_cent]; 
+  TH1F * hMC_trkMaxJtpt_jet80_rej[nbins_cent]; 
+//  TH1F * hMC_trSumJtpt_jet55_rej[nbins_cent] ;
+//  TH1F * hMC_trSumJtpt_jet65_rej[nbins_cent] ;
+//  TH1F * hMC_trSumJtpt_jet80_rej[nbins_cent] ;
+ 
   for(int i = 0;i<nbins_cent;++i){
+
+    hSVD_Matrix_noWeight[i] = new TH2F(Form("hSVD_Matrix_noWeight_cent%d", i),"",30, 0, 300, 30, 0, 350);
+    hSVD_Matrix_Weight[i] = new TH2F(Form("hSVD_Matrix_Weight_cent%d", i),"",30, 0, 300, 25, 50, 300);
+    hSVD_Trans_Matrix_noWeight[i] = new TH2F(Form("hSVD_Trans_Matrix_noWeight_cent%d", i),"",25, 50, 300, 30, 0, 300);
+    hSVD_Trans_Matrix_Weight[i] = new TH2F(Form("hSVD_Trans_Matrix_Weight_cent%d", i),"",25, 50, 300, 30, 0, 300);
+
+    hpbpb_Jet55Selection[i] = new TH1F(Form("hpbpb_Jet55Selection_cent%d",i),"",1000,0,1000);
+    hpbpb_Jet65Selection[i] = new TH1F(Form("hpbpb_Jet65Selection_cent%d",i),"",1000,0,1000);
 
     hpbpb_pthat_oldWeight[i] = new TH1F(Form("pthat_oldWeight_cent%d",i),"",1000,0,1000);
     hpbpb_pthat_newWeight[i] = new TH1F(Form("pthat_newWeight_cent%d",i),"",1000,0,1000);
@@ -675,6 +731,12 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
     hpbpb_matrix_HLT_BothSmear[i] = new TH2F(Form("hpbpb_matrix_HLT_BothSmear_R%d_%s_cent%d",radius,etaWidth,i),Form("Matrix refpt jtpt from trigger addition R%d %s %2.0f - %2.0f cent",radius,etaWidth,5*boundaries_cent[i],5*boundaries_cent[i+1]),1000,0,1000,1000,0,1000);
     hpbpb_matrix_HLT_5TrigIneff_Smear[i] = new TH2F(Form("hpbpb_matrix_HLT_5TrigIneffSmear_R%d_%s_cent%d",radius,etaWidth,i),Form("Matrix refpt jtpt from trigger addition R%d %s %2.0f - %2.0f cent",radius,etaWidth,5*boundaries_cent[i],5*boundaries_cent[i+1]),1000,0,1000,1000,0,1000);
     hpbpb_matrix_HLT_10TrigIneff_Smear[i] = new TH2F(Form("hpbpb_matrix_HLT_10TrigIneffSmear_R%d_%s_cent%d",radius,etaWidth,i),Form("Matrix refpt jtpt from trigger addition R%d %s %2.0f - %2.0f cent",radius,etaWidth,5*boundaries_cent[i],5*boundaries_cent[i+1]),1000,0,1000,1000,0,1000);
+
+    hpbpb_Trans_matrix_HLT_GenSmear[i] = new TH2F(Form("hpbpb_Trans_matrix_HLT_GenSmear_R%d_%s_cent%d",radius,etaWidth,i),Form("Matrix refpt jtpt from trigger addition R%d %s %2.0f - %2.0f cent",radius,etaWidth,5*boundaries_cent[i],5*boundaries_cent[i+1]),1000,0,1000,1000,0,1000);
+    hpbpb_Trans_matrix_HLT_gen2pSmear[i] = new TH2F(Form("hpbpb_Trans_matrix_HLT_gen2pSmear_R%d_%s_cent%d",radius,etaWidth,i),Form("Matrix refpt jtpt from trigger addition R%d %s %2.0f - %2.0f cent",radius,etaWidth,5*boundaries_cent[i],5*boundaries_cent[i+1]),1000,0,1000,1000,0,1000);
+    hpbpb_Trans_matrix_HLT_RecoSmear[i] = new TH2F(Form("hpbpb_Trans_matrix_HLT_RecoSmear_R%d_%s_cent%d",radius,etaWidth,i),Form("Matrix refpt jtpt from trigger addition R%d %s %2.0f - %2.0f cent",radius,etaWidth,5*boundaries_cent[i],5*boundaries_cent[i+1]),1000,0,1000,1000,0,1000);
+    hpbpb_Trans_matrix_HLT_BothSmear[i] = new TH2F(Form("hpbpb_Trans_matrix_HLT_BothSmear_R%d_%s_cent%d",radius,etaWidth,i),Form("Matrix refpt jtpt from trigger addition R%d %s %2.0f - %2.0f cent",radius,etaWidth,5*boundaries_cent[i],5*boundaries_cent[i+1]),1000,0,1000,1000,0,1000);
+
 
 
     
@@ -837,24 +899,24 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
     hMC_phSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_phSumJtpt_jet80_rej_cent%d",i),Form("MC phSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,2);
     hMC_muMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_muMaxJtpt_jet80_rej_cent%d",i),Form("MC muMax/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,1);
     hMC_muSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_muSumJtpt_jet80_rej_cent%d",i),Form("MC muSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,1);
-     hMC_trkMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet55_keep_cent%d",i),Form("MC trkMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
-     hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
+// //    hMC_trkMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet55_keep_cent%d",i),Form("MC trkMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
+//     hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
     hMC_trkMaxJtpt_jet55_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet55_keep_cent%d",i),Form("MC trkMax/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
+//    hMC_trSumJtpt_jet55_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet55_keep_cent%d",i),Form("MC trSum/Jtpt, jet55 pass cutA in centrality bin %d",i),100,0,3);
     hMC_trkMaxJtpt_jet65_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet65_keep_cent%d",i),Form("MC trkMax/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet65_keep_cent%d",i),Form("MC trSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,3);
+//    hMC_trSumJtpt_jet65_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet65_keep_cent%d",i),Form("MC trSum/Jtpt, jet65 pass cutA in centrality bin %d",i),100,0,3);
     hMC_trkMaxJtpt_jet80_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet80_keep_cent%d",i),Form("MC trkMax/Jtpt, jet80 pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trSumJtpt_jet80_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet80_keep_cent%d",i),Form("MC trSum/Jtpt, jet80 pass cutA in centrality bin %d",i),100,0,3);
+//    hMC_trSumJtpt_jet80_keep[i] = new TH1F(Form("hMC_trSumJtpt_jet80_keep_cent%d",i),Form("MC trSum/Jtpt, jet80 pass cutA in centrality bin %d",i),100,0,3);
     hMC_trkMaxJtpt_jet55_rej[i] = new TH1F(Form("hMC_trkMaxJtpt_jet55_rej_cent%d",i),Form("MC trkMax/Jtpt, jet55 fail cutA in centrality bin %d",i),100,0,1);
-    hMC_trSumJtpt_jet55_rej[i] = new TH1F(Form("hMC_trSumJtpt_jet55_rej_cent%d",i),Form("MC trSum/Jtpt, jet55 fail cutA in centrality bin %d",i),100,0,3);
+//    hMC_trSumJtpt_jet55_rej[i] = new TH1F(Form("hMC_trSumJtpt_jet55_rej_cent%d",i),Form("MC trSum/Jtpt, jet55 fail cutA in centrality bin %d",i),100,0,3);
     hMC_trkMaxJtpt_jet65_rej[i] = new TH1F(Form("hMC_trkMaxJtpt_jet65_rej_cent%d",i),Form("MC trkMax/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,1);
-    hMC_trSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_trSumJtpt_jet65_rej_cent%d",i),Form("MC trSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,3);
+//    hMC_trSumJtpt_jet65_rej[i] = new TH1F(Form("hMC_trSumJtpt_jet65_rej_cent%d",i),Form("MC trSum/Jtpt, jet65 fail cutA in centrality bin %d",i),100,0,3);
     hMC_trkMaxJtpt_jet80_rej[i] = new TH1F(Form("hMC_trkMaxJtpt_jet80_rej_cent%d",i),Form("MC trkMax/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,1);
-    hMC_trSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_trSumJtpt_jet80_rej_cent%d",i),Form("MC trSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,3);
-    hMC_trkMaxJtpt_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet 55 or 65 or 80, matched pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trkMaxJtpt_jet55_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet55_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet55 matched pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trkMaxJtpt_jet65_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet65_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet65 matched pass cutA in centrality bin %d",i),100,0,1);
-    hMC_trkMaxJtpt_jet80_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet80_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet80 matched pass cutA in centrality bin %d",i),100,0,1);
+//    hMC_trSumJtpt_jet80_rej[i] = new TH1F(Form("hMC_trSumJtpt_jet80_rej_cent%d",i),Form("MC trSum/Jtpt, jet80 fail cutA in centrality bin %d",i),100,0,3);
+//    hMC_trkMaxJtpt_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet 55 or 65 or 80, matched pass cutA in centrality bin %d",i),100,0,1);
+//    hMC_trkMaxJtpt_jet55_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet55_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet55 matched pass cutA in centrality bin %d",i),100,0,1);/
+//    hMC_trkMaxJtpt_jet65_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet65_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet65 matched pass cutA in centrality bin %d",i),100,0,1);
+ //   hMC_trkMaxJtpt_jet80_Matched_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_jet80_Matched_keep_cent%d",i),Form("MC trkMax/Jtpt, jet80 matched pass cutA in centrality bin %d",i),100,0,1);
 //    hMC_trkMaxJtpt_Matched_NoTrig_keep[i] = new TH1F(Form("hMC_trkMaxJtpt_Matched_NoTrig_keep_cent%d",i),Form("MC trkMax/Jtpt, no trig, matched pass cutA in centrality bin %d",i),100,0,1);
     
   }
@@ -889,15 +951,36 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
     
     //if(printDebug) cout<<"forest values = "<<hiBin_F<<", "<<evt_F<<", "<<run_F<<", "<<lumi_F<<", "<<vz_F<<endl;
 
-    // if(pcollisionEventSelection_F==0) continue; 
-    // if(fabs(vz_F)>15) continue;
-    if(!isGoodEvent_eS) continue; 
+    if(pcollisionEventSelection_F==0) continue; 
+    if(fabs(vz_F)>15) continue;
+    //if(!isGoodEvent_eS) continue; 
     
     // jet_select->GetEntry(nGoodEvt);
     // ++nGoodEvt;
  
     int cBin = findBin(hiBin_F);//tells us the centrality of the event. 
     if(cBin==-1 || cBin==nbins_cent) continue;
+
+    int hfbin = findHFbin(hiHF_F)-1;
+    if(hfbin == -1) continue; 
+
+    hCentrality_fromHFBound->Fill(hfbin);
+
+
+    hNpix_vs_hiBin->Fill(hiBin_F, hiNpix_F);
+    hNpixelTracks_vs_hiBin->Fill(hiBin_F, hiNpixelTracks_F);
+    hNTracks_vs_hiBin->Fill(hiBin_F, hiNtracks_F);
+    hNTracksPtCut_vs_hiBin->Fill(hiBin_F, hiNtracksPtCut_F);
+    hNTracksEtaCut_vs_hiBin->Fill(hiBin_F, hiNtracksEtaCut_F);
+    hNTracksEtaPtCut_vs_hiBin->Fill(hiBin_F, hiNtracksEtaPtCut_F);
+
+    hNpix_vs_HF->Fill(hiHF_F, hiNpix_F);
+    hNpixelTracks_vs_HF->Fill(hiHF_F, hiNpixelTracks_F);
+    hNTracks_vs_HF->Fill(hiHF_F, hiNtracks_F);
+    hNTracksPtCut_vs_HF->Fill(hiHF_F, hiNtracksPtCut_F);
+    hNTracksEtaCut_vs_HF->Fill(hiHF_F, hiNtracksEtaCut_F);
+    hNTracksEtaPtCut_vs_HF->Fill(hiHF_F, hiNtracksEtaPtCut_F);
+
 
     // if(hiBin_eS != hiBin_F || evt_eS != evt_F || run_eS != run_F || lumi_eS != lumi_F || vz_eS != vz_F) cout<<"ERROR mismatch eS, F"<<endl;
     // if(hiBin_eS != hiBin_jS || evt_eS != evt_jS || run_eS != run_jS || lumi_eS != lumi_jS || vz_eS != vz_jS) cout<<"ERROR mismatch eS, jS"<<endl;
@@ -1009,8 +1092,9 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
       if( pt_F[jet] > 3.0 * pthat_F ) continue;
       //if( pt_F[jet] > 3 * pthat[startfile] ) continue;
 
+
       // if( chMax_F[jet] < 7 && trkMax_F[jet] < 7 && neMax_F[jet] < 8 ) continue;
-      if( trkMax_F[jet] < 8 && neMax_F[jet] < 8 ) continue;
+ //     if( trkMax_F[jet] < 8 && neMax_F[jet] < 8 ) continue;
 
       // if( (fabs(refpt_F[jet]) > 3.0 * pthat_F) || (pt_F[jet]/refpt_F[jet] > 2.0) ) continue;
       bool PFElecCut = false;
@@ -1045,8 +1129,17 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
 	hpbpb_mcclosure_data_train[cBin]->Fill(recpt, weight_eS);
       }
 
+      if(jet55_F == 1) hpbpb_Jet55Selection[cBin]->Fill(recpt, weight_eS * jet55_p_F);
+      if(jet65_F == 1) hpbpb_Jet65Selection[cBin]->Fill(recpt, weight_eS * jet65_p_F);
+      
       if(jet55_F == 1 && jet65_F==0 && jet80_F == 0){
 	//weight_eS = weight_eS * jet55_p_F;
+
+	hSVD_Matrix_noWeight[cBin]->Fill(genpt, recpt);
+	hSVD_Matrix_Weight[cBin]->Fill(genpt, recpt, weight_eS * jet55_p_F);
+
+	hSVD_Trans_Matrix_noWeight[cBin]->Fill(recpt, genpt);
+	hSVD_Trans_Matrix_Weight[cBin]->Fill(recpt, genpt, weight_eS * jet55_p_F);
 	
 	hpbpb_Jet55_gen[cBin]->Fill(genpt, weight_eS * jet55_p_F);
 	hpbpb_Jet55_GenSmear[cBin]->Fill(genpt + rnd.Gaus(0,1), weight_eS * jet55_p_F);
@@ -1058,7 +1151,6 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
 	hpbpb_matrix_HLT_5TrigIneff_Smear[cBin]->Fill(genpt * (1. + 0.05/nbins_cent*(nbins_cent-cBin)), recpt * (1. + 0.05/nbins_cent*(nbins_cent-cBin)), weight_eS * jet55_p_F);
 	hpbpb_matrix_HLT_10TrigIneff_Smear[cBin]->Fill(genpt * (1. + 0.1/nbins_cent*(nbins_cent-cBin)), recpt * (1. + 0.1/nbins_cent*(nbins_cent-cBin)), weight_eS * jet55_p_F);
 
-	hpbpb_matrix_HLT_gen2pSmear[cBin]->Fill(genpt * (1. + 0.02/nbins_cent*(nbins_cent-cBin)), recpt, weight_eS * jet55_p_F);
 
 	hpbpb_Jet55_reco[cBin]->Fill(recpt, weight_eS * jet55_p_F);
 	hpbpb_Jet55_RecoSmear[cBin]->Fill(recpt + rnd.Gaus(0,1), weight_eS * jet55_p_F);
@@ -1069,9 +1161,16 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
 	hpbpb_anaBin_matrix_HLT_Jet55[cBin]->Fill(genpt, recpt, weight_eS * jet55_p_F);
 	hpbpb_anaBin_Trans_matrix_HLT_Jet55[cBin]->Fill( recpt,genpt, weight_eS * jet55_p_F);
 	
+	hpbpb_matrix_HLT_gen2pSmear[cBin]->Fill(genpt * (1. + 0.02/nbins_cent*(nbins_cent-cBin)), recpt, weight_eS * jet55_p_F);
 	hpbpb_matrix_HLT_GenSmear[cBin]->Fill(genpt + rnd.Gaus(0,1), recpt, weight_eS * jet55_p_F);
 	hpbpb_matrix_HLT_RecoSmear[cBin]->Fill(genpt, recpt + rnd.Gaus(0,1), weight_eS * jet55_p_F);
 	hpbpb_matrix_HLT_BothSmear[cBin]->Fill(genpt + rnd.Gaus(0,1), recpt + rnd.Gaus(0,1), weight_eS * jet55_p_F);
+
+	hpbpb_Trans_matrix_HLT_gen2pSmear[cBin]->Fill(recpt, genpt * (1. + 0.02/nbins_cent*(nbins_cent-cBin)), weight_eS * jet55_p_F);
+	hpbpb_Trans_matrix_HLT_GenSmear[cBin]->Fill( recpt ,genpt + rnd.Gaus(0,1), weight_eS * jet55_p_F);
+	hpbpb_Trans_matrix_HLT_RecoSmear[cBin]->Fill( recpt + rnd.Gaus(0,1),genpt, weight_eS * jet55_p_F);
+	hpbpb_Trans_matrix_HLT_BothSmear[cBin]->Fill( recpt + rnd.Gaus(0,1),genpt + rnd.Gaus(0,1), weight_eS * jet55_p_F);
+
 	
 	hpbpb_anaBin_Jet55_gen[cBin]->Fill(genpt, weight_eS * jet55_p_F);
 	hpbpb_anaBin_Jet55_reco[cBin]->Fill(recpt, weight_eS * jet55_p_F);
@@ -1115,6 +1214,12 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
       }// jet55 selection
 
       if(jet65_F == 1 && jet80_F == 0){
+
+	hSVD_Matrix_noWeight[cBin]->Fill(genpt, recpt);
+	hSVD_Matrix_Weight[cBin]->Fill(genpt, recpt, weight_eS);
+
+	hSVD_Trans_Matrix_noWeight[cBin]->Fill(recpt, genpt);
+	hSVD_Trans_Matrix_Weight[cBin]->Fill(recpt, genpt, weight_eS);
 	
 	hpbpb_Jet65_gen[cBin]->Fill(genpt, weight_eS);
 	hpbpb_Jet65_GenSmear[cBin]->Fill(genpt + rnd.Gaus(0,1), weight_eS);
@@ -1132,6 +1237,12 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
 	hpbpb_Trans_matrix_HLT_Jet65[cBin]->Fill( recpt, genpt, weight_eS);
 	hpbpb_anaBin_matrix_HLT_Jet65[cBin]->Fill(genpt, recpt, weight_eS);
 	hpbpb_anaBin_Trans_matrix_HLT_Jet65[cBin]->Fill( recpt,genpt, weight_eS);
+
+	hpbpb_Trans_matrix_HLT_gen2pSmear[cBin]->Fill(recpt, genpt * (1. + 0.02/nbins_cent*(nbins_cent-cBin)), weight_eS);
+	hpbpb_Trans_matrix_HLT_GenSmear[cBin]->Fill( recpt ,genpt + rnd.Gaus(0,1), weight_eS);
+	hpbpb_Trans_matrix_HLT_RecoSmear[cBin]->Fill( recpt + rnd.Gaus(0,1),genpt, weight_eS);
+	hpbpb_Trans_matrix_HLT_BothSmear[cBin]->Fill( recpt + rnd.Gaus(0,1),genpt + rnd.Gaus(0,1), weight_eS);
+
 	
 	hpbpb_matrix_HLT_GenSmear[cBin]->Fill(genpt + rnd.Gaus(0,1), recpt, weight_eS);
 	hpbpb_matrix_HLT_RecoSmear[cBin]->Fill(genpt, recpt + rnd.Gaus(0,1), weight_eS);
@@ -1174,6 +1285,12 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
 
       if(jet80_F == 1){
 
+	hSVD_Matrix_noWeight[cBin]->Fill(genpt, recpt);
+	hSVD_Matrix_Weight[cBin]->Fill(genpt, recpt, weight_eS);
+
+	hSVD_Trans_Matrix_noWeight[cBin]->Fill(recpt, genpt);
+	hSVD_Trans_Matrix_Weight[cBin]->Fill(recpt, genpt, weight_eS);
+	
 	hpbpb_Jet80_gen[cBin]->Fill(genpt, weight_eS);
 	hpbpb_Jet80_GenSmear[cBin]->Fill(genpt + rnd.Gaus(0,1), weight_eS);
 	hpbpb_Jet80_gen2pSmear[cBin]->Fill(genpt * (1. + 0.02/nbins_cent*(nbins_cent-cBin)), weight_eS);
@@ -1186,6 +1303,12 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
 	hpbpb_anaBin_matrix_HLT_Jet80[cBin]->Fill(genpt, recpt, weight_eS);
 	hpbpb_anaBin_Trans_matrix_HLT_Jet80[cBin]->Fill( recpt,genpt, weight_eS);
 
+	hpbpb_Trans_matrix_HLT_gen2pSmear[cBin]->Fill(recpt, genpt * (1. + 0.02/nbins_cent*(nbins_cent-cBin)), weight_eS);
+	hpbpb_Trans_matrix_HLT_GenSmear[cBin]->Fill( recpt ,genpt + rnd.Gaus(0,1), weight_eS);
+	hpbpb_Trans_matrix_HLT_RecoSmear[cBin]->Fill( recpt + rnd.Gaus(0,1),genpt, weight_eS);
+	hpbpb_Trans_matrix_HLT_BothSmear[cBin]->Fill( recpt + rnd.Gaus(0,1),genpt + rnd.Gaus(0,1), weight_eS);
+
+	
 	hpbpb_Jet80_reco[cBin]->Fill(recpt, weight_eS);
 	hpbpb_Jet80_RecoSmear[cBin]->Fill(recpt + rnd.Gaus(0,1), weight_eS);
 	hpbpb_Jet80_raw[cBin]->Fill(rawpt, weight_eS);
@@ -1234,7 +1357,7 @@ void RAA_read_mc_pbpb_JetID(int startfile = 8,
     if(jet55_F == 1 && jet65_F == 0 && jet80_F == 0){        
       if(pt_F[jet]>pfptmin){
              hMC_chMaxJtpt_jet55_rej[cBin]->Fill(chMax_F[jet]/pt_F[jet],weight_eS);
-             hMC_trkMaxJtpt_jet55_keep[cBin]->Fill(trkMax_F[jet]/pt_F[jet],weight_eS);
+             hMC_trkMaxJtpt_jet55_rej[cBin]->Fill(trkMax_F[jet]/pt_F[jet],weight_eS);
              hMC_eMaxJtpt_jet55_rej[cBin]->Fill(eMax_F[jet]/pt_F[jet],weight_eS);
              hMC_neMaxJtpt_jet55_rej[cBin]->Fill(neMax_F[jet]/pt_F[jet],weight_eS);
              hMC_phMaxJtpt_jet55_rej[cBin]->Fill(phMax_F[jet]/pt_F[jet],weight_eS);
