@@ -1,4 +1,4 @@
-// run with: root -l 'comparison_with_ATLAS_pp_SVD_1Sep2015.C(10,60,320,"")'
+// run with: root -l 'comparison_with_ATLAS_pp_SVD_1Sep2015.C(10,60,300,"")'
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
@@ -82,7 +82,7 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    
    Int_t ci;   // for color index setting
    ci = TColor::GetColor("#000099");
-   uATLAS_PP_R4->SetLineColor(ci);
+   uATLAS_PP_R4->SetLineColor(kRed);
 
    ci = TColor::GetColor("#ff0000");
    uATLAS_PP_R4->SetMarkerColor(ci);
@@ -94,15 +94,15 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    uATLAS_PP_R4->GetXaxis()->SetLabelFont(43);
    uATLAS_PP_R4->GetXaxis()->SetLabelSize(20);
    uATLAS_PP_R4->GetXaxis()->SetTitleSize(22);
-   uATLAS_PP_R4->GetXaxis()->SetTitleOffset(2);
+   uATLAS_PP_R4->GetXaxis()->SetTitleOffset(1.2);
    uATLAS_PP_R4->GetXaxis()->SetTitleFont(43);
-   uATLAS_PP_R4->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T} d#eta}");
+   uATLAS_PP_R4->GetYaxis()->SetTitle("power law fit #frac{d#sigma}{dp_{T} d#eta}");
    uATLAS_PP_R4->GetYaxis()->CenterTitle(true);
    uATLAS_PP_R4->GetYaxis()->SetNdivisions(610);
    uATLAS_PP_R4->GetYaxis()->SetLabelFont(43);
    uATLAS_PP_R4->GetYaxis()->SetLabelSize(20);
    uATLAS_PP_R4->GetYaxis()->SetTitleSize(22);
-   uATLAS_PP_R4->GetYaxis()->SetTitleOffset(2);
+   uATLAS_PP_R4->GetYaxis()->SetTitleOffset(1.2);
    uATLAS_PP_R4->GetYaxis()->SetTitleFont(43);
    uATLAS_PP_R4->GetZaxis()->SetLabelFont(42);
    uATLAS_PP_R4->GetZaxis()->SetLabelSize(0.035);
@@ -142,7 +142,7 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    uPP_R4_ATLASComp->SetStats(0);
 
    ci = TColor::GetColor("#000099");
-   uPP_R4_ATLASComp->SetLineColor(ci);
+   uPP_R4_ATLASComp->SetLineColor(kGreen);
 
    ci = TColor::GetColor("#00ff00");
    uPP_R4_ATLASComp->SetMarkerColor(ci);
@@ -183,7 +183,7 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    uATLAS_PP_R4->Draw("");     
    uPP_R4_ATLASComp->Draw("same");
    
-   TLegend *leg = new TLegend(0.2,0.2,0.5,0.4,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.4,0.6,0.6,0.7,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(62);
    leg->SetTextSize(0.04);
@@ -192,7 +192,7 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   TLegendEntry *entry=leg->AddEntry("uPP_R4_ATLASComp","CMS PP, R=0.4","pl");
+   TLegendEntry *entry=leg->AddEntry("uPP_R4_ATLASComp","CMS PP, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -203,7 +203,7 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    entry->SetMarkerColor(ci);
    entry->SetMarkerStyle(27);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("uATLAS_PP_R4","ATLAS PP, R=0.4","pl");
+   entry=leg->AddEntry("uATLAS_PP_R4","ATLAS PP, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -257,7 +257,8 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    cRatio_pp->SetFrameBorderMode(0);
    cRatio_pp->SetFrameLineColor(0);
    cRatio_pp->SetFrameBorderMode(0);   
-   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,50,300);
+   cRatio_pp->SetLogy(0);
+   TH1F *hRatioBlank = new TH1F("hRatioBlank"," ",100,50,320);
    hRatioBlank->SetMinimum(0.5);
    hRatioBlank->SetMaximum(1.5);
    hRatioBlank->SetDirectory(0);
@@ -273,12 +274,12 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    hRatioBlank->GetXaxis()->SetLabelSize(0.045);
    hRatioBlank->GetXaxis()->SetTitleSize(0.055);
    hRatioBlank->GetXaxis()->SetTitleFont(42);
-   hRatioBlank->GetYaxis()->SetTitle("CMS/ATLAS #frac{d^{2}#sigma}{dp_{T} d#eta} nb");
+   hRatioBlank->GetYaxis()->SetTitle("CMS/ATLAS power law fit #frac{d^{2}#sigma}{dp_{T} d#eta} nb");
    hRatioBlank->GetYaxis()->SetLabelFont(42);
    hRatioBlank->GetYaxis()->SetLabelOffset(0.01);
    hRatioBlank->GetYaxis()->SetLabelSize(0.045);
    hRatioBlank->GetYaxis()->SetTitleSize(0.055);
-   hRatioBlank->GetYaxis()->SetTitleOffset(1.5);
+   hRatioBlank->GetYaxis()->SetTitleOffset(1.4);
    hRatioBlank->GetYaxis()->SetTitleFont(42);
    hRatioBlank->GetZaxis()->SetLabelFont(42);
    hRatioBlank->GetZaxis()->SetLabelSize(0.045);
@@ -291,8 +292,34 @@ void comparison_with_ATLAS_pp_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, Int_
    hFitRatioCMS->Draw("ap,same");
 //   hRatioATLAS->Draw("ap,same");
 //   hRatioATLASHist->Draw("ap,same");
+double xvalue, yerrorpp, ATLASyerrorpp;
+ xvalue = 304.0;
+yerrorpp=0.037;
+ATLASyerrorpp=0.031;
+   int ci = 30;
+  int ca = 38;
+  TBox * b = new TBox(xvalue-5, 1.-yerrorpp/2, xvalue+5, 1.+yerrorpp/2);
+  b->SetFillColor(ci);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ci);
+  b->Draw();
+  TBox * b = new TBox(xvalue-15, 1.-ATLASyerrorpp/2, xvalue-10, 1.+ATLASyerrorpp/2);
+  b->SetFillColor(ca);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ca);
+  b->Draw();
+    
+//    box = new TBox(0.25,0.75,0.5,0.85);
+//    box->SetFillColor(30);
+//    box->SetFillStyle(3001);
+//    box->SetLineColor(30);
+//    box->Draw();   
+TLine *line = new TLine(50, 1, 320, 1);
+line->SetLineStyle(2);
+//line->SetNDC(kTRUE);
+line->Draw();
    
-   cRatio_pp->SaveAs("Plots/CMSfit_ATLASfit_ratio_pp.pdf");   
+   cRatio_pp->SaveAs("Plots/CMSpowerlawfit_ATLASpowerlawfit_ratio_pp.pdf");   
 //   hFitRatioATLAS->SetLineColor(0);
 //   TH1F *hRatioATLAS = (TH1F*)uPP_R4_SVD->Clone("hRatioATLAS"); //clone histogram hRatio from h
 

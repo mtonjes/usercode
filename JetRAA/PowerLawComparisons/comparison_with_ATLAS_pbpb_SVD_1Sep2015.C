@@ -1,4 +1,4 @@
-//root -l 'comparison_with_ATLAS_pbpb_SVD_1Sep2015.C(10,60,280,"IL")'
+//run with root -l 'comparison_with_ATLAS_pbpb_SVD_1Sep2015.C(10,60,280,"")'
 //MIT VERSION UPDATED May 19 2015 for MinBias subtraction MBT
 #include <iostream>
 #include <stdio.h>
@@ -154,13 +154,13 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_periph->SetLineColor(kGreen);   
  
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent7->Fit("fitATLAS_periph",FitOpt,"",FitStart,FitEnd); //fit function
+     uATLAS_PbPb_R4_cent7->Fit("fitATLAS_periph","IL","",60,280); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_periph_axes = (TH1F*)uPbPb_R4_ATLASComp_cent5->Clone("hRatioCMS_periph_axes");
     for(int ic=0; ic<nfit; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent5->Fit("fitCMS_periph",FitOpt,"",FitStart,FitEnd); //fit function
+      uPbPb_R4_ATLASComp_cent5->Fit("fitCMS_periph","IL","",60,280); //fit function
     }   
     
    Double_t xAxis2138[11] = {30, 40, 50, 60, 80, 100, 120, 160, 200, 250, 320}; 
@@ -270,13 +270,13 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_midperiph->SetLineColor(kGreen);     
 
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent5->Fit("fitATLAS_midperiph",FitOpt,"",FitStart,FitEnd); //fit function
+     uATLAS_PbPb_R4_cent5->Fit("fitATLAS_midperiph","","",60,300); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_midperiph_axes = (TH1F*)uPbPb_R4_ATLASComp_cent4->Clone("hRatioCMS_midperiph_axes");
     for(int ic=0; ic<nfit; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent4->Fit("fitCMS_midperiph",FitOpt,"",FitStart,FitEnd); //fit function
+      uPbPb_R4_ATLASComp_cent4->Fit("fitCMS_midperiph","","",60,250); //fit function
     }   
     
    Double_t xAxis2140[11] = {30, 40, 50, 60, 80, 100, 120, 160, 200, 250, 320}; 
@@ -391,13 +391,13 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_midcent->SetLineColor(kGreen);     
 
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent3->Fit("fitATLAS_midcent",FitOpt,"",FitStart,FitEnd); //fit function
+     uATLAS_PbPb_R4_cent3->Fit("fitATLAS_midcent","","",60,300); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_midcent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent3->Clone("hRatioCMS_midcent_axes");
     for(int ic=0; ic<nfit; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent3->Fit("fitCMS_midcent",FitOpt,"",FitStart,FitEnd); //fit function
+      uPbPb_R4_ATLASComp_cent3->Fit("fitCMS_midcent",FitOpt,"",60,300); //fit function
     }   
 
    Double_t xAxis2142[11] = {30, 40, 50, 60, 80, 100, 120, 160, 200, 250, 320}; 
@@ -509,7 +509,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_cent->SetLineColor(kGreen);     
    
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent1->Fit("fitATLAS_cent",FitOpt,"",FitStart,FitEnd); //fit function
+     uATLAS_PbPb_R4_cent1->Fit("fitATLAS_cent","","",60,300); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_cent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent2->Clone("hRatioCMS_cent_axes");
@@ -625,7 +625,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_mostcent->SetLineColor(kGreen);   
    
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent0->Fit("fitATLAS_mostcent",FitOpt,"",FitStart,FitEnd); //fit function
+     uATLAS_PbPb_R4_cent0->Fit("fitATLAS_mostcent","","",60,300); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_mostcent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent0->Clone("hRatioCMS_mostcent_axes");
@@ -679,7 +679,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   TLegendEntry *entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent5","CMS PbPb 70-90%, R=0.4","pl");
+   TLegendEntry *entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent5","CMS PbPb 70-90%, R=0.4, power law fit","pl");
 
 
    ci = TColor::GetColor("#000099");
@@ -691,7 +691,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    entry->SetMarkerColor(ci);
    entry->SetMarkerStyle(27);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("uATLAS_PbPb_R4_cent7","ATLAS PbPb 70-80%, R=0.4","pl");
+   entry=leg->AddEntry("uATLAS_PbPb_R4_cent7","ATLAS PbPb 70-80%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -741,7 +741,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent4","CMS PbPb 50-70%, R=0.4","pl");
+   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent4","CMS PbPb 50-70%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -752,7 +752,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    entry->SetMarkerColor(ci);
    entry->SetMarkerStyle(27);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("uATLAS_PbPb_R4_cent5","ATLAS PbPb 50-60%, R=0.4","pl");
+   entry=leg->AddEntry("uATLAS_PbPb_R4_cent5","ATLAS PbPb 50-60%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -799,7 +799,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent3","CMS PbPb 30-50%, R=0.4","pl");
+   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent3","CMS PbPb 30-50%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -810,7 +810,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    entry->SetMarkerColor(ci);
    entry->SetMarkerStyle(27);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("uATLAS_PbPb_R4_cent3","ATLAS PbPb 30-40%, R=0.4","pl");
+   entry=leg->AddEntry("uATLAS_PbPb_R4_cent3","ATLAS PbPb 30-40%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -856,7 +856,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent2","CMS PbPb 10-30%, R=0.4","pl");
+   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent2","CMS PbPb 10-30%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -867,7 +867,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    entry->SetMarkerColor(ci);
    entry->SetMarkerStyle(27);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("uATLAS_PbPb_R4_cent1","ATLAS PbPb 10-20%, R=0.4","pl");
+   entry=leg->AddEntry("uATLAS_PbPb_R4_cent1","ATLAS PbPb 10-20%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -914,7 +914,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent0","CMS PbPb 0-5%, R=0.4","pl");
+   entry=leg->AddEntry("uPbPb_R4_ATLASComp_cent0","CMS PbPb 0-5%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -925,7 +925,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    entry->SetMarkerColor(ci);
    entry->SetMarkerStyle(27);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("uATLAS_PbPb_R4_cent0","ATLAS PbPb 0-10%, R=0.4","pl");
+   entry=leg->AddEntry("uATLAS_PbPb_R4_cent0","ATLAS PbPb 0-10%, R=0.4, power law fit","pl");
 
    ci = TColor::GetColor("#000099");
    entry->SetLineColor(ci);
@@ -1005,7 +1005,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    hRatioBlank->SetLineStyle(0);
    hRatioBlank->SetMarkerStyle(20);
    hRatioBlank->SetMarkerSize(1.2);
-   hRatioBlank->GetXaxis()->SetTitle("ak R=0.4 Jet p_{T} (GeV/c)");
+   hRatioBlank->GetXaxis()->SetTitle("ak R=0.4, power law fit Jet p_{T} (GeV/c)");
    hRatioBlank->GetXaxis()->SetLabelFont(42);
    hRatioBlank->GetXaxis()->SetLabelOffset(0.01);
    hRatioBlank->GetXaxis()->SetLabelSize(0.045);
@@ -1022,6 +1022,33 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    hRatioBlank->GetZaxis()->SetLabelSize(0.045);
    hRatioBlank->GetZaxis()->SetTitleSize(0.035);
    hRatioBlank->GetZaxis()->SetTitleFont(42);
+
+double xvalue, yerrorNpart[6];
+
+  xvalue = 294.0;
+
+  yerrorNpart[0]=0.0409, yerrorNpart[1]=0.0459, yerrorNpart[2]=0.0578, yerrorNpart[3]=0.0944, yerrorNpart[4]=0.143, yerrorNpart[5]=0.176;
+ 
+ //TAA uncertainty without the pp lumi uncertainty 	  
+  // add 6% error 
+  yerrorNpart[0]=TMath::Sqrt(yerrorNpart[0]*yerrorNpart[0]);
+  yerrorNpart[1]=TMath::Sqrt(yerrorNpart[1]*yerrorNpart[1]);
+  yerrorNpart[2]=TMath::Sqrt(yerrorNpart[2]*yerrorNpart[2]);
+  yerrorNpart[3]=TMath::Sqrt(yerrorNpart[3]*yerrorNpart[3]);
+  yerrorNpart[4]=TMath::Sqrt(yerrorNpart[4]*yerrorNpart[4]);
+  yerrorNpart[5]=TMath::Sqrt(yerrorNpart[5]*yerrorNpart[5]);
+
+//http://hepdata.cedar.ac.uk/view/ins1326911
+double ATLASyerrorNpart[6];
+  ATLASyerrorNpart[0]=(0.37/23.45); // 0-10%
+  ATLASyerrorNpart[1]=(1.); // NO BIN, putting this in CMS bins
+  ATLASyerrorNpart[2]=(0.30/14.43); // 10-20%
+  ATLASyerrorNpart[3]=(0.22/5.04); // 30-40%
+  ATLASyerrorNpart[4]=(0.12/1.33); // 50-60%
+  ATLASyerrorNpart[5]=(0.04/0.24); // 70-80%
+
+  int ci = 30;
+  int ca = 38;
      
 // ------------>Primitives in pad: cATLAS_Ratio_1 EMPTY
    TPad *cATLAS_Ratio_1 = new TPad("cATLAS_Ratio_1", "cATLAS_Ratio_1",0.01,0.51,0.3233333,0.99);
@@ -1032,6 +1059,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    cATLAS_Ratio_1->SetBorderMode(0);
    cATLAS_Ratio_1->SetBorderSize(2);
    cATLAS_Ratio_1->SetFrameBorderMode(0);
+   cATLAS_Ratio_1->SetLogy(0);
    cATLAS_Ratio_1->Modified();
    cATLAS_Ratio->cd();
   
@@ -1043,11 +1071,19 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    cATLAS_Ratio_2->SetFillColor(0);
    cATLAS_Ratio_2->SetBorderMode(0);
    cATLAS_Ratio_2->SetBorderSize(2);
-   cATLAS_Ratio_2->SetLogy();
+   cATLAS_Ratio_2->SetLogy(0);
    cATLAS_Ratio_2->SetFrameBorderMode(0);
    cATLAS_Ratio_2->SetFrameBorderMode(0);
-   hRatioBlank->Draw();     
+  // hRatioBlank->Draw();    
+  TH1F* hRatioPeriph = (TH1F*)hRatioBlank->Clone("hRatioPeriph");
+  hRatioPeriph->GetXaxis()->SetRangeUser(50,180);  
+   hRatioPeriph->Draw();
    hFitRatioCMS_periph->Draw("same,ap");
+//    box = new TBox(169,0.9070269,179,1.092973);
+//    box->SetFillColor(30);
+//    box->SetFillStyle(3001);
+//    box->SetLineColor(30);
+//    box->Draw();
    
    TLegend *leg = new TLegend(0.25,0.75,0.5,0.85,NULL,"brNDC");
    leg->SetBorderSize(0);
@@ -1058,8 +1094,30 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   TLegendEntry *entry=leg->AddEntry("hFitRatioCMS_periph","CMS 70-90%/ATLAS 70-80%, R=0.4","pl");
+   TLegendEntry *entry=leg->AddEntry("hFitRatioCMS_periph","CMS 70-90%/ATLAS 70-80%, R=0.4, power law fit","pl");
    leg->Draw();
+// and for PbPb, lets just point the ratio points till 180 for 70-90% and 240 for 50-70%
+//    box = new TBox(0.25,0.75,0.5,0.85);
+//    box->SetFillColor(30);
+//    box->SetFillStyle(3001);
+//    box->SetLineColor(30);
+//    box->Draw();  
+  xvalue = 174.0; 
+  TBox * b = new TBox(xvalue-5, 1.-yerrorNpart[5]/2, xvalue+5, 1.+yerrorNpart[5]/2);
+  b->SetFillColor(ci);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ci);
+  b->Draw();
+  TBox * b = new TBox(xvalue-15, 1.-ATLASyerrorNpart[5]/2, xvalue-10, 1.+ATLASyerrorNpart[5]/2);
+  b->SetFillColor(ca);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ca);
+  b->Draw();
+    
+TLine *line = new TLine(50, 1, 300, 1);
+line->SetLineStyle(2);
+//line->SetNDC(kTRUE);
+line->Draw();
    
    TPaveText *pt = new TPaveText(0.4831415,0.94,0.5168585,0.995,"blNDC");
    pt->SetName("title");
@@ -1083,12 +1141,16 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    cATLAS_Ratio_3->SetFillColor(0);
    cATLAS_Ratio_3->SetBorderMode(0);
    cATLAS_Ratio_3->SetBorderSize(2);
-   cATLAS_Ratio_3->SetLogy();
+   cATLAS_Ratio_3->SetLogy(0);
    cATLAS_Ratio_3->SetFrameBorderMode(0);
    cATLAS_Ratio_3->SetFrameBorderMode(0);
-   hRatioBlank->Draw();     
+//   hRatioBlank->Draw();    
+  TH1F* hRatioMidPeriph = (TH1F*)hRatioBlank->Clone("hRatioMidPeriph");
+  hRatioMidPeriph->GetXaxis()->SetRangeUser(50,250);  
+   hRatioMidPeriph->Draw();
+ //  hFitRatioCMS_midperiph->GetXAxis()->SetRangeUser(50,250); 
    hFitRatioCMS_midperiph->Draw("same,ap");
-   
+// and for PbPb, lets just point the ratio points till 180 for 70-90% and 240 for 50-70%   
    leg = new TLegend(0.25,0.75,0.5,0.85,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(62);
@@ -1098,9 +1160,29 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("hFitRatioCMS_midperiph","CMS 50-70%/ATLAS 50-60%, R=0.4","pl");
+   entry=leg->AddEntry("hFitRatioCMS_midperiph","CMS 50-70%/ATLAS 50-60%, R=0.4, power law fit","pl");
    leg->Draw();
-   
+//    box = new TBox(239,0.9224613,249,1.077539);
+//    box->SetFillColor(30);
+//    box->SetFillStyle(3001);
+//    box->SetLineColor(30);
+//    box->Draw();
+  xvalue = 244.0; 
+  TBox * b = new TBox(xvalue-5, 1.-yerrorNpart[4]/2, xvalue+5, 1.+yerrorNpart[4]/2);
+  b->SetFillColor(ci);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ci);
+  b->Draw();
+  TBox * b = new TBox(xvalue-15, 1.-ATLASyerrorNpart[4]/2, xvalue-10, 1.+ATLASyerrorNpart[4]/2);
+  b->SetFillColor(ca);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ca);
+  b->Draw();  
+TLine *line = new TLine(50, 1, 300, 1);
+line->SetLineStyle(2);
+//line->SetNDC(kTRUE);
+line->Draw();
+      
    pt = new TPaveText(0.4831415,0.94,0.5168585,0.995,"blNDC");
    pt->SetName("title");
    pt->SetBorderSize(0);
@@ -1120,7 +1202,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    cATLAS_Ratio_4->SetFillColor(0);
    cATLAS_Ratio_4->SetBorderMode(0);
    cATLAS_Ratio_4->SetBorderSize(2);
-   cATLAS_Ratio_4->SetLogy();
+   cATLAS_Ratio_4->SetLogy(0);
    cATLAS_Ratio_4->SetFrameBorderMode(0);
    cATLAS_Ratio_4->SetFrameBorderMode(0);
    hRatioBlank->Draw();     
@@ -1135,9 +1217,29 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("hFitRatioCMS_midcent","CMS 30-50%/ATLAS 30-40%, R=0.4","pl");
+   entry=leg->AddEntry("hFitRatioCMS_midcent","CMS 30-50%/ATLAS 30-40%, R=0.4, power law fit","pl");
    leg->Draw();
-   
+//    box = new TBox(289,0.9440729,299,1.055927);
+//    box->SetFillColor(30);
+//    box->SetFillStyle(3001);
+//    box->SetLineColor(30);
+//    box->Draw();
+  xvalue = 294.0; 
+  TBox * b = new TBox(xvalue-5, 1.-yerrorNpart[3]/2, xvalue+5, 1.+yerrorNpart[3]/2);
+  b->SetFillColor(ci);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ci);
+  b->Draw();
+  TBox * b = new TBox(xvalue-15, 1.-ATLASyerrorNpart[3]/2, xvalue-10, 1.+ATLASyerrorNpart[3]/2);
+  b->SetFillColor(ca);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ca);
+  b->Draw();  
+TLine *line = new TLine(50, 1, 300, 1);
+line->SetLineStyle(2);
+//line->SetNDC(kTRUE);
+line->Draw();
+      
    pt = new TPaveText(0.4831415,0.94,0.5168585,0.995,"blNDC");
    pt->SetName("title");
    pt->SetBorderSize(0);
@@ -1157,7 +1259,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    cATLAS_Ratio_5->SetFillColor(0);
    cATLAS_Ratio_5->SetBorderMode(0);
    cATLAS_Ratio_5->SetBorderSize(2);
-   cATLAS_Ratio_5->SetLogy();
+   cATLAS_Ratio_5->SetLogy(0);
    cATLAS_Ratio_5->SetFrameBorderMode(0);
    cATLAS_Ratio_5->SetFrameBorderMode(0);
    hRatioBlank->Draw();     
@@ -1171,9 +1273,29 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("hFitRatioCMS_cent","CMS 10-30%/ATLAS 10-20%, R=0.4","pl");
+   entry=leg->AddEntry("hFitRatioCMS_cent","CMS 10-30%/ATLAS 10-20%, R=0.4, power law fit","pl");
    leg->Draw();
-   
+//    box = new TBox(289,0.9583441,299,1.041656);
+//    box->SetFillColor(30);
+//    box->SetFillStyle(3001);
+//    box->SetLineColor(30);
+//    box->Draw();
+  xvalue = 294.0; 
+  TBox * b = new TBox(xvalue-5, 1.-yerrorNpart[2]/2, xvalue+5, 1.+yerrorNpart[2]/2);
+  b->SetFillColor(ci);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ci);
+  b->Draw();
+  TBox * b = new TBox(xvalue-15, 1.-ATLASyerrorNpart[2]/2, xvalue-10, 1.+ATLASyerrorNpart[2]/2);
+  b->SetFillColor(ca);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ca);
+  b->Draw();  
+ TLine *line = new TLine(50, 1, 300, 1);
+line->SetLineStyle(2);
+//line->SetNDC(kTRUE);
+line->Draw();
+     
    pt = new TPaveText(0.4831415,0.94,0.5168585,0.995,"blNDC");
    pt->SetName("title");
    pt->SetBorderSize(0);
@@ -1193,7 +1315,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    cATLAS_Ratio_6->SetFillColor(0);
    cATLAS_Ratio_6->SetBorderMode(0);
    cATLAS_Ratio_6->SetBorderSize(2);
-   cATLAS_Ratio_6->SetLogy();
+   cATLAS_Ratio_6->SetLogy(0);
    cATLAS_Ratio_6->SetFrameBorderMode(0);
    cATLAS_Ratio_6->SetFrameBorderMode(0);
  
@@ -1208,9 +1330,29 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    leg->SetLineWidth(1);
    leg->SetFillColor(19);
    leg->SetFillStyle(0);
-   entry=leg->AddEntry("hFitRatioCMS_mostcent","CMS 0-5%/ATLAS 0-10%, R=0.4","pl");
+   entry=leg->AddEntry("hFitRatioCMS_mostcent","CMS 0-5%/ATLAS 0-10%, R=0.4, power law fit","pl");
    leg->Draw();
-   
+//    box = new TBox(289,0.9636929,299,1.036307);
+//    box->SetFillColor(30);
+//    box->SetFillStyle(3001);
+//    box->SetLineColor(30);
+//    box->Draw();
+  xvalue = 294.0; 
+  TBox * b = new TBox(xvalue-5, 1.-yerrorNpart[0]/2, xvalue+5, 1.+yerrorNpart[0]/2);
+  b->SetFillColor(ci);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ci);
+  b->Draw();
+  TBox * b = new TBox(xvalue-15, 1.-ATLASyerrorNpart[0]/2, xvalue-10, 1.+ATLASyerrorNpart[0]/2);
+  b->SetFillColor(ca);
+  b->SetFillStyle(3001);
+  b->SetLineColor(ca);
+  b->Draw();  
+TLine *line = new TLine(50, 1, 300, 1);
+line->SetLineStyle(2);
+//line->SetNDC(kTRUE);
+line->Draw();
+      
    pt = new TPaveText(0.4831415,0.94,0.5168585,0.995,"blNDC");
    pt->SetName("title");
    pt->SetBorderSize(0);
