@@ -1,4 +1,7 @@
 //run with root -l 'comparison_with_ATLAS_pbpb_SVD_1Sep2015.C(10,60,280,"")'
+// ATLAS: root -l 'comparison_with_ATLAS_pbpb_SVD_1Sep2015.C(10,60,300,"I")'
+// note some parts of fit options and start and end are hard coded below,
+// current best results with the first method shown above
 //MIT VERSION UPDATED May 19 2015 for MinBias subtraction MBT
 #include <iostream>
 #include <stdio.h>
@@ -154,13 +157,13 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_periph->SetLineColor(kGreen);   
  
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent7->Fit("fitATLAS_periph","IL","",60,280); //fit function
+     uATLAS_PbPb_R4_cent7->Fit("fitATLAS_periph",FitOpt,"",FitStart,FitEnd); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_periph_axes = (TH1F*)uPbPb_R4_ATLASComp_cent5->Clone("hRatioCMS_periph_axes");
     for(int ic=0; ic<nfit; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent5->Fit("fitCMS_periph","IL","",60,280); //fit function
+      uPbPb_R4_ATLASComp_cent5->Fit("fitCMS_periph",FitOpt,"IL",FitStart,200); //fit function
     }   
     
    Double_t xAxis2138[11] = {30, 40, 50, 60, 80, 100, 120, 160, 200, 250, 320}; 
@@ -270,13 +273,13 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_midperiph->SetLineColor(kGreen);     
 
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent5->Fit("fitATLAS_midperiph","","",60,300); //fit function
+     uATLAS_PbPb_R4_cent5->Fit("fitATLAS_midperiph",FitOpt,"",FitStart,FitEnd); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_midperiph_axes = (TH1F*)uPbPb_R4_ATLASComp_cent4->Clone("hRatioCMS_midperiph_axes");
     for(int ic=0; ic<nfit; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent4->Fit("fitCMS_midperiph","","",60,250); //fit function
+      uPbPb_R4_ATLASComp_cent4->Fit("fitCMS_midperiph",FitOpt,"",FitStart,250); //fit function
     }   
     
    Double_t xAxis2140[11] = {30, 40, 50, 60, 80, 100, 120, 160, 200, 250, 320}; 
@@ -391,13 +394,13 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_midcent->SetLineColor(kGreen);     
 
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent3->Fit("fitATLAS_midcent","","",60,300); //fit function
+     uATLAS_PbPb_R4_cent3->Fit("fitATLAS_midcent",FitOpt,"",FitStart,FitEnd); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_midcent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent3->Clone("hRatioCMS_midcent_axes");
     for(int ic=0; ic<nfit; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent3->Fit("fitCMS_midcent",FitOpt,"",60,300); //fit function
+      uPbPb_R4_ATLASComp_cent3->Fit("fitCMS_midcent",FitOpt,"",FitStart,FitEnd); //fit function
     }   
 
    Double_t xAxis2142[11] = {30, 40, 50, 60, 80, 100, 120, 160, 200, 250, 320}; 
@@ -509,7 +512,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_cent->SetLineColor(kGreen);     
    
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent1->Fit("fitATLAS_cent","","",60,300); //fit function
+     uATLAS_PbPb_R4_cent1->Fit("fitATLAS_cent",FitOpt,"",FitStart,FitEnd); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_cent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent2->Clone("hRatioCMS_cent_axes");
@@ -625,7 +628,7 @@ void comparison_with_ATLAS_pbpb_SVD_1Sep2015(Int_t nfit=6, Int_t FitStart=60, In
    fitCMS_mostcent->SetLineColor(kGreen);   
    
    for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent0->Fit("fitATLAS_mostcent","","",60,300); //fit function
+     uATLAS_PbPb_R4_cent0->Fit("fitATLAS_mostcent",FitOpt,"",FitStart,FitEnd); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_mostcent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent0->Clone("hRatioCMS_mostcent_axes");
