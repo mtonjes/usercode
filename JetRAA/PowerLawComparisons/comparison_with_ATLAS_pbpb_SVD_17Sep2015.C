@@ -1,4 +1,4 @@
-//run with root -l 'comparison_with_ATLAS_pbpb_SVD_17Sep2015.C(10,60,280,"")'
+//run with root -l 'comparison_with_ATLAS_pbpb_SVD_17Sep2015.C(10,60,300,"")'
 // ATLAS: root -l 'comparison_with_ATLAS_pbpb_SVD_17Sep2015.C(10,60,300,"I")'
 // note some parts of fit options and start and end are hard coded below,
 // current best results with the first method shown above
@@ -156,14 +156,14 @@ void comparison_with_ATLAS_pbpb_SVD_17Sep2015(Int_t nfit=6, Int_t FitStart=60, I
    fitCMS_periph->SetParameters(1e10,-5,0);
    fitCMS_periph->SetLineColor(kGreen);   
  
-   for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent7->Fit("fitATLAS_periph",FitOpt,"",FitStart,FitEnd); //fit function
+   for(int i=0; i<6; ++i){
+     uATLAS_PbPb_R4_cent7->Fit("fitATLAS_periph","I","",60,200); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_periph_axes = (TH1F*)uPbPb_R4_ATLASComp_cent5->Clone("hRatioCMS_periph_axes");
-    for(int ic=0; ic<nfit; ic++){
+    for(int ic=0; ic<2; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent5->Fit("fitCMS_periph",FitOpt,"IL",FitStart,200); //fit function
+      uPbPb_R4_ATLASComp_cent5->Fit("fitCMS_periph","I","",60,200); //fit function
     }   
        
 //    TLegend *leg = new TLegend(0.25,0.75,0.5,0.85,NULL,"brNDC");
@@ -328,12 +328,12 @@ void comparison_with_ATLAS_pbpb_SVD_17Sep2015(Int_t nfit=6, Int_t FitStart=60, I
    fitCMS_midperiph->SetParameters(1e10,-5,0);
    fitCMS_midperiph->SetLineColor(kGreen);     
 
-   for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent5->Fit("fitATLAS_midperiph",FitOpt,"",FitStart,FitEnd); //fit function
+   for(int i=0; i<4; ++i){
+     uATLAS_PbPb_R4_cent5->Fit("fitATLAS_midperiph","","",FitStart,FitEnd); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_midperiph_axes = (TH1F*)uPbPb_R4_ATLASComp_cent4->Clone("hRatioCMS_midperiph_axes");
-    for(int ic=0; ic<nfit; ic++){
+    for(int ic=0; ic<4; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
       uPbPb_R4_ATLASComp_cent4->Fit("fitCMS_midperiph",FitOpt,"",FitStart,250); //fit function
     }   
@@ -504,14 +504,14 @@ void comparison_with_ATLAS_pbpb_SVD_17Sep2015(Int_t nfit=6, Int_t FitStart=60, I
    fitCMS_midcent->SetParameters(1e10,-5,0);
    fitCMS_midcent->SetLineColor(kGreen);     
 
-   for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent3->Fit("fitATLAS_midcent",FitOpt,"",FitStart,FitEnd); //fit function
+   for(int i=0; i<2; ++i){
+     uATLAS_PbPb_R4_cent3->Fit("fitATLAS_midcent","","",60,300); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_midcent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent3->Clone("hRatioCMS_midcent_axes");
-    for(int ic=0; ic<nfit; ic++){
+    for(int ic=0; ic<2; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent3->Fit("fitCMS_midcent",FitOpt,"",FitStart,FitEnd); //fit function
+      uPbPb_R4_ATLASComp_cent3->Fit("fitCMS_midcent","","",60,300); //fit function
     }      
 //    leg = new TLegend(0.25,0.75,0.5,0.85,NULL,"brNDC");
 //    leg->SetBorderSize(0);
@@ -674,14 +674,14 @@ void comparison_with_ATLAS_pbpb_SVD_17Sep2015(Int_t nfit=6, Int_t FitStart=60, I
    TF1 *fitCMS_cent = new TF1("fitCMS_cent","[0]*pow(x+[2],[1])"); //create function
    fitCMS_cent->SetParameters(1e10,-5,0);
    fitCMS_cent->SetLineColor(kGreen);     
-   for(int i=0; i<nfit; ++i){
-     uATLAS_PbPb_R4_cent1->Fit("fitATLAS_cent",FitOpt,"",FitStart,FitEnd); //fit function
+   for(int i=0; i<2; ++i){
+     uATLAS_PbPb_R4_cent1->Fit("fitATLAS_cent","","",60,300); //fit function
    }    
    // clone before fit so I don't get that stupid line in the ratio plot
    TH1F *hRatioCMS_cent_axes = (TH1F*)uPbPb_R4_ATLASComp_cent2->Clone("hRatioCMS_cent_axes");
-    for(int ic=0; ic<nfit; ic++){
+    for(int ic=0; ic<2; ic++){
 //      uPP_R4_ATLASComp->Fit("fitppCMS",FitOpt,"",60,300); //fit function    
-      uPbPb_R4_ATLASComp_cent2->Fit("fitCMS_cent",FitOpt,"",FitStart,FitEnd); //fit function
+      uPbPb_R4_ATLASComp_cent2->Fit("fitCMS_cent","","",60,300); //fit function
     }   
        
 //    leg = new TLegend(0.25,0.75,0.5,0.85,NULL,"brNDC");
