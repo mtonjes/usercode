@@ -1,0 +1,14 @@
+<use   name="DataFormats/HcalDetId"/>
+<use   name="DataFormats/HcalDigi"/>
+<use   name="DataFormats/FEDRawData"/>
+<use   name="FWCore/MessageLogger"/>
+<use   name="CondFormats/CastorObjects"/>
+<use   name="FWCore/Utilities"/>
+<use   name="EventFilter/HcalRawToDigi"/>
+<use   name="CalibFormats/HcalObjects"/>
+<use   name="Geometry/ForwardGeometry"/>
+<use   name="CalibCalorimetry/HcalAlgos"/>
+<use   name="boost"/>
+<export>
+  <lib   name="1"/>
+</export>
