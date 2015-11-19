@@ -48,6 +48,7 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
   using namespace edm;
   using namespace reco;
   using namespace std;
+//  std::cout<<"ForwardAnalyzer::analyze, go!"<<std::endl;
   ++evtNo;
   time_t a = (iEvent.time().value()) >> 32; // store event info
   event = iEvent.id().event();
@@ -78,13 +79,16 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
 
 
 
+//   std::cout<<"ForwardAnalyzer::analyze, handle ZDCDigi Collection"<<std::endl;
 
-  Handle<ZDCDigiCollection> zdc_digi_h;
+  Handle<ZDCDigiCollection> castorDigis;
+//     std::cout<<"ForwardAnalyzer::analyze, now get those HF RecHits"<<std::endl;
+
   edm::Handle<HFRecHitCollection> hf_recHits_h;
   Handle<CastorRecHitCollection> castor_recHits_h; //added Nov 19 2015 to see if it will make line 83 work
   edm::ESHandle<HcalDbService> conditions;
   iSetup.get<HcalDbRecord>().get(conditions);
-  iEvent.getByLabel("zdc_digi_h",zdc_digi_h);//see below
+ //see below
   iEvent.getByLabel("castor_recHits_h",castor_recHits_h);// changed Nov 19 2015 to use getByLabel instead of getByType. Seems to work ok after adding line 80
 
 //  Handle<reco::EvtPlaneCollection> evtPlanes;
@@ -98,23 +102,34 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
 
   if (!(iEvent.getByLabel("hfreco",hf_recHits_h)))
     {
-      std::cout<<"SHIT NO HF"<<std::endl;
-      return;
+      std::cout<<"NO HF, I don't care!!!"<<std::endl;
+   //   return;
     }
-  const ZDCDigiCollection *zdc_digi = zdc_digi_h.failedToGet()? 0 : &*zdc_digi_h;
-  const HFRecHitCollection *hf_recHits = hf_recHits_h.failedToGet()? 0 : &*hf_recHits_h;
+         std::cout<<"ForwardAnalyzer::analyze, now get those ZDC digis by label"<<std::endl;
+
+  if (!(iEvent.getByLabel("castorDigis",castorDigis)))
+  {
+      std::cout<<"No ZDC Digis gotten with label:"<<castorDigis<<std::endl;
+      return;
+  }
+  const ZDCDigiCollection *zdc_digi = castorDigis.failedToGet()? 0 : &*castorDigis;
+//  const HFRecHitCollection *hf_recHits = hf_recHits_h.failedToGet()? 0 : &*hf_recHits_h;
 
   iSetup.get<HcalDbRecord>().get(conditions);
 
   if(zdc_digi){
     for(int i=0; i<180; i++){DigiDatafC[i]=0;DigiDataADC[i]=0;}
-
+//std::cout<<"ForwardAnalyzer::analyze if(zdc_digi) is fine, now to loop over the digis"<<std::endl;
     for (ZDCDigiCollection::const_iterator j=zdc_digi->begin();j!=zdc_digi->end();j++){
       const ZDCDataFrame digi = (const ZDCDataFrame)(*j);
       int iSide      = digi.id().zside();
       int iSection   = digi.id().section();
       int iChannel   = digi.id().channel();
       int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
+      
+//      std::cout << "ForwardAnalyzer::analyze, looping over digis, at j: "<<j<<std::endl;
+//      std::cout<<"ForwardAnalyzer::analyze looping over digis, iSide: "<<iSide<<", iSection: "<<iSection<<", iChannel: "<<iChannel<<", chid: "<<chid<<std::endl;
+      //<<
 
     HcalZDCDetId cell = j->id();
 //	const HcalCalibrations& calibrations=conditions->getHcalCalibrations(cell);
@@ -140,19 +155,19 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
   }
 
 
-  if(hf_recHits){
-    int hf_counter=0;
-    HF_NumberofHits=hf_recHits->size();
-    for (HFRecHitCollection::const_iterator HFiter=hf_recHits->begin();HFiter!=hf_recHits->end();++HFiter){
-      HF_Energy[hf_counter]=HFiter->energy();
-      HcalDetId id(HFiter->detid().rawId());
-      HF_iEta[hf_counter]=id.ieta();
-      HF_iPhi[hf_counter]=id.iphi();
-      HF_Depth[hf_counter]=id.depth();
-      ++hf_counter;
-    }//end of HF RecHits Iterator
-    HFRecoTree->Fill();
-  }//end of if(hf_recHits)
+//   if(hf_recHits){
+//     int hf_counter=0;
+//     HF_NumberofHits=hf_recHits->size();
+//     for (HFRecHitCollection::const_iterator HFiter=hf_recHits->begin();HFiter!=hf_recHits->end();++HFiter){
+//       HF_Energy[hf_counter]=HFiter->energy();
+//       HcalDetId id(HFiter->detid().rawId());
+//       HF_iEta[hf_counter]=id.ieta();
+//       HF_iPhi[hf_counter]=id.iphi();
+//       HF_Depth[hf_counter]=id.depth();
+//       ++hf_counter;
+//     }//end of HF RecHits Iterator
+//     HFRecoTree->Fill();
+//   }//end of if(hf_recHits)
 
   ///Event Plane Section
 //   for (EvtPlaneCollection::const_iterator rp=evtPlanes->begin();rp!=evtPlanes->end();rp++)
@@ -380,7 +395,7 @@ void ForwardAnalyzer::beginJob(){
   ZDCDigiTree = new TTree("ZDCDigiTree","ZDC Digi Tree");
 
   BeamTree = new TTree("BeamTree","Beam Tree");
-  HFRecoTree = new TTree("HFRecTree","HF RecHit Tree");
+//  HFRecoTree = new TTree("HFRecTree","HF RecHit Tree");
 //  EventPlaneTree = new TTree("EventPlaneTree","Event Plane Tree");
 
 
@@ -390,11 +405,11 @@ void ForwardAnalyzer::beginJob(){
   }
 
 
-  HFRecoTree->Branch("HF_NumberOfHits",&HF_NumberofHits,"HF_NumberOfHits/I");
-  HFRecoTree->Branch("HF_iEta",&HF_iEta,"HF_iEta[HF_NumberOfHits]/F");
-  HFRecoTree->Branch("HF_iPhi",&HF_iPhi,"HF_iPhi[HF_NumberOfHits]/F");
-  HFRecoTree->Branch("HF_Depth",&HF_Depth,"HF_Depth[HF_NumberOfHits]/F");
-  HFRecoTree->Branch("HF_Energy",&HF_Energy,"HF_Energy[HF_NumberOfHits]/F");
+//   HFRecoTree->Branch("HF_NumberOfHits",&HF_NumberofHits,"HF_NumberOfHits/I");
+//   HFRecoTree->Branch("HF_iEta",&HF_iEta,"HF_iEta[HF_NumberOfHits]/F");
+//   HFRecoTree->Branch("HF_iPhi",&HF_iPhi,"HF_iPhi[HF_NumberOfHits]/F");
+//   HFRecoTree->Branch("HF_Depth",&HF_Depth,"HF_Depth[HF_NumberOfHits]/F");
+//   HFRecoTree->Branch("HF_Energy",&HF_Energy,"HF_Energy[HF_NumberOfHits]/F");
 
 
   BeamTree->Branch("BunchXing",&BeamData[0],"BunchXing/I");
