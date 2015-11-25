@@ -6,6 +6,10 @@
 
 void TimeSliceEventCount::Loop()
 {
+// string Indir = "/home/belt/wrk/ZDC/2015Data/ZDCTree/CMSSW_7_5_5/src/", string Infile="ForwardAnalyzerRun_pp_fixDigi"
+string Indir = "/home/belt/wrk/ZDC/2015Data/ZDCTree/CMSSW_7_5_5/src/";
+// note that don't put the ".root" in because I use the Infile string as code for labeling files below.
+string Infile="ForwardAnalyzerRun_pp_fixDigi";
 //   In a ROOT session, you can do:
 //      Root > .L TimeSliceEventCount.C
 //      Root > TimeSliceEventCount t
@@ -31,7 +35,7 @@ void TimeSliceEventCount::Loop()
 //by  b_branchname->GetEntry(ientry); //read only this branch
 
  TChain *chain=new TChain("ZDCDigiTree","");
- TFile *OutFile=new TFile("ZDCDigiOut_TS_eventCount_Run262081_lumi50_VdM.root","RECREATE");
+ TFile *OutFile=new TFile(Form("ForwardAnalyzerTree_%s.root",Infile.c_str()),"RECREATE");
   TH1F* histogram_1D_PosHAD1 = new TH1F("PHAD1signal_TS_eventCount", "PHAD1signal_TS_eventCount", 10, 0, 10); 
   TH1F* histogram_1D_PosHAD2 = new TH1F("PHAD2signal_TS_eventCount", "PHAD2signal_TS_eventCount", 10, 0, 10); 
   TH1F* histogram_1D_PosHAD3 = new TH1F("PHAD3signal_TS_eventCount", "PHAD3signal_TS_eventCount", 10, 0, 10); 
@@ -216,42 +220,61 @@ void TimeSliceEventCount::Loop()
 // && negHD4ADC[iTS]>126
    
    }
+histogram_1D_PosHAD1->Write();
+histogram_1D_PosHAD2->Write();
+histogram_1D_PosHAD3->Write();
+histogram_1D_PosHAD4->Write();
+histogram_1D_NegHAD1->Write();
+histogram_1D_NegHAD2->Write();
+histogram_1D_NegHAD3->Write();
+histogram_1D_NegHAD4->Write();
+histogram_1D_PosEM1->Write();
+histogram_1D_PosEM2->Write();
+histogram_1D_PosEM3->Write();
+histogram_1D_PosEM4->Write();
+histogram_1D_PosEM5->Write();
+histogram_1D_NegEM1->Write();
+histogram_1D_NegEM2->Write();
+histogram_1D_NegEM3->Write();
+histogram_1D_NegEM4->Write();
+histogram_1D_NegEM5->Write();
+   
   // histogram_2D->Draw("COLZ");
   c1 = new TCanvas();
  histogram_1D_PosHAD1->Draw();
- c1->Print("Plots/PosHAD1signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/PosHAD1signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_PosHAD2->Draw();
- c1->Print("Plots/PosHAD2signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/PosHAD2signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_PosHAD3->Draw();
- c1->Print("Plots/PosHAD3signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/PosHAD3signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_PosHAD4->Draw();
- c1->Print("Plots/PosHAD4signal_TS_eventCount_Run262081_lumi50_VdM.pdf");   
+ c1->Print(Form("Plots/PosHAD4signal_TS_EventCount_%s.pdf",Infile.c_str()));   
  histogram_1D_NegHAD1->Draw();
- c1->Print("Plots/NegHAD1signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/NegHAD1signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_NegHAD2->Draw();
- c1->Print("Plots/NegHAD2signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/NegHAD2signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_NegHAD3->Draw();
- c1->Print("Plots/NegHAD3signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/NegHAD3signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_NegHAD4->Draw();
- c1->Print("Plots/NegHAD4signal_TS_eventCount_Run262081_lumi50_VdM.pdf");   
+ c1->Print(Form("Plots/NegHAD4signal_TS_EventCount_%s.pdf",Infile.c_str()));   
  histogram_1D_PosEM1->Draw();
- c1->Print("Plots/PosEM1signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/PosEM1signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_PosEM2->Draw();
- c1->Print("Plots/PosEM2signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/PosEM2signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_PosEM3->Draw();
- c1->Print("Plots/PosEM3signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/PosEM3signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_PosEM4->Draw();
- c1->Print("Plots/PosEM4signal_TS_eventCount_Run262081_lumi50_VdM.pdf");   
+ c1->Print(Form("Plots/PosEM4signal_TS_EventCount_%s.pdf",Infile.c_str()));   
  histogram_1D_PosEM5->Draw();
- c1->Print("Plots/PosEM5signal_TS_eventCount_Run262081_lumi50_VdM.pdf");  
+ c1->Print(Form("Plots/PosEM5signal_TS_EventCount_%s.pdf",Infile.c_str()));  
  histogram_1D_NegEM1->Draw();
- c1->Print("Plots/NegEM1signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/NegEM1signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_NegEM2->Draw();
- c1->Print("Plots/NegEM2signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/NegEM2signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_NegEM3->Draw();
- c1->Print("Plots/NegEM3signal_TS_eventCount_Run262081_lumi50_VdM.pdf");
+ c1->Print(Form("Plots/NegEM3signal_TS_EventCount_%s.pdf",Infile.c_str()));
  histogram_1D_NegEM4->Draw();
- c1->Print("Plots/NegEM4signal_TS_eventCount_Run262081_lumi50_VdM.pdf"); 
+ c1->Print(Form("Plots/NegEM4signal_TS_EventCount_%s.pdf",Infile.c_str())); 
  histogram_1D_NegEM5->Draw();
- c1->Print("Plots/NegEM5signal_TS_eventCount_Run262081_lumi50_VdM.pdf");   
+ c1->Print(Form("Plots/NegEM5signal_TS_EventCount_%s.pdf",Infile.c_str()));   
 }

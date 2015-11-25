@@ -25,14 +25,14 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource",
-                            fileNames = cms.untracked.vstring('file:/home/belt/wrk/ZDC/2015Data/ZDCTree/output_data_rereco.root')
+                            fileNames = cms.untracked.vstring('file:/home/belt/wrk/ZDC/2015Data/ZDCTree/output_data_pp_fixDigi.root')
                             )
 
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 # pp 2015
-#process.GlobalTag = GlobalTag(process.GlobalTag, '74X_dataRun2_HLT_ppAt5TeV_v0', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '74X_dataRun2_HLT_ppAt5TeV_v0', '')
 # PbPb 2015
-process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_ExpressHI_v2', '')
+#process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_ExpressHI_v2', '')
 
 # load centrality
 #process.HeavyIonGlobalParameters = cms.PSet(
@@ -71,7 +71,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_ExpressHI_v2', ''
 #                                   )##END of L1 Stuff
 
 process.TFileService = cms.Service("TFileService",
-                                   fileName = cms.string('ForwardAnalyzerRun262081_lumi50_VdM.root')
+                                   fileName = cms.string('ForwardAnalyzerRun_pp_fixDigi.root')
                                    )
 
 process.fwdana = cms.EDAnalyzer('ForwardAnalyzer', 

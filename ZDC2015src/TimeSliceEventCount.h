@@ -11,6 +11,7 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <cstring>
 
 class TimeSliceEventCount {
 public :
@@ -109,12 +110,15 @@ public :
 #ifdef TimeSliceEventCount_cxx
 TimeSliceEventCount::TimeSliceEventCount(TTree *tree)
 {
+string Indir = "/home/belt/wrk/ZDC/2015Data/ZDCTree/CMSSW_7_5_5/src/";
+// note that don't put the ".root" in because I use the Infile string as code for labeling files in the main macro.
+string Infile="ForwardAnalyzerRun_pp_fixDigi";
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/home/belt/wrk/ZDC/2015Data/ZDCTree/CMSSW_7_5_5/src/ForwardAnalyzerRun262081_lumi50_VdM.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(Form("%s/%s.root",Indir.c_str(),Infile.c_str()));
       if (!f) {
-         f = new TFile("/home/belt/wrk/ZDC/2015Data/ZDCTree/CMSSW_7_5_5/src/ForwardAnalyzerRun262081_lumi50_VdM.root");
+         f = new TFile(Form("%s/%s.root",Indir.c_str(),Infile.c_str()));
       }
       tree = (TTree*)gDirectory->Get("ZDCDigiTree");
 
