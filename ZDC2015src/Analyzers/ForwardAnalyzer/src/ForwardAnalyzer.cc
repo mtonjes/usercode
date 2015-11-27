@@ -105,7 +105,7 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
       std::cout<<"NO HF, I don't care!!!"<<std::endl;
    //   return;
     }
-         std::cout<<"ForwardAnalyzer::analyze, now get those ZDC digis by label"<<std::endl;
+//         std::cout<<"ForwardAnalyzer::analyze, now get those ZDC digis by label"<<std::endl;
 
   if (!(iEvent.getByLabel("castorDigis",castorDigis)))
   {
