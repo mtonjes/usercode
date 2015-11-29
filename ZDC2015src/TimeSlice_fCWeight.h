@@ -112,7 +112,7 @@ TimeSlice_fCWeight::TimeSlice_fCWeight(TTree *tree)
 {
 // CHANGE THAT VARIABLE Infile
 // Full file location at hepcms cluster:
-string Infile = "/data/users/belt/ZDCTrees/PbPb2015/ForwardAnalyzerRun262694_MinBiasHF1AndExpress.root";
+string Infile = "/data/users/belt/ZDCTrees/PbPb2015/ForwardAnalyzerRun262811_MinBiasHF1AndExpress.root";
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
