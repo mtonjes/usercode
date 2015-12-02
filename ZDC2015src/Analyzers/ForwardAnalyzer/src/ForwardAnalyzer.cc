@@ -113,7 +113,7 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
       return;
   }
   const ZDCDigiCollection *zdc_digi = castorDigis.failedToGet()? 0 : &*castorDigis;
-//  const HFRecHitCollection *hf_recHits = hf_recHits_h.failedToGet()? 0 : &*hf_recHits_h;
+  const HFRecHitCollection *hf_recHits = hf_recHits_h.failedToGet()? 0 : &*hf_recHits_h;
 
   iSetup.get<HcalDbRecord>().get(conditions);
 
@@ -155,19 +155,19 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
   }
 
 
-//   if(hf_recHits){
-//     int hf_counter=0;
-//     HF_NumberofHits=hf_recHits->size();
-//     for (HFRecHitCollection::const_iterator HFiter=hf_recHits->begin();HFiter!=hf_recHits->end();++HFiter){
-//       HF_Energy[hf_counter]=HFiter->energy();
-//       HcalDetId id(HFiter->detid().rawId());
-//       HF_iEta[hf_counter]=id.ieta();
-//       HF_iPhi[hf_counter]=id.iphi();
-//       HF_Depth[hf_counter]=id.depth();
-//       ++hf_counter;
-//     }//end of HF RecHits Iterator
-//     HFRecoTree->Fill();
-//   }//end of if(hf_recHits)
+  if(hf_recHits){
+    int hf_counter=0;
+    HF_NumberofHits=hf_recHits->size();
+    for (HFRecHitCollection::const_iterator HFiter=hf_recHits->begin();HFiter!=hf_recHits->end();++HFiter){
+      HF_Energy[hf_counter]=HFiter->energy();
+      HcalDetId id(HFiter->detid().rawId());
+      HF_iEta[hf_counter]=id.ieta();
+      HF_iPhi[hf_counter]=id.iphi();
+      HF_Depth[hf_counter]=id.depth();
+      ++hf_counter;
+    }//end of HF RecHits Iterator
+    HFRecoTree->Fill();
+  }//end of if(hf_recHits)
 
   ///Event Plane Section
 //   for (EvtPlaneCollection::const_iterator rp=evtPlanes->begin();rp!=evtPlanes->end();rp++)
@@ -395,7 +395,7 @@ void ForwardAnalyzer::beginJob(){
   ZDCDigiTree = new TTree("ZDCDigiTree","ZDC Digi Tree");
 
   BeamTree = new TTree("BeamTree","Beam Tree");
-//  HFRecoTree = new TTree("HFRecTree","HF RecHit Tree");
+  HFRecoTree = new TTree("HFRecTree","HF RecHit Tree");
 //  EventPlaneTree = new TTree("EventPlaneTree","Event Plane Tree");
 
 
@@ -405,11 +405,11 @@ void ForwardAnalyzer::beginJob(){
   }
 
 
-//   HFRecoTree->Branch("HF_NumberOfHits",&HF_NumberofHits,"HF_NumberOfHits/I");
-//   HFRecoTree->Branch("HF_iEta",&HF_iEta,"HF_iEta[HF_NumberOfHits]/F");
-//   HFRecoTree->Branch("HF_iPhi",&HF_iPhi,"HF_iPhi[HF_NumberOfHits]/F");
-//   HFRecoTree->Branch("HF_Depth",&HF_Depth,"HF_Depth[HF_NumberOfHits]/F");
-//   HFRecoTree->Branch("HF_Energy",&HF_Energy,"HF_Energy[HF_NumberOfHits]/F");
+  HFRecoTree->Branch("HF_NumberOfHits",&HF_NumberofHits,"HF_NumberOfHits/I");
+  HFRecoTree->Branch("HF_iEta",&HF_iEta,"HF_iEta[HF_NumberOfHits]/F");
+  HFRecoTree->Branch("HF_iPhi",&HF_iPhi,"HF_iPhi[HF_NumberOfHits]/F");
+  HFRecoTree->Branch("HF_Depth",&HF_Depth,"HF_Depth[HF_NumberOfHits]/F");
+  HFRecoTree->Branch("HF_Energy",&HF_Energy,"HF_Energy[HF_NumberOfHits]/F");
 
 
   BeamTree->Branch("BunchXing",&BeamData[0],"BunchXing/I");
