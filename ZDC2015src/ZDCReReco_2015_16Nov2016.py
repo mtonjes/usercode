@@ -31,7 +31,7 @@ process.source = cms.Source("PoolSource",
     
     	#'file:USC_261664.root')
         #'root://xrootd.ba.infn.it//store/data/Run2015A/ZeroBias1/RAW/v1/000/247/324/00000/92067870-580D-E511-940D-02163E013891.root')
-        'file:/data/users/belt/ZDCDigi/HIExpress_FEVT_262811_F6FDD699-CC96-E511-9474-02163E014646.root')
+        'file:/home/belt/wrk/ZDC/2015Data/ZDCTree/Mate/PbPb2015_PromptReco_MinBias2_263005.root')
 )
 
 process.options = cms.untracked.PSet(
@@ -51,12 +51,12 @@ process.es_ascii = cms.ESSource("HcalTextCalibrations",
              cms.PSet(
                  object = cms.string('Gains'),
                               file =
-                 cms.FileInPath('data/Gains_Run210498_211831.txt')
+                 cms.FileInPath('data/Gains_Runs262834-263614.txt')
                           ),
                       cms.PSet(
                  object = cms.string('LongRecoParams'),
                               file =
-                 cms.FileInPath('data/LongRecoParams_Runs210737_211831.txt')
+                 cms.FileInPath('data/LongRecoParams_Runs262314-263614.txt')
                           ),
                       cms.PSet(
                  object = cms.string('MCParams'),
