@@ -31,7 +31,15 @@ process.source = cms.Source("PoolSource",
     
     	#'file:USC_261664.root')
         #'root://xrootd.ba.infn.it//store/data/Run2015A/ZeroBias1/RAW/v1/000/247/324/00000/92067870-580D-E511-940D-02163E013891.root')
-        'file:/home/belt/wrk/ZDC/2015Data/ZDCTree/Mate/PbPb2015_PromptReco_MinBias2_263005.root')
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/0002B478-ECA7-E511-9CB4-02163E012BB7.root',
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/00059C74-ECA7-E511-9541-02163E0136FD.root',
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/00346478-ECA7-E511-85E5-02163E011BA0.root',
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/00BE069B-EDA7-E511-8934-02163E0129F2.root',
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/02DBEF7A-ECA7-E511-83E6-02163E0133F0.root',
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/046E6A75-ECA7-E511-88F6-02163E012408.root',
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/047F987C-ECA7-E511-BD83-02163E012AD0.root',
+'root://cmsxrootd.fnal.gov//store/hidata/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/988/00000/FE7AA556-ECA7-E511-A990-02163E011D46.root'
+        )
 )
 
 process.options = cms.untracked.PSet(
