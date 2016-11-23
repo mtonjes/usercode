@@ -174,6 +174,13 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
         std::cout<<"No ZDC Digis gotten with label:"<<castorDigis<<std::endl;
         return;
     }
+    
+    if (!(iEvent.getByLabel("zdcreco",zdc_recHits_h)))
+        {
+            std::cout<<"NO ZDCRecHits obtained, why not?"<<std::endl;
+   //   return;
+        }
+            
     const ZDCDigiCollection *zdc_digi = castorDigis.failedToGet()? 0 : &*castorDigis;
     const HFRecHitCollection *hf_recHits = hf_recHits_h.failedToGet()? 0 : &*hf_recHits_h;
 	const ZDCRecHitCollection *zdc_recHits = zdc_recHits_h.failedToGet()? 0 : &*zdc_recHits_h;
@@ -236,13 +243,13 @@ void ForwardAnalyzer::analyze(const Event& iEvent, const EventSetup& iSetup)
 		for(int i=0; i<36; i++){RecData[i]=0;}
 
 		for (ZDCRecHitCollection::const_iterator zhit=zdc_recHits->begin();zhit!=zdc_recHits->end();zhit++){		
-			int iSide      = (zhit->id()).zside();
-			int iSection   = (zhit->id()).section();
-			int iChannel   = (zhit->id()).channel();
-			int chid = (iSection-1)*5+(iSide+1)/2*9+(iChannel-1);
+			int iSideRec      = (zhit->id()).zside();
+			int iSectionRec   = (zhit->id()).section();
+			int iChannelRec   = (zhit->id()).channel();
+			int chidRec = (iSectionRec-1)*5+(iSideRec+1)/2*9+(iChannelRec-1);
 
-			RecData[chid]=zhit->energy();
-			RecData[chid+18]=zhit->time();
+			RecData[chidRec]=zhit->energy();
+			RecData[chidRec+18]=zhit->time();
 		}
 		
 		ZDCRecTree->Fill();
