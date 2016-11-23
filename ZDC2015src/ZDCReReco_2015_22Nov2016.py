@@ -19,6 +19,10 @@ process.load('Configuration.StandardSequences.L1Reco_cff')
 process.load('Configuration.StandardSequences.Reconstruction_Data_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
+# Event selection recommendations (not final)
+process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
+process.load('Analyzers.ForwardAnalyzer.HIClusterCompatibilityFilter_cfi') # manually changed
+process.clusterCompatibilityFilter.clusterPars = cms.vdouble(0.0,0.006)
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(100)
@@ -44,10 +48,21 @@ process.TFileService = cms.Service("TFileService",
                                    #  fileName = cms.string(outfile)
                                    fileName = cms.string('Run262988_100events_ZDCTrees.root')
                                    )
-process.HeavyIonGlobalParameters=cms.PSet(centralityVariable= cms.string("PixelHits"),#HFhits"),#"PixelHits"),
-                                          centralitySrc = cms.InputTag("hiCentrality")
-                                          )
-process.fwdana = cms.EDAnalyzer('ForwardAnalyzer')
+### if you want trigger selection uncomment these as well as including them below in the Path
+### import HLTrigger.HLTfilters.hltHighLevel_cfi                                                                     
+### process.hltMinBias = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
+### process.hltMinBias.HLTPaths = [
+###                                "HLT_HIL1MinimumBiasHF1AND_*",
+###                                "HLT_HIL1MinimumBiasHF2AND_*"
+###                                ]
+                                                                  
+process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
+process.fwdana = cms.EDAnalyzer('ForwardAnalyzer'
+                                , CentralitySrc = cms.InputTag("hiCentrality")
+                                , CentralityBinSrc = cms.InputTag("centralityBin","HFtowers")
+                                , trackSrc = cms.InputTag("hiGeneralTracks")
+                                , vtxCollection_ = cms.InputTag("hiSelectedVertex")
+                                )
 process.forwardSequence = cms.Sequence(process.fwdana)
                                                                            
 process.options = cms.untracked.PSet(
@@ -128,7 +143,18 @@ process.es_prefer_es_pool = cms.ESPrefer( "PoolDBESSource", "es_pool" )
 process.reconstruction_step = cms.Path(process.zdcreco)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.RECOoutput_step = cms.EndPath(process.RECOoutput)
-process.p = cms.Path(process.zdcreco*process.fwdana)
+### version with no triggers and no RECO level output, just Tree
+process.p = cms.Path(process.zdcreco*
+                     process.centralityBin *
+                     process.fwdana )
+### version with triggers
+### process.p = cms.Path(process.zdcreco*
+###                      process.hfCoincFilter3 *
+###                      process.primaryVertexFilter *
+###                      process.clusterCompatibilityFilter *
+###                      process.centralityBin *
+###                      process.hltMinBias *
+###                      process.fwdana )
 
 # Schedule definition
 #process.schedule = cms.Schedule(process.raw2digi_step,process.L1Reco_step,process.reconstruction_step,process.endjob_step,process.RECOoutput_step)
